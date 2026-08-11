@@ -12,19 +12,21 @@
     },
     {
       "nom": "Gymnase Saint-Germain",
-      "etiquette": "",
-      "adresse": "12 rue Lavoisier, 19100 Brive",
-      "usage": "Matchs seniors · école de volley",
-      "acces": "",
-      "itineraire": ""
+      "etiquette": "Salle secondaire",
+      "adresse": "6 Bd Marx Dormoy, 19100 Brive-la-Gaillarde",
+      "usage": "Entraînements · Matchs Ufolep",
+      "acces": "Parking gratuit",
+      "itineraire": "https://maps.app.goo.gl/RSmFdNEa5tYgZyMU9",
+      "photo": "assets/uploads/gymnase_saint-germain.webp"
     },
     {
-      "nom": "Plan d'eau du Causse",
+      "nom": "Beach Park de Tujac",
       "etiquette": "Beach",
-      "adresse": "Lissac-sur-Couze",
+      "adresse": "Plaine des Jeux de Tujac, 19100 Brive-la-Gaillarde",
       "usage": "Terrains de beach · mai à septembre",
       "acces": "",
-      "itineraire": ""
+      "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
+      "photo": "assets/uploads/beach_park.png"
     }
   ]
 }
