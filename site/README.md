@@ -13,24 +13,35 @@ site/
   admin/       index.html · config.yml                     ← interface Decap CMS
 ```
 
-## 1 · Mettre le code sur GitHub
-1. Créez un dépôt (ex. `cabc-volley`), branche `main`.
-2. Téléversez le contenu de ce projet (glisser-déposer sur github.com fonctionne).
-3. Dans `site/admin/config.yml`, remplacez `VOTRE-COMPTE/cabc-volley` par `votre-compte/cabc-volley`.
+## 1 · Le dépôt GitHub
+Le code vit sur <https://github.com/nbresson/cabc-volley>, branche `main`.
+Chaque publication depuis Decap y crée un commit.
 
-## 2 · Déployer sur Cloudflare Pages
-1. Cloudflare → Workers & Pages → Create → Pages → Connect to Git → choisissez le dépôt.
-2. Réglages de build :
-   - **Framework preset** : None
-   - **Build command** : (laisser vide)
-   - **Build output directory** : `site`
-3. Save and Deploy. Le site est en ligne sur `https://cabc-volley.pages.dev`.
+## 2 · Déploiement sur Cloudflare Workers
+Le site est servi par un worker `cabc-volley` en « static assets » : le dossier `site/`
+est publié tel quel, d'après [`wrangler.jsonc`](../wrangler.jsonc) à la racine du projet.
+En ligne sur `https://cabc-volley.nkobrs21.workers.dev`.
+
+- **Automatique** : le worker est relié au dépôt (Settings → Builds). Chaque commit
+  déclenche une compilation qui exécute `npx wrangler deploy`.
+- **À la main**, si une compilation échoue : `npx wrangler deploy` depuis la racine
+  (`npx wrangler login` la première fois).
+
+> La version de wrangler est **figée dans `package.json`** (et `package-lock.json`).
+> Ce n'est pas une précaution théorique : la version 4.121.0 est sortie avec une
+> dépendance introuvable, ce qui a fait échouer les compilations jusqu'à ce que la
+> version soit épinglée. Ne relâchez cette contrainte qu'après avoir testé une
+> nouvelle version en local.
+
+Si la page en ligne ne reflète pas une modification faite dans Decap, le réflexe est
+d'ouvrir l'onglet **Builds** du worker : le commit y figure-t-il, et la compilation
+est-elle en vert ?
 
 ## 3 · Brancher le domaine (plus tard)
 Sans débrancher l'ancien site tout de suite :
-- Testez d'abord sur l'URL `.pages.dev`, ou sur un sous-domaine `nouveau.cabc-volley.fr`.
-- Quand tout est prêt : Cloudflare Pages → Custom domains → ajoutez `www.cabc-volley.fr`
-  (le domaine doit être géré par Cloudflare, ou créez un CNAME vers le `.pages.dev`).
+- Testez d'abord sur l'URL `.workers.dev`, ou sur un sous-domaine `nouveau.cabc-volley.fr`.
+- Quand tout est prêt : page du worker → **Domains & Routes** → ajoutez `www.cabc-volley.fr`
+  (le domaine doit être géré par Cloudflare, ou créez un CNAME vers le `.workers.dev`).
 
 ## 4 · Activer Decap CMS (édition par le bureau)
 L'admin est sur `https://VOTRE-SITE/admin/`. Authentification GitHub — au choix :
