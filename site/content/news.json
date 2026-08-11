@@ -1,12 +1,13 @@
 {
   "items": [
     {
-      "titre": "Victoire 3–1 à Limoges : la reprise rêvée",
+      "titre": "National 3 2026/2027",
       "date": "2026-09-08",
-      "categorie": "Résumé",
-      "extrait": "Portées par le service de Marion Chassagne et une réception retrouvée, les Brivistes ramènent trois points de Beaublanc.",
+      "categorie": "Club",
+      "extrait": "Le calendrier des matchs de l'équipe de National 3 masculin est sortie !\nNotre équipe évoluera dans la poule D.\nSouhaitons leur bonne chance pour la saison qui se profile.",
       "une": true,
-      "slug": "victoire-limoges"
+      "slug": "victoire-limoges",
+      "image": "assets/uploads/annonce_n3m_2026-2027.jpg"
     },
     {
       "titre": "L'école de volley fait le plein au forum",
