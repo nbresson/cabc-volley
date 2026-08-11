@@ -19,7 +19,7 @@
     <p class="muted" style="max-width:38ch">Entrée libre pour tous les matchs à domicile. La buvette ouvre une heure avant le coup d'envoi.</p>
     <a id="ffvb1" class="btn btn-secondary" style="margin-top:20px" target="_blank" rel="noopener">Calendrier complet FFVB ↗</a>
   </div>
-  <div id="upcoming"></div>
+  <div id="upcoming" class="match-list"></div>
 </section>
 <section class="section pad">
   <div class="section-head"><h2>Classement Prénationale F</h2><a id="ffvb2" class="mono" style="border-bottom:2px solid var(--encre);color:var(--encre)" target="_blank" rel="noopener">Classement FFVB officiel →</a></div>
@@ -44,7 +44,7 @@ window.__pageInit=async function(){
     lr.innerHTML=`<div class="pad"><div class="eyebrow" style="margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
       <div class="match-band" style="padding:0"><strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--taupe)'}">${a}</strong><span class="score">${last.score||"–"}</span><strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--taupe)':''}">${b}</strong></div></div>`;}
   document.getElementById("upcoming").innerHTML=(matches?.items||[]).filter(m=>m.statut==="a_venir").map(m=>{const d=new Date(m.date);return `
-    <div style="display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:20px;padding:24px 36px;border-bottom:1px solid var(--lin)">
+    <div class="match-row">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
       <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}).join("")||'<p class="muted pad">Aucun match programmé.</p>';

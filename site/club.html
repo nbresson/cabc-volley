@@ -59,7 +59,7 @@ window.__pageInit=async function(){
     ${h.legende?`<div class="mono" style="padding:12px 18px;border-top:2px solid var(--encre)">${h.legende}</div>`:""}`;
   const dates=h.dates||[];
   document.getElementById("histoire-dates").innerHTML=dates.map((t,i)=>`
-    <div class="pad" style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-top:30px;padding-bottom:30px;${t.une?"background:var(--sable);":""}${i<dates.length-1?"border-bottom:1px solid var(--lin)":""}">
+    <div class="pad timeline" style="padding-top:30px;padding-bottom:30px;${t.une?"background:var(--sable);":""}${i<dates.length-1?"border-bottom:1px solid var(--lin)":""}">
       <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1">${t.annee}</strong>
       <p class="muted" style="align-self:center;font-size:14px">${gras(t.texte)}</p>
     </div>`).join("");

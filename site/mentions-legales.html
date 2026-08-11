@@ -45,7 +45,7 @@ window.__pageInit=async function(){
     +row("Site",h.site?`<a href="${h.site}" style="border-bottom:2px solid var(--encre)">${h.site.replace(/^https?:\/\//,"")}</a>`:"");
   const arts=d.articles||[];
   document.getElementById("articles").innerHTML=arts.map((a,i)=>`
-    <section class="pad" style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding-top:38px;padding-bottom:38px;border-bottom:${i===arts.length-1?"2px solid var(--encre)":"1px solid var(--lin)"}">
+    <section class="pad timeline" style="padding-top:38px;padding-bottom:38px;border-bottom:${i===arts.length-1?"2px solid var(--encre)":"1px solid var(--lin)"}">
       <strong class="mono" style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1;letter-spacing:0;color:var(--lin)">${String(i+1).padStart(2,"0")}</strong>
       <div><h2 style="font-size:clamp(24px,3.4vw,32px);margin-bottom:14px">${a.titre}</h2>${mdToHtml(a.corps)}</div>
     </section>`).join("");
