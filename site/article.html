@@ -25,7 +25,7 @@ window.__pageInit=async function(){
     <div class="crumb"><a href="actualites.html">Actualités</a><span>/</span><span style="color:var(--encre)">${n.categorie}</span></div>
     <h1 style="font-size:clamp(40px,7vw,56px);margin:14px 0">${n.titre}</h1>
     <div class="row" style="align-items:center;margin-bottom:22px;padding-bottom:22px;border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)}</span><span class="badge">${n.categorie}</span></div>
-    ${n.image?'':'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-bottom:28px"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div>'}
+    ${n.image?`<img src="${n.image}" alt="${n.titre}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-bottom:28px">`:'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-bottom:28px"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div>'}
     <p style="font-size:17px;line-height:1.75;font-weight:500;margin-bottom:20px">${n.extrait}</p>
     ${mdToHtml(n.corps)}
     <div class="row" style="justify-content:space-between;margin-top:40px;padding-top:24px;border-top:2px solid var(--encre)"><a href="actualites.html" class="btn btn-secondary">← Toutes les actus</a><a href="calendrier.html" class="btn btn-primary">Voir le prochain match</a></div>`;
