@@ -118,6 +118,14 @@ ul.ds-list{margin:0 0 18px;padding:0;list-style:none}
 ul.ds-list li{position:relative;padding-left:22px;color:#4a4438;line-height:1.8}
 ul.ds-list li::before{content:"—";position:absolute;left:0;color:var(--taupe)}
 
+/* Liens réseaux sociaux — le carré s'inverse au survol, comme les cartes */
+.social{display:flex;align-items:center;gap:14px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;line-height:1}
+.social svg{flex:none;width:34px;height:34px}
+.social:hover,.social:focus-visible{opacity:1}
+.social:hover svg,.social:focus-visible svg{color:var(--encre)}
+.social:hover .frame,.social:focus-visible .frame{fill:var(--creme)}
+.social:hover .lbl,.social:focus-visible .lbl{box-shadow:0 3px 0 currentColor}
+
 /* Deux colonnes séparées par un filet */
 .split{display:grid;grid-template-columns:1fr 1fr}
 .split>*+*{border-left:2px solid var(--encre)}
