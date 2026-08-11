@@ -4,7 +4,7 @@ backend:
   repo: nbresson/cabc-volley            # dépôt GitHub du site
   branch: main
   # Connecteur OAuth (worker Cloudflare) — voir decap-oauth-worker/README.md :
-  base_url: https://cabc-decap-oauth.VOTRE-COMPTE.workers.dev   # à remplacer par l'URL de votre worker
+  base_url: https://cabc-decap-oauth.nkobrs21.workers.dev
   auth_endpoint: /auth
 
 # Décommenter en local pour tester sans GitHub :
