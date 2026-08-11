@@ -16,7 +16,7 @@ function renderChrome(){
   const footer=document.getElementById("footer");
   if(footer)footer.innerHTML=`
     <footer class="site-footer section" style="border-bottom:none;border-top:2px solid var(--encre)">
-      <span class="mono">© ${new Date().getFullYear()} C.A. BRIVE CORRÈZE VOLLEY</span>
+      <span class="mono">© ${new Date().getFullYear()} C.A. BRIVE CORRÈZE VOLLEY / Réalisation Nicolas BRESSON</span>
       <nav><a href="https://www.ffvb.org/" target="_blank" rel="noopener">FFVB</a><a href="https://www.instagram.com/cabcvolley/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/cabvolley19/" target="_blank" rel="noopener">Facebook</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
     </footer>`;
 }
