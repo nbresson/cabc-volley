@@ -1,0 +1,46 @@
+{
+  "maj": "2026-08-11",
+  "editeur": {
+    "denomination": "C.A. Brive Corrèze Volley",
+    "statut": "Association loi 1901",
+    "adresse": "",
+    "rna": "",
+    "siret": "",
+    "directeur_publication": ""
+  },
+  "hebergeur": {
+    "nom": "Cloudflare, Inc.",
+    "adresse": "101 Townsend Street, San Francisco, CA 94107, États-Unis",
+    "site": "https://www.cloudflare.com"
+  },
+  "articles": [
+    {
+      "titre": "Objet du site",
+      "corps": "Ce site présente le club : ses équipes, son calendrier, ses actualités et sa boutique. Il est édité à titre non lucratif par l'association, dans le cadre de son objet associatif.\n\nIl est mis à jour par les membres du bureau. Les classements et calendriers officiels font foi sur le site de la Fédération Française de Volley."
+    },
+    {
+      "titre": "Propriété intellectuelle",
+      "corps": "L'ensemble des contenus de ce site — textes, photographies, logo, mise en page — est la propriété de l'association ou de leurs auteurs respectifs. Toute reproduction, même partielle, est soumise à autorisation écrite préalable.\n\nLe logo et les couleurs du club ne peuvent être utilisés sans l'accord du bureau."
+    },
+    {
+      "titre": "Données personnelles",
+      "corps": "Les formulaires d'adhésion et de contact transmettent les informations saisies à l'adresse email du club, via le service Web3Forms. Ces données servent uniquement à répondre à votre demande et à gérer les adhésions : elles ne sont ni revendues, ni utilisées à des fins commerciales, ni conservées sur ce site.\n\nConformément au règlement général sur la protection des données (RGPD), vous pouvez demander l'accès, la rectification ou la suppression des informations vous concernant en écrivant à l'adresse email du club. La demande est traitée sous un mois."
+    },
+    {
+      "titre": "Cookies et mesure d'audience",
+      "corps": "Ce site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience et n'affiche aucune publicité.\n\nLes polices de caractères sont chargées depuis les serveurs de Google Fonts, ce qui transmet votre adresse IP à Google. Aucune autre donnée n'est communiquée à un tiers."
+    },
+    {
+      "titre": "Liens vers d'autres sites",
+      "corps": "Le site renvoie vers des sites tiers, notamment la Fédération Française de Volley pour les classements et calendriers officiels, ainsi que vers les réseaux sociaux du club. L'association n'est responsable ni de leur contenu, ni de leurs pratiques en matière de données personnelles."
+    },
+    {
+      "titre": "Photographies et droit à l'image",
+      "corps": "Les photographies publiées ici sont prises lors des entraînements, des matchs et des manifestations du club.\n\nToute personne figurant sur une photographie peut en demander le retrait en écrivant au club : la suppression est effectuée dans les meilleurs délais. Pour un mineur, la demande est faite par son représentant légal."
+    },
+    {
+      "titre": "Signaler une erreur",
+      "corps": "Une information inexacte, un lien cassé, une photo à retirer ? Écrivez au club : le bureau corrige la page dans les meilleurs délais."
+    }
+  ]
+}

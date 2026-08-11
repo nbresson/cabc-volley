@@ -17,10 +17,18 @@ function renderChrome(){
   if(footer)footer.innerHTML=`
     <footer class="site-footer section" style="border-bottom:none;border-top:2px solid var(--encre)">
       <span class="mono">© ${new Date().getFullYear()} C.A. BRIVE CORRÈZE VOLLEY</span>
-      <nav><a href="https://www.ffvb.org/" target="_blank">FFVB</a><a href="https://www.instagram.com/cabcvolley/" target="_blank">Instagram</a><a href="https://www.facebook.com/cabvolley19/" target="_blank">Facebook</a><a href="contact.html">Contact</a><a href="#">Mentions légales</a></nav>
+      <nav><a href="https://www.ffvb.org/" target="_blank" rel="noopener">FFVB</a><a href="https://www.instagram.com/cabcvolley/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/cabvolley19/" target="_blank" rel="noopener">Facebook</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
     </footer>`;
 }
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
+// Markdown minimal (Decap) : paragraphes, ## titres, > citations, - listes, **gras**, [lien](url)
+function mdToHtml(md){if(!md)return"";
+  const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" style="border-bottom:2px solid var(--encre)">$1</a>');
+  return md.split(/\n\n+/).map(b=>{b=b.trim();if(!b)return"";
+    if(b.startsWith("> "))return '<blockquote class="ds"><p>'+inl(b.slice(2).replace(/\n/g," "))+'</p></blockquote>';
+    if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';
+    if(/^[-*] /.test(b))return '<ul class="ds-list">'+b.split("\n").map(l=>'<li>'+inl(l.replace(/^[-*] +/,""))+'</li>').join("")+'</ul>';
+    return '<p class="muted" style="font-size:15px;line-height:1.8;margin-bottom:18px">'+inl(b)+'</p>';}).join("");}
 // Formulaires (adhésion & contact) — envoi par Web3Forms, message de confirmation inline.
 function initForms(){
   document.querySelectorAll("form[data-web3forms]").forEach(form=>{

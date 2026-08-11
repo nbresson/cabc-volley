@@ -113,6 +113,15 @@ details.acc summary:hover{background:var(--sable)}
 details.acc[open] summary:hover{background:var(--encre)}
 details.acc .acc-body{padding:20px 26px}
 
+/* Listes (contenu markdown) */
+ul.ds-list{margin:0 0 18px;padding:0;list-style:none}
+ul.ds-list li{position:relative;padding-left:22px;color:#4a4438;line-height:1.8}
+ul.ds-list li::before{content:"—";position:absolute;left:0;color:var(--taupe)}
+
+/* Deux colonnes séparées par un filet */
+.split{display:grid;grid-template-columns:1fr 1fr}
+.split>*+*{border-left:2px solid var(--encre)}
+
 /* Citation */
 blockquote.ds{border-left:6px solid var(--encre);background:var(--sable);padding:24px 28px;margin:0}
 blockquote.ds p{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;font-style:italic;line-height:1.15}
@@ -133,6 +142,8 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
   .stats{grid-template-columns:repeat(2,1fr)}
   .stats>div:nth-child(2){border-right:none}
   .cols-2,.cols-3,.cols-4{grid-template-columns:1fr!important}
+  .split{grid-template-columns:1fr}
+  .split>*+*{border-left:none;border-top:2px solid var(--encre)}
   .match-band{grid-template-columns:1fr;text-align:center;justify-items:center}
 }
 .cols-2{display:grid;grid-template-columns:1fr 1fr;gap:28px}

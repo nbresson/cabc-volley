@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mentions légales — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Mentions légales</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(48px,8vw,88px)">Mentions<br>légales</h1><span class="mono" id="maj" style="align-self:flex-end"></span></div>
+</section>
+<section class="section split">
+  <div class="pad">
+    <div class="eyebrow">— Éditeur du site</div>
+    <table class="ds" style="margin-top:18px"><tbody id="editeur"></tbody></table>
+  </div>
+  <div class="pad">
+    <div class="eyebrow">— Hébergeur</div>
+    <table class="ds" style="margin-top:18px"><tbody id="hebergeur"></tbody></table>
+  </div>
+</section>
+<div id="articles"></div>
+<section class="section dark pad" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px">
+  <div><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(24px,4vw,34px);text-transform:uppercase;line-height:1">Une question sur ces informations ?</strong><br><span style="font-size:13px;color:#c9c1ab">Le bureau répond sous 48 h.</span></div>
+  <a href="contact.html" class="btn btn-outline-light">Écrire au club →</a>
+</section>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const [d,s]=await Promise.all([getJSON("content/legal.json"),getJSON("content/settings.json")]);
+  if(!d)return;
+  if(d.maj)document.getElementById("maj").textContent="Mise à jour "+new Date(d.maj).toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"});
+  const todo='<span class="mono" style="font-size:11px;color:var(--erreur)">à compléter</span>';
+  const row=(k,v)=>`<tr><td class="mono" style="width:180px;font-size:11px;letter-spacing:.16em">${k}</td><td>${v||todo}</td></tr>`;
+  const e=d.editeur||{},h=d.hebergeur||{};
+  document.getElementById("editeur").innerHTML=
+    row("Dénomination",e.denomination)+row("Statut",e.statut)+row("Siège social",e.adresse)
+    +row("N° RNA",e.rna)+row("N° SIRET",e.siret)+row("Directeur de publication",e.directeur_publication)
+    +row("Email",s?.email?`<a href="mailto:${s.email}" style="border-bottom:2px solid var(--encre)">${s.email}</a>`:"")
+    +row("Téléphone",s?.telephone);
+  document.getElementById("hebergeur").innerHTML=
+    row("Nom",h.nom)+row("Adresse",h.adresse)
+    +row("Site",h.site?`<a href="${h.site}" style="border-bottom:2px solid var(--encre)">${h.site.replace(/^https?:\/\//,"")}</a>`:"");
+  const arts=d.articles||[];
+  document.getElementById("articles").innerHTML=arts.map((a,i)=>`
+    <section class="pad" style="display:grid;grid-template-columns:110px 1fr;gap:24px;padding-top:38px;padding-bottom:38px;border-bottom:${i===arts.length-1?"2px solid var(--encre)":"1px solid var(--lin)"}">
+      <strong class="mono" style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1;letter-spacing:0;color:var(--lin)">${String(i+1).padStart(2,"0")}</strong>
+      <div><h2 style="font-size:clamp(24px,3.4vw,32px);margin-bottom:14px">${a.titre}</h2>${mdToHtml(a.corps)}</div>
+    </section>`).join("");
+};
+</script></body></html>

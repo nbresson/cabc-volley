@@ -121,3 +121,39 @@ collections:
           - {name: permanence, label: Permanence, widget: string}
           - {name: email, label: Email, widget: string}
           - {name: telephone, label: Téléphone, widget: string}
+
+  - name: legal
+    label: Mentions légales
+    files:
+      - name: legal
+        label: Mentions légales
+        file: site/content/legal.json
+        fields:
+          - {name: maj, label: Dernière mise à jour, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false}
+          - name: editeur
+            label: Éditeur du site
+            widget: object
+            hint: "L'email et le téléphone affichés sur la page viennent des « Réglages du club »."
+            fields:
+              - {name: denomination, label: Dénomination officielle, widget: string}
+              - {name: statut, label: Statut juridique, widget: string}
+              - {name: adresse, label: Siège social, widget: string, required: false, hint: "Adresse complète, ex. 12 rue Lavoisier, 19100 Brive-la-Gaillarde"}
+              - {name: rna, label: N° RNA, widget: string, required: false, hint: "N° de déclaration en préfecture, format W19xxxxxxx"}
+              - {name: siret, label: N° SIRET, widget: string, required: false}
+              - {name: directeur_publication, label: Directeur de publication, widget: string, required: false, hint: "En général le président ou la présidente du club"}
+          - name: hebergeur
+            label: Hébergeur
+            widget: object
+            hint: "À ne modifier que si le site change d'hébergeur."
+            fields:
+              - {name: nom, label: Nom, widget: string}
+              - {name: adresse, label: Adresse, widget: string}
+              - {name: site, label: Site web, widget: string}
+          - name: articles
+            label: Articles
+            label_singular: Article
+            widget: list
+            summary: "{{fields.titre}}"
+            fields:
+              - {name: titre, label: Titre, widget: string}
+              - {name: corps, label: Texte, widget: markdown}

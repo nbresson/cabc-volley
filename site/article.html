@@ -10,10 +10,6 @@
 <article class="section" style="max-width:820px;margin:0 auto;padding:64px 48px" id="article"></article>
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
-function mdToHtml(md){if(!md)return"";return md.split(/\n\n+/).map(b=>{b=b.trim();
-  if(b.startsWith("> "))return '<blockquote class="ds"><p>'+b.slice(2).replace(/\n/g," ")+'</p></blockquote>';
-  if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+b.slice(3)+'</h2>';
-  return '<p class="muted" style="font-size:15px;line-height:1.8;margin-bottom:18px">'+b.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")+'</p>';}).join("");}
 window.__pageInit=async function(){
   const slug=new URLSearchParams(location.search).get("slug");
   const data=await getJSON("content/news.json");
