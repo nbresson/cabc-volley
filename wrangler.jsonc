@@ -1,0 +1,10 @@
+// Déploiement du site statique via Cloudflare Workers (static assets).
+// Le connecteur OAuth de l'admin a sa propre config dans decap-oauth-worker/.
+{
+  "name": "cabc-volley",
+  "compatibility_date": "2026-08-11",
+  "assets": {
+    "directory": "./site",
+    "not_found_handling": "404-page"
+  }
+}
