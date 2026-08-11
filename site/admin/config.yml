@@ -1,7 +1,7 @@
 # Configuration Decap CMS — CABC Volley
 backend:
   name: github
-  repo: VOTRE-COMPTE/cabc-volley        # à remplacer par votre dépôt GitHub
+  repo: nbresson/cabc-volley            # dépôt GitHub du site
   branch: main
   # Connecteur OAuth (worker Cloudflare) — voir decap-oauth-worker/README.md :
   base_url: https://cabc-decap-oauth.VOTRE-COMPTE.workers.dev   # à remplacer par l'URL de votre worker
