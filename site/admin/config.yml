@@ -153,6 +153,88 @@ collections:
               - {name: itineraire, label: Lien itinéraire, widget: string, required: false, hint: "Ouvrez la salle dans Google Maps, puis collez ici l'adresse de la page. Le bouton « Itinéraire » n'apparaît que si ce champ est rempli."}
               - {name: photo, label: Photo, widget: image, required: false, hint: "Paysage : 1600 × 1000 px (format 16/10), moins de 400 Ko."}
 
+  - name: club
+    label: Page Club
+    files:
+      - name: club
+        label: Contenu de la page
+        file: site/content/club.json
+        fields:
+          - name: presentation
+            label: Bandeau d'accueil & chiffres clés
+            widget: object
+            collapsed: true
+            fields:
+              - {name: eyebrow, label: Sur-titre, widget: string, required: false, hint: "Petite ligne au-dessus du titre, ex. Le Club · 1946 → 2026"}
+              - {name: titre, label: Grand titre, widget: text, hint: "Passez à la ligne pour couper le titre en deux."}
+              - {name: chapo, label: Texte d'introduction, widget: text}
+              - name: chiffres
+                label: Chiffres clés
+                label_singular: Chiffre
+                widget: list
+                summary: "{{fields.valeur}} {{fields.libelle}}"
+                hint: "Bandeau noir sous le titre. De 2 à 4 chiffres pour rester lisible."
+                fields:
+                  - {name: valeur, label: Nombre, widget: string}
+                  - {name: libelle, label: Libellé, widget: string}
+          - name: histoire
+            label: Notre histoire
+            widget: object
+            collapsed: true
+            fields:
+              - {name: eyebrow, label: Sur-titre, widget: string, required: false}
+              - {name: titre, label: Titre, widget: text, hint: "Passez à la ligne pour couper le titre en deux."}
+              - {name: photo, label: Photo d'archive, widget: image, required: false, hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko."}
+              - {name: legende, label: Légende sous la photo, widget: string, required: false}
+              - name: dates
+                label: Dates clés
+                label_singular: Date
+                widget: list
+                summary: "{{fields.annee}} — {{fields.texte}}"
+                fields:
+                  - {name: annee, label: Année, widget: string}
+                  - {name: texte, label: Texte, widget: text, hint: "Encadrez un passage de deux astérisques pour le mettre en gras : **comme ceci**."}
+                  - {name: une, label: Mettre en avant ?, widget: boolean, default: false, required: false, hint: "Affiche la ligne sur fond sable. Réservez-le à une seule date."}
+          - name: bureau
+            label: Le bureau
+            widget: object
+            collapsed: true
+            fields:
+              - {name: titre, label: Titre de la section, widget: string}
+              - {name: mention, label: Mention à droite du titre, widget: string, required: false, hint: "Ex. Élu en AG · juin 2026"}
+              - name: membres
+                label: Membres
+                label_singular: Membre
+                widget: list
+                summary: "{{fields.nom}} — {{fields.role}}"
+                fields:
+                  - {name: nom, label: Nom, widget: string}
+                  - {name: role, label: Rôle, widget: string}
+                  - {name: photo, label: Portrait, widget: image, required: false, hint: "Portrait vertical : 900 × 1200 px (format 3/4), moins de 400 Ko."}
+              - name: appel
+                label: Encart « appel aux bénévoles »
+                widget: object
+                collapsed: true
+                fields:
+                  - {name: titre, label: Titre, widget: string, required: false, hint: "Laissez vide pour masquer complètement l'encart."}
+                  - {name: texte, label: Texte, widget: text, required: false}
+                  - {name: bouton, label: Libellé du bouton, widget: string, required: false}
+                  - {name: lien, label: Lien du bouton, widget: string, required: false, hint: "Ex. contact.html ou adhesion.html"}
+          - name: galerie
+            label: La vie du club
+            widget: object
+            collapsed: true
+            fields:
+              - {name: titre, label: Titre de la section, widget: string}
+              - {name: legende, label: Mention à droite du titre, widget: string, required: false}
+              - name: photos
+                label: Photos
+                label_singular: Photo
+                widget: list
+                required: false
+                hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko chacune. Par multiples de 3 pour des rangées pleines."
+                field: {name: image, label: Photo, widget: image}
+
   - name: legal
     label: Mentions légales
     files:

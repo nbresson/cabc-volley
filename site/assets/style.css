@@ -61,7 +61,7 @@ p{margin:0}
 /* Grilles utilitaires */
 .grid{display:grid;gap:0}
 .row{display:flex;gap:14px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:repeat(4,1fr)}
+.stats{display:grid;grid-template-columns:repeat(var(--n,4),1fr)}
 .stats>div{padding:36px;text-align:center;border-right:1px solid #3a352b}
 .stats>div:last-child{border-right:none}
 .stats strong{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:60px;line-height:1}

@@ -1,0 +1,46 @@
+{
+  "presentation": {
+    "eyebrow": "Le Club · 1946 → 2026",
+    "titre": "Quatre-vingts ans de fierté gaillarde",
+    "chapo": "Le CAB n'est pas qu'un club de volley. C'est une buvette tenue par des parents, des anciens qui ne manquent pas un match, des gamins qui rêvent en regardant les seniors. Une chaîne humaine qui tient depuis 1946.",
+    "chiffres": [
+      { "valeur": "220", "libelle": "Licencié·es" },
+      { "valeur": "8", "libelle": "Équipes" },
+      { "valeur": "32", "libelle": "Bénévoles" },
+      { "valeur": "4", "libelle": "Gymnases" }
+    ]
+  },
+  "histoire": {
+    "eyebrow": "— L'histoire",
+    "titre": "80 ans\nde filet",
+    "photo": "",
+    "legende": "Championnat régional, vers 1962. Archives du club.",
+    "dates": [
+      { "annee": "1946", "texte": "Fondation de la section volley du Club Athlétique de Brive. Douze licenciés la première année.", "une": false },
+      { "annee": "1974", "texte": "Premier titre régional seniors. La photo trône encore à la buvette du gymnase.", "une": false },
+      { "annee": "2003", "texte": "Création de l'école de volley : le club s'ouvre aux moins de 11 ans et double ses effectifs.", "une": false },
+      { "annee": "2018", "texte": "Lancement de la section beach au Beach Park de Tujac.", "une": false },
+      { "annee": "2026", "texte": "**80 ans du club.** Tournoi anciens/actuels, expo photo et grande tablée en juin.", "une": true }
+    ]
+  },
+  "bureau": {
+    "titre": "Le bureau",
+    "mention": "Élu en AG · juin 2026",
+    "membres": [
+      { "nom": "À compléter", "role": "Président", "photo": "" },
+      { "nom": "À compléter", "role": "Trésorier·ère", "photo": "" },
+      { "nom": "À compléter", "role": "Secrétaire", "photo": "" }
+    ],
+    "appel": {
+      "titre": "Envie de donner un coup de main ?",
+      "texte": "Buvette, table de marque, transport des jeunes : le club vit grâce à ses bénévoles.",
+      "bouton": "Devenir bénévole →",
+      "lien": "contact.html"
+    }
+  },
+  "galerie": {
+    "titre": "La vie du club",
+    "legende": "Photos · saison 2026–2027",
+    "photos": []
+  }
+}

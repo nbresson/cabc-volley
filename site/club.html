@@ -9,36 +9,85 @@
 <div id="header"></div>
 <section class="hero section">
   <div class="lines"></div>
-  <div class="eyebrow">Le Club · 1946 → 2026</div>
-  <h1 style="max-width:14ch;margin:14px auto 0">Quatre-vingts ans de fierté gaillarde</h1>
-  <p class="muted" style="max-width:58ch;margin:18px auto 0">Le CAB n'est pas qu'un club de volley. C'est une buvette tenue par des parents, des anciens qui ne manquent pas un match, des gamins qui rêvent en regardant les seniors. Une chaîne humaine qui tient depuis 1946.</p>
+  <div class="eyebrow" id="hero-eyebrow"></div>
+  <h1 id="hero-titre" style="max-width:14ch;margin:14px auto 0"></h1>
+  <p class="muted" id="hero-chapo" style="max-width:58ch;margin:18px auto 0"></p>
 </section>
-<section class="section dark stats">
-  <div><strong>220</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">Licencié·es</span></div>
-  <div><strong>8</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">Équipes</span></div>
-  <div><strong>32</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">Bénévoles</span></div>
-  <div><strong>3</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">Gymnases</span></div>
-</section>
-<section class="section" style="display:grid;grid-template-columns:1fr 1.4fr">
-  <div class="pad" style="border-right:2px solid var(--encre)">
-    <div class="eyebrow">— L'histoire</div>
-    <h2 style="font-size:52px;margin:14px 0">80 ans<br>de filet</h2>
-    <div class="card" style="margin-top:8px"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo n&b équipe 1962 ]</span></div><div style="padding:12px 18px;border-top:2px solid var(--encre)" class="mono">Championnat régional, vers 1962. Archives du club.</div></div>
+<section class="section dark stats" id="chiffres"></section>
+<section class="section split">
+  <div class="pad">
+    <div class="eyebrow" id="histoire-eyebrow"></div>
+    <h2 id="histoire-titre" style="font-size:clamp(34px,5vw,52px);margin:14px 0"></h2>
+    <div class="card" style="margin-top:8px" id="histoire-photo"></div>
   </div>
-  <div>
-    <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding:30px 40px;border-bottom:1px solid var(--lin)"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1">1946</strong><p class="muted" style="align-self:center;font-size:14px">Fondation de la section volley du Club Athlétique de Brive. Douze licenciés la première année.</p></div><div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding:30px 40px;border-bottom:1px solid var(--lin)"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1">1974</strong><p class="muted" style="align-self:center;font-size:14px">Premier titre régional seniors. La photo trône encore à la buvette du gymnase Lavoisier.</p></div><div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding:30px 40px;border-bottom:1px solid var(--lin)"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1">2003</strong><p class="muted" style="align-self:center;font-size:14px">Création de l'école de volley : le club s'ouvre aux moins de 11 ans et double ses effectifs.</p></div><div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding:30px 40px;border-bottom:1px solid var(--lin)"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1">2018</strong><p class="muted" style="align-self:center;font-size:14px">Lancement de la section beach au plan d'eau du Causse.</p></div>
-    <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding:30px 40px;background:var(--sable)"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1">2026</strong><p class="muted" style="align-self:center;font-size:14px"><strong>80 ans du club.</strong> Tournoi anciens/actuels, expo photo et grande tablée en juin.</p></div>
-  </div>
-</section>
-<section class="section">
-  <div class="pad" style="padding-bottom:28px"><div class="section-head"><h2>Le bureau</h2><span class="mono">Élu en AG · juin 2026</span></div></div>
-  <div class="grid" style="grid-template-columns:repeat(4,1fr);border-top:2px solid var(--encre)">
-    <div class="card" style="border:none;border-right:2px solid var(--encre)"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ portrait ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;text-transform:uppercase;line-height:1">Jean-Marc Delpy</strong><span class="mono" style="font-size:11px;letter-spacing:.16em">Président</span></div></div><div class="card" style="border:none;border-right:2px solid var(--encre)"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ portrait ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;text-transform:uppercase;line-height:1">Sylvie Monteil</strong><span class="mono" style="font-size:11px;letter-spacing:.16em">Trésorière</span></div></div><div class="card" style="border:none;border-right:2px solid var(--encre)"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ portrait ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;text-transform:uppercase;line-height:1">Karim Belkacem</strong><span class="mono" style="font-size:11px;letter-spacing:.16em">Secrétaire</span></div></div>
-    <div class="dark" style="display:flex;flex-direction:column;justify-content:center;gap:12px;padding:28px"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:28px;text-transform:uppercase;line-height:1">Envie de donner un coup de main ?</strong><span style="font-size:13px;color:#c9c1ab">Buvette, table de marque, transport des jeunes : le club vit grâce à ses bénévoles.</span><a href="contact.html" class="btn btn-outline-light" style="align-self:flex-start;padding:9px 20px;font-size:16px">Devenir bénévole →</a></div>
-  </div>
+  <div id="histoire-dates"></div>
 </section>
 <section class="section pad">
-  <div class="section-head"><h2>La vie du club</h2><span class="mono">Photos · saison 2025–2026</span></div>
-  <div class="cols-3" id="galerie"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo ]</span></div><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo ]</span></div><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo ]</span></div><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo ]</span></div><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo ]</span></div><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo ]</span></div></div>
+  <div class="section-head"><h2 id="bureau-titre"></h2><span class="mono" id="bureau-mention"></span></div>
+  <div id="bureau" class="cols-4"></div>
 </section>
-<div id="footer"></div><script src="assets/site.js"></script></body></html>
+<section class="section pad">
+  <div class="section-head"><h2 id="galerie-titre"></h2><span class="mono" id="galerie-legende"></span></div>
+  <div class="cols-3" id="galerie"></div>
+</section>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const d=await getJSON("content/club.json");
+  if(!d)return;
+  const nl=s=>String(s||"").replace(/\n/g,"<br>");
+  const gras=s=>String(s||"").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+
+  // Bandeau d'accueil
+  const p=d.presentation||{};
+  document.getElementById("hero-eyebrow").textContent=p.eyebrow||"";
+  document.getElementById("hero-titre").innerHTML=nl(p.titre);
+  document.getElementById("hero-chapo").textContent=p.chapo||"";
+
+  // Chiffres clés
+  const chiffres=p.chiffres||[];
+  const bande=document.getElementById("chiffres");
+  bande.style.setProperty("--n",chiffres.length||1);
+  bande.innerHTML=chiffres.map(c=>`<div><strong>${c.valeur}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">${c.libelle}</span></div>`).join("");
+
+  // Histoire
+  const h=d.histoire||{};
+  document.getElementById("histoire-eyebrow").textContent=h.eyebrow||"";
+  document.getElementById("histoire-titre").innerHTML=nl(h.titre);
+  document.getElementById("histoire-photo").innerHTML=`
+    <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${h.photo?vignette(h.photo,h.legende):'<span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo d\'archive ]</span>'}</div>
+    ${h.legende?`<div class="mono" style="padding:12px 18px;border-top:2px solid var(--encre)">${h.legende}</div>`:""}`;
+  const dates=h.dates||[];
+  document.getElementById("histoire-dates").innerHTML=dates.map((t,i)=>`
+    <div class="pad" style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-top:30px;padding-bottom:30px;${t.une?"background:var(--sable);":""}${i<dates.length-1?"border-bottom:1px solid var(--lin)":""}">
+      <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1">${t.annee}</strong>
+      <p class="muted" style="align-self:center;font-size:14px">${gras(t.texte)}</p>
+    </div>`).join("");
+
+  // Le bureau
+  const b=d.bureau||{},a=b.appel||{};
+  document.getElementById("bureau-titre").textContent=b.titre||"Le bureau";
+  document.getElementById("bureau-mention").textContent=b.mention||"";
+  const membres=(b.membres||[]).map(m=>`
+    <div class="card shadow">
+      <div class="ph" style="aspect-ratio:3/4;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${m.photo?vignette(m.photo,m.nom):'<span class="mono" style="color:#8f8672">[ portrait ]</span>'}</div>
+      <div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;text-transform:uppercase;line-height:1">${m.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.16em">${m.role||""}</span></div>
+    </div>`);
+  if(a.titre)membres.push(`
+    <div class="dark" style="border:2px solid var(--encre);display:flex;flex-direction:column;justify-content:center;gap:12px;padding:28px">
+      <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:28px;text-transform:uppercase;line-height:1">${a.titre}</strong>
+      <span style="font-size:13px;color:#c9c1ab">${a.texte||""}</span>
+      ${a.bouton?`<a href="${a.lien||"contact.html"}" class="btn btn-outline-light" style="align-self:flex-start;padding:9px 20px;font-size:16px">${a.bouton}</a>`:""}
+    </div>`);
+  document.getElementById("bureau").innerHTML=membres.join("");
+
+  // La vie du club
+  const g=d.galerie||{};
+  document.getElementById("galerie-titre").textContent=g.titre||"";
+  document.getElementById("galerie-legende").textContent=g.legende||"";
+  const photos=(g.photos||[]).filter(Boolean);
+  document.getElementById("galerie").innerHTML=photos.map(src=>`
+    <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${vignette(src,"")}</div>`).join("")
+    ||'<p class="muted">Les photos de la saison arrivent bientôt.</p>';
+};
+</script></body></html>
