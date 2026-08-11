@@ -6,6 +6,12 @@
       "creneau": "Mer. 18h30-20h30, Ven. 18h00-20h00 · Rollinat",
       "effectif": [
         {
+          "num": "E",
+          "nom": "Jean-Pierre DELOST",
+          "poste": "Entraîneur",
+          "photo": "assets/uploads/jp_delost-297x300.png"
+        },
+        {
           "num": "10",
           "nom": "Rémi DARDANELLI",
           "poste": "Attaquant R4/Pointe"
@@ -24,12 +30,6 @@
           "num": "09",
           "nom": "Corentin VEYSSIERE",
           "poste": "R4"
-        },
-        {
-          "num": "E",
-          "nom": "Jean-Pierre DELOST",
-          "poste": "Entraîneur",
-          "photo": "assets/uploads/jp_delost-297x300.png"
         }
       ]
     },
