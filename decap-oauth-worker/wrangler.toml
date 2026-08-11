@@ -7,4 +7,4 @@ main = "worker.js"
 compatibility_date = "2026-08-01"
 
 [vars]
-# GITHUB_CLIENT_ID = "à renseigner dans le tableau de bord ou ici"
+GITHUB_CLIENT_ID = "Ov23liqwbFOdacWASpzd"
