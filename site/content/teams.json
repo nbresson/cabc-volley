@@ -3,34 +3,34 @@
     {
       "nom": "National 3 masculin",
       "categorie": "National 3",
-      "creneau": "Mer. 18h30-20h30, Ven. 18h00-20h00 · Rollinat"
-    },
-    {
-      "nom": "Régional 1 féminin",
-      "categorie": "Régional 1",
-      "creneau": "Mar. 20h00-22h00 · Saint-Germain",
+      "creneau": "Mer. 18h30-20h30, Ven. 18h00-20h00 · Rollinat",
       "effectif": [
         {
-          "num": "07",
-          "nom": "Marion Chassagne",
-          "poste": "Attaquante · Capitaine"
+          "num": "10",
+          "nom": "Rémi DARDANELLI",
+          "poste": "Attaquant R4/Pointe"
         },
         {
           "num": "12",
-          "nom": "Léa Bordas",
-          "poste": "Passeuse"
+          "nom": "Mathis PERROT-GAUTHIER",
+          "poste": "Libéro"
         },
         {
-          "num": "04",
-          "nom": "Inès Mazaud",
-          "poste": "Centrale"
+          "num": "2",
+          "nom": "Sylvain MARTHON",
+          "poste": "R4/Pointe"
         },
         {
           "num": "09",
-          "nom": "Camille Faurie",
-          "poste": "Libéro"
+          "nom": "Corentin VEYSSIERE",
+          "poste": "R4"
         }
       ]
+    },
+    {
+      "nom": "égional 1 féminin",
+      "categorie": "Régional 1",
+      "creneau": "Mar. 20h00-22h00 · Saint-Germain"
     },
     {
       "nom": "Régional 1 masculin",
