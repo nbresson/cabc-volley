@@ -3,10 +3,10 @@
   "editeur": {
     "denomination": "C.A. Brive Corrèze Volley",
     "statut": "Association loi 1901",
-    "adresse": "",
-    "rna": "",
-    "siret": "",
-    "directeur_publication": ""
+    "adresse": "49 rue Maurice Rollinat, 19100 Brive-La-Gaillarde",
+    "rna": "W191 001 115",
+    "siret": "383 322 823 00022",
+    "directeur_publication": "Jacques NOBRE"
   },
   "hebergeur": {
     "nom": "Cloudflare, Inc.",
