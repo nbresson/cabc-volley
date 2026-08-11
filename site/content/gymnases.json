@@ -11,6 +11,15 @@
       "photo": "assets/uploads/gymnase_rollinat.webp"
     },
     {
+      "nom": "Beach Park de Tujac",
+      "etiquette": "Beach",
+      "adresse": "Plaine des Jeux de Tujac, 19100 Brive-la-Gaillarde",
+      "usage": "Terrains de beach · mai à septembre",
+      "acces": "",
+      "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
+      "photo": "assets/uploads/beach_park.png"
+    },
+    {
       "nom": "Gymnase Saint-Germain",
       "etiquette": "Salle secondaire",
       "adresse": "6 Bd Marx Dormoy, 19100 Brive-la-Gaillarde",
@@ -20,13 +29,12 @@
       "photo": "assets/uploads/gymnase_saint-germain.webp"
     },
     {
-      "nom": "Beach Park de Tujac",
-      "etiquette": "Beach",
-      "adresse": "Plaine des Jeux de Tujac, 19100 Brive-la-Gaillarde",
-      "usage": "Terrains de beach · mai à septembre",
-      "acces": "",
-      "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
-      "photo": "assets/uploads/beach_park.png"
+      "nom": "Gymnase d'Arsonval",
+      "etiquette": "",
+      "adresse": "2 Rue Paul Pradaud, 19100 Brive-La-Gaillarde",
+      "usage": "Entraînements",
+      "itineraire": "https://maps.app.goo.gl/yWWyHS9yrF1YgMYf7",
+      "photo": "assets/uploads/gymnase_darsonval.png"
     }
   ]
 }
