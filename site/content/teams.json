@@ -1,6 +1,11 @@
 {
   "items": [
     {
+      "nom": "National 3 masculin",
+      "categorie": "National 3",
+      "creneau": "Mer. 18h30-20h30, Ven. 18h00-20h00 · Rollinat"
+    },
+    {
       "nom": "Régional 1 féminin",
       "categorie": "Régional 1",
       "creneau": "Mar. 20h00-22h00 · Saint-Germain",
@@ -44,11 +49,6 @@
       "categorie": "M11 & baby",
       "creneau": "Sam. 10h · Lavoisier",
       "effectif": []
-    },
-    {
-      "nom": "National 3 masculin",
-      "categorie": "National 3",
-      "creneau": "Mer. 18h30-20h30, Ven. 18h00-20h00 · Rollinat"
     }
   ]
 }
