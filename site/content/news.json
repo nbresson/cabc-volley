@@ -1,7 +1,7 @@
 {
   "items": [
     {
-      "titre": "National 3 2026/2027",
+      "titre": "National 3 masculin 2026/2027",
       "date": "2026-09-08",
       "categorie": "Club",
       "extrait": "Le calendrier des matchs de l'équipe de National 3 masculin est sortie !\nNotre équipe évoluera dans la poule D.\nSouhaitons leur bonne chance pour la saison qui se profile.",
@@ -10,18 +10,20 @@
       "image": "assets/uploads/annonce_n3m_2026-2027.jpg"
     },
     {
-      "titre": "L'école de volley fait le plein au forum",
+      "titre": "Régional 1 masculin 2026/2027",
       "date": "2026-09-04",
       "categorie": "Club",
-      "extrait": "Belle affluence au forum des associations : l'école de volley affiche déjà complet sur plusieurs créneaux.",
-      "slug": "forum-associations"
+      "extrait": "Le calendrier des matchs de l'équipe de Régional 1 masculin est sortie !\nNotre équipe évoluera dans la poule Centre.\nSouhaitons leur bonne chance pour la saison qui se profile.",
+      "slug": "annonce_r1m_2026-2027",
+      "image": "assets/uploads/annonce_r1m_2026-2027.jpg"
     },
     {
-      "titre": "Trois M18 en sélection départementale",
+      "titre": "Régional 1 féminin",
       "date": "2026-09-01",
-      "categorie": "Jeunes",
-      "extrait": "Trois de nos joueuses M18 rejoignent la sélection départementale pour le stage de Toussaint.",
-      "slug": "selection-departementale"
+      "categorie": "Club",
+      "extrait": "Le calendrier des matchs de l'équipe de Régional 1 masculin est sortie !\nNotre équipe évoluera dans la poule Centre.\nSouhaitons leur bonne chance pour la saison qui se profile.",
+      "slug": "annonce_r1f_2026-2027",
+      "image": "assets/uploads/annonce_r1f_2026-2027.jpg"
     }
   ]
 }
