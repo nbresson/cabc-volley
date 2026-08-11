@@ -9,13 +9,13 @@
 <div id="header"></div>
 <section class="pad section">
   <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Calendrier &amp; résultats</span></div>
-  <h1 style="font-size:clamp(52px,9vw,88px)">Calendrier<br>&amp; résultats</h1>
+  <h1 style="font-size:clamp(38px,9vw,88px)">Calendrier<br>&amp; résultats</h1>
 </section>
 <section class="section" id="last-result" style="padding:0"></section>
 <section class="section split" style="--b:1.5fr">
   <div class="pad">
     <div class="eyebrow">— Prochaines journées</div>
-    <h2 style="font-size:52px;margin:14px 0 18px">Les matchs<br>à venir</h2>
+    <h2 style="font-size:clamp(32px,5vw,52px);margin:14px 0 18px">Les matchs<br>à venir</h2>
     <p class="muted" style="max-width:38ch">Entrée libre pour tous les matchs à domicile. La buvette ouvre une heure avant le coup d'envoi.</p>
     <a id="ffvb1" class="btn btn-secondary" style="margin-top:20px" target="_blank" rel="noopener">Calendrier complet FFVB ↗</a>
   </div>
@@ -42,7 +42,7 @@ window.__pageInit=async function(){
   const lr=document.getElementById("last-result");
   if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
     lr.innerHTML=`<div class="pad"><div class="eyebrow" style="margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
-      <div class="match-band" style="padding:0"><strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:36px;${home?'':'color:var(--taupe)'}">${a}</strong><span class="score">${last.score||"–"}</span><strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:36px;${home?'color:var(--taupe)':''}">${b}</strong></div></div>`;}
+      <div class="match-band" style="padding:0"><strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--taupe)'}">${a}</strong><span class="score">${last.score||"–"}</span><strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--taupe)':''}">${b}</strong></div></div>`;}
   document.getElementById("upcoming").innerHTML=(matches?.items||[]).filter(m=>m.statut==="a_venir").map(m=>{const d=new Date(m.date);return `
     <div style="display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:20px;padding:24px 36px;border-bottom:1px solid var(--lin)">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>

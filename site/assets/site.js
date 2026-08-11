@@ -33,7 +33,7 @@ function mdToHtml(md){if(!md)return"";
     if(b.startsWith("> "))return '<blockquote class="ds"><p>'+inl(b.slice(2).replace(/\n/g," "))+'</p></blockquote>';
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';
     if(/^[-*] /.test(b))return '<ul class="ds-list">'+b.split("\n").map(l=>'<li>'+inl(l.replace(/^[-*] +/,""))+'</li>').join("")+'</ul>';
-    return '<p class="muted" style="font-size:15px;line-height:1.8;margin-bottom:18px">'+inl(b)+'</p>';}).join("");}
+    return '<p class="muted" style="line-height:1.8;margin-bottom:18px">'+inl(b)+'</p>';}).join("");}
 // Formulaires (adhésion & contact) — envoi par Web3Forms, message de confirmation inline.
 function initForms(){
   document.querySelectorAll("form[data-web3forms]").forEach(form=>{
