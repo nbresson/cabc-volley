@@ -18,22 +18,42 @@
       "statut": "a_venir"
     },
     {
-      "date": "2026-09-21T20:30",
-      "domicile": false,
-      "adversaire": "Ussel VB",
-      "competition": "Prénationale F · J08",
-      "lieu": "Ussel",
+      "date": "2026-10-11T15:00",
+      "domicile": true,
+      "adversaire": "Vannes Volley 56",
+      "competition": "National 3 (3MD)",
+      "lieu": "Gymnase Rollinat",
       "statut": "a_venir"
     },
     {
-      "date": "2026-09-07T20:00",
+      "date": "2026-10-24T20:00",
+      "domicile": true,
+      "adversaire": "Club Municipal Floirac",
+      "competition": "National 3 (3MD)",
+      "lieu": "Gymnase Rollinat",
+      "statut": "a_venir",
+      "score": "",
+      "gagne": false
+    },
+    {
       "domicile": false,
-      "adversaire": "Limoges VB",
-      "competition": "Prénationale F · J06",
-      "lieu": "Beaublanc",
-      "statut": "termine",
-      "score": "1–3",
-      "gagne": true
+      "statut": "a_venir",
+      "gagne": false,
+      "une": false,
+      "date": "2026-11-01T16:00",
+      "adversaire": "US Bouguenais Volley-Ball",
+      "competition": "National 3 (3MD)",
+      "lieu": "Salle de la Gagnerie"
+    },
+    {
+      "domicile": true,
+      "statut": "a_venir",
+      "gagne": false,
+      "une": false,
+      "date": "2026-11-07T20:00",
+      "adversaire": "Sporting Club de L'Ouest",
+      "competition": "National 3 (3MD)",
+      "lieu": "Gymnase Rollinat"
     }
   ]
 }
