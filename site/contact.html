@@ -28,16 +28,36 @@
   <div>
     <div class="pad" style="border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.2em">Email</span><br><a id="mail" class="mono" style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;letter-spacing:.02em;border-bottom:2px solid var(--encre);color:var(--encre);display:inline-block;margin-top:8px">contact@cabc-volley.fr</a></div>
     <div class="pad" style="border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.2em">Téléphone (répondeur)</span><br><strong id="tel" style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;letter-spacing:.04em">05 55 00 00 00</strong></div>
-    <div class="dark pad" style="display:flex;flex-direction:column;gap:14px"><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">Réseaux</span><a style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase">Instagram ↗</a><a style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase">Facebook ↗</a><span style="font-size:13px;color:#c9c1ab">Résultats en story chaque week-end.</span></div>
+    <div class="dark pad" style="display:flex;flex-direction:column;gap:14px"><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">Réseaux</span><a href="https://www.instagram.com/cabcvolley/" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase">Instagram ↗</a><a href="https://www.facebook.com/cabvolley19/" target="_blank" rel="noopener" style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase">Facebook ↗</a><span style="font-size:13px;color:#c9c1ab">Résultats en story chaque week-end.</span></div>
   </div>
 </section>
-<section class="section">
-  <div class="pad" style="padding-bottom:28px"><div class="section-head"><h2>Nos gymnases</h2><span class="mono">3 salles · Brive-la-Gaillarde</span></div></div>
-  <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;border-top:2px solid var(--encre)">
-    <div style="border-right:2px solid var(--encre)"><div class="ph" style="aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;border-bottom:2px solid var(--encre)"><span class="mono" style="color:#8f8672">[ carte des 3 gymnases ]</span></div><div class="pad mono" style="padding:16px 24px">Cliquez sur un repère pour l'itinéraire</div></div>
-    <div style="border-right:2px solid var(--encre);display:flex;flex-direction:column"><div class="pad" style="padding:28px;flex:1"><span class="badge">Salle principale</span><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:27px;display:block;margin-top:12px;text-transform:uppercase;line-height:1">Gymnase Lavoisier</strong><span class="muted" style="display:block;font-size:13px;margin-top:8px">12 rue Lavoisier, 19100 Brive<br>Matchs seniors · école de volley</span><span class="mono" style="display:block;font-size:10px;margin-top:8px">Parking gratuit · Bus ligne 4</span></div></div>
-    <div style="display:flex;flex-direction:column"><div class="pad" style="padding:28px;border-bottom:1px solid var(--lin)"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;text-transform:uppercase;line-height:1">Gymnase Rollinat</strong><span class="muted" style="display:block;font-size:13px;margin-top:6px">Av. Maurice Rollinat · seniors M, loisir, jeunes</span></div><div class="pad" style="padding:28px;flex:1"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;text-transform:uppercase;line-height:1">Plan d'eau du Causse</strong><span class="muted" style="display:block;font-size:13px;margin-top:6px">Terrains de beach · mai à septembre</span></div></div>
-  </div>
+<section class="section pad">
+  <div class="section-head"><h2>Nos gymnases</h2><span class="mono" id="gym-sub"></span></div>
+  <div id="gymnases" class="cols-3"></div>
 </section>
 <div id="footer"></div><script src="assets/site.js"></script>
-<script>window.__pageInit=async function(){const s=await getJSON("content/settings.json");if(s){if(s.email){document.getElementById("mail").textContent=s.email;document.getElementById("mail").href="mailto:"+s.email;}if(s.telephone)document.getElementById("tel").textContent=s.telephone;}};</script></body></html>
+<script>
+window.__pageInit=async function(){
+  const [s,g]=await Promise.all([getJSON("content/settings.json"),getJSON("content/gymnases.json")]);
+  if(s){
+    if(s.email){const m=document.getElementById("mail");m.textContent=s.email;m.href="mailto:"+s.email;}
+    if(s.telephone)document.getElementById("tel").textContent=s.telephone;
+  }
+  const salles=g?.items||[];
+  document.getElementById("gym-sub").textContent=[salles.length+(salles.length>1?" salles":" salle"),g?.secteur].filter(Boolean).join(" · ");
+  document.getElementById("gymnases").innerHTML=salles.map(v=>`
+    <div class="card shadow">
+      <div class="ph" style="aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        ${v.photo?`<img src="${v.photo}" alt="${v.nom}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:#8f8672">[ photo à venir ]</span>'}
+        ${v.etiquette?`<span class="badge" style="position:absolute;top:12px;left:12px">${v.etiquette}</span>`:''}
+      </div>
+      <div class="body" style="padding:20px">
+        <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:25px;text-transform:uppercase;line-height:1">${v.nom}</strong>
+        ${v.adresse?`<span class="muted" style="font-size:13px">${v.adresse}</span>`:''}
+        ${v.usage?`<span class="muted" style="font-size:13px">${v.usage}</span>`:''}
+        ${v.acces?`<span class="mono" style="font-size:10px">${v.acces}</span>`:''}
+        ${v.itineraire?`<a href="${v.itineraire}" target="_blank" rel="noopener" class="mono" style="align-self:flex-start;margin-top:6px;font-size:11px;color:var(--encre);border-bottom:2px solid var(--encre)">Itinéraire ↗</a>`:''}
+      </div>
+    </div>`).join("")||'<p class="muted">Les salles seront renseignées prochainement.</p>';
+};
+</script></body></html>

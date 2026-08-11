@@ -1,0 +1,29 @@
+{
+  "secteur": "Brive-la-Gaillarde",
+  "items": [
+    {
+      "nom": "Gymnase Lavoisier",
+      "etiquette": "Salle principale",
+      "adresse": "12 rue Lavoisier, 19100 Brive",
+      "usage": "Matchs seniors · école de volley",
+      "acces": "Parking gratuit · Bus ligne 4",
+      "itineraire": ""
+    },
+    {
+      "nom": "Gymnase Rollinat",
+      "etiquette": "",
+      "adresse": "Av. Maurice Rollinat, 19100 Brive",
+      "usage": "Seniors M · loisir · jeunes",
+      "acces": "",
+      "itineraire": ""
+    },
+    {
+      "nom": "Plan d'eau du Causse",
+      "etiquette": "Beach",
+      "adresse": "Lissac-sur-Couze",
+      "usage": "Terrains de beach · mai à septembre",
+      "acces": "",
+      "itineraire": ""
+    }
+  ]
+}

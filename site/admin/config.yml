@@ -122,6 +122,28 @@ collections:
           - {name: email, label: Email, widget: string}
           - {name: telephone, label: Téléphone, widget: string}
 
+  - name: gymnases
+    label: Gymnases
+    files:
+      - name: gymnases
+        label: Nos gymnases
+        file: site/content/gymnases.json
+        fields:
+          - {name: secteur, label: Secteur affiché, widget: string, required: false, hint: "Affiché à côté du nombre de salles, ex. Brive-la-Gaillarde"}
+          - name: items
+            label: Salles
+            label_singular: Salle
+            widget: list
+            summary: "{{fields.nom}}"
+            fields:
+              - {name: nom, label: Nom, widget: string}
+              - {name: etiquette, label: Étiquette, widget: string, required: false, hint: "Pastille affichée sur la photo, ex. Salle principale ou Beach. Laisser vide pour ne rien afficher."}
+              - {name: adresse, label: Adresse, widget: string, required: false}
+              - {name: usage, label: Ce qui s'y passe, widget: string, required: false, hint: "Ex. Matchs seniors · école de volley"}
+              - {name: acces, label: Accès, widget: string, required: false, hint: "Ex. Parking gratuit · Bus ligne 4"}
+              - {name: itineraire, label: Lien itinéraire, widget: string, required: false, hint: "Ouvrez la salle dans Google Maps, puis collez ici l'adresse de la page. Le bouton « Itinéraire » n'apparaît que si ce champ est rempli."}
+              - {name: photo, label: Photo, widget: image, required: false}
+
   - name: legal
     label: Mentions légales
     files:
