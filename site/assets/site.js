@@ -17,7 +17,7 @@ function renderChrome(){
   if(footer)footer.innerHTML=`
     <footer class="site-footer section" style="border-bottom:none;border-top:2px solid var(--encre)">
       <span class="mono">© ${new Date().getFullYear()} C.A. BRIVE CORRÈZE VOLLEY</span>
-      <nav><a href="https://www.instagram.com/cabcvolley/">Instagram</a><a href="https://www.facebook.com/cabvolley19/">Facebook</a><a href="contact.html">Contact</a><a href="#">Mentions légales</a></nav>
+      <nav><a href="https://www.instagram.com/cabcvolley/" target="_blank">Instagram</a><a href="https://www.facebook.com/cabvolley19/" target="_blank">Facebook</a><a href="contact.html">Contact</a><a href="#">Mentions légales</a></nav>
     </footer>`;
 }
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
