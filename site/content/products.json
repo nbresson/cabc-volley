@@ -18,13 +18,15 @@
       "nom": "T-shirt « Fierté gaillarde »",
       "prix": "22 €",
       "detail": "XS → XXL",
-      "statut": "dispo"
+      "statut": "dispo",
+      "image": "assets/uploads/tshirt_exemple.webp"
     },
     {
       "nom": "Bonnet gaillard",
       "prix": "15 €",
       "detail": "Épuisé",
-      "statut": "epuise"
+      "statut": "epuise",
+      "image": "assets/uploads/bonnet_exemple.jpg"
     }
   ]
 }
