@@ -11,7 +11,8 @@
       "nom": "Écharpe 80 ans",
       "prix": "18 €",
       "detail": "Édition limitée",
-      "statut": "nouveau"
+      "statut": "nouveau",
+      "image": "assets/uploads/echarpe_exemple.jpg"
     },
     {
       "nom": "T-shirt « Fierté gaillarde »",
