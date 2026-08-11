@@ -1,10 +1,11 @@
 {
   "items": [
     {
-      "nom": "Maillot domicile 26/27",
-      "prix": "46 €",
+      "nom": "Polo Evo Homme",
+      "prix": "28 euros",
       "detail": "S → XXL",
-      "statut": "dispo"
+      "statut": "dispo",
+      "image": "assets/uploads/polo-evo-h-28-euros.png"
     },
     {
       "nom": "Écharpe 80 ans",
