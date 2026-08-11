@@ -35,7 +35,16 @@ collections:
               - {name: categorie, label: Catégorie, widget: select, options: ["Résumé","Club","Jeunes"]}
               - {name: extrait, label: Chapô / extrait, widget: text}
               - {name: une, label: À la une ?, widget: boolean, default: false, required: false}
-              - {name: image, label: Image, widget: image, required: false}
+              - {name: image, label: Image, widget: image, required: false, hint: "Photo : 1600 × 900 px (format paysage 16/9), moins de 400 Ko. Affiche carrée ou verticale : choisissez « Affiche » juste en dessous."}
+              - name: cadrage
+                label: Affichage de l'image
+                widget: select
+                required: false
+                default: remplir
+                hint: "« Photo » recadre l'image pour remplir le cadre. « Affiche » la montre en entier, sans jamais la couper."
+                options:
+                  - {label: "Photo — remplit le cadre, recadrée au centre", value: remplir}
+                  - {label: "Affiche — image entière, jamais coupée", value: entier}
               - {name: slug, label: Identifiant URL, widget: string, hint: "sans espaces, ex. victoire-limoges"}
               - {name: corps, label: Contenu de l'article, widget: markdown, required: false}
 
@@ -88,7 +97,7 @@ collections:
                   - {name: num, label: Numéro, widget: string}
                   - {name: nom, label: Nom, widget: string}
                   - {name: poste, label: Poste, widget: string}
-                  - {name: photo, label: Photo, widget: image, required: false}
+                  - {name: photo, label: Photo, widget: image, required: false, hint: "Portrait vertical : 900 × 1200 px (format 3/4), moins de 400 Ko. Cadrez le visage au centre."}
 
   - name: products
     label: Boutique
@@ -107,7 +116,7 @@ collections:
               - {name: prix, label: Prix, widget: string}
               - {name: detail, label: Détail (tailles…), widget: string}
               - {name: statut, label: Statut, widget: select, options: ["dispo","nouveau","epuise"], default: "dispo"}
-              - {name: image, label: Photo, widget: image, required: false}
+              - {name: image, label: Photo, widget: image, required: false, hint: "Carré : 1200 × 1200 px, moins de 400 Ko. Le produit doit être centré, il est recadré au centre."}
 
   - name: settings
     label: Réglages du club
@@ -142,7 +151,7 @@ collections:
               - {name: usage, label: Ce qui s'y passe, widget: string, required: false, hint: "Ex. Matchs seniors · école de volley"}
               - {name: acces, label: Accès, widget: string, required: false, hint: "Ex. Parking gratuit · Bus ligne 4"}
               - {name: itineraire, label: Lien itinéraire, widget: string, required: false, hint: "Ouvrez la salle dans Google Maps, puis collez ici l'adresse de la page. Le bouton « Itinéraire » n'apparaît que si ce champ est rempli."}
-              - {name: photo, label: Photo, widget: image, required: false}
+              - {name: photo, label: Photo, widget: image, required: false, hint: "Paysage : 1600 × 1000 px (format 16/10), moins de 400 Ko."}
 
   - name: legal
     label: Mentions légales

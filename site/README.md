@@ -60,6 +60,26 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 Les classements/calendriers détaillés restent sur la FFVB (bouton présent sur la page Calendrier) ;
 seuls les matchs mis en avant sont saisis à la main.
 
+### Formats d'images recommandés
+Chaque emplacement a un cadre de proportions fixes : l'image est recadrée **au centre**
+pour le remplir. En respectant ces tailles, aucun recadrage ne surprend.
+
+| Emplacement            | Proportions | Taille conseillée |
+|------------------------|-------------|-------------------|
+| Actualités (photo)     | 16/9        | 1600 × 900 px     |
+| Boutique               | 1/1         | 1200 × 1200 px    |
+| Portraits joueur·ses   | 3/4         | 900 × 1200 px     |
+| Gymnases               | 16/10       | 1600 × 1000 px    |
+
+Dans tous les cas : **JPEG** (ou WebP) et **moins de 400 Ko**. Le PNG est réservé aux
+logos et aux images à fond transparent — sur une photo il pèse cinq à dix fois plus
+lourd sans rien apporter. Chaque image reste définitivement dans l'historique GitHub.
+
+**Affiches carrées ou verticales** (annonce de match, visuel Instagram, flyer) : ne les
+redimensionnez pas. Dans le menu Actualités, réglez « Affichage de l'image » sur
+**Affiche** — l'image est alors montrée en entier, sans jamais être coupée, centrée sur
+le fond hachuré. Réservez « Photo » aux vraies photographies en paysage.
+
 ## 6 · Formulaires (adhésion & contact)
 Ils sont branchés sur **Web3Forms** (gratuit, 250 envois/mois, sans compte). Il ne
 manque que la clé d'accès :

@@ -21,6 +21,11 @@ function renderChrome(){
     </footer>`;
 }
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
+// Vignette : cadrage "entier" montre l'image complète sur le fond hachuré (affiches),
+// sinon elle remplit le cadre quitte à être recadrée (photos).
+function vignette(src,alt,cadrage){if(!src)return"";
+  const entier=cadrage==="entier";
+  return `<img src="${src}" alt="${alt||""}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${entier?"contain":"cover"}${entier?";padding:14px":""}">`;}
 // Markdown minimal (Decap) : paragraphes, ## titres, > citations, - listes, **gras**, [lien](url)
 function mdToHtml(md){if(!md)return"";
   const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" style="border-bottom:2px solid var(--encre)">$1</a>');

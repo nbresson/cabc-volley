@@ -18,7 +18,7 @@ window.__pageInit=async function(){
   const data=await getJSON("content/news.json");
   document.getElementById("news-list").innerHTML=(data?.items||[]).map(n=>`
     <a class="card link shadow" href="article.html?slug=${encodeURIComponent(n.slug||"")}">
-      <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${n.image?`<img src="${n.image}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:#8f8672">[ photo à venir ]</span>'}</div>
+      <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span class="mono" style="color:#8f8672">[ photo à venir ]</span>'}</div>
       <div class="body"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}</span>
       <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;line-height:1;text-transform:uppercase">${n.titre}</strong>
       <span class="muted" style="font-size:13px">${n.extrait}</span></div></a>`).join("")||'<p class="muted">Aucune actualité pour le moment.</p>';
