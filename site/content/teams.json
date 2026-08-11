@@ -24,6 +24,12 @@
           "num": "09",
           "nom": "Corentin VEYSSIERE",
           "poste": "R4"
+        },
+        {
+          "num": "E",
+          "nom": "Jean-Pierre DELOST",
+          "poste": "Entraîneur",
+          "photo": "assets/uploads/jp_delost-297x300.png"
         }
       ]
     },
