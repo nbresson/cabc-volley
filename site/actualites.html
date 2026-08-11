@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Actualités — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Actualités</span></div>
+  <h1 style="font-size:clamp(56px,9vw,88px)">La gazette<br>du filet</h1>
+</section>
+<section class="section pad"><div id="news-list" class="cols-3"></div></section>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const data=await getJSON("content/news.json");
+  document.getElementById("news-list").innerHTML=(data?.items||[]).map(n=>`
+    <a class="card link shadow" href="article.html?slug=${encodeURIComponent(n.slug||"")}">
+      <div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center"><span class="mono" style="color:#8f8672">[ ${n.image?"":"photo à venir"} ]</span></div>
+      <div class="body"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}</span>
+      <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;line-height:1;text-transform:uppercase">${n.titre}</strong>
+      <span class="muted" style="font-size:13px">${n.extrait}</span></div></a>`).join("")||'<p class="muted">Aucune actualité pour le moment.</p>';
+};
+</script></body></html>

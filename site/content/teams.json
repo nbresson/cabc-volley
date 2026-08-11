@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "nom": "Seniors féminines",
+      "categorie": "Prénationale",
+      "creneau": "Sam. 20h · Lavoisier",
+      "effectif": [
+        {
+          "num": "07",
+          "nom": "Marion Chassagne",
+          "poste": "Attaquante · Capitaine"
+        },
+        {
+          "num": "12",
+          "nom": "Léa Bordas",
+          "poste": "Passeuse"
+        },
+        {
+          "num": "04",
+          "nom": "Inès Mazaud",
+          "poste": "Centrale"
+        },
+        {
+          "num": "09",
+          "nom": "Camille Faurie",
+          "poste": "Libéro"
+        }
+      ]
+    },
+    {
+      "nom": "Seniors masculins",
+      "categorie": "Départementale",
+      "creneau": "Ven. 21h · Rollinat",
+      "effectif": []
+    },
+    {
+      "nom": "Jeunes",
+      "categorie": "M18 · M15 · M13",
+      "creneau": "Mer. & sam. après-midi",
+      "effectif": []
+    },
+    {
+      "nom": "École de volley",
+      "categorie": "M11 & baby",
+      "creneau": "Sam. 10h · Lavoisier",
+      "effectif": []
+    }
+  ]
+}

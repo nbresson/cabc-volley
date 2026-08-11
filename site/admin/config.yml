@@ -1,0 +1,123 @@
+# Configuration Decap CMS — CABC Volley
+backend:
+  name: github
+  repo: VOTRE-COMPTE/cabc-volley        # à remplacer par votre dépôt GitHub
+  branch: main
+  # Connecteur OAuth (worker Cloudflare) — voir decap-oauth-worker/README.md :
+  base_url: https://cabc-decap-oauth.VOTRE-COMPTE.workers.dev   # à remplacer par l'URL de votre worker
+  auth_endpoint: /auth
+
+# Décommenter en local pour tester sans GitHub :
+# local_backend: true
+
+media_folder: "site/assets/uploads"     # où sont stockées les images téléversées
+public_folder: "assets/uploads"
+site_url: https://www.cabc-volley.fr
+locale: fr
+
+collections:
+  - name: news
+    label: Actualités
+    label_singular: Article
+    files:
+      - name: news
+        label: Liste des actualités
+        file: site/content/news.json
+        fields:
+          - name: items
+            label: Articles
+            label_singular: Article
+            widget: list
+            summary: "{{fields.titre}}"
+            fields:
+              - {name: titre, label: Titre, widget: string}
+              - {name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false}
+              - {name: categorie, label: Catégorie, widget: select, options: ["Résumé","Club","Jeunes"]}
+              - {name: extrait, label: Chapô / extrait, widget: text}
+              - {name: une, label: À la une ?, widget: boolean, default: false, required: false}
+              - {name: image, label: Image, widget: image, required: false}
+              - {name: slug, label: Identifiant URL, widget: string, hint: "sans espaces, ex. victoire-limoges"}
+              - {name: corps, label: Contenu de l'article, widget: markdown, required: false}
+
+  - name: matches
+    label: Matchs & résultats
+    files:
+      - name: matches
+        label: Matchs
+        file: site/content/matches.json
+        fields:
+          - name: items
+            label: Matchs
+            label_singular: Match
+            widget: list
+            summary: "{{fields.adversaire}} — {{fields.date}}"
+            fields:
+              - {name: date, label: Date & heure, widget: datetime, format: "YYYY-MM-DDTHH:mm"}
+              - {name: adversaire, label: Adversaire, widget: string}
+              - {name: competition, label: Compétition, widget: string}
+              - {name: lieu, label: Lieu, widget: string}
+              - {name: domicile, label: À domicile ?, widget: boolean, default: true}
+              - {name: statut, label: Statut, widget: select, options: ["a_venir","termine"], default: "a_venir"}
+              - {name: score, label: Score (si terminé), widget: string, required: false}
+              - {name: gagne, label: Victoire ?, widget: boolean, default: false, required: false}
+              - {name: une, label: Match à la une ?, widget: boolean, default: false, required: false}
+
+  - name: teams
+    label: Équipes & effectifs
+    files:
+      - name: teams
+        label: Équipes
+        file: site/content/teams.json
+        fields:
+          - name: items
+            label: Équipes
+            label_singular: Équipe
+            widget: list
+            summary: "{{fields.nom}}"
+            fields:
+              - {name: nom, label: Nom de l'équipe, widget: string}
+              - {name: categorie, label: Catégorie / niveau, widget: string}
+              - {name: creneau, label: Créneau, widget: string}
+              - name: effectif
+                label: Effectif
+                label_singular: Joueur/joueuse
+                widget: list
+                required: false
+                summary: "{{fields.num}} — {{fields.nom}}"
+                fields:
+                  - {name: num, label: Numéro, widget: string}
+                  - {name: nom, label: Nom, widget: string}
+                  - {name: poste, label: Poste, widget: string}
+                  - {name: photo, label: Photo, widget: image, required: false}
+
+  - name: products
+    label: Boutique
+    files:
+      - name: products
+        label: Produits
+        file: site/content/products.json
+        fields:
+          - name: items
+            label: Produits
+            label_singular: Produit
+            widget: list
+            summary: "{{fields.nom}} — {{fields.prix}}"
+            fields:
+              - {name: nom, label: Nom, widget: string}
+              - {name: prix, label: Prix, widget: string}
+              - {name: detail, label: Détail (tailles…), widget: string}
+              - {name: statut, label: Statut, widget: select, options: ["dispo","nouveau","epuise"], default: "dispo"}
+              - {name: image, label: Photo, widget: image, required: false}
+
+  - name: settings
+    label: Réglages du club
+    files:
+      - name: settings
+        label: Coordonnées & liens
+        file: site/content/settings.json
+        fields:
+          - {name: club_nom, label: Nom du club, widget: string}
+          - {name: ffvb_classement, label: Lien classement FFVB, widget: string}
+          - {name: permanence, label: Permanence, widget: string}
+          - {name: email, label: Email, widget: string}
+          - {name: telephone, label: Téléphone, widget: string}

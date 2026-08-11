@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calendrier & résultats — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Calendrier &amp; résultats</span></div>
+  <h1 style="font-size:clamp(52px,9vw,88px)">Calendrier<br>&amp; résultats</h1>
+</section>
+<section class="section" id="last-result" style="padding:0"></section>
+<section class="section" style="display:grid;grid-template-columns:1fr 1.5fr">
+  <div class="pad" style="border-right:2px solid var(--encre)">
+    <div class="eyebrow">— Prochaines journées</div>
+    <h2 style="font-size:52px;margin:14px 0 18px">Les matchs<br>à venir</h2>
+    <p class="muted" style="max-width:38ch">Entrée libre pour tous les matchs à domicile. La buvette ouvre une heure avant le coup d'envoi.</p>
+    <a id="ffvb1" class="btn btn-secondary" style="margin-top:20px" target="_blank" rel="noopener">Calendrier complet FFVB ↗</a>
+  </div>
+  <div id="upcoming"></div>
+</section>
+<section class="section pad">
+  <div class="section-head"><h2>Classement Prénationale F</h2><a id="ffvb2" class="mono" style="border-bottom:2px solid var(--encre);color:var(--encre)" target="_blank" rel="noopener">Classement FFVB officiel →</a></div>
+  <table class="ds"><thead><tr><th>#</th><th>Équipe</th><th style="text-align:center">J</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:right">Pts</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Ussel VB</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">0</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">18</strong></td></tr>
+    <tr class="hl"><td>2</td><td>C.A. Brive Corrèze Volley</td><td style="text-align:center">6</td><td style="text-align:center">5</td><td style="text-align:center">1</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">15</strong></td></tr>
+    <tr><td>3</td><td>Limoges VB</td><td style="text-align:center">6</td><td style="text-align:center">4</td><td style="text-align:center">2</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">13</strong></td></tr>
+    <tr><td>4</td><td>Tulle VB</td><td style="text-align:center">6</td><td style="text-align:center">2</td><td style="text-align:center">4</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">8</strong></td></tr>
+    <tr><td>5</td><td>Ussac VB</td><td style="text-align:center">6</td><td style="text-align:center">1</td><td style="text-align:center">5</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">4</strong></td></tr>
+  </tbody></table>
+  <p class="mono" style="margin-top:14px;font-size:11px">Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.</p>
+</section>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const [matches,settings]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json")]);
+  if(settings?.ffvb_classement){document.getElementById("ffvb1").href=settings.ffvb_classement;document.getElementById("ffvb2").href=settings.ffvb_classement;}
+  const last=(matches?.items||[]).filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
+  const lr=document.getElementById("last-result");
+  if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
+    lr.innerHTML=`<div class="pad"><div class="eyebrow" style="margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
+      <div class="match-band" style="padding:0"><strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:36px;${home?'':'color:var(--taupe)'}">${a}</strong><span class="score">${last.score||"–"}</span><strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:36px;${home?'color:var(--taupe)':''}">${b}</strong></div></div>`;}
+  document.getElementById("upcoming").innerHTML=(matches?.items||[]).filter(m=>m.statut==="a_venir").map(m=>{const d=new Date(m.date);return `
+    <div style="display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:20px;padding:24px 36px;border-bottom:1px solid var(--lin)">
+      <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
+      <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
+      <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}).join("")||'<p class="muted pad">Aucun match programmé.</p>';
+};
+</script></body></html>

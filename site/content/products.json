@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "nom": "Maillot domicile 26/27",
+      "prix": "45 €",
+      "detail": "S → XXL",
+      "statut": "dispo"
+    },
+    {
+      "nom": "Écharpe 80 ans",
+      "prix": "18 €",
+      "detail": "Édition limitée",
+      "statut": "nouveau"
+    },
+    {
+      "nom": "T-shirt « Fierté gaillarde »",
+      "prix": "22 €",
+      "detail": "XS → XXL",
+      "statut": "dispo"
+    },
+    {
+      "nom": "Bonnet gaillard",
+      "prix": "15 €",
+      "detail": "Épuisé",
+      "statut": "epuise"
+    }
+  ]
+}

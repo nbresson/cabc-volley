@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "date": "2026-09-14T20:00",
+      "domicile": true,
+      "adversaire": "Tulle VB",
+      "competition": "Prénationale F · J07",
+      "lieu": "Gymnase Lavoisier",
+      "statut": "a_venir",
+      "une": true
+    },
+    {
+      "date": "2026-09-20T21:00",
+      "domicile": true,
+      "adversaire": "Ussac VB",
+      "competition": "Départementale M · J03",
+      "lieu": "Gymnase Rollinat",
+      "statut": "a_venir"
+    },
+    {
+      "date": "2026-09-21T20:30",
+      "domicile": false,
+      "adversaire": "Ussel VB",
+      "competition": "Prénationale F · J08",
+      "lieu": "Ussel",
+      "statut": "a_venir"
+    },
+    {
+      "date": "2026-09-07T20:00",
+      "domicile": false,
+      "adversaire": "Limoges VB",
+      "competition": "Prénationale F · J06",
+      "lieu": "Beaublanc",
+      "statut": "termine",
+      "score": "1–3",
+      "gagne": true
+    }
+  ]
+}

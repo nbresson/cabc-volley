@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C.A. Brive Corrèze Volley — Accueil</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<section class="hero section">
+  <div class="lines"></div>
+  <div class="eyebrow">Brive-la-Gaillarde · Corrèze</div>
+  <h1>La fierté<br>gaillarde</h1>
+  <div class="sep" style="margin:14px 0">Corrèze · Volley · Passion</div>
+  <p class="muted" style="max-width:56ch;margin:0 auto">Quatre-vingts ans de volley au cœur de la Gaillarde. Des équipes seniors aux plus jeunes pousses, le CAB fait vivre le ballon au filet, saison après saison.</p>
+  <div class="row" style="justify-content:center;margin-top:24px">
+    <a href="equipes.html" class="btn btn-primary">Nos équipes</a>
+    <a href="club.html" class="btn btn-secondary">L'histoire du club</a>
+  </div>
+</section>
+
+<section class="section dark" id="next-match" style="padding:0"></section>
+
+<section class="section pad">
+  <div class="section-head"><h2>Les prochaines journées</h2><a href="calendrier.html" class="mono" style="border-bottom:2px solid var(--encre);color:var(--encre)">Tout le calendrier →</a></div>
+  <div id="upcoming"></div>
+</section>
+
+<section class="section pad">
+  <div class="section-head"><h2>La gazette du filet</h2><a href="actualites.html" class="mono" style="border-bottom:2px solid var(--encre);color:var(--encre)">Toutes les actus →</a></div>
+  <div id="news" class="cols-3"></div>
+</section>
+
+<section class="section">
+  <div class="pad" style="padding-bottom:28px"><h2>Nos équipes</h2></div>
+  <div id="teams" class="grid" style="grid-template-columns:repeat(4,1fr);border-top:2px solid var(--encre)"></div>
+</section>
+
+<section class="section dark hero" style="text-align:center">
+  <div class="lines"></div>
+  <img src="assets/logo.png" alt="" style="height:76px;margin:0 auto;filter:invert(1) brightness(.93)">
+  <h2 style="font-size:clamp(40px,7vw,64px);margin-top:14px">Rejoins la maison</h2>
+  <p style="color:#c9c1ab;max-width:48ch;margin:10px auto 0">Débutant·e ou confirmé·e, de 6 à 66 ans : la première séance d'essai est gratuite.</p>
+  <div class="row" style="justify-content:center;margin-top:22px">
+    <a href="adhesion.html" class="btn btn-inverse">S'inscrire pour 2026–27</a>
+    <a href="contact.html" class="btn btn-outline-light">Venir essayer</a>
+  </div>
+</section>
+<div id="footer"></div><script src="assets/site.js"></script></body></html>
+<script>
+window.__pageInit=async function(){
+  const [matches,newsData,teamsData,settings]=await Promise.all([
+    getJSON("content/matches.json"),getJSON("content/news.json"),getJSON("content/teams.json"),getJSON("content/settings.json")]);
+  // Prochain match à la une
+  const nm=(matches?.items||[]).find(m=>m.une&&m.statut==="a_venir")||(matches?.items||[]).find(m=>m.statut==="a_venir");
+  const el=document.getElementById("next-match");
+  if(nm&&el){
+    const d=new Date(nm.date);
+    const diff=Math.max(0,d-new Date());
+    const j=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),mn=Math.floor(diff%36e5/6e4);
+    el.innerHTML=`<div class="pad" style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center">
+      <div>
+        <div class="eyebrow" style="color:#a89e87">Prochain match ${nm.domicile?"à domicile":"à l'extérieur"}</div>
+        <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${nm.adversaire}</h2>
+        <div class="mono" style="color:#a89e87">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})} · ${nm.lieu}</div>
+      </div>
+      <div class="countdown"><div><strong>${String(j).padStart(2,"0")}</strong><span>JOURS</span></div><div><strong>${String(h).padStart(2,"0")}</strong><span>HEURES</span></div><div><strong>${String(mn).padStart(2,"0")}</strong><span>MIN</span></div></div>
+    </div>`;
+  }
+  // Matchs à venir
+  const up=document.getElementById("upcoming");
+  const list=(matches?.items||[]).filter(m=>m.statut==="a_venir").slice(0,4);
+  up.innerHTML=list.map(m=>{const d=new Date(m.date);return `
+    <div style="display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:20px;padding:22px 0;border-bottom:1px solid var(--lin)">
+      <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
+      <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
+      <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span>
+    </div>`;}).join("")||'<p class="muted">Aucun match programmé pour le moment.</p>';
+  // Actus
+  document.getElementById("news").innerHTML=(newsData?.items||[]).slice(0,3).map(n=>`
+    <a class="card link shadow" href="actualites.html">
+      <div class="ph"><span>[ ${n.image?"":"photo à venir"} ]</span></div>
+      <div class="body"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}</span>
+      <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;line-height:1;text-transform:uppercase">${n.titre}</strong>
+      <span class="muted" style="font-size:13px">${n.extrait}</span></div>
+    </a>`).join("");
+  // Équipes
+  document.getElementById("teams").innerHTML=(teamsData?.items||[]).map((t,i)=>`
+    <a class="card link" href="equipes.html" style="border:none;border-right:${i<3?'2px solid var(--encre)':'none'};padding:26px 24px;gap:8px">
+      <span class="mono" style="font-size:10px;letter-spacing:.18em;opacity:.6">${t.categorie}</span>
+      <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:27px;line-height:1;text-transform:uppercase">${t.nom}</strong>
+      <span class="muted" style="font-size:13px">${t.creneau}</span>
+    </a>`).join("");
+};
+</script>

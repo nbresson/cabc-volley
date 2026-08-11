@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Adhérer — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<section class="section dark hero" style="text-align:left;padding:64px 48px">
+  <div class="lines"></div>
+  <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center">
+    <div>
+      <div class="eyebrow" style="color:#a89e87">— Saison 2026–2027</div>
+      <h1 style="font-size:clamp(56px,9vw,84px);margin:14px 0">Rejoins<br>la maison</h1>
+      <p style="color:#c9c1ab;max-width:50ch">Débutant·e ou confirmé·e, de 6 à 66 ans : il y a une place pour toi au CAB. La première séance d'essai est gratuite — viens avec des baskets, on s'occupe du reste.</p>
+      <p class="mono" style="color:#a89e87;margin-top:14px" id="perm">Permanences le mercredi 18h–20h · Gymnase Lavoisier</p>
+    </div>
+    <div class="cols-2" style="gap:14px">
+      <div style="border:2px solid var(--creme);padding:22px;text-align:center"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;display:block">90 €</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:#a89e87">École de volley</span></div>
+      <div style="border:2px solid var(--creme);padding:22px;text-align:center"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;display:block">120 €</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:#a89e87">Jeunes / Loisir</span></div>
+      <div style="border:2px solid var(--creme);padding:22px;text-align:center;grid-column:span 2"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;display:block">160 €</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:#a89e87">Seniors compétition · maillot inclus</span></div>
+    </div>
+  </div>
+</section>
+<section class="section pad">
+  <h2>Demande de licence</h2>
+  <p class="muted" style="margin:12px 0 24px;max-width:60ch">Remplis ce formulaire — on te répond sous 48 h. Le règlement se fait à la permanence (Pass'Sport accepté, paiement en trois fois possible).</p>
+  <form class="cols-2" style="gap:22px;align-items:start" data-web3forms>
+    <input type="hidden" name="access_key" value="VOTRE-CLE-WEB3FORMS">
+    <input type="hidden" name="subject" value="Nouvelle demande de licence — site CABC Volley">
+    <input type="hidden" name="from_name" value="Site CABC Volley">
+    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+    <label class="field"><span>Prénom &amp; nom *</span><input type="text" name="nom" required></label>
+    <label class="field"><span>Email *</span><input type="email" name="email" required></label>
+    <label class="field"><span>Catégorie souhaitée *</span><select name="categorie"><option>Seniors — compétition</option><option>Jeunes — M11 à M18</option><option>École de volley</option><option>Loisir</option><option>Beach</option></select></label>
+    <label class="field"><span>Année de naissance *</span><input type="text" name="annee_naissance" placeholder="2001"></label>
+    <label class="field" style="grid-column:span 2"><span>Un mot sur toi (facultatif)</span><textarea rows="3" name="message" placeholder="Poste préféré, expérience, disponibilités…"></textarea></label>
+    <div style="grid-column:span 2"><button class="btn btn-primary" type="submit">Envoyer ma demande</button><p class="ok mono" style="display:none;margin-top:14px;color:var(--encre)">✓ Demande envoyée — on te répond sous 48 h.</p><p class="ko mono" style="display:none;margin-top:14px;color:var(--erreur)">✗ L'envoi a échoué — réessaie, ou écris-nous directement (voir page Contact).</p></div>
+  </form>
+</section>
+<section class="section pad">
+  <h2 style="margin-bottom:24px">Avant de te lancer</h2>
+  <details class="acc" open><summary>Combien coûte la licence ?</summary><div class="acc-body muted">De 90 € (école de volley) à 160 € (seniors compétition), maillot d'entraînement compris. Pass'Sport accepté, paiement en trois fois possible.</div></details><details class="acc"><summary>Quels documents fournir ?</summary><div class="acc-body muted">Le formulaire de licence FFVB signé, un certificat médical (ou attestation santé pour un renouvellement) et une photo d'identité.</div></details><details class="acc"><summary>Peut-on essayer avant de s'inscrire ?</summary><div class="acc-body muted">Oui — la première séance est gratuite, sans engagement. Viens simplement en tenue de sport à l'horaire de ta catégorie.</div></details><details class="acc"><summary>Quels sont les horaires d'entraînement ?</summary><div class="acc-body muted">Consulte la page Calendrier ou passe à la permanence du mercredi — les créneaux varient selon la catégorie et le gymnase.</div></details>
+</section>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>window.__pageInit=async function(){const s=await getJSON("content/settings.json");if(s?.permanence)document.getElementById("perm").textContent="Permanences : "+s.permanence;};</script></body></html>

@@ -1,0 +1,10 @@
+# Déploiement en ligne de commande (facultatif — le copier-coller dans le
+# tableau de bord Cloudflare fonctionne aussi, voir README.md) :
+#   npx wrangler deploy
+#   npx wrangler secret put GITHUB_CLIENT_SECRET
+name = "cabc-decap-oauth"
+main = "worker.js"
+compatibility_date = "2026-08-01"
+
+[vars]
+# GITHUB_CLIENT_ID = "à renseigner dans le tableau de bord ou ici"

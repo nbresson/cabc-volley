@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Article — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<article class="section" style="max-width:820px;margin:0 auto;padding:64px 48px" id="article"></article>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+function mdToHtml(md){if(!md)return"";return md.split(/\n\n+/).map(b=>{b=b.trim();
+  if(b.startsWith("> "))return '<blockquote class="ds"><p>'+b.slice(2).replace(/\n/g," ")+'</p></blockquote>';
+  if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+b.slice(3)+'</h2>';
+  return '<p class="muted" style="font-size:15px;line-height:1.8;margin-bottom:18px">'+b.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")+'</p>';}).join("");}
+window.__pageInit=async function(){
+  const slug=new URLSearchParams(location.search).get("slug");
+  const data=await getJSON("content/news.json");
+  const n=(data?.items||[]).find(x=>x.slug===slug)||(data?.items||[])[0];
+  const el=document.getElementById("article");
+  if(!n){el.innerHTML='<p class="muted">Article introuvable. <a href="actualites.html">Retour aux actualités</a></p>';return;}
+  document.title=n.titre+" — C.A. Brive Corrèze Volley";
+  el.innerHTML=`
+    <div class="crumb"><a href="actualites.html">Actualités</a><span>/</span><span style="color:var(--encre)">${n.categorie}</span></div>
+    <h1 style="font-size:clamp(40px,7vw,56px);margin:14px 0">${n.titre}</h1>
+    <div class="row" style="align-items:center;margin-bottom:22px;padding-bottom:22px;border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)}</span><span class="badge">${n.categorie}</span></div>
+    ${n.image?'':'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-bottom:28px"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div>'}
+    <p style="font-size:17px;line-height:1.75;font-weight:500;margin-bottom:20px">${n.extrait}</p>
+    ${mdToHtml(n.corps)}
+    <div class="row" style="justify-content:space-between;margin-top:40px;padding-top:24px;border-top:2px solid var(--encre)"><a href="actualites.html" class="btn btn-secondary">← Toutes les actus</a><a href="calendrier.html" class="btn btn-primary">Voir le prochain match</a></div>`;
+};
+</script></body></html>

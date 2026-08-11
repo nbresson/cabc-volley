@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Équipes — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Équipes</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(56px,9vw,88px)">Nos équipes</h1><span class="mono" style="align-self:flex-end">Saison 2026–2027 · 220 licencié·es</span></div>
+</section>
+<section class="section pad"><div id="teams-detail"></div></section>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const data=await getJSON("content/teams.json");
+  const wrap=document.getElementById("teams-detail");
+  wrap.innerHTML=(data?.items||[]).map(t=>{
+    const eff=(t.effectif||[]);
+    const cards=eff.length?('<div class="cols-4" style="margin-top:24px">'+eff.map(p=>`
+      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative"><span class="mono" style="color:#8f8672">[ portrait ]</span><strong style="position:absolute;top:8px;right:14px;font-family:'Barlow Condensed';font-weight:900;font-size:40px">${p.num||""}</strong></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase;line-height:1">${p.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">${p.poste||""}</span></div></div>`).join("")+'</div>')
+      :'<p class="muted" style="margin-top:16px">Effectif à venir — le bureau le complétera prochainement.</p>';
+    return `<div style="margin-bottom:56px"><div class="section-head" style="margin-bottom:12px"><h2>${t.nom}</h2><span class="mono">${t.categorie} · ${t.creneau}</span></div>${cards}</div>`;
+  }).join("");
+};
+</script></body></html>

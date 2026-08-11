@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "titre": "Victoire 3–1 à Limoges : la reprise rêvée",
+      "date": "2026-09-08",
+      "categorie": "Résumé",
+      "extrait": "Portées par le service de Marion Chassagne et une réception retrouvée, les Brivistes ramènent trois points de Beaublanc.",
+      "une": true,
+      "slug": "victoire-limoges"
+    },
+    {
+      "titre": "L'école de volley fait le plein au forum",
+      "date": "2026-09-04",
+      "categorie": "Club",
+      "extrait": "Belle affluence au forum des associations : l'école de volley affiche déjà complet sur plusieurs créneaux.",
+      "slug": "forum-associations"
+    },
+    {
+      "titre": "Trois M18 en sélection départementale",
+      "date": "2026-09-01",
+      "categorie": "Jeunes",
+      "extrait": "Trois de nos joueuses M18 rejoignent la sélection départementale pour le stage de Toussaint.",
+      "slug": "selection-departementale"
+    }
+  ]
+}
