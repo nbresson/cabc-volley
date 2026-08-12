@@ -39,11 +39,29 @@ window.__pageInit=async function(){
       :`<div class="card shadow">${inner}</div>`;
   };
 
+  // ORDRE ne fixe que l'ordre d'affichage des groupes connus : ce n'est
+  // plus une liste blanche, un groupe non vide absent de cette liste
+  // obtient quand meme sa propre section.
   const ORDRE=["Séniors","Jeunes","Formation"];
   const groupes=new Map(ORDRE.map(g=>[g,[]]));
-  groupes.set("Autres",[]);
-  // Un groupe vide ou inconnu ne doit jamais faire disparaitre une equipe.
-  items.forEach(t=>groupes.get(groupes.has(t.groupe)?t.groupe:"Autres").push(t));
+  const autres=[];
+  // Un groupe vide, absent ou fait uniquement d'espaces rejoint "Autres",
+  // affiche en dernier ; un groupe non vide et inconnu cree sa propre
+  // section, dans l'ordre de premiere apparition. Aucune equipe n'est
+  // jamais perdue, quelle que soit la valeur de groupe.
+  items.forEach(t=>{
+    const nom=typeof t.groupe==="string"?t.groupe.trim():"";
+    if(!nom){autres.push(t);return;}
+    if(!groupes.has(nom))groupes.set(nom,[]);
+    groupes.get(nom).push(t);
+  });
+  // "Autres" doit toujours arriver en dernier, meme si une equipe a pour
+  // groupe le mot litteral "Autres" : on fusionne plutot que d'ecraser.
+  if(groupes.has("Autres")||autres.length){
+    const liste=[...(groupes.get("Autres")||[]),...autres];
+    groupes.delete("Autres");
+    groupes.set("Autres",liste);
+  }
 
   wrap.innerHTML=[...groupes].filter(([,l])=>l.length).map(([nom,liste])=>`
     <div style="margin-bottom:56px">

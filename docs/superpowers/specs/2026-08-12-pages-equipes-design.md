@@ -171,10 +171,14 @@ La page conserve son en-tête actuel (fil d'ariane, titre, mention de saison) et
 remplace le déversement des effectifs par une grille de cartes, groupées par
 `groupe` avec un sous-titre par groupe.
 
-Les groupes sont affichés dans l'ordre Séniors, Jeunes, Formation. Une équipe
-dont le `groupe` est vide ou inconnu est rattachée à un groupe « Autres » placé
-en dernier : une saisie incomplète dans Decap ne doit jamais faire disparaître
-une équipe de l'index. Un groupe sans équipe n'est pas affiché.
+Les groupes Séniors, Jeunes, Formation sont affichés en premier, dans cet ordre.
+Une équipe dont le `groupe` est renseigné mais ne correspond à aucun de ces
+trois obtient sa propre section, intitulée avec la valeur du `groupe`, affichée
+après eux (dans l'ordre de première apparition dans `teams.json`). Une équipe
+dont le `groupe` est vide, absent ou ne contient que des espaces est rattachée
+à un groupe « Autres » placé en dernier : une saisie incomplète dans Decap ne
+doit jamais faire disparaître une équipe de l'index. Un groupe sans équipe
+n'est pas affiché.
 
 Chaque carte contient :
 

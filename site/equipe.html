@@ -43,11 +43,11 @@ window.__pageInit=async function(){
         <span class="${m.gagne?'badge':'badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;};
 
   const blocAvenir=avenir.length?`<section class="section">
-    <div class="pad"><h2 class="eyebrow">— Prochains matchs</h2></div>
+    <div class="pad"><h2 class="eyebrow" style="font-weight:400;line-height:1.65">— Prochains matchs</h2></div>
     <div class="match-list">${avenir.map(matchRow).join("")}</div></section>`:"";
 
   const blocResultats=finis.length?`<section class="section">
-    <div class="pad"><h2 class="eyebrow">— Derniers résultats</h2></div>
+    <div class="pad"><h2 class="eyebrow" style="font-weight:400;line-height:1.65">— Derniers résultats</h2></div>
     <div class="match-list">${finis.map(ligneResultat).join("")}</div></section>`:"";
 
   // Le lien propre a l equipe prime. Le lien general des reglages ne sert de

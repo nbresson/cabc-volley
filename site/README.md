@@ -35,6 +35,15 @@ En ligne sur `https://cabc-volley.nkobrs21.workers.dev`.
 - **À la main**, si une compilation échoue : `npx wrangler deploy` depuis la racine
   (`npx wrangler login` la première fois).
 
+> La commande de compilation du worker (Settings → Builds → Build command) doit être
+> `npm run check && npx wrangler deploy`, et pas seulement `npx wrangler deploy`. Toute
+> publication depuis Decap crée un commit, donc c'est le seul moment où `npm run check`
+> peut réellement protéger le site : si un fichier de contenu est invalide (identifiant
+> d'équipe en double, par exemple), la compilation s'arrête avant de publier quoi que ce
+> soit, et l'ancienne version reste en ligne à la place d'une page cassée.
+
+<!-- -->
+
 > La version de wrangler est **figée dans `package.json`** (et `package-lock.json`).
 > Ce n'est pas une précaution théorique : la version 4.121.0 est sortie avec une
 > dépendance introuvable, ce qui a fait échouer les compilations jusqu'à ce que la
