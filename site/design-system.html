@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Design system — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* Charpente de la galerie uniquement. Prefixe gal- obligatoire : ds- est deja
+   pris par .ds (tableaux, citations) et .ds-list. Aucune regle ici ne doit
+   redefinir une classe du design system. */
+.gal-page{display:grid;grid-template-columns:220px 1fr;align-items:start}
+.gal-nav{position:sticky;top:0;max-height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:26px 18px;border-right:2px solid var(--encre)}
+.gal-nav a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe)}
+.gal-nav a:hover{color:var(--encre);opacity:1}
+.gal-main{min-width:0}
+.gal-head{padding:34px 28px;border-bottom:2px solid var(--encre)}
+.gal-section{padding:32px 28px;border-bottom:2px solid var(--encre)}
+.gal-item{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:22px 0;border-top:1px solid var(--lin);align-items:start}
+.gal-item:first-of-type{border-top:none}
+.gal-meta{min-width:0}
+.gal-name{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.1em;color:var(--encre)}
+.gal-note{font-size:13px;color:#4a4438;margin-top:6px}
+.gal-demo{margin-top:15px}
+.gal-code{margin:0;background:var(--encre);color:var(--creme);padding:14px 16px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.gal-copy{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:none;color:var(--encre);border:1px solid var(--encre);padding:5px 11px;cursor:pointer;margin-top:9px}
+.gal-copy:hover{background:var(--encre);color:var(--creme)}
+.gal-swatch{height:66px;border:2px solid var(--encre)}
+@media(max-width:880px){
+  .gal-page{grid-template-columns:1fr}
+  .gal-nav{position:static;max-height:none;flex-direction:row;flex-wrap:wrap;gap:10px 16px;padding:16px 22px;border-right:none;border-bottom:2px solid var(--encre)}
+  .gal-item{grid-template-columns:1fr;gap:14px}
+  .gal-head,.gal-section{padding:24px 22px}
+}
+</style>
+</head><body>
+<div class="gal-page">
+  <nav class="gal-nav" id="gal-nav"></nav>
+  <main class="gal-main">
+    <header class="gal-head">
+      <h1 style="font-size:clamp(32px,6vw,64px)">Design system</h1>
+      <p class="gal-note" style="max-width:60ch">Cette page n'est liée depuis aucun menu du site : elle s'atteint en saisissant son adresse. Elle charge la vraie feuille de style, donc ce qu'on y voit est ce que le site produit. Un contrôle automatisé vérifie qu'aucune classe de <code>style.css</code> n'y manque.</p>
+    </header>
+  </main>
+</div>
+<script>
+// Chaque composant est ecrit une seule fois, dans un <template>. Le rendu et le
+// bloc de code sortent du meme markup : le code affiche EST le code rendu.
+document.querySelectorAll(".gal-item").forEach(item=>{
+  const tpl=item.querySelector("template");
+  if(!tpl)return;
+  const markup=tpl.innerHTML.trim();
+  const demo=item.querySelector(".gal-demo");
+  if(demo)demo.innerHTML=markup;
+  const code=item.querySelector(".gal-code");
+  if(code)code.textContent=markup;
+  const btn=item.querySelector(".gal-copy");
+  if(!btn)return;
+  // Hors contexte securise, l API presse-papier n existe pas : on retire le
+  // bouton plutot que d offrir une action qui echouera.
+  if(!navigator.clipboard){btn.remove();return;}
+  btn.addEventListener("click",async()=>{
+    await navigator.clipboard.writeText(markup);
+    const avant=btn.textContent;btn.textContent="Copié";
+    setTimeout(()=>{btn.textContent=avant},1200);
+  });
+});
+// Le sommaire est deduit des sections : une section ajoutee y apparait seule.
+document.getElementById("gal-nav").innerHTML=
+  [...document.querySelectorAll("section.gal-section")]
+    .map(s=>`<a href="#${s.id}">${s.querySelector("h2").textContent}</a>`).join("");
+</script>
+</body></html>
