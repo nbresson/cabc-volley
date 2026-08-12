@@ -43,6 +43,6 @@ window.__pageInit=async function(){
   if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
     lr.innerHTML=`<div class="pad"><div class="eyebrow" style="margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
       <div class="match-band" style="padding:0"><strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--taupe)'}">${a}</strong><span class="score">${last.score||"–"}</span><strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--taupe)':''}">${b}</strong></div></div>`;}
-  document.getElementById("upcoming").innerHTML=(matches?.items||[]).filter(m=>m.statut==="a_venir").map(matchRow).join("")||'<p class="muted pad">Aucun match programmé.</p>';
+  document.getElementById("upcoming").innerHTML=(matches?.items||[]).filter(m=>m.statut==="a_venir").map(matchRow).join("")||'<p class="vide muted pad">Aucun match programmé pour le moment.</p>';
 };
 </script></body></html>
