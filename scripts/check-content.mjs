@@ -17,6 +17,7 @@ for (const e of equipes) {
   }
   if (!/^[a-z0-9-]+$/.test(e.slug)) {
     erreurs.push(`Équipe « ${e.nom} » : slug « ${e.slug} » doit être en minuscules, chiffres et tirets`);
+    continue;
   }
   if (slugs.has(e.slug)) {
     erreurs.push(`Slug « ${e.slug} » utilisé par deux équipes`);

@@ -86,7 +86,7 @@ window.__pageInit=async function(){
     </a>`).join("");
   // Équipes
   document.getElementById("teams").innerHTML=(teamsData?.items||[]).map(t=>`
-    <a class="card link" href="equipes.html" style="padding:26px 24px;gap:8px">
+    <a class="card link" ${t.slug?`href="${teamUrl(t.slug)}"`:'href="equipes.html"'} style="padding:26px 24px;gap:8px">
       <span class="mono" style="font-size:10px;letter-spacing:.18em;opacity:.6">${t.categorie}</span>
       <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:27px;line-height:1;text-transform:uppercase">${t.nom}</strong>
       <span class="muted" style="font-size:13px">${t.creneau}</span>

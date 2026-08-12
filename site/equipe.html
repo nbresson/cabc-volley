@@ -34,20 +34,20 @@ window.__pageInit=async function(){
 
   // Ligne de resultat : score et badge sont groupes dans une seule cellule,
   // .match-row n acceptant que 3 enfants directs.
-  const ligneResultat=m=>{const d=new Date(m.date);return `
+  const ligneResultat=m=>{return `
     <div class="match-row">
-      <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}</span>
+      <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${fmtDate(m.date)}</span>
       <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
-      <span class="row" style="align-items:center;gap:12px;flex-wrap:nowrap">
+      <span class="row" style="align-items:center;gap:12px">
         <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px">${m.score||"–"}</strong>
         <span class="${m.gagne?'badge':'badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;};
 
   const blocAvenir=avenir.length?`<section class="section">
-    <div class="pad"><div class="eyebrow">— Prochains matchs</div></div>
+    <div class="pad"><h2 class="eyebrow">— Prochains matchs</h2></div>
     <div class="match-list">${avenir.map(matchRow).join("")}</div></section>`:"";
 
   const blocResultats=finis.length?`<section class="section">
-    <div class="pad"><div class="eyebrow">— Derniers résultats</div></div>
+    <div class="pad"><h2 class="eyebrow">— Derniers résultats</h2></div>
     <div class="match-list">${finis.map(ligneResultat).join("")}</div></section>`:"";
 
   // Le lien propre a l equipe prime. Le lien general des reglages ne sert de
@@ -58,7 +58,7 @@ window.__pageInit=async function(){
     <a class="btn btn-secondary" href="${lienClassement}" target="_blank" rel="noopener">Classement FFVB ↗</a></section>`:"";
 
   // Bloc des equipes sans calendrier : masque tant que le bureau n a pas
-  // rempli au least un titre dans Decap.
+  // rempli au moins un titre dans Decap.
   const i=t.infos||{};
   const blocInfos=i.titre?`<section class="pad section">
     <div class="section-head" style="margin-bottom:14px"><h2>${i.titre}</h2></div>
