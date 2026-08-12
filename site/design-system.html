@@ -82,7 +82,7 @@ border: 2px solid var(--encre);</pre>
           <p class="gal-note">Trois familles, chacune avec un rôle exclusif. Les mélanger est le moyen le plus rapide de faire dérailler la charte.</p>
           <div style="margin-top:16px;display:flex;flex-direction:column;gap:18px">
             <div><h3 style="font-size:clamp(34px,5vw,52px)">Barlow Condensed 900</h3><div class="gal-note">Titres, scores, chiffres. Toujours en capitales, interligne 0.92. C'est la voix qui crie.</div></div>
-            <div><strong style="font-family:'Barlow Condensed';font-weight:700;font-size:21px;text-transform:uppercase;letter-spacing:.04em">Barlow Condensed 700</strong><div class="gal-note">Boutons, navigation, résumés d'accordéon.</div></div>
+            <div><strong class="display-s" style="font-weight:700;text-transform:uppercase;letter-spacing:.04em">Barlow Condensed 700</strong><div class="gal-note">Boutons, navigation, résumés d'accordéon.</div></div>
             <div><span style="font-size:15px">Archivo — le texte courant respire à 15 px, interligne 1.65. Il passe à 16 px sous 880 px.</span><div class="gal-note">Corps de texte, champs de formulaire.</div></div>
             <div><span class="mono">DM Mono — les surtitres chuchotent</span><div class="gal-note">Surtitres, badges, dates, métadonnées. Toujours espacé et en capitales.</div></div>
           </div>
@@ -125,6 +125,12 @@ body        → Archivo 15px / 16px
     <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
     <template><div class="eyebrow">— Prochaines journées</div></template>
   </article>
+
+      <article class="gal-item" data-classes="display-s display-m display-l display-xl display-2xl">
+        <div class="gal-meta"><div class="gal-name">.display-s &middot; -m &middot; -l &middot; -xl &middot; -2xl</div><p class="gal-note">Barlow Condensed sur autre chose qu'un titre : score, chiffre, nom, prix. Ces classes ne portent <strong>que la police et la taille</strong> — la graisse, les capitales et l'interlignage restent des choix explicites, parce qu'ils varient d'un usage à l'autre. Une taille fluide se déclare toujours en inline.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div style="display:flex;flex-direction:column;gap:10px"><span class="display-s">22 px &middot; .display-s</span><span class="display-m">26 px &middot; .display-m</span><span class="display-l">34 px &middot; .display-l</span><span class="display-xl">40 px &middot; .display-xl</span><span class="display-2xl">44 px &middot; .display-2xl</span></div></template>
+      </article>
 
   <article class="gal-item" data-classes="muted">
     <div class="gal-meta"><div class="gal-name">.muted</div><p class="gal-note">Texte secondaire. Ce n'est pas du gris : c'est l'encre éclaircie, pour rester lisible sur le crème.</p><div class="gal-demo"></div></div>
@@ -204,13 +210,13 @@ body        → Archivo 15px / 16px
       <article class="gal-item" data-classes="card body ph">
         <div class="gal-meta"><div class="gal-name">.card &middot; .card .ph &middot; .card .body</div><p class="gal-note">La carte de base : bordure 2 px, fond crème. <code>.ph</code> est le cadre hachuré d'image, en 4/3 par défaut. <code>.body</code> est le corps texte.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="card" style="max-width:260px"><div class="ph"><span>[ photo ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase">Écharpe du club</strong><span class="mono" style="font-size:11px">18 €</span></div></div></template>
+        <template><div class="card" style="max-width:260px"><div class="ph"><span>[ photo ]</span></div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase">Écharpe du club</strong><span class="mono" style="font-size:11px">18 €</span></div></div></template>
       </article>
 
       <article class="gal-item" data-classes="link shadow">
         <div class="gal-meta"><div class="gal-name">.card.link &middot; .card.shadow</div><p class="gal-note"><code>.link</code> inverse la carte au survol : c'est lui qu'il faut réserver aux cartes réellement cliquables. <code>.shadow</code> ne fait rien au repos — l'ombre dure décalée n'apparaît qu'au survol — et le site l'emploie aussi sur des cartes non cliquables : <code>site/equipe.html:73</code>, <code>site/club.html:73</code>, <code>site/contact.html:54</code>, et la « Carte joueur » de cette galerie.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><a class="card link shadow" href="#blocs" style="max-width:260px;text-decoration:none;color:inherit"><div class="ph"><span>[ photo ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase">Survolez-moi</strong></div></a></template>
+        <template><a class="card link shadow" href="#blocs" style="max-width:260px;text-decoration:none;color:inherit"><div class="ph"><span>[ photo ]</span></div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase">Survolez-moi</strong></div></a></template>
       </article>
 
       <article class="gal-item" data-classes="cols-2 cols-3 cols-4">
@@ -246,7 +252,7 @@ body        → Archivo 15px / 16px
       <article class="gal-item" data-classes="match-row match-list">
         <div class="gal-meta"><div class="gal-name">.match-row &middot; .match-list</div><p class="gal-note"><strong>Grille à trois colonnes</strong> (130px 1fr auto) : une ligne doit avoir exactement trois enfants directs, sinon elle déborde sous 880 px, où elle passe à deux colonnes avec la date sur toute la largeur. <code>.match-list</code> encadre plusieurs lignes et les sépare d'un filet.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="match-list section"><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.<br><span style="color:var(--taupe)">20:00</span></span><div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3 · Gymnase Rollinat</div></div><span class="badge">Domicile</span></div></div></template>
+        <template><div class="match-list section"><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.<br><span style="color:var(--taupe)">20:00</span></span><div><strong class="display-m">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3 · Gymnase Rollinat</div></div><span class="badge">Domicile</span></div></div></template>
       </article>
 
       <article class="gal-item" data-classes="match-band score">
@@ -306,7 +312,7 @@ body        → Archivo 15px / 16px
       <article class="gal-item" data-classes="timeline">
         <div class="gal-meta"><div class="gal-name">.timeline</div><p class="gal-note">Frise année · texte, en deux colonnes de 120 px et 1fr. Empilée sous 880 px.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="pad timeline"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:34px">1946</strong><p class="muted">Fondation de la section volley-ball du Club Athlétique de Brive.</p></div></template>
+        <template><div class="pad timeline"><strong class="display-l" style="font-weight:900">1946</strong><p class="muted">Fondation de la section volley-ball du Club Athlétique de Brive.</p></div></template>
       </article>
     </section>
     <section class="gal-section" id="composites">
@@ -316,7 +322,7 @@ body        → Archivo 15px / 16px
       <article class="gal-item">
         <div class="gal-meta"><div class="gal-name">Carte joueur</div><p class="gal-note">Source : <code>site/equipe.html:73</code>. Portrait en 3/4, numéro en surimpression avec une ombre crème pour rester lisible sur toute photo. <code>loading="lazy"</code> appartient à la branche photo du gabarit — cette démo rend la branche sans photo, donc l'attribut n'apparaît pas dans le code ci-contre. <code>max-width:230px</code> ci-dessous est un cadrage de galerie, absent de la source.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="card shadow" style="max-width:230px"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden"><span class="mono" style="color:var(--mention)">[ portrait ]</span><strong style="position:absolute;top:8px;right:14px;font-family:'Barlow Condensed';font-weight:900;font-size:40px;text-shadow:0 0 6px var(--creme)">10</strong></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase;line-height:1">Rémi DARDANELLI</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">Attaquant R4/Pointe</span></div></div></template>
+        <template><div class="card shadow" style="max-width:230px"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden"><span class="mono" style="color:var(--mention)">[ portrait ]</span><strong class="display-xl" style="position:absolute;top:8px;right:14px;font-weight:900;text-shadow:0 0 6px var(--creme)">10</strong></div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1">Rémi DARDANELLI</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">Attaquant R4/Pointe</span></div></div></template>
       </article>
 
       <article class="gal-item">
@@ -328,19 +334,19 @@ body        → Archivo 15px / 16px
       <article class="gal-item">
         <div class="gal-meta"><div class="gal-name">Ligne de match à venir</div><p class="gal-note">Source : <code>matchRow()</code> dans <code>site/assets/site.js</code>. C'est la seule des cinq à être déjà une fonction partagée — l'appeler vaut mieux que copier ce markup. <strong>Exactement trois enfants directs</strong> : au-delà, la grille déborde sous 880 px.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.<br><span style="color:var(--taupe)">20:00</span></span><div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3 · Gymnase Rollinat</div></div><span class="badge">Domicile</span></div></template>
+        <template><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.<br><span style="color:var(--taupe)">20:00</span></span><div><strong class="display-m">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3 · Gymnase Rollinat</div></div><span class="badge">Domicile</span></div></template>
       </article>
 
       <article class="gal-item">
         <div class="gal-meta"><div class="gal-name">Ligne de résultat</div><p class="gal-note">Source : <code>site/equipe.html</code>. Variante de la précédente. Le score et le badge sont groupés dans <strong>une seule</strong> cellule : c'est ce qui préserve les trois enfants directs de la grille.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.</span><div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3</div></div><span class="row" style="align-items:center;gap:12px"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px">3–1</strong><span class="badge">Victoire</span></span></div></template>
+        <template><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.</span><div><strong class="display-m">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3</div></div><span class="row" style="align-items:center;gap:12px"><strong class="display-m" style="font-weight:900">3–1</strong><span class="badge">Victoire</span></span></div></template>
       </article>
 
       <article class="gal-item">
         <div class="gal-meta"><div class="gal-name">Carte d'index cliquable</div><p class="gal-note">Source : <code>site/equipes.html</code>. La carte entière est le lien, d'où <code>text-decoration:none;color:inherit</code>. Sans identifiant, la page rend un <code>&lt;div&gt;</code> au lieu du <code>&lt;a&gt;</code> : la carte reste visible mais n'est pas cliquable, plutôt que de produire un lien mort. <code>max-width:300px</code> ci-dessous est un cadrage de galerie, absent de la source.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><a class="card link shadow" href="#composites" style="max-width:300px;text-decoration:none;color:inherit"><div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase;line-height:1.05">National 3 masculin</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">National 3</span><span class="muted" style="font-size:13px">Mer. 18h30-20h30 · Rollinat</span><span class="mono" style="font-size:11px;letter-spacing:.12em;border-top:1px solid var(--lin);padding-top:8px;margin-top:4px">Prochain · SAM. 26 SEPT. · Poitiers 3</span></div></a></template>
+        <template><a class="card link shadow" href="#composites" style="max-width:300px;text-decoration:none;color:inherit"><div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div><div class="body"><strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1.05">National 3 masculin</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">National 3</span><span class="muted" style="font-size:13px">Mer. 18h30-20h30 · Rollinat</span><span class="mono" style="font-size:11px;letter-spacing:.12em;border-top:1px solid var(--lin);padding-top:8px;margin-top:4px">Prochain · SAM. 26 SEPT. · Poitiers 3</span></div></a></template>
       </article>
     </section>
   </main>

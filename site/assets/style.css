@@ -13,6 +13,11 @@ h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-trans
 p{margin:0}
 .mono{font-family:'DM Mono',monospace;letter-spacing:.24em;text-transform:uppercase;font-size:12px;color:var(--taupe)}
 .eyebrow{font-family:'DM Mono',monospace;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--taupe)}
+.display-s{font-family:'Barlow Condensed',sans-serif;font-size:22px}
+.display-m{font-family:'Barlow Condensed',sans-serif;font-size:26px}
+.display-l{font-family:'Barlow Condensed',sans-serif;font-size:34px}
+.display-xl{font-family:'Barlow Condensed',sans-serif;font-size:40px}
+.display-2xl{font-family:'Barlow Condensed',sans-serif;font-size:44px}
 .wrap{max-width:1240px;margin:0 auto;padding:0 48px}
 .section{border-bottom:2px solid var(--encre)}
 .pad{padding:56px 48px}

@@ -28,7 +28,7 @@ window.__pageInit=async function(){
   const carte=t=>{
     const m=prochain[t.slug];
     const inner=`<div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden">${t.photo?`<img src="${t.photo}" alt="${t.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}</div>
-      <div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase;line-height:1.05">${t.nom}</strong>
+      <div class="body"><strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1.05">${t.nom}</strong>
       <span class="mono" style="font-size:11px;letter-spacing:.14em">${t.categorie||""}</span>
       ${t.creneau?`<span class="muted" style="font-size:13px">${t.creneau}</span>`:""}
       ${m?`<span class="mono" style="font-size:11px;letter-spacing:.12em;border-top:1px solid var(--lin);padding-top:8px;margin-top:4px">Prochain · ${fmtDate(m.date)} · ${m.adversaire}</span>`:""}</div>`;
