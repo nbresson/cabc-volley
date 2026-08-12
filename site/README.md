@@ -8,6 +8,8 @@ Aucune étape de build : ce sont des fichiers HTML/CSS/JS, le contenu vit dans `
 site/
   index.html club.html equipes.html equipe.html calendrier.html
   actualites.html article.html adhesion.html boutique.html contact.html 404.html
+  design-system.html  ← galerie du design system, non liée depuis aucun menu,
+                         s'atteint en saisissant son adresse
   assets/      style.css · site.js · logo.png · uploads/ (images du CMS)
   content/     settings/news/matches/teams/products .json  ← contenu éditable
   admin/       index.html · config.yml                     ← interface Decap CMS
@@ -24,6 +26,17 @@ Après une modification de `site/content/*.json`, `npm run check` vérifie que l
 fichiers restent cohérents (identifiants d'équipe uniques et bien formés, matchs
 rattachés à une équipe existante). À lancer avant de committer une modification
 manuelle de ces fichiers.
+
+`npm run check` vérifie aussi désormais que la galerie `design-system.html`
+documente bien toutes les classes de `style.css` : ajouter une classe dans la
+feuille de style sans la documenter dans la galerie fait échouer la compilation.
+Seul un développeur peut déclencher cet échec — le bureau, qui publie depuis
+Decap, ne touche jamais à `style.css` et ne peut pas le provoquer.
+
+Une classe de chrome de page (en-tête, pied de page, gabarit) n'a pas sa place
+dans la galerie : elle se déclare plutôt dans la liste `EXCLUES` de
+`scripts/check-design-system.mjs`, avec sa raison. Si le contrôle échoue sur
+une classe de ce genre, c'est là qu'il faut l'ajouter, pas dans `design-system.html`.
 
 ## 2 · Déploiement sur Cloudflare Workers
 Le site est servi par un worker `cabc-volley` en « static assets » : le dossier `site/`
