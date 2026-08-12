@@ -202,13 +202,13 @@ body        → Archivo 15px / 16px
       <article class="gal-item" data-classes="cols-2 cols-3 cols-4">
         <div class="gal-meta"><div class="gal-name">.cols-2 &middot; .cols-3 &middot; .cols-4</div><p class="gal-note">Grilles à gouttière de 28 px. <code>.cols-3</code> et <code>.cols-4</code> passent à deux colonnes sous 1100 px, puis à une seule sous 880 px. <code>.cols-2</code> passe directement à une colonne.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="cols-3"><div class="card"><div class="body">Un</div></div><div class="card"><div class="body">Deux</div></div><div class="card"><div class="body">Trois</div></div></div></template>
+        <template><div><div class="cols-2" style="margin-bottom:20px"><div class="card"><div class="body">Un</div></div><div class="card"><div class="body">Deux</div></div></div><div class="cols-3" style="margin-bottom:20px"><div class="card"><div class="body">Un</div></div><div class="card"><div class="body">Deux</div></div><div class="card"><div class="body">Trois</div></div></div><div class="cols-4"><div class="card"><div class="body">Un</div></div><div class="card"><div class="body">Deux</div></div><div class="card"><div class="body">Trois</div></div><div class="card"><div class="body">Quatre</div></div></div></div></template>
       </article>
 
       <article class="gal-item" data-classes="duo split">
         <div class="gal-meta"><div class="gal-name">.duo &middot; .split</div><p class="gal-note">Deux colonnes de proportions réglables par <code>--a</code> et <code>--b</code>. <code>.split</code> ajoute le filet de séparation, <code>.duo</code> s'en passe. Sous 880 px le filet devient horizontal.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div class="split" style="--b:1.5fr"><div class="pad">Colonne étroite</div><div class="pad">Colonne large, une fois et demie plus grande</div></div></template>
+        <template><div><div class="split" style="--b:1.5fr;margin-bottom:20px"><div class="pad">Colonne étroite</div><div class="pad">Colonne large, une fois et demie plus grande</div></div><div class="duo"><div class="pad">Colonne gauche</div><div class="pad">Colonne droite</div></div></div></template>
       </article>
 
       <article class="gal-item" data-classes="band">
