@@ -24,14 +24,25 @@ window.__pageInit=async function(){
   if(data?.chapo)chapo.textContent=data.chapo; else chapo.remove();
 
   // Une adresse saisie sans protocole serait resolue relativement au site et
-  // menerait a la page 404. Ce champ est neuf, la faute est probable.
-  const externe=u=>/^https?:/i.test(u)?u:"https://"+u;
+  // menerait a la page 404. Ce champ est neuf, la faute est probable. On laisse
+  // passer tel quel un schema explicite (https:, mailto:, tel:...) ou un chemin
+  // racine (/adhesion.html) : seul un nom d hote nu doit recevoir le prefixe.
+  const externe=u=>/^([a-z][a-z0-9+.-]*:|\/)/i.test(u)?u:"https://"+u;
+
+  // L extension du fichier televerse determine le suffixe affiche : on ne
+  // suppose jamais "(PDF)", le widget accepte n importe quel type de fichier.
+  const extension=nom=>{
+    const m=/\.([a-z0-9]+)$/i.exec(nom||"");
+    return m?m[1].toUpperCase():"";
+  };
 
   // Un document dont le champ utile est vide, ou dont le type est inconnu, est
   // ignore : le reste du bloc s affiche quand meme.
   const bouton=d=>{
-    if(d?.type==="fichier"&&d.fichier)
-      return `<a class="btn btn-secondary" href="${d.fichier}" download>↓ ${d.libelle||"Document"} (PDF)</a>`;
+    if(d?.type==="fichier"&&d.fichier){
+      const ext=extension(d.fichier);
+      return `<a class="btn btn-secondary" href="${d.fichier}" download>↓ ${d.libelle||"Document"}${ext?` (${ext})`:""}</a>`;
+    }
     if(d?.type==="lien"&&d.url)
       return `<a class="btn btn-secondary" href="${externe(d.url)}" target="_blank" rel="noopener">${d.libelle||"Lien"} ↗</a>`;
     return "";

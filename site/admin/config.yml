@@ -313,6 +313,7 @@ collections:
             label: Blocs
             label_singular: Bloc
             widget: list
+            collapsed: true
             required: false
             summary: "{{fields.titre}}"
             hint: "Chaque bloc est une section de la page : un titre, du texte, et autant de documents ou de liens que nécessaire."
@@ -323,6 +324,7 @@ collections:
                 label: Documents et liens
                 label_singular: Document ou lien
                 widget: list
+                collapsed: true
                 required: false
                 types:
                   - name: fichier
