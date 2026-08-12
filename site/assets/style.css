@@ -11,6 +11,11 @@ a:hover{opacity:.72}
 ::selection{background:var(--encre);color:var(--creme)}
 h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:.02em;margin:0}
 p{margin:0}
+/* .mono se combine a l'occasion avec .display-* et .ok/.ko sur le meme element
+   (email en .mono.lien.display-m, messages de formulaire en .ok.mono/.ko.mono).
+   A specificite egale, ces regles declarees plus bas l'emportent sur .mono par
+   ordre de source : ne pas regrouper .mono avec les autres regles de typo sans
+   y penser. */
 .mono{font-family:'DM Mono',monospace;letter-spacing:.24em;text-transform:uppercase;font-size:12px;color:var(--taupe)}
 .eyebrow{font-family:'DM Mono',monospace;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--taupe)}
 .display-s{font-family:'Barlow Condensed',sans-serif;font-size:22px}
@@ -23,7 +28,10 @@ p{margin:0}
 .pad{padding:56px 48px}
 .muted{color:#4a4438}
 .lien{border-bottom:2px solid var(--encre)}
-.vide{padding-top:28px;padding-bottom:28px}
+/* .pad.vide en plus de .vide seul : specificite superieure a .pad (deux classes
+   contre une), pour que l'espacement de .vide resiste au .pad du palier 880 px
+   quel que soit l'ordre des regles dans ce fichier. */
+.vide,.pad.vide{padding-top:28px;padding-bottom:28px}
 
 /* Boutons */
 .btn{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:13px 28px;border:2px solid var(--encre);cursor:pointer}

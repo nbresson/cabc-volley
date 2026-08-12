@@ -31,7 +31,7 @@ function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekd
 function matchRow(m){const d=new Date(m.date);return `
     <div class="match-row">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
-      <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
+      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
 // Vignette : cadrage "entier" montre l'image complète sur le fond hachuré (affiches),
 // sinon elle remplit le cadre quitte à être recadrée (photos).
