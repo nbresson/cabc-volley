@@ -31,7 +31,7 @@ function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekd
 function matchRow(m){const d=new Date(m.date);return `
     <div class="match-row">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
-      <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
+      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
 // Vignette : cadrage "entier" montre l'image complète sur le fond hachuré (affiches),
 // sinon elle remplit le cadre quitte à être recadrée (photos).
@@ -40,7 +40,7 @@ function vignette(src,alt,cadrage){if(!src)return"";
   return `<img src="${src}" alt="${alt||""}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${entier?"contain":"cover"}${entier?";padding:14px":""}">`;}
 // Markdown minimal (Decap) : paragraphes, ## titres, > citations, - listes, **gras**, [lien](url)
 function mdToHtml(md){if(!md)return"";
-  const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" style="border-bottom:2px solid var(--encre)">$1</a>');
+  const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" class="lien">$1</a>');
   return md.split(/\n\n+/).map(b=>{b=b.trim();if(!b)return"";
     if(b.startsWith("> "))return '<blockquote class="ds"><p>'+inl(b.slice(2).replace(/\n/g," "))+'</p></blockquote>';
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';

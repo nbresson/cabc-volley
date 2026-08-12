@@ -1,6 +1,6 @@
 :root{
   --encre:#17150F; --creme:#EFE9DB; --sable:#E6DFCD; --taupe:#6B6353; --lin:#CFC7B2;
-  --erreur:#8C2F1E; --hachures:repeating-linear-gradient(45deg,#E2DBC8 0 12px,#EAE4D4 12px 24px);
+  --erreur:#8C2F1E; --mention:#8f8672; --mention-sombre:#a89e87; --texte-sombre:#c9c1ab; --hachures:repeating-linear-gradient(45deg,#E2DBC8 0 12px,#EAE4D4 12px 24px);
 }
 *{box-sizing:border-box}
 html{-webkit-font-smoothing:antialiased}
@@ -11,12 +11,27 @@ a:hover{opacity:.72}
 ::selection{background:var(--encre);color:var(--creme)}
 h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;line-height:.92;letter-spacing:.02em;margin:0}
 p{margin:0}
+/* .mono se combine a l'occasion avec .display-* et .ok/.ko sur le meme element
+   (email en .mono.lien.display-m, messages de formulaire en .ok.mono/.ko.mono).
+   A specificite egale, ces regles declarees plus bas l'emportent sur .mono par
+   ordre de source : ne pas regrouper .mono avec les autres regles de typo sans
+   y penser. */
 .mono{font-family:'DM Mono',monospace;letter-spacing:.24em;text-transform:uppercase;font-size:12px;color:var(--taupe)}
 .eyebrow{font-family:'DM Mono',monospace;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--taupe)}
+.display-s{font-family:'Barlow Condensed',sans-serif;font-size:22px}
+.display-m{font-family:'Barlow Condensed',sans-serif;font-size:26px}
+.display-l{font-family:'Barlow Condensed',sans-serif;font-size:34px}
+.display-xl{font-family:'Barlow Condensed',sans-serif;font-size:40px}
+.display-2xl{font-family:'Barlow Condensed',sans-serif;font-size:44px}
 .wrap{max-width:1240px;margin:0 auto;padding:0 48px}
 .section{border-bottom:2px solid var(--encre)}
 .pad{padding:56px 48px}
 .muted{color:#4a4438}
+.lien{border-bottom:2px solid var(--encre)}
+/* .pad.vide en plus de .vide seul : specificite superieure a .pad (deux classes
+   contre une), pour que l'espacement de .vide resiste au .pad du palier 880 px
+   quel que soit l'ordre des regles dans ce fichier. */
+.vide,.pad.vide{padding-top:28px;padding-bottom:28px}
 
 /* Boutons */
 .btn{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:13px 28px;border:2px solid var(--encre);cursor:pointer}
@@ -73,7 +88,7 @@ p{margin:0}
 .card.link:hover *{color:inherit}
 .card.shadow:hover{box-shadow:6px 6px 0 var(--encre)}
 .card .ph{background:var(--hachures);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
-.card .ph span{font-family:'DM Mono',monospace;font-size:11px;color:#8f8672}
+.card .ph span{font-family:'DM Mono',monospace;font-size:11px;color:var(--mention)}
 .card .body{padding:16px 18px;display:flex;flex-direction:column;gap:6px}
 .ph{background:var(--hachures)}
 
@@ -85,7 +100,7 @@ p{margin:0}
 .countdown{display:flex;gap:12px;flex-wrap:wrap}
 .countdown div{border:2px solid var(--creme);padding:12px 0;width:82px;text-align:center}
 .countdown strong{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:1;display:block}
-.countdown span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;color:#a89e87}
+.countdown span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--mention-sombre)}
 
 /* Tables */
 table.ds{width:100%;border-collapse:collapse;font-size:15px}
@@ -100,6 +115,9 @@ label.field{display:flex;flex-direction:column;gap:7px}
 label.field>span{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--taupe)}
 input[type=text],input[type=email],input[type=tel],textarea,select{border:2px solid var(--encre);border-radius:0;background:var(--creme);padding:13px 14px;font-family:'Archivo',sans-serif;font-size:15px;color:var(--encre);width:100%}
 input:focus,textarea:focus,select:focus{background:#fff;box-shadow:4px 4px 0 var(--encre);outline:none}
+.ok,.ko{display:none;margin-top:14px}
+.ok{color:var(--encre)}
+.ko{color:var(--erreur)}
 
 /* Accordéon */
 details.acc{border:2px solid var(--encre);border-bottom:none}

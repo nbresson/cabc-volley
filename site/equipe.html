@@ -16,7 +16,7 @@ window.__pageInit=async function(){
     getJSON("content/teams.json"),getJSON("content/matches.json"),getJSON("content/settings.json")]);
   const el=document.getElementById("equipe");
   const t=(teams?.items||[]).find(x=>x.slug&&x.slug===slug);
-  if(!t){el.innerHTML='<section class="pad section"><p class="muted">Équipe introuvable. <a href="equipes.html" style="border-bottom:2px solid var(--encre)">Retour aux équipes</a></p></section>';return;}
+  if(!t){el.innerHTML='<section class="pad section"><p class="muted">Équipe introuvable. <a href="equipes.html" class="lien">Retour aux équipes</a></p></section>';return;}
   document.title=t.nom+" — C.A. Brive Corrèze Volley";
 
   const entete=`<section class="pad section">
@@ -25,7 +25,7 @@ window.__pageInit=async function(){
     ${t.creneau?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${t.creneau}</p>`:""}
     ${t.photo
       ?`<img src="${t.photo}" alt="${t.nom}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-top:24px">`
-      :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-top:24px"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div>'}
+      :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-top:24px"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div>'}
   </section>`;
 
   const mine=(matches?.items||[]).filter(m=>m.equipe===t.slug);
@@ -37,9 +37,9 @@ window.__pageInit=async function(){
   const ligneResultat=m=>{return `
     <div class="match-row">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${fmtDate(m.date)}</span>
-      <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
+      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
       <span class="row" style="align-items:center;gap:12px">
-        <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px">${m.score||"–"}</strong>
+        <strong class="display-m" style="font-weight:900">${m.score||"–"}</strong>
         <span class="${m.gagne?'badge':'badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;};
 
   const blocAvenir=avenir.length?`<section class="section">
@@ -70,7 +70,7 @@ window.__pageInit=async function(){
   const blocEffectif=eff.length?`<section class="pad section">
     <div class="section-head"><h2>L'effectif</h2><span class="mono">${eff.length} membre${eff.length>1?"s":""}</span></div>
     <div class="cols-4">${eff.map(p=>`
-      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden">${p.photo?`<img src="${p.photo}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:#8f8672">[ portrait ]</span>'}<strong style="position:absolute;top:8px;right:14px;font-family:'Barlow Condensed';font-weight:900;font-size:40px;text-shadow:0 0 6px var(--creme)">${p.num||""}</strong></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase;line-height:1">${p.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">${p.poste||""}</span></div></div>`).join("")}</div>
+      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden">${p.photo?`<img src="${p.photo}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ portrait ]</span>'}<strong class="display-xl" style="position:absolute;top:8px;right:14px;font-weight:900;text-shadow:0 0 6px var(--creme)">${p.num||""}</strong></div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1">${p.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">${p.poste||""}</span></div></div>`).join("")}</div>
   </section>`:"";
 
   const pied=`<section class="pad section" style="border-bottom:none">

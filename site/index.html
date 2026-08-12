@@ -22,12 +22,12 @@
 <section class="section dark" id="next-match" style="padding:0"></section>
 
 <section class="section pad">
-  <div class="section-head"><h2>Les prochaines journées</h2><a href="calendrier.html" class="mono" style="border-bottom:2px solid var(--encre);color:var(--encre)">Tout le calendrier →</a></div>
+  <div class="section-head"><h2>Les prochaines journées</h2><a href="calendrier.html" class="mono lien" style="color:var(--encre)">Tout le calendrier →</a></div>
   <div id="upcoming"></div>
 </section>
 
 <section class="section pad">
-  <div class="section-head"><h2>La gazette du filet</h2><a href="actualites.html" class="mono" style="border-bottom:2px solid var(--encre);color:var(--encre)">Toutes les actus →</a></div>
+  <div class="section-head"><h2>La gazette du filet</h2><a href="actualites.html" class="mono lien" style="color:var(--encre)">Toutes les actus →</a></div>
   <div id="news" class="cols-3"></div>
 </section>
 
@@ -40,7 +40,7 @@
   <div class="lines"></div>
   <img src="assets/logo.png" alt="" style="height:76px;margin:0 auto;filter:invert(1) brightness(.93)">
   <h2 style="font-size:clamp(40px,7vw,64px);margin-top:14px">Rejoins la maison</h2>
-  <p style="color:#c9c1ab;max-width:48ch;margin:10px auto 0">Débutant·e ou confirmé·e, de 6 à 66 ans : la première séance d'essai est gratuite.</p>
+  <p style="color:var(--texte-sombre);max-width:48ch;margin:10px auto 0">Débutant·e ou confirmé·e, de 6 à 66 ans : la première séance d'essai est gratuite.</p>
   <div class="row" style="justify-content:center;margin-top:22px">
     <a href="adhesion.html" class="btn btn-inverse">S'inscrire pour 2026-2027</a>
     <a href="contact.html" class="btn btn-outline-light">Venir essayer</a>
@@ -60,9 +60,9 @@ window.__pageInit=async function(){
     const j=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),mn=Math.floor(diff%36e5/6e4);
     el.innerHTML=`<div class="pad duo" style="--b:auto;gap:32px;align-items:center">
       <div>
-        <div class="eyebrow" style="color:#a89e87">Prochain match ${nm.domicile?"à domicile":"à l'extérieur"}</div>
+        <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${nm.domicile?"à domicile":"à l'extérieur"}</div>
         <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${nm.adversaire}</h2>
-        <div class="mono" style="color:#a89e87">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})} · ${nm.lieu}</div>
+        <div class="mono" style="color:var(--mention-sombre)">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})} · ${nm.lieu}</div>
       </div>
       <div class="countdown"><div><strong>${String(j).padStart(2,"0")}</strong><span>JOURS</span></div><div><strong>${String(h).padStart(2,"0")}</strong><span>HEURES</span></div><div><strong>${String(mn).padStart(2,"0")}</strong><span>MIN</span></div></div>
     </div>`;
@@ -73,22 +73,22 @@ window.__pageInit=async function(){
   up.innerHTML=list.map(m=>{const d=new Date(m.date);return `
     <div class="match-row" style="padding:22px 0;border-bottom:1px solid var(--lin)">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
-      <div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
+      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span>
-    </div>`;}).join("")||'<p class="muted">Aucun match programmé pour le moment.</p>';
+    </div>`;}).join("")||'<p class="vide muted">Aucun match programmé pour le moment.</p>';
   // Actus
   document.getElementById("news").innerHTML=(newsData?.items||[]).slice(0,3).map(n=>`
     <a class="card link shadow" href="actualites.html">
       <div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span>[ photo à venir ]</span>'}</div>
       <div class="body"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}</span>
-      <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;line-height:1;text-transform:uppercase">${n.titre}</strong>
+      <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${n.titre}</strong>
       <span class="muted" style="font-size:13px">${n.extrait}</span></div>
     </a>`).join("");
   // Équipes
   document.getElementById("teams").innerHTML=(teamsData?.items||[]).map(t=>`
     <a class="card link" ${t.slug?`href="${teamUrl(t.slug)}"`:'href="equipes.html"'} style="padding:26px 24px;gap:8px">
       <span class="mono" style="font-size:10px;letter-spacing:.18em;opacity:.6">${t.categorie}</span>
-      <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:27px;line-height:1;text-transform:uppercase">${t.nom}</strong>
+      <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${t.nom}</strong>
       <span class="muted" style="font-size:13px">${t.creneau}</span>
     </a>`).join("");
 };

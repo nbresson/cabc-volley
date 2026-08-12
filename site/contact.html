@@ -22,18 +22,18 @@
       <label class="field"><span>Email *</span><input type="email" name="email" required></label>
       <label class="field" style="grid-column:span 2"><span>Sujet *</span><select name="sujet"><option>Inscription / essai gratuit</option><option>Bénévolat</option><option>Partenariat / sponsoring</option><option>Presse</option><option>Autre demande</option></select></label>
       <label class="field" style="grid-column:span 2"><span>Message *</span><textarea rows="6" name="message" placeholder="Bonjour, je souhaiterais…" required></textarea></label>
-      <div style="grid-column:span 2"><button class="btn btn-primary" type="submit">Envoyer le message</button><p class="ok mono" style="display:none;margin-top:14px;color:var(--encre)">✓ Message envoyé — réponse sous 48 h.</p><p class="ko mono" style="display:none;margin-top:14px;color:var(--erreur)">✗ L'envoi a échoué — réessayez, ou écrivez-nous directement par email.</p></div>
+      <div style="grid-column:span 2"><button class="btn btn-primary" type="submit">Envoyer le message</button><p class="ok mono">✓ Message envoyé — réponse sous 48 h.</p><p class="ko mono">✗ L'envoi a échoué — réessayez, ou écrivez-nous directement par email.</p></div>
     </form>
   </div>
   <div>
-    <div class="pad" style="border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.2em">Email</span><br><a id="mail" class="mono" style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;letter-spacing:.02em;border-bottom:2px solid var(--encre);color:var(--encre);display:inline-block;margin-top:8px">contact@cabc-volley.fr</a></div>
-    <div class="pad" style="border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.2em">Téléphone / Portable</span><br><strong id="tel" style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;letter-spacing:.04em">05 55 00 00 00</strong></div>
-    <div class="dark pad" style="display:flex;flex-direction:column;gap:14px"><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">Réseaux</span><a class="social" href="https://www.instagram.com/cabcvolley/" target="_blank" rel="noopener">
+    <div class="pad" style="border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.2em">Email</span><br><a id="mail" class="mono lien display-m" style="font-weight:900;letter-spacing:.02em;color:var(--encre);display:inline-block;margin-top:8px">contact@cabc-volley.fr</a></div>
+    <div class="pad" style="border-bottom:2px solid var(--encre)"><span class="mono" style="font-size:11px;letter-spacing:.2em">Téléphone / Portable</span><br><strong id="tel" class="display-m" style="font-weight:900;letter-spacing:.04em">05 55 00 00 00</strong></div>
+    <div class="dark pad" style="display:flex;flex-direction:column;gap:14px"><span class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)">Réseaux</span><a class="social" href="https://www.instagram.com/cabcvolley/" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect class="frame" x="2" y="2" width="20" height="20"/><circle cx="12" cy="12" r="4.6"/><rect x="16.3" y="5.7" width="2.5" height="2.5" fill="currentColor" stroke="none"/></svg>
       <span class="lbl">Instagram ↗</span></a>
     <a class="social" href="https://www.facebook.com/cabvolley19/" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect class="frame" x="2" y="2" width="20" height="20"/><path d="M14.5 6.5H12.2V17.5M9.5 11H14.5"/></svg>
-      <span class="lbl">Facebook ↗</span></a><span style="font-size:13px;color:#c9c1ab">Résultats en story chaque week-end.</span></div>
+      <span class="lbl">Facebook ↗</span></a><span style="font-size:13px;color:var(--texte-sombre)">Résultats en story chaque week-end.</span></div>
   </div>
 </section>
 <section class="section pad">
@@ -53,15 +53,15 @@ window.__pageInit=async function(){
   document.getElementById("gymnases").innerHTML=salles.map(v=>`
     <div class="card shadow">
       <div class="ph" style="aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
-        ${v.photo?`<img src="${v.photo}" alt="${v.nom}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:#8f8672">[ photo à venir ]</span>'}
+        ${v.photo?`<img src="${v.photo}" alt="${v.nom}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}
         ${v.etiquette?`<span class="badge" style="position:absolute;top:12px;left:12px">${v.etiquette}</span>`:''}
       </div>
       <div class="body" style="padding:20px">
-        <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:25px;text-transform:uppercase;line-height:1">${v.nom}</strong>
+        <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${v.nom}</strong>
         ${v.adresse?`<span class="muted" style="font-size:13px">${v.adresse}</span>`:''}
         ${v.usage?`<span class="muted" style="font-size:13px">${v.usage}</span>`:''}
         ${v.acces?`<span class="mono" style="font-size:10px">${v.acces}</span>`:''}
-        ${v.itineraire?`<a href="${v.itineraire}" target="_blank" rel="noopener" class="mono" style="align-self:flex-start;margin-top:6px;font-size:11px;color:var(--encre);border-bottom:2px solid var(--encre)">Itinéraire ↗</a>`:''}
+        ${v.itineraire?`<a href="${v.itineraire}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;margin-top:6px;font-size:11px;color:var(--encre)">Itinéraire ↗</a>`:''}
       </div>
     </div>`).join("")||'<p class="muted">Les salles seront renseignées prochainement.</p>';
 };

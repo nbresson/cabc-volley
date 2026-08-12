@@ -22,14 +22,14 @@
   <div id="upcoming" class="match-list"></div>
 </section>
 <section class="section pad">
-  <div class="section-head"><h2>Classement Prénationale F</h2><a id="ffvb2" class="mono" style="border-bottom:2px solid var(--encre);color:var(--encre)" target="_blank" rel="noopener">Classement FFVB officiel →</a></div>
+  <div class="section-head"><h2>Classement Prénationale F</h2><a id="ffvb2" class="mono lien" style="color:var(--encre)" target="_blank" rel="noopener">Classement FFVB officiel →</a></div>
   <div class="table-wrap"><table class="ds"><thead><tr><th>#</th><th>Équipe</th><th style="text-align:center">J</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:right">Pts</th></tr></thead>
   <tbody>
-    <tr><td>1</td><td>Ussel VB</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">0</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">18</strong></td></tr>
-    <tr class="hl"><td>2</td><td>C.A. Brive Corrèze Volley</td><td style="text-align:center">6</td><td style="text-align:center">5</td><td style="text-align:center">1</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">15</strong></td></tr>
-    <tr><td>3</td><td>Limoges VB</td><td style="text-align:center">6</td><td style="text-align:center">4</td><td style="text-align:center">2</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">13</strong></td></tr>
-    <tr><td>4</td><td>Tulle VB</td><td style="text-align:center">6</td><td style="text-align:center">2</td><td style="text-align:center">4</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">8</strong></td></tr>
-    <tr><td>5</td><td>Ussac VB</td><td style="text-align:center">6</td><td style="text-align:center">1</td><td style="text-align:center">5</td><td style="text-align:right"><strong style="font-family:'Barlow Condensed';font-size:21px">4</strong></td></tr>
+    <tr><td>1</td><td>Ussel VB</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">0</td><td style="text-align:right"><strong class="display-s">18</strong></td></tr>
+    <tr class="hl"><td>2</td><td>C.A. Brive Corrèze Volley</td><td style="text-align:center">6</td><td style="text-align:center">5</td><td style="text-align:center">1</td><td style="text-align:right"><strong class="display-s">15</strong></td></tr>
+    <tr><td>3</td><td>Limoges VB</td><td style="text-align:center">6</td><td style="text-align:center">4</td><td style="text-align:center">2</td><td style="text-align:right"><strong class="display-s">13</strong></td></tr>
+    <tr><td>4</td><td>Tulle VB</td><td style="text-align:center">6</td><td style="text-align:center">2</td><td style="text-align:center">4</td><td style="text-align:right"><strong class="display-s">8</strong></td></tr>
+    <tr><td>5</td><td>Ussac VB</td><td style="text-align:center">6</td><td style="text-align:center">1</td><td style="text-align:center">5</td><td style="text-align:right"><strong class="display-s">4</strong></td></tr>
   </tbody></table></div>
   <p class="mono" style="margin-top:14px;font-size:11px">Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.</p>
 </section>
@@ -43,6 +43,6 @@ window.__pageInit=async function(){
   if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
     lr.innerHTML=`<div class="pad"><div class="eyebrow" style="margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
       <div class="match-band" style="padding:0"><strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--taupe)'}">${a}</strong><span class="score">${last.score||"–"}</span><strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--taupe)':''}">${b}</strong></div></div>`;}
-  document.getElementById("upcoming").innerHTML=(matches?.items||[]).filter(m=>m.statut==="a_venir").map(matchRow).join("")||'<p class="muted pad">Aucun match programmé.</p>';
+  document.getElementById("upcoming").innerHTML=(matches?.items||[]).filter(m=>m.statut==="a_venir").map(matchRow).join("")||'<p class="vide muted pad">Aucun match programmé pour le moment.</p>';
 };
 </script></body></html>

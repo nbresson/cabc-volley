@@ -23,7 +23,7 @@
 </section>
 <div id="articles"></div>
 <section class="section dark pad" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px">
-  <div><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(24px,4vw,34px);text-transform:uppercase;line-height:1">Une question sur ces informations ?</strong><br><span style="font-size:13px;color:#c9c1ab">Le bureau répond sous 48 h.</span></div>
+  <div><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(24px,4vw,34px);text-transform:uppercase;line-height:1">Une question sur ces informations ?</strong><br><span style="font-size:13px;color:var(--texte-sombre)">Le bureau répond sous 48 h.</span></div>
   <a href="contact.html" class="btn btn-outline-light">Écrire au club →</a>
 </section>
 <div id="footer"></div><script src="assets/site.js"></script>
@@ -38,15 +38,15 @@ window.__pageInit=async function(){
   document.getElementById("editeur").innerHTML=
     row("Dénomination",e.denomination)+row("Statut",e.statut)+row("Siège social",e.adresse)
     +row("N° RNA",e.rna)+row("N° SIRET",e.siret)+row("Directeur de publication",e.directeur_publication)
-    +row("Email",s?.email?`<a href="mailto:${s.email}" style="border-bottom:2px solid var(--encre)">${s.email}</a>`:"")
+    +row("Email",s?.email?`<a href="mailto:${s.email}" class="lien">${s.email}</a>`:"")
     +row("Téléphone",s?.telephone);
   document.getElementById("hebergeur").innerHTML=
     row("Nom",h.nom)+row("Adresse",h.adresse)
-    +row("Site",h.site?`<a href="${h.site}" style="border-bottom:2px solid var(--encre)">${h.site.replace(/^https?:\/\//,"")}</a>`:"");
+    +row("Site",h.site?`<a href="${h.site}" class="lien">${h.site.replace(/^https?:\/\//,"")}</a>`:"");
   const arts=d.articles||[];
   document.getElementById("articles").innerHTML=arts.map((a,i)=>`
     <section class="pad timeline" style="padding-top:38px;padding-bottom:38px;border-bottom:${i===arts.length-1?"2px solid var(--encre)":"1px solid var(--lin)"}">
-      <strong class="mono" style="font-family:'Barlow Condensed';font-weight:900;font-size:44px;line-height:1;letter-spacing:0;color:var(--lin)">${String(i+1).padStart(2,"0")}</strong>
+      <strong class="mono display-2xl" style="font-weight:900;line-height:1;letter-spacing:0;color:var(--lin)">${String(i+1).padStart(2,"0")}</strong>
       <div><h2 style="font-size:clamp(24px,3.4vw,32px);margin-bottom:14px">${a.titre}</h2>${mdToHtml(a.corps)}</div>
     </section>`).join("");
 };
