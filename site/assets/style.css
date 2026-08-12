@@ -1,6 +1,6 @@
 :root{
   --encre:#17150F; --creme:#EFE9DB; --sable:#E6DFCD; --taupe:#6B6353; --lin:#CFC7B2;
-  --erreur:#8C2F1E; --hachures:repeating-linear-gradient(45deg,#E2DBC8 0 12px,#EAE4D4 12px 24px);
+  --erreur:#8C2F1E; --mention:#8f8672; --mention-sombre:#a89e87; --texte-sombre:#c9c1ab; --hachures:repeating-linear-gradient(45deg,#E2DBC8 0 12px,#EAE4D4 12px 24px);
 }
 *{box-sizing:border-box}
 html{-webkit-font-smoothing:antialiased}
@@ -73,7 +73,7 @@ p{margin:0}
 .card.link:hover *{color:inherit}
 .card.shadow:hover{box-shadow:6px 6px 0 var(--encre)}
 .card .ph{background:var(--hachures);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
-.card .ph span{font-family:'DM Mono',monospace;font-size:11px;color:#8f8672}
+.card .ph span{font-family:'DM Mono',monospace;font-size:11px;color:var(--mention)}
 .card .body{padding:16px 18px;display:flex;flex-direction:column;gap:6px}
 .ph{background:var(--hachures)}
 
@@ -85,7 +85,7 @@ p{margin:0}
 .countdown{display:flex;gap:12px;flex-wrap:wrap}
 .countdown div{border:2px solid var(--creme);padding:12px 0;width:82px;text-align:center}
 .countdown strong{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:1;display:block}
-.countdown span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;color:#a89e87}
+.countdown span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--mention-sombre)}
 
 /* Tables */
 table.ds{width:100%;border-collapse:collapse;font-size:15px}

@@ -24,7 +24,7 @@ window.__pageInit=async function(){
     ${n.image?(n.cadrage==="entier"
       ?`<img src="${n.image}" alt="${n.titre}" style="display:block;max-width:100%;max-height:70vh;width:auto;margin:0 auto 28px;border:2px solid var(--encre)">`
       :`<img src="${n.image}" alt="${n.titre}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-bottom:28px">`)
-      :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-bottom:28px"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div>'}
+      :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-bottom:28px"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div>'}
     <p style="font-size:17px;line-height:1.75;font-weight:500;margin-bottom:20px">${n.extrait}</p>
     ${mdToHtml(n.corps)}
     <div class="row" style="justify-content:space-between;margin-top:40px;padding-top:24px;border-top:2px solid var(--encre)"><a href="actualites.html" class="btn btn-secondary">← Toutes les actus</a><a href="calendrier.html" class="btn btn-primary">Voir le prochain match</a></div>`;

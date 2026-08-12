@@ -48,14 +48,14 @@ window.__pageInit=async function(){
   const chiffres=p.chiffres||[];
   const bande=document.getElementById("chiffres");
   bande.style.setProperty("--n",chiffres.length||1);
-  bande.innerHTML=chiffres.map(c=>`<div><strong>${c.valeur}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:#a89e87">${c.libelle}</span></div>`).join("");
+  bande.innerHTML=chiffres.map(c=>`<div><strong>${c.valeur}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)">${c.libelle}</span></div>`).join("");
 
   // Histoire
   const h=d.histoire||{};
   document.getElementById("histoire-eyebrow").textContent=h.eyebrow||"";
   document.getElementById("histoire-titre").innerHTML=nl(h.titre);
   document.getElementById("histoire-photo").innerHTML=`
-    <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${h.photo?vignette(h.photo,h.legende):'<span class="mono" style="letter-spacing:.1em;color:#8f8672">[ photo d\'archive ]</span>'}</div>
+    <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${h.photo?vignette(h.photo,h.legende):'<span class="mono" style="letter-spacing:.1em;color:var(--mention)">[ photo d\'archive ]</span>'}</div>
     ${h.legende?`<div class="mono" style="padding:12px 18px;border-top:2px solid var(--encre)">${h.legende}</div>`:""}`;
   const dates=h.dates||[];
   document.getElementById("histoire-dates").innerHTML=dates.map((t,i)=>`
@@ -70,13 +70,13 @@ window.__pageInit=async function(){
   document.getElementById("bureau-mention").textContent=b.mention||"";
   const membres=(b.membres||[]).map(m=>`
     <div class="card shadow">
-      <div class="ph" style="aspect-ratio:3/4;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${m.photo?vignette(m.photo,m.nom):'<span class="mono" style="color:#8f8672">[ portrait ]</span>'}</div>
+      <div class="ph" style="aspect-ratio:3/4;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${m.photo?vignette(m.photo,m.nom):'<span class="mono" style="color:var(--mention)">[ portrait ]</span>'}</div>
       <div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:24px;text-transform:uppercase;line-height:1">${m.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.16em">${m.role||""}</span></div>
     </div>`);
   if(a.titre)membres.push(`
     <div class="dark" style="border:2px solid var(--encre);display:flex;flex-direction:column;justify-content:center;gap:12px;padding:28px">
       <strong style="font-family:'Barlow Condensed';font-weight:900;font-size:28px;text-transform:uppercase;line-height:1">${a.titre}</strong>
-      <span style="font-size:13px;color:#c9c1ab">${a.texte||""}</span>
+      <span style="font-size:13px;color:var(--texte-sombre)">${a.texte||""}</span>
       ${a.bouton?`<a href="${a.lien||"contact.html"}" class="btn btn-outline-light" style="align-self:flex-start;padding:9px 20px;font-size:16px">${a.bouton}</a>`:""}
     </div>`);
   document.getElementById("bureau").innerHTML=membres.join("");

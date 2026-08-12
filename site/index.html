@@ -40,7 +40,7 @@
   <div class="lines"></div>
   <img src="assets/logo.png" alt="" style="height:76px;margin:0 auto;filter:invert(1) brightness(.93)">
   <h2 style="font-size:clamp(40px,7vw,64px);margin-top:14px">Rejoins la maison</h2>
-  <p style="color:#c9c1ab;max-width:48ch;margin:10px auto 0">Débutant·e ou confirmé·e, de 6 à 66 ans : la première séance d'essai est gratuite.</p>
+  <p style="color:var(--texte-sombre);max-width:48ch;margin:10px auto 0">Débutant·e ou confirmé·e, de 6 à 66 ans : la première séance d'essai est gratuite.</p>
   <div class="row" style="justify-content:center;margin-top:22px">
     <a href="adhesion.html" class="btn btn-inverse">S'inscrire pour 2026-2027</a>
     <a href="contact.html" class="btn btn-outline-light">Venir essayer</a>
@@ -60,9 +60,9 @@ window.__pageInit=async function(){
     const j=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),mn=Math.floor(diff%36e5/6e4);
     el.innerHTML=`<div class="pad duo" style="--b:auto;gap:32px;align-items:center">
       <div>
-        <div class="eyebrow" style="color:#a89e87">Prochain match ${nm.domicile?"à domicile":"à l'extérieur"}</div>
+        <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${nm.domicile?"à domicile":"à l'extérieur"}</div>
         <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${nm.adversaire}</h2>
-        <div class="mono" style="color:#a89e87">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})} · ${nm.lieu}</div>
+        <div class="mono" style="color:var(--mention-sombre)">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})} · ${nm.lieu}</div>
       </div>
       <div class="countdown"><div><strong>${String(j).padStart(2,"0")}</strong><span>JOURS</span></div><div><strong>${String(h).padStart(2,"0")}</strong><span>HEURES</span></div><div><strong>${String(mn).padStart(2,"0")}</strong><span>MIN</span></div></div>
     </div>`;
