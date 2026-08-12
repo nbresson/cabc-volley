@@ -2,6 +2,8 @@
   "items": [
     {
       "nom": "National 3 masculin",
+      "slug": "n3-masculin",
+      "groupe": "Séniors",
       "categorie": "National 3",
       "creneau": "Mer. 18h30-20h30, Ven. 18h00-20h00 · Rollinat",
       "effectif": [
@@ -35,23 +37,31 @@
     },
     {
       "nom": "Régional 1 féminin",
+      "slug": "r1-feminin",
+      "groupe": "Séniors",
       "categorie": "Régional 1",
       "creneau": "Mar. 20h00-22h00 · Saint-Germain"
     },
     {
       "nom": "Régional 1 masculin",
+      "slug": "r1-masculin",
+      "groupe": "Séniors",
       "categorie": "Régional",
       "creneau": "Mer. 20h30-22h30, Ven. 20h00-22h00 · Rollinat",
       "effectif": []
     },
     {
       "nom": "Jeunes",
+      "slug": "jeunes",
+      "groupe": "Jeunes",
       "categorie": "M18 · M15 · M13",
       "creneau": "Mer. & sam. après-midi",
       "effectif": []
     },
     {
       "nom": "École de volley",
+      "slug": "ecole-de-volley",
+      "groupe": "Formation",
       "categorie": "M11 & baby",
       "creneau": "Sam. 10h · Lavoisier",
       "effectif": []

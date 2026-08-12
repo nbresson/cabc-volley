@@ -3,6 +3,7 @@
   "private": true,
   "description": "Site du C.A. Brive Corrèze Volley — pages statiques servies par Cloudflare Workers",
   "scripts": {
+    "check": "node scripts/check-content.mjs",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
