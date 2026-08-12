@@ -5,7 +5,7 @@
       "slug": "n3-masculin",
       "groupe": "Séniors",
       "categorie": "National 3",
-      "creneau": "Mer. 18h30-20h30, Ven. 18h00-20h00 · Rollinat",
+      "creneau": "Mer. 18h30-20h30, Ven. 18h30-20h30 · Rollinat",
       "effectif": [
         {
           "num": "E",
@@ -33,22 +33,27 @@
           "nom": "Corentin VEYSSIERE",
           "poste": "R4"
         }
-      ]
+      ],
+      "photo": "assets/uploads/n3-1024x627.png",
+      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/seniors/2026-2027/index_3md.htm"
     },
     {
       "nom": "Régional 1 féminin",
       "slug": "r1-feminin",
       "groupe": "Séniors",
       "categorie": "Régional 1",
-      "creneau": "Mar. 20h00-22h00 · Saint-Germain"
+      "creneau": "Mar. 20h00-22h00 · Rollinat",
+      "photo": "assets/uploads/r1f_v2.png"
     },
     {
       "nom": "Régional 1 masculin",
       "slug": "r1-masculin",
       "groupe": "Séniors",
       "categorie": "Régional",
-      "creneau": "Mer. 20h30-22h30, Ven. 20h00-22h00 · Rollinat",
-      "effectif": []
+      "creneau": "Mar. 20h30-22h30, Ven. 20h30-22h30 · Saint-Germain",
+      "effectif": [],
+      "photo": "assets/uploads/r1m.png",
+      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RMB"
     },
     {
       "nom": "Jeunes",
