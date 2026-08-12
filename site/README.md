@@ -7,11 +7,11 @@ Aucune étape de build : ce sont des fichiers HTML/CSS/JS, le contenu vit dans `
 ```
 site/
   index.html club.html equipes.html equipe.html calendrier.html
-  actualites.html article.html adhesion.html boutique.html contact.html 404.html
+  actualites.html article.html adhesion.html boutique.html contact.html infos.html 404.html
   design-system.html  ← galerie du design system, non liée depuis aucun menu,
                          s'atteint en saisissant son adresse
-  assets/      style.css · site.js · logo.png · uploads/ (images du CMS)
-  content/     settings/news/matches/teams/products .json  ← contenu éditable
+  assets/      style.css · site.js · logo.png · uploads/ (images du CMS) · documents/ (fichiers du CMS)
+  content/     settings/news/matches/teams/products/gymnases/club/legal/infos .json  ← contenu éditable
   admin/       index.html · config.yml                     ← interface Decap CMS
 ```
 `equipe.html` est le gabarit de la page d'une équipe (accessible via l'identifiant
@@ -97,6 +97,10 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 - **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo) ; chaque équipe a aussi son identifiant URL, son groupe, sa photo d'équipe, son lien de classement FFVB et son bloc infos pratiques (pour les équipes sans calendrier de matchs)
 - **Boutique** — produits (nom, prix, statut dispo/nouveau/épuisé, photo)
 - **Réglages** — email, téléphone, permanence, **lien classement FFVB**
+- **Gymnases** — secteur affiché et salles (nom, étiquette, adresse, ce qui s'y passe, accès, lien itinéraire, photo)
+- **Page Club** — bandeau d'accueil et chiffres clés, notre histoire (dates clés), le bureau (membres, encart appel aux bénévoles), la vie du club (photos)
+- **Mentions légales** — date de mise à jour, éditeur du site, hébergeur, articles
+- **Infos & documents** — blocs de texte libre, chacun avec ses documents téléversés (PDF de préférence) ou ses liens externes
 
 Les classements/calendriers détaillés restent sur la FFVB (bouton présent sur la page Calendrier) ;
 seuls les matchs mis en avant sont saisis à la main.

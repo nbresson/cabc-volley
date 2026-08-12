@@ -299,3 +299,45 @@ collections:
             fields:
               - {name: titre, label: Titre, widget: string}
               - {name: corps, label: Texte, widget: markdown}
+
+  - name: infos
+    label: Infos & documents
+    files:
+      - name: infos
+        label: Contenu de la page
+        file: site/content/infos.json
+        fields:
+          - {name: titre, label: Titre de la page, widget: string}
+          - {name: chapo, label: Texte d'introduction, widget: text, required: false}
+          - name: blocs
+            label: Blocs
+            label_singular: Bloc
+            widget: list
+            collapsed: true
+            required: false
+            summary: "{{fields.titre}}"
+            hint: "Chaque bloc est une section de la page : un titre, du texte, et autant de documents ou de liens que nécessaire."
+            fields:
+              - {name: titre, label: Titre du bloc, widget: string}
+              - {name: texte, label: Texte, widget: markdown, required: false}
+              - name: documents
+                label: Documents et liens
+                label_singular: Document ou lien
+                widget: list
+                collapsed: true
+                required: false
+                types:
+                  - name: fichier
+                    label: Document téléversé
+                    widget: object
+                    summary: "{{fields.libelle}}"
+                    fields:
+                      - {name: libelle, label: Libellé du bouton, widget: string, hint: "Ce que lit le visiteur, ex. Fiche d'inscription"}
+                      - {name: fichier, label: Fichier, widget: file, media_folder: "/site/assets/documents", public_folder: "/assets/documents", hint: "PDF de préférence, moins de 2 Mo. Pour une mise à jour, remplacez le fichier existant plutôt que d'en téléverser un nouveau : chaque version reste définitivement dans l'historique du dépôt."}
+                  - name: lien
+                    label: Lien externe
+                    widget: object
+                    summary: "{{fields.libelle}}"
+                    fields:
+                      - {name: libelle, label: Libellé du bouton, widget: string, hint: "Ce que lit le visiteur, ex. Formulaire de licence FFVB"}
+                      - {name: url, label: Adresse du lien, widget: string, hint: "Collez l'adresse complète, avec https://. Le lien s'ouvrira dans un nouvel onglet."}

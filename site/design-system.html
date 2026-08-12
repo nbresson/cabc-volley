@@ -103,8 +103,8 @@ body        → Archivo 15px / 16px
           <div class="gal-name">Paliers responsive</div>
           <p class="gal-note">Deux paliers seulement. Ce sont les valeurs réelles de <code>style.css</code> — les vérifier ici évite de tester à la mauvaise largeur.</p>
           <ul class="ds-list" style="margin-top:14px">
-            <li><strong>1100 px</strong> — <code>.cols-3</code> et <code>.cols-4</code> passent à deux colonnes.</li>
-            <li><strong>880 px</strong> — la mise en page repasse en une colonne, sauf <code>.match-row</code> et <code>.stats</code> qui passent à deux ; le corps grimpe à 16 px, le menu devient un burger, la date de <code>.match-row</code> prend toute la largeur, les filets verticaux deviennent horizontaux.</li>
+            <li><strong>1100 px</strong> — <code>.cols-3</code> et <code>.cols-4</code> passent à deux colonnes, et le menu principal se replie en burger : ses huit entrées plus le bouton ne tiennent pas en dessous.</li>
+            <li><strong>880 px</strong> — la mise en page repasse en une colonne, sauf <code>.match-row</code> et <code>.stats</code> qui passent à deux ; le corps grimpe à 16 px, les espacements se resserrent, la date de <code>.match-row</code> prend toute la largeur, les filets verticaux deviennent horizontaux.</li>
           </ul>
           <p class="gal-note">Largeur de contrôle retenue pour les vérifications visuelles : <strong>360 px</strong>.</p>
         </div>
@@ -166,7 +166,7 @@ body        → Archivo 15px / 16px
   </article>
 
   <article class="gal-item" data-classes="btn btn-primary btn-secondary">
-    <div class="gal-meta"><div class="gal-name">.btn.btn-primary &middot; .btn.btn-secondary</div><p class="gal-note">Une seule action primaire par écran : c'est celle qu'on veut voir choisie. Tout le reste est secondaire. Le secondaire s'inverse au survol.</p><div class="gal-demo"></div></div>
+    <div class="gal-meta"><div class="gal-name">.btn.btn-primary &middot; .btn.btn-secondary</div><p class="gal-note">Une seule action primaire par écran : c'est celle qu'on veut voir choisie. Tout le reste est secondaire. Le secondaire s'inverse au survol. Convention pour un lien qui sort de la page : <code>↗</code> et un nouvel onglet vers un lien externe, <code>↓</code> et l'attribut <code>download</code> pour un fichier servi par le site.</p><div class="gal-demo"></div></div>
     <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
     <template><div class="row"><a class="btn btn-primary">Adhérer</a><a class="btn btn-secondary">En savoir plus</a></div></template>
   </article>
