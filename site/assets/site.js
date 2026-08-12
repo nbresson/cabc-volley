@@ -1,5 +1,5 @@
 // Site CABC Volley — header/footer partagés + rendu du contenu JSON (Decap)
-const NAV=[["index.html","Accueil"],["club.html","Le Club"],["equipes.html","Équipes"],["calendrier.html","Calendrier"],["actualites.html","Actualités"],["boutique.html","Boutique"]];
+const NAV=[["index.html","Accueil"],["club.html","Le Club"],["equipes.html","Équipes"],["calendrier.html","Calendrier"],["actualites.html","Actualités"],["boutique.html","Boutique"],["infos.html","Infos"],["contact.html","Contact"]];
 // Pages enfants : elles allument l'entree de nav de leur page parente.
 const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html"};
 // Seul endroit du code qui construit l'URL d'une page equipe.
