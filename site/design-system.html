@@ -184,6 +184,111 @@ body        → Archivo 15px / 16px
     <template><span class="sep">Depuis 1946</span></template>
   </article>
 </section>
+    <section class="gal-section" id="blocs">
+      <h2>Blocs et grilles</h2>
+
+      <article class="gal-item" data-classes="card body ph">
+        <div class="gal-meta"><div class="gal-name">.card &middot; .card .ph &middot; .card .body</div><p class="gal-note">La carte de base : bordure 2 px, fond crème. <code>.ph</code> est le cadre hachuré d'image, en 4/3 par défaut. <code>.body</code> est le corps texte.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="card" style="max-width:260px"><div class="ph"><span>[ photo ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase">Écharpe du club</strong><span class="mono" style="font-size:11px">18 €</span></div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="link shadow">
+        <div class="gal-meta"><div class="gal-name">.card.link &middot; .card.shadow</div><p class="gal-note"><code>.link</code> inverse la carte au survol, <code>.shadow</code> lui donne une ombre dure décalée. À réserver aux cartes réellement cliquables.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><a class="card link shadow" href="#blocs" style="max-width:260px;text-decoration:none;color:inherit"><div class="ph"><span>[ photo ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase">Survolez-moi</strong></div></a></template>
+      </article>
+
+      <article class="gal-item" data-classes="cols-2 cols-3 cols-4">
+        <div class="gal-meta"><div class="gal-name">.cols-2 &middot; .cols-3 &middot; .cols-4</div><p class="gal-note">Grilles à gouttière de 28 px. <code>.cols-3</code> et <code>.cols-4</code> passent à deux colonnes sous 1100 px, puis à une seule sous 880 px. <code>.cols-2</code> passe directement à une colonne.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="cols-3"><div class="card"><div class="body">Un</div></div><div class="card"><div class="body">Deux</div></div><div class="card"><div class="body">Trois</div></div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="duo split">
+        <div class="gal-meta"><div class="gal-name">.duo &middot; .split</div><p class="gal-note">Deux colonnes de proportions réglables par <code>--a</code> et <code>--b</code>. <code>.split</code> ajoute le filet de séparation, <code>.duo</code> s'en passe. Sous 880 px le filet devient horizontal.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="split" style="--b:1.5fr"><div class="pad">Colonne étroite</div><div class="pad">Colonne large, une fois et demie plus grande</div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="band">
+        <div class="gal-meta"><div class="gal-name">.band</div><p class="gal-note">Bandeau de N cellules séparées par des filets, N réglé par <code>--n</code>. Empilé sous 880 px, les filets passant à l'horizontale.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="band section" style="--n:3"><div class="pad">Premier</div><div class="pad">Deuxième</div><div class="pad">Troisième</div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="row">
+        <div class="gal-meta"><div class="gal-name">.row</div><p class="gal-note">Rangée souple à gouttière de 14 px, qui passe à la ligne. C'est l'utilitaire à réflexe pour aligner des boutons ou des badges.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="row"><span class="badge">Un</span><span class="badge">Deux</span><span class="badge">Trois</span></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="stats">
+        <div class="gal-meta"><div class="gal-name">.stats</div><p class="gal-note">Bandeau de chiffres clés, N cellules via <code>--n</code>. Passe à deux colonnes sous 880 px. Presque toujours combiné à <code>.dark</code>.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="section dark stats" style="--n:3"><div><strong>220</strong><span class="mono">Licencié·es</span></div><div><strong>1946</strong><span class="mono">Fondation</span></div><div><strong>3</strong><span class="mono">Gymnases</span></div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="match-row match-list">
+        <div class="gal-meta"><div class="gal-name">.match-row &middot; .match-list</div><p class="gal-note"><strong>Grille à trois colonnes</strong> (130px 1fr auto) : une ligne doit avoir exactement trois enfants directs, sinon elle déborde sous 880 px, où elle passe à deux colonnes avec la date sur toute la largeur. <code>.match-list</code> encadre plusieurs lignes et les sépare d'un filet.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="match-list section"><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.<br><span style="color:var(--taupe)">20:00</span></span><div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3 · Gymnase Rollinat</div></div><span class="badge">Domicile</span></div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="match-band score">
+        <div class="gal-meta"><div class="gal-name">.match-band &middot; .score</div><p class="gal-note">Le bandeau de résultat mis en avant. Centré et empilé sous 880 px.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="match-band"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(24px,4vw,36px)">C.A. Brive</strong><span class="score">3–1</span><strong style="font-family:'Barlow Condensed';font-weight:700;font-size:clamp(24px,4vw,36px);color:var(--taupe)">Poitiers 3</strong></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="countdown">
+        <div class="gal-meta"><div class="gal-name">.countdown</div><p class="gal-note">Compte à rebours du prochain match. Bordures crème : il est prévu pour un fond sombre.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="dark pad"><div class="countdown"><div><strong>12</strong><span>JOURS</span></div><div><strong>04</strong><span>HEURES</span></div><div><strong>37</strong><span>MIN</span></div></div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="ds hl table-wrap">
+        <div class="gal-meta"><div class="gal-name">table.ds &middot; tr.hl &middot; .table-wrap</div><p class="gal-note"><code>.hl</code> met en avant la ligne du club, avec un liseré à gauche. <code>.table-wrap</code> fait défiler le tableau dans son cadre plutôt que de pousser la page — indispensable sur mobile.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="table-wrap"><table class="ds"><thead><tr><th>#</th><th>Équipe</th><th style="text-align:right">Pts</th></tr></thead><tbody><tr><td>1</td><td>Ussel VB</td><td style="text-align:right">18</td></tr><tr class="hl"><td>2</td><td>C.A. Brive Corrèze Volley</td><td style="text-align:right">15</td></tr></tbody></table></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="ds">
+        <div class="gal-meta"><div class="gal-name">blockquote.ds</div><p class="gal-note">Citation sur fond sable, barre épaisse à gauche. La même classe <code>ds</code> sert aux tableaux : c'est voulu, ce sont deux éléments distincts.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><blockquote class="ds"><p>On ne joue pas pour le classement, on joue pour le club.</p><cite>Jean-Pierre Delost, entraîneur</cite></blockquote></template>
+      </article>
+
+      <article class="gal-item" data-classes="field">
+        <div class="gal-meta"><div class="gal-name">label.field</div><p class="gal-note">Champ de formulaire avec son intitulé. Au focus, le champ blanchit et prend une ombre dure. La taille passe à 16 px sous 880 px : en dessous, Safari iOS zoome à chaque prise de focus.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><label class="field" style="max-width:320px"><span>Adresse email</span><input type="email" placeholder="prenom.nom@exemple.fr"></label></template>
+      </article>
+
+      <article class="gal-item" data-classes="acc acc-body">
+        <div class="gal-meta"><div class="gal-name">details.acc &middot; .acc-body</div><p class="gal-note">Accordéon natif, sans JavaScript. Le marqueur passe de + à – à l'ouverture, et le résumé s'inverse.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div><details class="acc"><summary>Comment s'inscrire ?</summary><div class="acc-body muted">Le dossier se remplit en ligne, puis se dépose lors d'une permanence.</div></details><details class="acc"><summary>Quel équipement prévoir ?</summary><div class="acc-body muted">Une tenue de sport et des chaussures de salle propres.</div></details></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="ds-list">
+        <div class="gal-meta"><div class="gal-name">ul.ds-list</div><p class="gal-note">Liste à tirets cadratins. C'est ce que produit le convertisseur Markdown de <code>site.js</code> pour le contenu rédigé dans Decap.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><ul class="ds-list"><li>Entraînement le mercredi et le vendredi</li><li>Matchs à domicile au gymnase Rollinat</li><li>Buvette ouverte une heure avant</li></ul></template>
+      </article>
+
+      <article class="gal-item" data-classes="social frame lbl">
+        <div class="gal-meta"><div class="gal-name">.social &middot; .frame &middot; .lbl</div><p class="gal-note">Lien réseau social : le carré du pictogramme s'inverse au survol, comme les cartes. <code>color:inherit</code> y est indispensable — sans lui, la règle globale <code>a{color:var(--encre)}</code> rend ces liens invisibles sur fond sombre.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="dark pad"><a class="social" href="#blocs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect class="frame" x="2" y="2" width="20" height="20"/><circle cx="12" cy="12" r="4.6"/><rect x="16.3" y="5.7" width="2.5" height="2.5" fill="currentColor" stroke="none"/></svg><span class="lbl">Instagram ↗</span></a></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="timeline">
+        <div class="gal-meta"><div class="gal-name">.timeline</div><p class="gal-note">Frise année · texte, en deux colonnes de 120 px et 1fr. Empilée sous 880 px.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="pad timeline"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:34px">1946</strong><p class="muted">Fondation de la section volley-ball du Club Athlétique de Brive.</p></div></template>
+      </article>
+    </section>
   </main>
 </div>
 <script>
