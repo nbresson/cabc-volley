@@ -17,6 +17,7 @@ p{margin:0}
 .section{border-bottom:2px solid var(--encre)}
 .pad{padding:56px 48px}
 .muted{color:#4a4438}
+.lien{border-bottom:2px solid var(--encre)}
 
 /* Boutons */
 .btn{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:13px 28px;border:2px solid var(--encre);cursor:pointer}

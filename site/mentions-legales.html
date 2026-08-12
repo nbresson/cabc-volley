@@ -38,11 +38,11 @@ window.__pageInit=async function(){
   document.getElementById("editeur").innerHTML=
     row("Dénomination",e.denomination)+row("Statut",e.statut)+row("Siège social",e.adresse)
     +row("N° RNA",e.rna)+row("N° SIRET",e.siret)+row("Directeur de publication",e.directeur_publication)
-    +row("Email",s?.email?`<a href="mailto:${s.email}" style="border-bottom:2px solid var(--encre)">${s.email}</a>`:"")
+    +row("Email",s?.email?`<a href="mailto:${s.email}" class="lien">${s.email}</a>`:"")
     +row("Téléphone",s?.telephone);
   document.getElementById("hebergeur").innerHTML=
     row("Nom",h.nom)+row("Adresse",h.adresse)
-    +row("Site",h.site?`<a href="${h.site}" style="border-bottom:2px solid var(--encre)">${h.site.replace(/^https?:\/\//,"")}</a>`:"");
+    +row("Site",h.site?`<a href="${h.site}" class="lien">${h.site.replace(/^https?:\/\//,"")}</a>`:"");
   const arts=d.articles||[];
   document.getElementById("articles").innerHTML=arts.map((a,i)=>`
     <section class="pad timeline" style="padding-top:38px;padding-bottom:38px;border-bottom:${i===arts.length-1?"2px solid var(--encre)":"1px solid var(--lin)"}">

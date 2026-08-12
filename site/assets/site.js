@@ -40,7 +40,7 @@ function vignette(src,alt,cadrage){if(!src)return"";
   return `<img src="${src}" alt="${alt||""}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${entier?"contain":"cover"}${entier?";padding:14px":""}">`;}
 // Markdown minimal (Decap) : paragraphes, ## titres, > citations, - listes, **gras**, [lien](url)
 function mdToHtml(md){if(!md)return"";
-  const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" style="border-bottom:2px solid var(--encre)">$1</a>');
+  const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" class="lien">$1</a>');
   return md.split(/\n\n+/).map(b=>{b=b.trim();if(!b)return"";
     if(b.startsWith("> "))return '<blockquote class="ds"><p>'+inl(b.slice(2).replace(/\n/g," "))+'</p></blockquote>';
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';

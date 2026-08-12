@@ -16,7 +16,7 @@ window.__pageInit=async function(){
     getJSON("content/teams.json"),getJSON("content/matches.json"),getJSON("content/settings.json")]);
   const el=document.getElementById("equipe");
   const t=(teams?.items||[]).find(x=>x.slug&&x.slug===slug);
-  if(!t){el.innerHTML='<section class="pad section"><p class="muted">Équipe introuvable. <a href="equipes.html" style="border-bottom:2px solid var(--encre)">Retour aux équipes</a></p></section>';return;}
+  if(!t){el.innerHTML='<section class="pad section"><p class="muted">Équipe introuvable. <a href="equipes.html" class="lien">Retour aux équipes</a></p></section>';return;}
   document.title=t.nom+" — C.A. Brive Corrèze Volley";
 
   const entete=`<section class="pad section">
