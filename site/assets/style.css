@@ -101,6 +101,9 @@ label.field{display:flex;flex-direction:column;gap:7px}
 label.field>span{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--taupe)}
 input[type=text],input[type=email],input[type=tel],textarea,select{border:2px solid var(--encre);border-radius:0;background:var(--creme);padding:13px 14px;font-family:'Archivo',sans-serif;font-size:15px;color:var(--encre);width:100%}
 input:focus,textarea:focus,select:focus{background:#fff;box-shadow:4px 4px 0 var(--encre);outline:none}
+.ok,.ko{display:none;margin-top:14px}
+.ok{color:var(--encre)}
+.ko{color:var(--erreur)}
 
 /* Accordéon */
 details.acc{border:2px solid var(--encre);border-bottom:none}
