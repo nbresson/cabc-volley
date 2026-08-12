@@ -78,7 +78,7 @@ Champs ajoutés à chaque entrée de `items` :
 | Champ | Obligatoire | Rôle |
 | --- | --- | --- |
 | `slug` | oui | Identifiant d'URL, sans espaces ni accents |
-| `groupe` | recommandé | `Séniors` / `Jeunes` / `Formation` — groupement de l'index ; à défaut, groupe « Autres » |
+| `groupe` | recommandé | `Séniors` / `Jeunes` / `Formation` — groupement de l'index ; une autre valeur crée sa propre section, une valeur absente ou vide range l'équipe dans « Autres » |
 | `photo` | non | Photo d'équipe, format 16/9 |
 | `classement` | non | Lien FFVB propre à l'équipe |
 | `infos` | non | Bloc « infos pratiques » (objet, voir ci-dessous) |
