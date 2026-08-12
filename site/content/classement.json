@@ -1,0 +1,46 @@
+{
+  "titre": "Classement Prénationale F",
+  "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+  "items": [
+    {
+      "equipe": "Ussel VB",
+      "joues": 6,
+      "victoires": 6,
+      "defaites": 0,
+      "points": 18,
+      "notre_club": false
+    },
+    {
+      "equipe": "C.A. Brive Corrèze Volley",
+      "joues": 6,
+      "victoires": 5,
+      "defaites": 1,
+      "points": 15,
+      "notre_club": true
+    },
+    {
+      "equipe": "Limoges VB",
+      "joues": 6,
+      "victoires": 4,
+      "defaites": 2,
+      "points": 13,
+      "notre_club": false
+    },
+    {
+      "equipe": "Tulle VB",
+      "joues": 6,
+      "victoires": 2,
+      "defaites": 4,
+      "points": 8,
+      "notre_club": false
+    },
+    {
+      "equipe": "Ussac VB",
+      "joues": 6,
+      "victoires": 1,
+      "defaites": 5,
+      "points": 4,
+      "notre_club": false
+    }
+  ]
+}

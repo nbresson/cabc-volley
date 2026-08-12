@@ -22,22 +22,36 @@
   <div id="upcoming" class="match-list"></div>
 </section>
 <section class="section pad">
-  <div class="section-head"><h2>Classement Prénationale F</h2><a id="ffvb2" class="mono lien" style="color:var(--encre)" target="_blank" rel="noopener">Classement FFVB officiel →</a></div>
-  <div class="table-wrap"><table class="ds"><thead><tr><th>#</th><th>Équipe</th><th style="text-align:center">J</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:right">Pts</th></tr></thead>
-  <tbody>
-    <tr><td>1</td><td>Ussel VB</td><td style="text-align:center">6</td><td style="text-align:center">6</td><td style="text-align:center">0</td><td style="text-align:right"><strong class="display-s">18</strong></td></tr>
-    <tr class="hl"><td>2</td><td>C.A. Brive Corrèze Volley</td><td style="text-align:center">6</td><td style="text-align:center">5</td><td style="text-align:center">1</td><td style="text-align:right"><strong class="display-s">15</strong></td></tr>
-    <tr><td>3</td><td>Limoges VB</td><td style="text-align:center">6</td><td style="text-align:center">4</td><td style="text-align:center">2</td><td style="text-align:right"><strong class="display-s">13</strong></td></tr>
-    <tr><td>4</td><td>Tulle VB</td><td style="text-align:center">6</td><td style="text-align:center">2</td><td style="text-align:center">4</td><td style="text-align:right"><strong class="display-s">8</strong></td></tr>
-    <tr><td>5</td><td>Ussac VB</td><td style="text-align:center">6</td><td style="text-align:center">1</td><td style="text-align:center">5</td><td style="text-align:right"><strong class="display-s">4</strong></td></tr>
-  </tbody></table></div>
-  <p class="mono" style="margin-top:14px;font-size:11px">Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.</p>
+  <div class="section-head"><h2 id="cl-titre">Classement</h2><a id="ffvb2" class="mono lien" style="color:var(--encre)" target="_blank" rel="noopener">Classement FFVB officiel →</a></div>
+  <div class="table-wrap" id="cl-tableau"><table class="ds"><thead><tr><th>#</th><th>Équipe</th><th style="text-align:center">J</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:right">Pts</th></tr></thead>
+  <tbody id="cl-lignes"></tbody></table></div>
+  <p class="vide muted" id="cl-vide" style="display:none">Classement à venir.</p>
+  <p class="mono" id="cl-note" style="margin-top:14px;font-size:11px"></p>
 </section>
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const [matches,settings]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json")]);
+  const [matches,settings,classement]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json"),getJSON("content/classement.json")]);
   if(settings?.ffvb_classement){document.getElementById("ffvb1").href=settings.ffvb_classement;document.getElementById("ffvb2").href=settings.ffvb_classement;}
+  // Le rang n est pas stocke : c est la position dans la liste. Reordonner les
+  // lignes dans Decap suffit, aucun numero n est a saisir.
+  const cl=classement||{};
+  document.getElementById("cl-titre").textContent=cl.titre||"Classement";
+  const lignes=Array.isArray(cl.items)?cl.items:[];
+  // Un chiffre absent ou illisible vaut 0 : la ligne reste lisible plutot que trouee.
+  const n=v=>Number.isFinite(+v)?+v:0;
+  if(lignes.length){
+    document.getElementById("cl-lignes").innerHTML=lignes.map((e,i)=>`
+      <tr${e.notre_club?' class="hl"':''}><td>${i+1}</td><td>${e.equipe||""}</td><td style="text-align:center">${n(e.joues)}</td><td style="text-align:center">${n(e.victoires)}</td><td style="text-align:center">${n(e.defaites)}</td><td style="text-align:right"><strong class="display-s">${n(e.points)}</strong></td></tr>`).join("");
+    document.getElementById("cl-vide").remove();
+  }else{
+    // Sans lignes, le tableau disparait mais la section reste : son titre et le
+    // lien vers le classement officiel FFVB gardent leur utilite.
+    document.getElementById("cl-tableau").remove();
+    document.getElementById("cl-vide").style.display="";
+  }
+  const note=document.getElementById("cl-note");
+  if(cl.note)note.textContent=cl.note; else note.remove();
   const last=(matches?.items||[]).filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
   const lr=document.getElementById("last-result");
   if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
