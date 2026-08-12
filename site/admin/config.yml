@@ -64,6 +64,16 @@ collections:
               - {name: date, label: Date & heure, widget: datetime, format: "YYYY-MM-DDTHH:mm"}
               - {name: adversaire, label: Adversaire, widget: string}
               - {name: competition, label: Compétition, widget: string}
+              - name: equipe
+                label: Équipe
+                widget: relation
+                collection: teams
+                file: teams
+                required: false
+                value_field: "items.*.slug"
+                search_fields: ["items.*.nom"]
+                display_fields: ["items.*.nom"]
+                hint: "Nécessaire pour que le match apparaisse sur la page de l'équipe. Sans équipe, il reste affiché sur la page Calendrier."
               - {name: lieu, label: Lieu, widget: string}
               - {name: domicile, label: À domicile ?, widget: boolean, default: true}
               - {name: statut, label: Statut, widget: select, options: ["a_venir","termine"], default: "a_venir"}
@@ -85,8 +95,23 @@ collections:
             summary: "{{fields.nom}}"
             fields:
               - {name: nom, label: Nom de l'équipe, widget: string}
+              - {name: slug, label: Identifiant URL, widget: string, hint: "Sans espaces ni accents, en minuscules, ex. n3-masculin. Ne le modifiez plus une fois la page en ligne : les liens déjà partagés cesseraient de fonctionner."}
+              - {name: groupe, label: Groupe, widget: select, options: ["Séniors","Jeunes","Formation"], default: "Séniors", required: false, hint: "Regroupe les équipes sur la page Équipes."}
               - {name: categorie, label: Catégorie / niveau, widget: string}
               - {name: creneau, label: Créneau, widget: string}
+              - {name: photo, label: Photo d'équipe, widget: image, required: false, hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko."}
+              - {name: classement, label: Lien classement FFVB de l'équipe, widget: string, required: false, hint: "Chaque équipe a sa poule, donc son propre classement. Ouvrez le classement de cette équipe sur le site de la FFVB et collez ici l'adresse de la page. Laissé vide, le lien général des « Réglages du club » est utilisé — et seulement si l'équipe a des matchs."}
+              - name: infos
+                label: Infos pratiques
+                widget: object
+                collapsed: true
+                required: false
+                hint: "Pour les équipes sans calendrier de matchs : jeunes, école de volley. Laissez le titre vide pour ne rien afficher."
+                fields:
+                  - {name: titre, label: Titre, widget: string, required: false, hint: "Laissez vide pour masquer complètement le bloc."}
+                  - {name: texte, label: Texte, widget: text, required: false}
+                  - {name: bouton, label: Libellé du bouton, widget: string, required: false, hint: "Le bouton n'apparaît que si le libellé ET le lien sont remplis."}
+                  - {name: lien, label: Lien du bouton, widget: string, required: false, hint: "Ex. adhesion.html ou contact.html"}
               - name: effectif
                 label: Effectif
                 label_singular: Joueur/joueuse
