@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Infos &amp; documents — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Infos &amp; documents</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(38px,9vw,88px)" id="titre"></h1></div>
+  <p class="muted" id="chapo" style="max-width:60ch;margin-top:14px"></p>
+</section>
+<div id="blocs"></div>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const data=await getJSON("content/infos.json");
+  const titre=data?.titre||"Infos & documents";
+  document.title=titre+" — C.A. Brive Corrèze Volley";
+  document.getElementById("titre").textContent=titre;
+  const chapo=document.getElementById("chapo");
+  if(data?.chapo)chapo.textContent=data.chapo; else chapo.remove();
+
+  // Une adresse saisie sans protocole serait resolue relativement au site et
+  // menerait a la page 404. Ce champ est neuf, la faute est probable.
+  const externe=u=>/^https?:/i.test(u)?u:"https://"+u;
+
+  // Un document dont le champ utile est vide, ou dont le type est inconnu, est
+  // ignore : le reste du bloc s affiche quand meme.
+  const bouton=d=>{
+    if(d?.type==="fichier"&&d.fichier)
+      return `<a class="btn btn-secondary" href="${d.fichier}" download>↓ ${d.libelle||"Document"} (PDF)</a>`;
+    if(d?.type==="lien"&&d.url)
+      return `<a class="btn btn-secondary" href="${externe(d.url)}" target="_blank" rel="noopener">${d.libelle||"Lien"} ↗</a>`;
+    return "";
+  };
+
+  const blocs=data?.blocs||[];
+  document.getElementById("blocs").innerHTML=blocs.length?blocs.map(b=>{
+    const docs=(b.documents||[]).map(bouton).join("");
+    return `<section class="pad section">
+      <div class="section-head" style="margin-bottom:14px"><h2>${b.titre||""}</h2></div>
+      ${b.texte?mdToHtml(b.texte):""}
+      ${docs?`<div class="row" style="margin-top:18px">${docs}</div>`:""}
+    </section>`;
+  }).join(""):'<section class="pad section"><p class="muted">Aucune information pour le moment.</p></section>';
+};
+</script></body></html>
