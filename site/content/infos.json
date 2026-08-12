@@ -3,12 +3,22 @@
   "chapo": "Les informations pratiques du club et les documents à télécharger.",
   "blocs": [
     {
-      "titre": "Formulaire de licence FFVB",
+      "titre": "Documents 2026/2027",
       "documents": [
         {
           "type": "lien",
           "url": "https://extranet.ffvb.org/data/Files/documents/licences/Formulaire_demande_licences_2026_2027.pdf",
           "libelle": "Formulaire vierge de Demande de licence 2026/2027"
+        },
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/licences/FFvolley_Categories_2026-27.pdf",
+          "libelle": "Catégories d'âge 2026/2027"
+        },
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/licences/FFvolley_Fiche_Pratique_Controle_Honorabilite.pdf",
+          "libelle": "Fiche pratique - Contrôle d'honorabilité"
         }
       ]
     }
