@@ -85,6 +85,29 @@ collections:
               - {name: gagne, label: Victoire ?, widget: boolean, default: false, required: false, hint: "À cocher pour une victoire. Si elle reste décochée, la rencontre s'affiche « Défaite » sur la page de l'équipe."}
               - {name: une, label: Match à la une ?, widget: boolean, default: false, required: false}
 
+  - name: classement
+    label: Classement
+    files:
+      - name: classement
+        label: Classement du championnat
+        file: site/content/classement.json
+        fields:
+          - {name: titre, label: Titre de la section, widget: string, hint: "Affiché au-dessus du tableau, ex. Classement Prénationale F"}
+          - {name: note, label: Phrase sous le tableau, widget: text, required: false, hint: "Laissez vide pour ne rien afficher sous le tableau."}
+          - name: items
+            label: Lignes du classement
+            label_singular: Équipe
+            widget: list
+            summary: "{{fields.equipe}} — {{fields.points}} pts"
+            hint: "Le rang n'est pas à saisir : c'est l'ordre de cette liste. Faites glisser une ligne pour la déplacer. Sans aucune ligne, la page affiche « Classement à venir »."
+            fields:
+              - {name: equipe, label: Équipe, widget: string}
+              - {name: joues, label: Matchs joués (J), widget: number, value_type: int, min: 0, default: 0}
+              - {name: victoires, label: Victoires (V), widget: number, value_type: int, min: 0, default: 0}
+              - {name: defaites, label: Défaites (D), widget: number, value_type: int, min: 0, default: 0}
+              - {name: points, label: Points (Pts), widget: number, value_type: int, min: 0, default: 0}
+              - {name: notre_club, label: Notre club ?, widget: boolean, default: false, required: false, hint: "Met la ligne en avant sur fond sable. À cocher sur une seule ligne."}
+
   - name: teams
     label: Équipes & effectifs
     files:
