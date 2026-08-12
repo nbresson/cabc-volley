@@ -6,16 +6,24 @@ Aucune étape de build : ce sont des fichiers HTML/CSS/JS, le contenu vit dans `
 ## Structure
 ```
 site/
-  index.html club.html equipes.html calendrier.html
+  index.html club.html equipes.html equipe.html calendrier.html
   actualites.html article.html adhesion.html boutique.html contact.html 404.html
   assets/      style.css · site.js · logo.png · uploads/ (images du CMS)
   content/     settings/news/matches/teams/products .json  ← contenu éditable
   admin/       index.html · config.yml                     ← interface Decap CMS
 ```
+`equipe.html` est le gabarit de la page d'une équipe (accessible via l'identifiant
+URL de l'équipe, construit par `teamUrl()` dans `assets/site.js`) : infos pratiques,
+prochains matchs, derniers résultats, classement et effectif.
 
 ## 1 · Le dépôt GitHub
 Le code vit sur <https://github.com/nbresson/cabc-volley>, branche `main`.
 Chaque publication depuis Decap y crée un commit.
+
+Après une modification de `site/content/*.json`, `npm run check` vérifie que les
+fichiers restent cohérents (identifiants d'équipe uniques et bien formés, matchs
+rattachés à une équipe existante). À lancer avant de committer une modification
+manuelle de ces fichiers.
 
 ## 2 · Déploiement sur Cloudflare Workers
 Le site est servi par un worker `cabc-volley` en « static assets » : le dossier `site/`
@@ -64,7 +72,7 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 ## 5 · Ce que le bureau peut modifier (menus Decap)
 - **Actualités** — articles (titre, date, catégorie, chapô, contenu Markdown, image, « à la une »)
 - **Matchs & résultats** — matchs à venir et scores ; « match à la une » = celui du compte à rebours d'accueil
-- **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo)
+- **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo) ; chaque équipe a aussi son identifiant URL, son groupe, sa photo d'équipe, son lien de classement FFVB et son bloc infos pratiques (pour les équipes sans calendrier de matchs)
 - **Boutique** — produits (nom, prix, statut dispo/nouveau/épuisé, photo)
 - **Réglages** — email, téléphone, permanence, **lien classement FFVB**
 
@@ -81,6 +89,7 @@ pour le remplir. En respectant ces tailles, aucun recadrage ne surprend.
 | Boutique               | 1/1         | 1200 × 1200 px    |
 | Portraits joueur·ses   | 3/4         | 900 × 1200 px     |
 | Gymnases               | 16/10       | 1600 × 1000 px    |
+| Photo d'équipe         | 16/9        | 1600 × 900 px     |
 
 Dans tous les cas : **JPEG** (ou WebP) et **moins de 400 Ko**. Le PNG est réservé aux
 logos et aux images à fond transparent — sur une photo il pèse cinq à dix fois plus
