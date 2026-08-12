@@ -1,5 +1,16 @@
 {
   "titre": "Infos & documents",
   "chapo": "Les informations pratiques du club et les documents à télécharger.",
-  "blocs": []
+  "blocs": [
+    {
+      "titre": "Formulaire de licence FFVB",
+      "documents": [
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/licences/Formulaire_demande_licences_2026_2027.pdf",
+          "libelle": "Formulaire vierge de Demande de licence 2026/2027"
+        }
+      ]
+    }
+  ]
 }
