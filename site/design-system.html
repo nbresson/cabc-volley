@@ -109,6 +109,81 @@ body        → Archivo 15px / 16px
         </div>
       </div>
     </section>
+    <section class="gal-section" id="texte">
+  <h2>Texte, structure et actions</h2>
+
+  <article class="gal-item" data-classes="mono">
+    <div class="gal-meta"><div class="gal-name">.mono</div><p class="gal-note">Métadonnée : date, catégorie, mention discrète. Interlettrage 0.24em.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><span class="mono">Saison 2026–2027</span></template>
+  </article>
+
+  <article class="gal-item" data-classes="eyebrow">
+    <div class="gal-meta"><div class="gal-name">.eyebrow</div><p class="gal-note">Surtitre annonçant une section. Plus espacé que <code>.mono</code> (0.3em), et généralement précédé d'un tiret cadratin.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="eyebrow">— Prochaines journées</div></template>
+  </article>
+
+  <article class="gal-item" data-classes="muted">
+    <div class="gal-meta"><div class="gal-name">.muted</div><p class="gal-note">Texte secondaire. Ce n'est pas du gris : c'est l'encre éclaircie, pour rester lisible sur le crème.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><p class="muted">Entrée libre pour tous les matchs à domicile.</p></template>
+  </article>
+
+  <article class="gal-item" data-classes="section pad">
+    <div class="gal-meta"><div class="gal-name">.section &middot; .pad</div><p class="gal-note"><code>.section</code> ne fait qu'une chose : le filet de 2 px en bas. <code>.pad</code> ne fait que l'espacement intérieur, 56 px qui tombent à 38 px sous 880 px. Elles se combinent presque toujours.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="section pad">Un bloc avec son espacement et son filet de séparation.</div></template>
+  </article>
+
+  <article class="gal-item" data-classes="section-head">
+    <div class="gal-meta"><div class="gal-name">.section-head</div><p class="gal-note">Titre de section et mention alignés sur la même ligne de base. La mention de droite passe à la ligne sous 880 px.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="section-head"><h2>Nos gymnases</h2><span class="mono">3 salles · Brive</span></div></template>
+  </article>
+
+  <article class="gal-item" data-classes="crumb">
+    <div class="gal-meta"><div class="gal-name">.crumb</div><p class="gal-note">Fil d'ariane. Le dernier élément n'est pas un lien et repasse en encre.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="equipes.html">Équipes</a><span>/</span><span style="color:var(--encre)">National 3 masculin</span></div></template>
+  </article>
+
+  <article class="gal-item" data-classes="dark">
+    <div class="gal-meta"><div class="gal-name">.dark</div><p class="gal-note">Inverse le bloc. Attention : les boutons ordinaires y deviennent illisibles, il faut passer à <code>.btn-inverse</code> ou <code>.btn-outline-light</code>.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="dark pad">Bloc inversé, texte crème sur encre.</div></template>
+  </article>
+
+  <article class="gal-item" data-classes="on-sable">
+    <div class="gal-meta"><div class="gal-name">.on-sable</div><p class="gal-note">Fond sable, pour distinguer un bloc sans l'inverser complètement.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="on-sable pad">Bloc sur fond sable.</div></template>
+  </article>
+
+  <article class="gal-item" data-classes="btn btn-primary btn-secondary">
+    <div class="gal-meta"><div class="gal-name">.btn.btn-primary &middot; .btn.btn-secondary</div><p class="gal-note">Une seule action primaire par écran : c'est celle qu'on veut voir choisie. Tout le reste est secondaire. Le secondaire s'inverse au survol.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="row"><a class="btn btn-primary">Adhérer</a><a class="btn btn-secondary">En savoir plus</a></div></template>
+  </article>
+
+  <article class="gal-item" data-classes="btn-inverse btn-outline-light">
+    <div class="gal-meta"><div class="gal-name">.btn-inverse &middot; .btn-outline-light</div><p class="gal-note">Les deux variantes pour fond sombre. Sur <code>.dark</code>, ce sont les seules utilisables.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div class="dark pad"><div class="row"><a class="btn btn-inverse">Adhérer</a><a class="btn btn-outline-light">En savoir plus</a></div></div></template>
+  </article>
+
+  <article class="gal-item" data-classes="badge badge-outline badge-muted">
+    <div class="gal-meta"><div class="gal-name">.badge &middot; .badge-outline &middot; .badge-muted</div><p class="gal-note">Étiquette d'état. Plein pour l'état par défaut, contour pour l'alternative, taupe pour l'état éteint.</p><p class="gal-note"><strong>Écart connu :</strong> <code>.badge-outline</code> et <code>.badge-muted</code> ne redéfinissent que couleur, bordure et espacement — ni la police, ni la taille, ni les capitales. Employées seules, elles ne ressemblent pas à une étiquette. C'est pourtant ce que fait le site aujourd'hui dans <code>matchRow()</code> et dans <code>equipe.html</code>. La première rangée ci-dessous montre l'usage actuel, la seconde le rendu obtenu en ajoutant <code>.badge</code>.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><div><div class="row" style="margin-bottom:12px"><span class="badge">Domicile</span><span class="badge-outline">Extérieur</span><span class="badge-muted">Défaite</span></div><div class="row"><span class="badge">Domicile</span><span class="badge badge-outline">Extérieur</span><span class="badge badge-muted">Défaite</span></div></div></template>
+  </article>
+
+  <article class="gal-item" data-classes="sep">
+    <div class="gal-meta"><div class="gal-name">.sep</div><p class="gal-note">Mention encadrée de deux filets. Sert de respiration entre deux blocs, souvent centrée.</p><div class="gal-demo"></div></div>
+    <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+    <template><span class="sep">Depuis 1946</span></template>
+  </article>
+</section>
   </main>
 </div>
 <script>
