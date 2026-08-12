@@ -198,6 +198,11 @@ Dans `site/admin/config.yml`, collection `teams` : ajout de `slug`, `groupe`,
 Le champ `slug` porte un avertissement explicite : une fois la page publiée et
 partagée, le modifier casse les liens existants.
 
+Le champ `classement` est propre à chaque équipe : chacune a sa poule et donc
+son URL de classement sur le site de la FFVB. Son hint invite à ouvrir le
+classement de la poule concernée et à en coller l'adresse. Le lien global des
+« Réglages du club » ne sert que de repli tant que ce champ est vide.
+
 Collection `matches` : ajout du champ `equipe`, en liste déroulante alimentée
 depuis `teams.json` via le widget `relation`, pour que le club n'ait pas à
 retenir les slugs et pour qu'une nouvelle équipe apparaisse d'elle-même dans la
