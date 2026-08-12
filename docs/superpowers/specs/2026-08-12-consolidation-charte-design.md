@@ -183,6 +183,28 @@ C'est le seul lot qui touche à du texte visible par le public. L'écart est min
 mais un site qui répond de trois façons différentes à la même absence donne
 l'impression d'avoir été écrit par trois personnes.
 
+## Les gabarits de la galerie sont dans le périmètre
+
+*Ajouté après relecture, une fois la galerie et la page Infos fusionnées dans
+`main`. Le relevé initial ne l'avait pas distingué.*
+
+`site/design-system.html` porte **13 des 48 usages inline de Barlow Condensed**,
+dont **12 à l'intérieur de ses `<template>`** — les démonstrations censées montrer
+le markup réel du site. Elle porte aussi 5 des occurrences de `#8f8672`, également
+dans des gabarits.
+
+Si le site adopte `.display-*` et que ces gabarits continuent d'afficher du Barlow
+inline, la galerie enseigne un markup que le site n'emploie plus. Elle se met à
+mentir, ce qui est précisément ce qu'elle existe pour empêcher.
+
+Les 12 gabarits concernés sont donc mis à jour dans ce chantier, au même titre que
+les pages. Le 13ᵉ usage, hors gabarit, appartient à la charpente de la page et suit
+la même règle que le reste du site.
+
+Le relevé confirmé après fusion, inchangé par l'arrivée de `site/infos.html`, qui
+n'introduit aucun Barlow inline : 48 usages au total, 17 `#8f8672`, 12 `#a89e87`,
+9 `#c9c1ab`, 15 soulignements de lien.
+
 ## Ce que le garde-fou impose
 
 Ajouter neuf classes à `style.css` — `display-s`, `display-m`, `display-l`,
