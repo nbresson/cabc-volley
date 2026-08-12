@@ -289,6 +289,40 @@ body        → Archivo 15px / 16px
         <template><div class="pad timeline"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:34px">1946</strong><p class="muted">Fondation de la section volley-ball du Club Athlétique de Brive.</p></div></template>
       </article>
     </section>
+    <section class="gal-section" id="composites">
+      <h2>Motifs composites</h2>
+      <p class="gal-note" style="max-width:70ch;margin-bottom:8px">Ces cinq assemblages n'ont pas de classe à eux : ils vivent en styles inline dans les pages. Le contrôle automatisé ne peut donc pas vérifier qu'ils sont à jour — leur exactitude repose sur la discipline. La source de chacun est indiquée.</p>
+
+      <article class="gal-item">
+        <div class="gal-meta"><div class="gal-name">Carte joueur</div><p class="gal-note">Source : <code>site/equipe.html</code>. Portrait en 3/4, numéro en surimpression avec une ombre crème pour rester lisible sur toute photo. Le portrait porte <code>loading="lazy"</code> : un effectif complet, c'est une douzaine d'images.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="card shadow" style="max-width:230px"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden"><span class="mono" style="color:#8f8672">[ portrait ]</span><strong style="position:absolute;top:8px;right:14px;font-family:'Barlow Condensed';font-weight:900;font-size:40px;text-shadow:0 0 6px var(--creme)">10</strong></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase;line-height:1">Rémi DARDANELLI</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">Attaquant R4/Pointe</span></div></div></template>
+      </article>
+
+      <article class="gal-item">
+        <div class="gal-meta"><div class="gal-name">Cadre hachuré de remplacement</div><p class="gal-note">Sources : <code>site/equipe.html</code>, <code>site/equipes.html</code>. Ce qui s'affiche tant qu'aucune photo n'a été téléversée. Deux proportions selon l'emplacement : 16/9 pour une photo d'équipe, 3/4 pour un portrait. La couleur <code>#8f8672</code> de la mention est un héritage, pas un jeton.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="cols-2"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre)"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div><div class="ph" style="aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre)"><span class="mono" style="color:#8f8672">[ portrait ]</span></div></div></template>
+      </article>
+
+      <article class="gal-item">
+        <div class="gal-meta"><div class="gal-name">Ligne de match à venir</div><p class="gal-note">Source : <code>matchRow()</code> dans <code>site/assets/site.js</code>. C'est la seule des cinq à être déjà une fonction partagée — l'appeler vaut mieux que copier ce markup. <strong>Exactement trois enfants directs</strong> : au-delà, la grille déborde sous 880 px.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.<br><span style="color:var(--taupe)">20:00</span></span><div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3 · Gymnase Rollinat</div></div><span class="badge">Domicile</span></div></template>
+      </article>
+
+      <article class="gal-item">
+        <div class="gal-meta"><div class="gal-name">Ligne de résultat</div><p class="gal-note">Source : <code>site/equipe.html</code>. Variante de la précédente. Le score et le badge sont groupés dans <strong>une seule</strong> cellule : c'est ce qui préserve les trois enfants directs de la grille.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="match-row"><span class="mono" style="letter-spacing:.06em;color:var(--encre)">SAM. 26 SEPT.</span><div><strong style="font-family:'Barlow Condensed';font-size:24px">CAB — Poitiers 3</strong><div class="muted" style="font-size:13px">National 3</div></div><span class="row" style="align-items:center;gap:12px"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px">3–1</strong><span class="badge">Victoire</span></span></div></template>
+      </article>
+
+      <article class="gal-item">
+        <div class="gal-meta"><div class="gal-name">Carte d'index cliquable</div><p class="gal-note">Source : <code>site/equipes.html</code>. La carte entière est le lien, d'où <code>text-decoration:none;color:inherit</code>. Sans identifiant, la page rend un <code>&lt;div&gt;</code> au lieu du <code>&lt;a&gt;</code> : la carte reste visible mais n'est pas cliquable, plutôt que de produire un lien mort.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><a class="card link shadow" href="#composites" style="max-width:300px;text-decoration:none;color:inherit"><div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase;line-height:1.05">National 3 masculin</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">National 3</span><span class="muted" style="font-size:13px">Mer. 18h30-20h30 · Rollinat</span><span class="mono" style="font-size:11px;letter-spacing:.12em;border-top:1px solid var(--lin);padding-top:8px;margin-top:4px">Prochain · SAM. 26 SEPT. · Poitiers 3</span></div></a></template>
+      </article>
+    </section>
   </main>
 </div>
 <script>
