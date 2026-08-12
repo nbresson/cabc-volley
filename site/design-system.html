@@ -42,6 +42,65 @@
       <h1 style="font-size:clamp(32px,6vw,64px)">Design system</h1>
       <p class="gal-note" style="max-width:60ch">Cette page n'est liée depuis aucun menu du site : elle s'atteint en saisissant son adresse. Elle charge la vraie feuille de style, donc ce qu'on y voit est ce que le site produit. Un contrôle automatisé vérifie qu'aucune classe de <code>style.css</code> n'y manque.</p>
     </header>
+    <section class="gal-section" id="fondations">
+      <h2>Fondations</h2>
+
+      <div class="gal-item">
+        <div class="gal-meta">
+          <div class="gal-name">Couleurs</div>
+          <p class="gal-note">Six jetons déclarés dans <code>:root</code>, plus un motif hachuré. Aucune autre couleur ne doit apparaître dans le site, à deux exceptions près, héritées : <code>#4a4438</code> pour le texte atténué et <code>#8f8672</code> pour les mentions de cadre vide.</p>
+          <div class="cols-3" style="gap:16px;margin-top:16px">
+            <div><div class="gal-swatch" style="background:var(--encre)"></div><div class="gal-name" style="margin-top:7px">--encre</div><div class="gal-note">#17150F — texte, bordures, fonds inversés</div></div>
+            <div><div class="gal-swatch" style="background:var(--creme)"></div><div class="gal-name" style="margin-top:7px">--creme</div><div class="gal-note">#EFE9DB — fond de page, texte sur fond sombre</div></div>
+            <div><div class="gal-swatch" style="background:var(--sable)"></div><div class="gal-name" style="margin-top:7px">--sable</div><div class="gal-note">#E6DFCD — fond alterné, ligne de tableau mise en avant</div></div>
+            <div><div class="gal-swatch" style="background:var(--taupe)"></div><div class="gal-name" style="margin-top:7px">--taupe</div><div class="gal-note">#6B6353 — texte secondaire, surtitres</div></div>
+            <div><div class="gal-swatch" style="background:var(--lin)"></div><div class="gal-name" style="margin-top:7px">--lin</div><div class="gal-note">#CFC7B2 — filets fins, séparateurs internes</div></div>
+            <div><div class="gal-swatch" style="background:var(--erreur)"></div><div class="gal-name" style="margin-top:7px">--erreur</div><div class="gal-note">#8C2F1E — messages d'erreur</div></div>
+            <div><div class="gal-swatch" style="background:var(--hachures)"></div><div class="gal-name" style="margin-top:7px">--hachures</div><div class="gal-note">Fond des cadres d'image manquante</div></div>
+          </div>
+        </div>
+        <div>
+          <pre class="gal-code">background: var(--encre);
+color: var(--creme);
+border: 2px solid var(--encre);</pre>
+        </div>
+      </div>
+
+      <div class="gal-item">
+        <div class="gal-meta">
+          <div class="gal-name">Typographies</div>
+          <p class="gal-note">Trois familles, chacune avec un rôle exclusif. Les mélanger est le moyen le plus rapide de faire dérailler la charte.</p>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:18px">
+            <div><h3 style="font-size:clamp(34px,5vw,52px)">Barlow Condensed 900</h3><div class="gal-note">Titres, scores, chiffres. Toujours en capitales, interligne 0.92. C'est la voix qui crie.</div></div>
+            <div><strong style="font-family:'Barlow Condensed';font-weight:700;font-size:21px;text-transform:uppercase;letter-spacing:.04em">Barlow Condensed 700</strong><div class="gal-note">Boutons, navigation, résumés d'accordéon.</div></div>
+            <div><span style="font-size:15px">Archivo — le texte courant respire à 15 px, interligne 1.65. Il passe à 16 px sous 880 px.</span><div class="gal-note">Corps de texte, champs de formulaire.</div></div>
+            <div><span class="mono">DM Mono — les surtitres chuchotent</span><div class="gal-note">Surtitres, badges, dates, métadonnées. Toujours espacé et en capitales.</div></div>
+          </div>
+        </div>
+        <div>
+          <pre class="gal-code">h1,h2,h3,h4 → Barlow Condensed 900
+.btn        → Barlow Condensed 700
+body        → Archivo 15px / 16px
+.mono .eyebrow → DM Mono</pre>
+        </div>
+      </div>
+
+      <div class="gal-item">
+        <div class="gal-meta">
+          <div class="gal-name">Paliers responsive</div>
+          <p class="gal-note">Deux paliers seulement. Ce sont les valeurs réelles de <code>style.css</code> — les vérifier ici évite de tester à la mauvaise largeur.</p>
+          <ul class="ds-list" style="margin-top:14px">
+            <li><strong>1100 px</strong> — <code>.cols-3</code> et <code>.cols-4</code> passent à deux colonnes.</li>
+            <li><strong>880 px</strong> — tout passe sur une colonne, le corps grimpe à 16 px, le menu devient un burger, <code>.match-row</code> passe à deux colonnes avec la date sur toute la largeur, les filets verticaux deviennent horizontaux.</li>
+          </ul>
+          <p class="gal-note">Largeur de contrôle retenue pour les vérifications visuelles : <strong>360 px</strong>.</p>
+        </div>
+        <div>
+          <pre class="gal-code">@media(max-width:1100px){ … }
+@media(max-width:880px){ … }</pre>
+        </div>
+      </div>
+    </section>
   </main>
 </div>
 <script>
