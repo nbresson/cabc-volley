@@ -33,6 +33,11 @@ feuille de style sans la documenter dans la galerie fait échouer la compilation
 Seul un développeur peut déclencher cet échec — le bureau, qui publie depuis
 Decap, ne touche jamais à `style.css` et ne peut pas le provoquer.
 
+Une classe de chrome de page (en-tête, pied de page, gabarit) n'a pas sa place
+dans la galerie : elle se déclare plutôt dans la liste `EXCLUES` de
+`scripts/check-design-system.mjs`, avec sa raison. Si le contrôle échoue sur
+une classe de ce genre, c'est là qu'il faut l'ajouter, pas dans `design-system.html`.
+
 ## 2 · Déploiement sur Cloudflare Workers
 Le site est servi par un worker `cabc-volley` en « static assets » : le dossier `site/`
 est publié tel quel, d'après [`wrangler.jsonc`](../wrangler.jsonc) à la racine du projet.

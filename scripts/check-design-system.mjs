@@ -41,9 +41,36 @@ function classesDeLaGalerie(html) {
   return noms;
 }
 
+// Pour chaque entree <article class="gal-item" data-classes="..."> pourvue
+// d un <template>, verifie que chaque classe declaree dans data-classes
+// apparait bien dans un class="..." a l interieur de ce meme template. Une
+// entree sans data-classes ou sans template est ignoree. C est ce controle
+// qui aurait detecte, mecaniquement, l ecart ou l entree des grilles
+// declarait .cols-2 et .cols-4 sans les rendre.
+function classesDeclareesSansRendu(html) {
+  const manquantes = [];
+  for (const article of html.matchAll(/<article class="gal-item"([^>]*)>([\s\S]*?)<\/article>/g)) {
+    const attrMatch = article[1].match(/data-classes\s*=\s*"([^"]*)"/);
+    if (!attrMatch) continue;
+    const tplMatch = article[2].match(/<template>([\s\S]*?)<\/template>/);
+    if (!tplMatch) continue;
+    const nomMatch = article[2].match(/<div class="gal-name">([\s\S]*?)<\/div>/);
+    const nomEntree = nomMatch ? nomMatch[1].replace(/<[^>]+>/g, "").trim() : "(sans nom)";
+    const dansTemplate = new Set();
+    for (const m of tplMatch[1].matchAll(/class="([^"]*)"/g)) {
+      for (const c of m[1].trim().split(/\s+/)) if (c) dansTemplate.add(c);
+    }
+    for (const nom of attrMatch[1].trim().split(/\s+/)) {
+      if (nom && !dansTemplate.has(nom)) manquantes.push({ nom, nomEntree });
+    }
+  }
+  return manquantes;
+}
+
 const erreurs = [];
 const duCss = classesDuCss(lire("site/assets/style.css"));
-const deLaGalerie = classesDeLaGalerie(lire("site/design-system.html"));
+const htmlGalerie = lire("site/design-system.html");
+const deLaGalerie = classesDeLaGalerie(htmlGalerie);
 
 for (const nom of [...duCss].sort()) {
   if (deLaGalerie.has(nom) || EXCLUES.has(nom)) continue;
@@ -63,6 +90,10 @@ for (const [nom, raison] of EXCLUES) {
   if (deLaGalerie.has(nom)) {
     erreurs.push(`Exclusion contradictoire : « ${nom} » est à la fois documentée dans la galerie et listée dans EXCLUES.`);
   }
+}
+
+for (const { nom, nomEntree } of classesDeclareesSansRendu(htmlGalerie)) {
+  erreurs.push(`Classe déclarée sans rendu : « ${nom} » figure dans le data-classes de l'entrée « ${nomEntree} » mais n'apparaît dans aucun class="" de son <template>.`);
 }
 
 if (erreurs.length) {

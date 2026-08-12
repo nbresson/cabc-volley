@@ -48,7 +48,7 @@
       <div class="gal-item">
         <div class="gal-meta">
           <div class="gal-name">Couleurs</div>
-          <p class="gal-note">Six jetons déclarés dans <code>:root</code>, plus un motif hachuré : c'est la palette officielle. Cinq valeurs supplémentaires subsistent dans <code>style.css</code>, héritées de l'ancien design : elles ne doivent pas servir de modèle. Aucune autre couleur ne doit apparaître dans le site.</p>
+          <p class="gal-note">Six jetons déclarés dans <code>:root</code>, plus un motif hachuré : c'est la palette officielle. Six valeurs supplémentaires subsistent dans <code>style.css</code>, héritées de l'ancien design ; une septième, <code>#c9c1ab</code>, n'est même pas dans la feuille de style — elle est répétée en style inline dans six pages (<code>404.html</code>, <code>adhesion.html</code>, <code>club.html</code>, <code>contact.html</code>, <code>index.html</code>, <code>mentions-legales.html</code>). Aucune de ces couleurs héritées n'est un modèle à suivre : la charte est verrouillée, et aucune couleur nouvelle ne doit s'y ajouter.</p>
           <div class="cols-3" style="gap:16px;margin-top:16px">
             <div><div class="gal-swatch" style="background:var(--encre)"></div><div class="gal-name" style="margin-top:7px">--encre</div><div class="gal-note">#17150F — texte, bordures, fonds inversés</div></div>
             <div><div class="gal-swatch" style="background:var(--creme)"></div><div class="gal-name" style="margin-top:7px">--creme</div><div class="gal-note">#EFE9DB — fond de page, texte sur fond sombre</div></div>
@@ -65,6 +65,11 @@
             <div><div class="gal-swatch" style="background:#8f8672"></div><div class="gal-name" style="margin-top:7px">#8f8672</div><div class="gal-note">mention de cadre vide</div></div>
             <div><div class="gal-swatch" style="background:#a89e87"></div><div class="gal-name" style="margin-top:7px">#a89e87</div><div class="gal-note">libellé sur fond sombre</div></div>
             <div><div class="gal-swatch" style="background:#fff"></div><div class="gal-name" style="margin-top:7px">#fff</div><div class="gal-note">fond de champ au focus</div></div>
+            <div><div class="gal-swatch" style="background:rgba(23,21,15,.05)"></div><div class="gal-name" style="margin-top:7px">rgba(23,21,15,.05)</div><div class="gal-note">filet du dégradé décoratif du héros</div></div>
+          </div>
+          <p class="gal-note" style="margin-top:18px;border-top:1px solid var(--lin);padding-top:18px;font-weight:600">Hors style.css (répétée en style inline, pas même héritée du fichier)</p>
+          <div class="cols-3" style="gap:16px;margin-top:14px">
+            <div><div class="gal-swatch" style="background:#c9c1ab"></div><div class="gal-name" style="margin-top:7px">#c9c1ab</div><div class="gal-note">texte de corps sur fond sombre, six pages</div></div>
           </div>
         </div>
         <div>
@@ -99,7 +104,7 @@ body        → Archivo 15px / 16px
           <p class="gal-note">Deux paliers seulement. Ce sont les valeurs réelles de <code>style.css</code> — les vérifier ici évite de tester à la mauvaise largeur.</p>
           <ul class="ds-list" style="margin-top:14px">
             <li><strong>1100 px</strong> — <code>.cols-3</code> et <code>.cols-4</code> passent à deux colonnes.</li>
-            <li><strong>880 px</strong> — tout passe sur une colonne, le corps grimpe à 16 px, le menu devient un burger, <code>.match-row</code> passe à deux colonnes avec la date sur toute la largeur, les filets verticaux deviennent horizontaux.</li>
+            <li><strong>880 px</strong> — la mise en page repasse en une colonne, sauf <code>.match-row</code> et <code>.stats</code> qui passent à deux ; le corps grimpe à 16 px, le menu devient un burger, la date de <code>.match-row</code> prend toute la largeur, les filets verticaux deviennent horizontaux.</li>
           </ul>
           <p class="gal-note">Largeur de contrôle retenue pour les vérifications visuelles : <strong>360 px</strong>.</p>
         </div>
@@ -137,7 +142,7 @@ body        → Archivo 15px / 16px
   </article>
 
   <article class="gal-item" data-classes="section-head">
-    <div class="gal-meta"><div class="gal-name">.section-head</div><p class="gal-note">Titre de section et mention alignés sur la même ligne de base. La mention de droite passe à la ligne sous 880 px.</p><div class="gal-demo"></div></div>
+    <div class="gal-meta"><div class="gal-name">.section-head</div><p class="gal-note">Titre de section et mention alignés sur la même ligne de base. Rien n'y prévoit de repli : sous 880 px, la mention ne passe jamais à la ligne, elle se retrouve simplement compressée à côté du titre.</p><div class="gal-demo"></div></div>
     <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
     <template><div class="section-head"><h2>Nos gymnases</h2><span class="mono">3 salles · Brive</span></div></template>
   </article>
@@ -194,7 +199,7 @@ body        → Archivo 15px / 16px
       </article>
 
       <article class="gal-item" data-classes="link shadow">
-        <div class="gal-meta"><div class="gal-name">.card.link &middot; .card.shadow</div><p class="gal-note"><code>.link</code> inverse la carte au survol, <code>.shadow</code> lui donne une ombre dure décalée. À réserver aux cartes réellement cliquables.</p><div class="gal-demo"></div></div>
+        <div class="gal-meta"><div class="gal-name">.card.link &middot; .card.shadow</div><p class="gal-note"><code>.link</code> inverse la carte au survol : c'est lui qu'il faut réserver aux cartes réellement cliquables. <code>.shadow</code> ne fait rien au repos — l'ombre dure décalée n'apparaît qu'au survol — et le site l'emploie aussi sur des cartes non cliquables : <code>site/equipe.html:73</code>, <code>site/club.html:73</code>, <code>site/contact.html:54</code>, et la « Carte joueur » de cette galerie.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
         <template><a class="card link shadow" href="#blocs" style="max-width:260px;text-decoration:none;color:inherit"><div class="ph"><span>[ photo ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase">Survolez-moi</strong></div></a></template>
       </article>
@@ -256,7 +261,7 @@ body        → Archivo 15px / 16px
       <article class="gal-item" data-classes="ds">
         <div class="gal-meta"><div class="gal-name">blockquote.ds</div><p class="gal-note">Citation sur fond sable, barre épaisse à gauche. La même classe <code>ds</code> sert aux tableaux : c'est voulu, ce sont deux éléments distincts.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><blockquote class="ds"><p>On ne joue pas pour le classement, on joue pour le club.</p><cite>Jean-Pierre Delost, entraîneur</cite></blockquote></template>
+        <template><blockquote class="ds"><p>Ici s'affiche la citation mise en avant, sur une ou deux lignes.</p><cite>Prénom Nom, fonction au club</cite></blockquote></template>
       </article>
 
       <article class="gal-item" data-classes="field">
@@ -294,15 +299,15 @@ body        → Archivo 15px / 16px
       <p class="gal-note" style="max-width:70ch;margin-bottom:8px">Ces cinq assemblages n'ont pas de classe à eux : ils vivent en styles inline dans les pages. Le contrôle automatisé ne peut donc pas vérifier qu'ils sont à jour — leur exactitude repose sur la discipline. La source de chacun est indiquée.</p>
 
       <article class="gal-item">
-        <div class="gal-meta"><div class="gal-name">Carte joueur</div><p class="gal-note">Source : <code>site/equipe.html</code>. Portrait en 3/4, numéro en surimpression avec une ombre crème pour rester lisible sur toute photo. Le portrait porte <code>loading="lazy"</code> : un effectif complet, c'est une douzaine d'images.</p><div class="gal-demo"></div></div>
+        <div class="gal-meta"><div class="gal-name">Carte joueur</div><p class="gal-note">Source : <code>site/equipe.html:73</code>. Portrait en 3/4, numéro en surimpression avec une ombre crème pour rester lisible sur toute photo. <code>loading="lazy"</code> appartient à la branche photo du gabarit — cette démo rend la branche sans photo, donc l'attribut n'apparaît pas dans le code ci-contre. <code>max-width:230px</code> ci-dessous est un cadrage de galerie, absent de la source.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
         <template><div class="card shadow" style="max-width:230px"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden"><span class="mono" style="color:#8f8672">[ portrait ]</span><strong style="position:absolute;top:8px;right:14px;font-family:'Barlow Condensed';font-weight:900;font-size:40px;text-shadow:0 0 6px var(--creme)">10</strong></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase;line-height:1">Rémi DARDANELLI</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">Attaquant R4/Pointe</span></div></div></template>
       </article>
 
       <article class="gal-item">
-        <div class="gal-meta"><div class="gal-name">Cadre hachuré de remplacement</div><p class="gal-note">Deux familles : <strong>autonome et bordée</strong> (<code>site/equipe.html:28</code>, 16/9) ; <strong>intégrée, non bordée</strong> (<code>site/equipe.html:73</code> en 3/4, <code>site/equipes.html:30</code> en 16/9). La forme non bordée n'existe jamais seule dans le site — elle vit toujours à l'intérieur d'une <code>.card shadow</code> dont elle hérite la bordure. Voir ces contextes complets dans les motifs « Carte joueur » et « Carte d'index cliquable » de cette même section. La couleur <code>#8f8672</code> de la mention est un héritage, pas un jeton.</p><div class="gal-demo"></div></div>
+        <div class="gal-meta"><div class="gal-name">Cadre hachuré de remplacement</div><p class="gal-note">Trois formes, pas deux. <strong>Bordée avec flex inline</strong> (<code>site/equipe.html:28</code>, 16/9 ; <code>site/article.html:27</code>) : le cadre gère lui-même son centrage. <strong>Non bordée, calée par <code>.card .ph</code></strong> (<code>site/equipe.html:73</code> en 3/4 ; <code>site/equipes.html:30</code> en 16/9) : le centrage vient de la carte qui l'entoure, pas du cadre — hors d'une <code>.card</code>, la mention se retrouve en haut à gauche au lieu d'être centrée. <strong>Non bordée avec flex inline</strong> (six occurrences : <code>site/club.html:58</code>, <code>:73</code>, <code>:90</code>, <code>site/actualites.html:21</code>, <code>site/boutique.html:28</code>, <code>site/contact.html:55</code>) : ce flex est redondant dans les cinq occurrences qui vivent déjà dans une <code>.card</code>, mais indispensable pour <code>site/club.html:90</code>, rendu nu dans une <code>.cols-3</code> sans carte. La couleur <code>#8f8672</code> de la mention est un héritage, pas un jeton. Cadrage de galerie ci-dessous, absent des sources : <code>width:180px</code> et <code>width:280px</code> sur les deux derniers cadres, et le <code>margin-top:24px</code> de <code>site/equipe.html:28</code> n'est pas reproduit.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
-        <template><div style="display:flex;flex-direction:column;gap:28px"><div style="margin-bottom:12px"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre)"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div></div><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden;width:180px"><span class="mono" style="color:#8f8672">[ portrait ]</span></div><div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden;width:280px"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div></div></template>
+        <template><div style="display:flex;flex-direction:column;gap:20px"><div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre)"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div><div class="card" style="width:180px"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden"><span class="mono" style="color:#8f8672">[ portrait ]</span></div></div><div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;width:280px"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div></div></template>
       </article>
 
       <article class="gal-item">
@@ -318,7 +323,7 @@ body        → Archivo 15px / 16px
       </article>
 
       <article class="gal-item">
-        <div class="gal-meta"><div class="gal-name">Carte d'index cliquable</div><p class="gal-note">Source : <code>site/equipes.html</code>. La carte entière est le lien, d'où <code>text-decoration:none;color:inherit</code>. Sans identifiant, la page rend un <code>&lt;div&gt;</code> au lieu du <code>&lt;a&gt;</code> : la carte reste visible mais n'est pas cliquable, plutôt que de produire un lien mort.</p><div class="gal-demo"></div></div>
+        <div class="gal-meta"><div class="gal-name">Carte d'index cliquable</div><p class="gal-note">Source : <code>site/equipes.html</code>. La carte entière est le lien, d'où <code>text-decoration:none;color:inherit</code>. Sans identifiant, la page rend un <code>&lt;div&gt;</code> au lieu du <code>&lt;a&gt;</code> : la carte reste visible mais n'est pas cliquable, plutôt que de produire un lien mort. <code>max-width:300px</code> ci-dessous est un cadrage de galerie, absent de la source.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
         <template><a class="card link shadow" href="#composites" style="max-width:300px;text-decoration:none;color:inherit"><div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden"><span class="mono" style="color:#8f8672">[ photo à venir ]</span></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:26px;text-transform:uppercase;line-height:1.05">National 3 masculin</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">National 3</span><span class="muted" style="font-size:13px">Mer. 18h30-20h30 · Rollinat</span><span class="mono" style="font-size:11px;letter-spacing:.12em;border-top:1px solid var(--lin);padding-top:8px;margin-top:4px">Prochain · SAM. 26 SEPT. · Poitiers 3</span></div></a></template>
       </article>
