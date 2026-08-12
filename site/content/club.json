@@ -30,28 +30,43 @@
     "dates": [
       {
         "annee": "1946",
-        "texte": "Fondation de la section volley du Club Athlétique de Brive. Douze licenciés la première année.",
+        "texte": "Après-guerre 39/45 — Le volley-ball se développe principalement en plein air au Kayak-club de Brive, qui devient un lieu de rassemblement des pratiquants.",
         "une": false
       },
       {
-        "annee": "1974",
-        "texte": "Premier titre régional seniors. La photo trône encore à la buvette du gymnase.",
+        "annee": "1960",
+        "texte": "Années 1960–1983 — De nombreux tournois sont organisés, puis une section volley est créée en 1966 à l’Étoile Sportive Briviste. Elle rejoint le Foyer Culturel de Brive en 1982, avant de devenir en 1983 l’association Volley-club Briviste.",
         "une": false
       },
       {
-        "annee": "2003",
-        "texte": "Création de l'école de volley : le club s'ouvre aux moins de 11 ans et double ses effectifs.",
+        "annee": "1987",
+        "texte": "1987–1997 — Le club connaît une forte progression : accession en Nationale 3 en 1987, titre de champion de France N3 en 1995, puis montées successives en Nationale 2 en 1996 et Nationale 1 en 1997.",
         "une": false
       },
       {
-        "annee": "2018",
-        "texte": "Lancement de la section beach au Beach Park de Tujac.",
+        "annee": "2000",
+        "texte": "2000–2001 — Les équipes féminine et masculine évoluent en Nationale 3, tandis que l’équipe de N1 termine vice-championne de France en 2001, manquant de peu l’accession en PRO B.",
         "une": false
       },
       {
+        "annee": "2002",
+        "texte": "2002–2010 — Le club se maintient durablement en Nationale 1 et dispute régulièrement les premières places des play-offs, avant d’évoluer en PRO B de 2008 à 2010.",
+        "une": false
+      },
+      {
+        "une": false,
+        "texte": "2011–2017 — Le club alterne entre Nationale 1, Elite et Nationale 2, avec un retour en Elite lors de la saison 2016-2017.",
+        "annee": "2011"
+      },
+      {
+        "une": false,
+        "texte": "2017–2026 — Le club évolue en Nationale 2 de 2017 à 2025, puis redescend en Nationale 3 pour la saison 2025-2026.",
+        "annee": "2017"
+      },
+      {
+        "une": true,
         "annee": "2026",
-        "texte": "**80 ans du club.** Tournoi anciens/actuels, expo photo et grande tablée en juin.",
-        "une": true
+        "texte": "80 ans du volley à Brive-la-Gaillarde. Tournoi anciens/actuels, expo photo et grande tablée en juin."
       }
     ]
   },
