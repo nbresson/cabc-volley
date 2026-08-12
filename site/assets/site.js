@@ -1,9 +1,14 @@
 // Site CABC Volley — header/footer partagés + rendu du contenu JSON (Decap)
 const NAV=[["index.html","Accueil"],["club.html","Le Club"],["equipes.html","Équipes"],["calendrier.html","Calendrier"],["actualites.html","Actualités"],["boutique.html","Boutique"]];
+// Pages enfants : elles allument l'entree de nav de leur page parente.
+const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html"};
+// Seul endroit du code qui construit l'URL d'une page equipe.
+// Passer a des URLs propres plus tard ne touchera que cette fonction.
+function teamUrl(slug){return "equipe.html?e="+encodeURIComponent(slug);}
 async function getJSON(p){try{const r=await fetch(p,{cache:"no-store"});if(!r.ok)throw 0;return await r.json();}catch(e){return null;}}
 function here(){const p=location.pathname.split("/").pop();return p||"index.html";}
 function renderChrome(){
-  const cur=here();
+  const cur=PARENT[here()]||here();
   const links=NAV.map(([h,t])=>`<a href="${h}" class="${h===cur?'active':''}">${t}</a>`).join("");
   const header=document.getElementById("header");
   if(header)header.innerHTML=`
