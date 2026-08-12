@@ -35,7 +35,7 @@ window.__pageInit=async function(){
     // Une equipe sans slug reste visible mais n est pas cliquable :
     // une saisie incomplete degrade la carte, elle ne cree pas de lien mort.
     return t.slug
-      ?`<a class="card link shadow" href="${teamUrl(t.slug)}" style="text-decoration:none;color:inherit">${inner}</a>`
+      ?`<a class="card link shadow" href="${teamUrl(t.slug)}">${inner}</a>`
       :`<div class="card shadow">${inner}</div>`;
   };
 
