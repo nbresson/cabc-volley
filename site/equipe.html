@@ -57,12 +57,28 @@ window.__pageInit=async function(){
   const blocClassement=lienClassement?`<section class="pad section">
     <a class="btn btn-secondary" href="${lienClassement}" target="_blank" rel="noopener">Classement FFVB ↗</a></section>`:"";
 
+  // Bloc des equipes sans calendrier : masque tant que le bureau n a pas
+  // rempli au least un titre dans Decap.
+  const i=t.infos||{};
+  const blocInfos=i.titre?`<section class="pad section">
+    <div class="section-head" style="margin-bottom:14px"><h2>${i.titre}</h2></div>
+    ${i.texte?`<p class="muted" style="max-width:60ch;line-height:1.8">${i.texte}</p>`:""}
+    ${i.bouton&&i.lien?`<a class="btn btn-primary" style="margin-top:20px" href="${i.lien}">${i.bouton}</a>`:""}
+  </section>`:"";
+
+  const eff=t.effectif||[];
+  const blocEffectif=eff.length?`<section class="pad section">
+    <div class="section-head"><h2>L'effectif</h2><span class="mono">${eff.length} membre${eff.length>1?"s":""}</span></div>
+    <div class="cols-4">${eff.map(p=>`
+      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden">${p.photo?`<img src="${p.photo}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:#8f8672">[ portrait ]</span>'}<strong style="position:absolute;top:8px;right:14px;font-family:'Barlow Condensed';font-weight:900;font-size:40px;text-shadow:0 0 6px var(--creme)">${p.num||""}</strong></div><div class="body"><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:22px;text-transform:uppercase;line-height:1">${p.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">${p.poste||""}</span></div></div>`).join("")}</div>
+  </section>`:"";
+
   const pied=`<section class="pad section" style="border-bottom:none">
     <div class="row" style="justify-content:space-between;padding-top:24px;border-top:2px solid var(--encre)">
       <a href="equipes.html" class="btn btn-secondary">← Toutes les équipes</a>
       <a href="calendrier.html" class="btn btn-primary">Calendrier complet</a></div>
   </section>`;
 
-  el.innerHTML=entete+blocAvenir+blocResultats+blocClassement+pied;
+  el.innerHTML=entete+blocInfos+blocAvenir+blocResultats+blocClassement+blocEffectif+pied;
 };
 </script></body></html>
