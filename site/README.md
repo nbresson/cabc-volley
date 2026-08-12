@@ -31,7 +31,7 @@ est publié tel quel, d'après [`wrangler.jsonc`](../wrangler.jsonc) à la racin
 En ligne sur `https://cabc-volley.nkobrs21.workers.dev`.
 
 - **Automatique** : le worker est relié au dépôt (Settings → Builds). Chaque commit
-  déclenche une compilation qui exécute `npx wrangler deploy`.
+  déclenche une compilation, qui doit exécuter la commande indiquée juste en dessous.
 - **À la main**, si une compilation échoue : `npx wrangler deploy` depuis la racine
   (`npx wrangler login` la première fois).
 
