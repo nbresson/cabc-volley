@@ -17,6 +17,46 @@
         },
         {
           "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_qs_sport_2025-26.pdf",
+          "libelle": "Questionnaire de Santé FFVB Sportif Majeur"
+        },
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/licences/FFvolley_Notice_CM_Sportif_Mineur.pdf",
+          "libelle": "Note aux Clubs - Certificat Médical pour Sportif Mineur"
+        },
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_qs_sport_sportifs_mineurs_2025-26.pdf",
+          "libelle": "Questionnaire de Santé FFVB Sportif Mineur"
+        },
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_CERTIFICAT_MEDICAL_A.pdf",
+          "libelle": "Certificat Médical - Fiche A (standard)"
+        },
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_CERTIFICAT_MEDICAL_B.pdf",
+          "libelle": "Certificat Médical - Fiche B (Double surclassement)"
+        },
+        {
+          "type": "lien",
+          "libelle": "Certificat Médical - Fiche C (Triple surclassement)",
+          "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_CERTIFICAT_MEDICAL_C.pdf"
+        },
+        {
+          "type": "lien",
+          "libelle": "Certificat Médical Encadrement (Arbitre et Marqueur, Entraîneur sportif, Soignant)",
+          "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_CERTIFICAT_MEDICAL_ENCADREMENT.pdf"
+        },
+        {
+          "type": "lien",
+          "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_CERTIFICAT_MEDICAL_VOLLEY_SANTE.pdf",
+          "libelle": "Certificat Médical Volley Santé"
+        },
+        {
+          "type": "lien",
           "url": "https://extranet.ffvb.org/data/Files/documents/licences/FFvolley_Fiche_Pratique_Controle_Honorabilite.pdf",
           "libelle": "Fiche pratique - Contrôle d'honorabilité"
         }
