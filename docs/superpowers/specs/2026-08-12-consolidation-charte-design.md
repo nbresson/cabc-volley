@@ -96,9 +96,16 @@ de la décoration : les fondre dans une classe de taille les rendrait invisibles
 | 40 px | 2 | `.display-xl` | aucun |
 | 44 px | 8 | `.display-2xl` | aucun |
 
-**31 éléments adoptent une classe. 20 d'entre eux voient leur taille bouger, d'au
-plus 2 px.** Sur du Barlow Condensed en graisse lourde, cet écart n'est pas
-perceptible à l'œil nu ; il doit néanmoins être contrôlé lors de la passe visuelle.
+**42 éléments adoptent une classe. 20 d'entre eux voient leur taille bouger, d'au
+plus 2 px** — ceux des groupes `s` et `m` ; les tailles 34, 40 et 44 px sont
+reprises telles quelles. Sur du Barlow Condensed en graisse lourde, un écart de
+2 px n'est pas perceptible à l'œil nu ; il doit néanmoins être contrôlé lors de la
+passe visuelle.
+
+*Correction apportée après relecture : ce paragraphe annonçait 31 éléments, chiffre
+qui ne comptait que les groupes `s` et `m` et omettait les onze usages en 34, 40 et
+44 px. La table ci-dessus, elle, était juste. 42 + les 6 valeurs fluides restées
+inline = les 48 usages relevés.*
 
 Les trois valeurs fluides — `clamp(24px,4vw,36px)`, `clamp(24px,4vw,34px)`,
 `clamp(20px,3vw,30px)` — **restent en inline**. Elles répondent à une contrainte de
