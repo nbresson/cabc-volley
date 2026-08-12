@@ -56,6 +56,12 @@
       "groupe": "Jeunes",
       "categorie": "M18 · M15 · M13",
       "creneau": "Mer. & sam. après-midi",
+      "infos": {
+        "titre": "Jouer en compétition jeunes",
+        "texte": "Le club engage des équipes en M18, M15 et M13. Les entraînements ont lieu le mercredi et le samedi après-midi. Pour connaître le créneau exact de votre catégorie, écrivez-nous.",
+        "bouton": "Nous contacter",
+        "lien": "contact.html"
+      },
       "effectif": []
     },
     {
@@ -64,6 +70,12 @@
       "groupe": "Formation",
       "categorie": "M11 & baby",
       "creneau": "Sam. 10h · Lavoisier",
+      "infos": {
+        "titre": "Découvrir le volley",
+        "texte": "L'école de volley accueille les plus jeunes, en catégories M11 et baby-volley, le samedi matin à 10h au gymnase Lavoisier. Pour inscrire votre enfant ou poser une question, écrivez-nous.",
+        "bouton": "Nous contacter",
+        "lien": "contact.html"
+      },
       "effectif": []
     }
   ]
