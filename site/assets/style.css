@@ -50,6 +50,12 @@ p{margin:0}
 
 /* Bandeau annonce */
 .topbar{text-align:center;padding:9px 20px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.32em;background:var(--encre);color:var(--creme)}
+/* Bandeau reseaux : bloc autonome qui prolonge la topbar sur le meme fond
+   encre, d'ou l'absence de bordure haute. Les tailles sont reduites ici ;
+   tout le reste (survol, inversion du carre) vient de .social. */
+.socialbar{background:var(--encre);color:var(--creme);display:flex;flex-wrap:wrap;justify-content:center;gap:34px;padding:12px 20px 16px}
+.socialbar .social{font-size:17px}
+.socialbar .social svg{width:20px;height:20px}
 
 /* Header */
 .site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:2px solid var(--encre);background:var(--creme);position:sticky;top:0;z-index:50}

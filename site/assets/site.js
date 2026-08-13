@@ -2,6 +2,17 @@
 const NAV=[["index.html","Accueil"],["club.html","Le Club"],["equipes.html","Équipes"],["calendrier.html","Calendrier"],["actualites.html","Actualités"],["boutique.html","Boutique"],["infos.html","Infos"],["contact.html","Contact"]];
 // Pages enfants : elles allument l'entree de nav de leur page parente.
 const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html"};
+// Reseaux du club. Seule source des deux adresses : le bandeau, le pied de
+// page et tout <div id="reseaux"> pose dans une page lisent cette liste.
+const RESEAUX=[
+  ["Instagram","https://www.instagram.com/cabcvolley/",'<rect class="frame" x="2" y="2" width="20" height="20"/><circle cx="12" cy="12" r="4.6"/><rect x="16.3" y="5.7" width="2.5" height="2.5" fill="currentColor" stroke="none"/>'],
+  ["Facebook","https://www.facebook.com/cabvolley19/",'<rect class="frame" x="2" y="2" width="20" height="20"/><path d="M14.5 6.5H12.2V17.5M9.5 11H14.5"/>']
+];
+// Bandeau reseaux : bloc autonome sur fond encre. Pose par defaut sous la
+// topbar, mais deplacable — un seul appel a bouger — et utilisable dans une
+// page en y ecrivant <div id="reseaux"></div>.
+function barreReseaux(){return `<div class="socialbar">${RESEAUX.map(([nom,url,glyphe])=>
+  `<a class="social" href="${url}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${glyphe}</svg><span class="lbl">${nom} ↗</span></a>`).join("")}</div>`;}
 // Seul endroit du code qui construit l'URL d'une page equipe.
 // Passer a des URLs propres plus tard ne touchera que cette fonction.
 function teamUrl(slug){return "equipe.html?e="+encodeURIComponent(slug);}
@@ -13,6 +24,7 @@ function renderChrome(){
   const header=document.getElementById("header");
   if(header)header.innerHTML=`
     <div class="topbar">CLUB ATHLÉTIQUE DE BRIVE — SECTION VOLLEY-BALL — DEPUIS 1946</div>
+    ${barreReseaux()}
     <header class="site-header">
       <button class="burger" aria-label="Menu" onclick="document.getElementById('mainnav').classList.toggle('open')"><span></span><span></span><span></span></button>
       <a class="logo" href="index.html"><img src="assets/logo.png" alt="C.A. Brive Corrèze Volley"></a>
@@ -22,8 +34,10 @@ function renderChrome(){
   if(footer)footer.innerHTML=`
     <footer class="site-footer section" style="border-bottom:none;border-top:2px solid var(--encre)">
       <span class="mono">© ${new Date().getFullYear()} C.A. BRIVE CORRÈZE VOLLEY / Réalisation Nicolas BRESSON</span>
-      <nav><a href="https://www.ffvb.org/" target="_blank" rel="noopener">FFVB</a><a href="https://www.instagram.com/cabcvolley/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/cabvolley19/" target="_blank" rel="noopener">Facebook</a><a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
+      <nav><a href="https://www.ffvb.org/" target="_blank" rel="noopener">FFVB</a>${RESEAUX.map(([nom,url])=>`<a href="${url}" target="_blank" rel="noopener">${nom}</a>`).join("")}<a href="contact.html">Contact</a><a href="mentions-legales.html">Mentions légales</a></nav>
     </footer>`;
+  const reseaux=document.getElementById("reseaux");
+  if(reseaux)reseaux.innerHTML=barreReseaux();
 }
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
 // Ligne d un match a venir. Exactement 3 enfants directs : .match-row est
