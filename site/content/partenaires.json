@@ -11,84 +11,84 @@
       "nom": "Ville de Brive-la-Gaillarde",
       "groupe": "Institutions",
       "logo": "assets/uploads/brive.webp",
-      "lien": "",
+      "lien": "https://www.brive.fr/",
       "mot": ""
     },
     {
       "nom": "Comité départemental de volley de la Corrèze",
       "groupe": "Institutions",
       "logo": "assets/uploads/partenaire_comite_correze.webp",
-      "lien": "",
+      "lien": "https://cd19volley.com/",
       "mot": ""
     },
     {
       "nom": "Région Nouvelle-Aquitaine",
       "groupe": "Institutions",
       "logo": "assets/uploads/partenaire_region_nouvelle_aquitaine.webp",
-      "lien": "",
+      "lien": "https://www.nouvelle-aquitaine.fr/",
       "mot": ""
     },
     {
       "nom": "Ligue Nouvelle-Aquitaine de Volley",
       "groupe": "Institutions",
       "logo": "assets/uploads/partenaire_ligue_volley.webp",
-      "lien": "",
+      "lien": "https://www.facebook.com/LNAVolley/?locale=fr_FR",
       "mot": ""
     },
     {
       "nom": "Crédit Mutuel",
       "groupe": "Entreprises",
       "logo": "assets/uploads/partenaire_credit_mutuel.webp",
-      "lien": "",
+      "lien": "https://www.creditmutuel.fr/fr",
       "mot": ""
     },
     {
       "nom": "Netto",
       "groupe": "Entreprises",
       "logo": "assets/uploads/partenaire_netto.webp",
-      "lien": "",
+      "lien": "https://www.netto.fr/store-locator/brive-la-gaillarde/09785",
       "mot": ""
     },
     {
       "nom": "CGR Cinémas",
       "groupe": "Entreprises",
       "logo": "assets/uploads/cgr.webp",
-      "lien": "",
+      "lien": "https://www.cgrcinemas.fr/cinema/p1038-cgr-brive-la-gaillarde/",
       "mot": ""
     },
     {
       "nom": "Optique Lafayette",
       "groupe": "Entreprises",
       "logo": "assets/uploads/optique-lafayette.png",
-      "lien": "",
+      "lien": "https://www.optiquelafayette.com/opticien/brive-la-gaillarde/",
       "mot": ""
     },
     {
       "nom": "Les Délices de Charlotte",
       "groupe": "Entreprises",
       "logo": "assets/uploads/partenaire_delices_de_charlotte.webp",
-      "lien": "",
+      "lien": "https://www.les-delices-de-charlotte19.com/",
       "mot": ""
     },
     {
       "nom": "Sikkens Solutions",
       "groupe": "Entreprises",
       "logo": "assets/uploads/partenaire_sikkens.webp",
-      "lien": "",
+      "lien": "https://www.sikkens-solutions.fr/stores/brive",
       "mot": ""
     },
     {
       "nom": "TDSC",
       "groupe": "Entreprises",
       "logo": "assets/uploads/partenaire_tdsc.webp",
-      "lien": "",
+      "lien": "https://lemerpro.fr/",
       "mot": ""
     },
     {
       "nom": "Kitadi Énergies",
       "groupe": "Entreprises",
       "logo": "assets/uploads/partenaire_kitadi.webp",
-      "lien": "",
+      "lien": "https://kitadi-energies.com/",
       "mot": ""
     },
     {
@@ -102,14 +102,14 @@
       "nom": "UV Germi",
       "groupe": "Entreprises",
       "logo": "assets/uploads/uv-germi.png",
-      "lien": "",
+      "lien": "https://www.uvgermi.fr/",
       "mot": ""
     },
     {
       "nom": "Dubois et Associés",
       "groupe": "Entreprises",
       "logo": "assets/uploads/partenaire_dubois.webp",
-      "lien": "",
+      "lien": "https://www.dubois-et-associes.fr/",
       "mot": ""
     }
   ]
