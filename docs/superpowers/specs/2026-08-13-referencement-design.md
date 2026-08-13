@@ -176,6 +176,9 @@ section 3 du README, « Brancher le domaine » :
    sitemap.
 4. **Poser les redirections 301 depuis les anciennes URLs du site officiel.** Sans
    elles, le club repart de zéro et perd l'ancienneté accumulée par l'ancien site.
+   L'inventaire est fait et figé : voir
+   [2026-08-13-anciennes-urls-inventaire.md](2026-08-13-anciennes-urls-inventaire.md).
+   La table de correspondance et les 410 vivront dans `worker.js`.
 
 ## Fichiers touchés
 
