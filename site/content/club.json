@@ -101,12 +101,12 @@
     "titre": "La vie du club",
     "legende": "Photos · saison 2026–2027",
     "photos": [
-      "assets/uploads/preparation_beach.jpg",
-      "assets/uploads/volley_fluo.png",
-      "assets/uploads/equipe_m18f.png",
-      "assets/uploads/equipe_r1f.png",
-      "assets/uploads/resultats.png",
-      "assets/uploads/a_chacun_son_volley.png"
+      "assets/uploads/preparation_beach.webp",
+      "assets/uploads/volley_fluo.webp",
+      "assets/uploads/equipe_m18f.webp",
+      "assets/uploads/equipe_r1f.webp",
+      "assets/uploads/resultats.webp",
+      "assets/uploads/a_chacun_son_volley.webp"
     ]
   }
 }

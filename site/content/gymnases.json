@@ -17,7 +17,7 @@
       "usage": "Terrains de beach · mai à septembre",
       "acces": "",
       "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
-      "photo": "assets/uploads/beach_park.png"
+      "photo": "assets/uploads/beach_park.webp"
     },
     {
       "nom": "Gymnase Saint-Germain",
@@ -34,7 +34,7 @@
       "adresse": "2 Rue Paul Pradaud, 19100 Brive-La-Gaillarde",
       "usage": "Entraînements",
       "itineraire": "https://maps.app.goo.gl/yWWyHS9yrF1YgMYf7",
-      "photo": "assets/uploads/gymnase_darsonval.png"
+      "photo": "assets/uploads/gymnase_darsonval.webp"
     }
   ]
 }
