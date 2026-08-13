@@ -29,37 +29,48 @@
       "statut": "a_venir"
     },
     {
-      "date": "2026-10-24T20:00",
+      "gagne": false,
       "domicile": true,
-      "adversaire": "Club Municipal Floirac",
-      "competition": "National 3 (3MD)",
-      "equipe": "n3-masculin",
       "lieu": "Gymnase Rollinat",
-      "statut": "a_venir",
+      "adversaire": "Club Municipal Floirac",
+      "date": "2026-10-24T20:00",
       "score": "",
-      "gagne": false
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
     },
     {
+      "gagne": false,
       "domicile": false,
-      "statut": "a_venir",
-      "gagne": false,
       "une": false,
-      "date": "2026-11-01T16:00",
+      "lieu": "Salle de la Gagnerie",
       "adversaire": "US Bouguenais Volley-Ball",
-      "competition": "National 3 (3MD)",
+      "date": "2026-11-01T16:00",
+      "statut": "a_venir",
       "equipe": "n3-masculin",
-      "lieu": "Salle de la Gagnerie"
+      "competition": "National 3 (3MD)"
     },
     {
-      "domicile": true,
-      "statut": "a_venir",
       "gagne": false,
+      "domicile": true,
       "une": false,
-      "date": "2026-11-07T20:00",
+      "lieu": "Gymnase Rollinat",
       "adversaire": "Sporting Club de L'Ouest",
-      "competition": "National 3 (3MD)",
+      "date": "2026-11-07T20:00",
+      "statut": "a_venir",
       "equipe": "n3-masculin",
-      "lieu": "Gymnase Rollinat"
+      "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Gymnase Léon Brulon",
+      "adversaire": "Saint-Avertin Sports",
+      "date": "2026-11-22T16:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
     }
   ]
 }
