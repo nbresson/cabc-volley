@@ -210,6 +210,20 @@ p{margin:0}
 /* Bandeau reseaux : bloc autonome qui prolonge la topbar sur le meme fond
    encre, d'ou l'absence de bordure haute. Les tailles sont reduites ici ;
    tout le reste (survol, inversion du carre) vient de .social. */
+/* Mur de partenaires, pose sur toutes les pages juste avant le bandeau reseaux.
+   Fond clair, et ce n est pas un choix esthetique : le filet creme du bandeau
+   ne se trace que precede d une section sombre. Un mur clair s intercale sans
+   rien casser, la transition se voyant d elle-meme. Le noeud est retire quand
+   aucun partenaire n est saisi, pour que l adjacence sombre revienne. */
+.murlogos{background:var(--sable);border-top:2px solid var(--encre);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px 38px;padding:22px 24px}
+.murlogos img{height:40px;width:auto;max-width:132px;object-fit:contain}
+.murlogos a{display:block}
+.murlogos a:hover img,.murlogos a:focus-visible img{opacity:.6}
+/* Cadre a logo : contrairement a .ph qui recadre une photo en la rognant, il
+   montre le logo entier sur un fond uni — un logo rogne ne vaut rien. */
+.logo-cadre{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--creme);border-bottom:2px solid var(--encre)}
+.logo-cadre img{max-height:100%;max-width:100%;width:auto;object-fit:contain}
+.card.link:hover .logo-cadre{background:var(--creme)}
 .socialbar{background:var(--encre);color:var(--creme);display:flex;flex-wrap:wrap;justify-content:center;gap:34px;padding:12px 20px 16px}
 .socialbar .social{font-size:17px}
 .socialbar .social svg{width:20px;height:20px}

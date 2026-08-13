@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gymnase — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<main>
+<div id="gymnase"></div>
+</main>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const slug=new URLSearchParams(location.search).get("g");
+  const data=await getJSON("content/gymnases.json");
+  const el=document.getElementById("gymnase");
+  const v=(data?.items||[]).find(x=>x.slug&&x.slug===slug);
+  if(!v){el.innerHTML='<section class="pad section"><p class="muted">Site introuvable. <a href="contact.html" class="lien">Retour à nos gymnases</a></p></section>';return;}
+  document.title=v.nom+" — C.A. Brive Corrèze Volley";
+
+  const entete=`<section class="pad section">
+    <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="contact.html">Nos gymnases</a><span>/</span><span style="color:var(--encre)">${v.nom}</span></div>
+    <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(32px,7vw,72px)">${v.nom}</h1>${v.etiquette?`<span class="badge" style="align-self:flex-end">${v.etiquette}</span>`:""}</div>
+    ${v.adresse?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${v.adresse}</p>`:""}
+    ${v.photo
+      ?`<img src="${v.photo}" alt="${v.nom}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-top:24px">`
+      :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-top:24px"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div>'}
+    <div class="row" style="margin-top:22px;align-items:center;gap:24px">
+      ${[v.usage,v.acces].filter(Boolean).length?`<span class="mono" style="font-size:11px;letter-spacing:.14em">${[v.usage,v.acces].filter(Boolean).join(" &middot; ")}</span>`:""}
+      ${v.itineraire?`<a href="${v.itineraire}" target="_blank" rel="noopener" class="btn btn-secondary" style="padding:9px 20px">Itinéraire ↗</a>`:""}
+    </div>
+  </section>`;
+
+  const description=v.description
+    ?`<section class="pad section"><div style="max-width:70ch">${mdToHtml(v.description)}</div></section>`
+    :"";
+
+  // Les blocs alternent image a gauche puis a droite. Un bloc sans photo
+  // occupe toute la largeur plutot que de laisser une colonne vide, et un
+  // bloc sans titre ni texte est ignore : Decap laisse facilement une entree
+  // a moitie remplie.
+  const blocs=(v.blocs||[]).filter(b=>b.titre||b.texte||b.photo).map((b,i)=>{
+    const texte=`<div class="pad"><h2>${b.titre||""}</h2>${b.texte?`<div class="muted" style="margin-top:14px">${mdToHtml(b.texte)}</div>`:""}</div>`;
+    if(!b.photo)return `<section class="section">${texte}</section>`;
+    const image=`<div><img src="${b.photo}" alt="${b.titre||v.nom}" loading="lazy" style="display:block;width:100%;height:100%;min-height:260px;object-fit:cover"></div>`;
+    return `<section class="section split">${i%2===0?image+texte:texte+image}</section>`;
+  }).join("");
+
+  el.innerHTML=entete+description+blocs;
+};
+</script></body></html>

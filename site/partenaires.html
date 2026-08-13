@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nos partenaires — C.A. Brive Corrèze Volley</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<main>
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="club.html">Le Club</a><span>/</span><span style="color:var(--encre)">Partenaires</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(38px,9vw,88px)">Ils nous<br>soutiennent</h1><span class="mono" id="p-compte" style="align-self:flex-end"></span></div>
+  <p class="muted" id="p-chapo" style="max-width:62ch;margin-top:18px"></p>
+</section>
+<section class="section pad"><div id="p-listes"></div></section>
+<section class="section dark pad" id="p-devenir" style="display:none">
+  <div class="lines"></div>
+  <div style="max-width:62ch">
+    <h2 id="p-dev-titre" style="color:var(--creme)"></h2>
+    <div id="p-dev-texte" style="color:var(--texte-sombre);margin-top:18px"></div>
+    <a id="p-dev-bouton" class="btn btn-primary" style="margin-top:26px;display:none"></a>
+  </div>
+</section>
+</main>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const data=await getJSON("content/partenaires.json");
+  const items=data?.items||[];
+
+  document.getElementById("p-chapo").textContent=data?.chapo||"";
+  document.getElementById("p-compte").textContent=items.length
+    ? items.length+" partenaire"+(items.length>1?"s":"") : "";
+
+  // Meme regle que les equipes : ORDRE ne fixe que l affichage des groupes
+  // connus, un groupe inconnu mais non vide obtient quand meme sa section.
+  const ORDRE=["Institutions","Entreprises"];
+  const groupes=new Map(ORDRE.map(g=>[g,[]]));
+  const autres=[];
+  items.forEach(p=>{
+    const g=typeof p.groupe==="string"?p.groupe.trim():"";
+    if(!g){autres.push(p);return;}
+    if(!groupes.has(g))groupes.set(g,[]);
+    groupes.get(g).push(p);
+  });
+  if(groupes.has("Autres")||autres.length){
+    const liste=[...(groupes.get("Autres")||[]),...autres];
+    groupes.delete("Autres");
+    groupes.set("Autres",liste);
+  }
+
+  const carte=p=>{
+    const dedans=`<div class="logo-cadre">${p.logo
+      ?`<img src="${p.logo}" alt="${p.nom||""}" loading="lazy">`
+      :`<span class="mono" style="color:var(--mention)">[ logo à venir ]</span>`}</div>
+      <div class="body" style="padding:16px 18px">
+        <strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1.05">${p.nom||""}</strong>
+        ${p.mot?`<span class="muted" style="font-size:13px">${p.mot}</span>`:""}
+        ${p.lien?`<span class="mono lien" style="font-size:11px;letter-spacing:.12em;color:var(--encre)">Voir le site ↗</span>`:""}
+      </div>`;
+    // Un partenaire sans adresse reste affiche, simplement pas cliquable :
+    // une saisie incomplete degrade la carte, elle ne cree pas de lien mort.
+    return p.lien
+      ?`<a class="card link shadow" href="${p.lien}" target="_blank" rel="noopener">${dedans}</a>`
+      :`<div class="card shadow">${dedans}</div>`;
+  };
+
+  document.getElementById("p-listes").innerHTML=[...groupes].filter(([,l])=>l.length).map(([nom,liste])=>`
+    <div style="margin-bottom:56px">
+      <div class="section-head" style="margin-bottom:20px"><h2>${nom}</h2><span class="mono">${liste.length}</span></div>
+      <div class="cols-4">${liste.map(carte).join("")}</div>
+    </div>`).join("")||'<p class="vide muted">Les partenaires seront présentés prochainement.</p>';
+
+  // Le bloc reste masque tant qu il n a pas de titre : meme convention que le
+  // bloc « infos » des equipes, ou un titre vide masque tout.
+  const d=data?.devenir;
+  if(d?.titre){
+    document.getElementById("p-devenir").style.display="";
+    document.getElementById("p-dev-titre").textContent=d.titre;
+    document.getElementById("p-dev-texte").innerHTML=mdToHtml(d.texte);
+    if(d.bouton&&d.lien){
+      const b=document.getElementById("p-dev-bouton");
+      b.textContent=d.bouton;b.href=d.lien;b.style.display="";
+    }
+  }
+};
+</script></body></html>

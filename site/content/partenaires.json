@@ -1,0 +1,116 @@
+{
+  "chapo": "Collectivités, commerces et entreprises de la Gaillarde : sans eux, il n'y aurait ni maillots, ni déplacements, ni tournois. Le CAB les remercie.",
+  "devenir": {
+    "titre": "Devenir partenaire",
+    "texte": "Soutenir le CAB, c'est faire vivre 220 licencié·es de 6 à 66 ans, huit équipes et une école de volley, dans quatre salles de Brive et de son agglomération.\n\nSelon la formule, votre enseigne apparaît sur les maillots, sur les panneaux du gymnase Rollinat les soirs de match, sur ce site et sur nos réseaux. Le bureau construit chaque partenariat au cas par cas : dites-nous ce qui vous intéresse, nous vous rappelons.",
+    "bouton": "Nous écrire",
+    "lien": "contact.html"
+  },
+  "items": [
+    {
+      "nom": "Ville de Brive-la-Gaillarde",
+      "groupe": "Institutions",
+      "logo": "assets/uploads/partenaire_ville_brive.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Comité départemental de volley de la Corrèze",
+      "groupe": "Institutions",
+      "logo": "assets/uploads/partenaire_comite_correze.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Région Nouvelle-Aquitaine",
+      "groupe": "Institutions",
+      "logo": "assets/uploads/partenaire_region_nouvelle_aquitaine.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Ligue Nouvelle-Aquitaine de Volley",
+      "groupe": "Institutions",
+      "logo": "assets/uploads/partenaire_ligue_volley.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Crédit Mutuel",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_credit_mutuel.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Netto",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_netto.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "CGR Cinémas",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_cgr_cinemas.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Optique Lafayette",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_optique_lafayette.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Les Délices de Charlotte",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_delices_de_charlotte.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Sikkens Solutions",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_sikkens.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "TDSC",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_tdsc.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Kitadi Énergies",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_kitadi.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Ent. Pereira",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_pereira.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "UV Germi",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_uv_germi.webp",
+      "lien": "",
+      "mot": ""
+    },
+    {
+      "nom": "Dubois et Associés",
+      "groupe": "Entreprises",
+      "logo": "assets/uploads/partenaire_dubois.webp",
+      "lien": "",
+      "mot": ""
+    }
+  ]
+}

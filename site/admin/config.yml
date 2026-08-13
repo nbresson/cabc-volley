@@ -198,12 +198,26 @@ collections:
             summary: "{{fields.nom}}"
             fields:
               - {name: nom, label: Nom, widget: string}
+              - {name: slug, label: Identifiant URL, widget: string, required: false, hint: "Sans espaces ni accents, en minuscules, ex. rollinat. Rempli, la salle gagne sa propre page et sa carte devient cliquable. Laissé vide, la salle reste affichée mais sans page. Ne le modifiez plus une fois la page en ligne : les liens déjà partagés cesseraient de fonctionner."}
               - {name: etiquette, label: Étiquette, widget: string, required: false, hint: "Pastille affichée sur la photo, ex. Salle principale ou Beach. Laisser vide pour ne rien afficher."}
               - {name: adresse, label: Adresse, widget: string, required: false}
               - {name: usage, label: Ce qui s'y passe, widget: string, required: false, hint: "Ex. Matchs seniors · école de volley"}
               - {name: acces, label: Accès, widget: string, required: false, hint: "Ex. Parking gratuit · Bus ligne 4"}
               - {name: itineraire, label: Lien itinéraire, widget: string, required: false, hint: "Ouvrez la salle dans Google Maps, puis collez ici l'adresse de la page. Le bouton « Itinéraire » n'apparaît que si ce champ est rempli."}
               - {name: photo, label: Photo, widget: image, required: false, hint: "Paysage : 1600 × 1000 px (format 16/10), moins de 400 Ko."}
+              - {name: description, label: Description, widget: text, required: false, hint: "Affichée sur la page de la salle, sous la grande photo. Un paragraphe par ligne vide. N'apparaît que si la salle a un identifiant URL."}
+              - name: blocs
+                label: Blocs de la page
+                label_singular: Bloc
+                widget: list
+                required: false
+                collapsed: true
+                summary: "{{fields.titre}}"
+                hint: "Sections ajoutées sous la description : les vestiaires, l'histoire de la salle, une galerie de photos… Les images alternent automatiquement à gauche puis à droite. Un bloc sans photo occupe toute la largeur."
+                fields:
+                  - {name: titre, label: Titre, widget: string, required: false}
+                  - {name: texte, label: Texte, widget: text, required: false}
+                  - {name: photo, label: Photo, widget: image, required: false, hint: "Paysage : 1600 × 1000 px, moins de 400 Ko."}
 
   - name: club
     label: Page Club
@@ -364,3 +378,34 @@ collections:
                     fields:
                       - {name: libelle, label: Libellé du bouton, widget: string, hint: "Ce que lit le visiteur, ex. Formulaire de licence FFVB"}
                       - {name: url, label: Adresse du lien, widget: string, hint: "Collez l'adresse complète, avec https://. Le lien s'ouvrira dans un nouvel onglet."}
+
+  - name: partenaires
+    label: Partenaires
+    files:
+      - name: partenaires
+        label: Nos partenaires
+        file: site/content/partenaires.json
+        fields:
+          - {name: chapo, label: Chapeau de la page, widget: text, required: false, hint: "Deux ou trois lignes sous le titre « Ils nous soutiennent »."}
+          - name: devenir
+            label: Bloc « Devenir partenaire »
+            widget: object
+            collapsed: true
+            required: false
+            hint: "Le bloc sombre en bas de page. Laissez le titre vide pour ne rien afficher."
+            fields:
+              - {name: titre, label: Titre, widget: string, required: false, hint: "Laissez vide pour masquer complètement le bloc."}
+              - {name: texte, label: Texte, widget: text, required: false}
+              - {name: bouton, label: Libellé du bouton, widget: string, required: false, hint: "Le bouton n'apparaît que si le libellé ET le lien sont remplis."}
+              - {name: lien, label: Lien du bouton, widget: string, required: false, hint: "Ex. contact.html"}
+          - name: items
+            label: Partenaires
+            label_singular: Partenaire
+            widget: list
+            summary: "{{fields.nom}}"
+            fields:
+              - {name: nom, label: Nom, widget: string}
+              - {name: groupe, label: Groupe, widget: select, options: ["Institutions","Entreprises"], default: "Entreprises", hint: "Institutions : collectivités, fédération, ligue. Entreprises : commerces et sociétés."}
+              - {name: logo, label: Logo, widget: image, required: false, hint: "Fond transparent de préférence, largeur 400 px, moins de 400 Ko. Le logo est affiché entier, jamais rogné. Sans logo, le partenaire n'apparaît pas dans le bandeau du bas de page."}
+              - {name: lien, label: Site du partenaire, widget: string, required: false, hint: "Adresse complète, avec https://. Laissé vide, la carte reste affichée mais n'est pas cliquable."}
+              - {name: mot, label: En un mot, widget: string, required: false, hint: "Une phrase courte, facultative, ex. Fournisseur officiel des maillots."}
