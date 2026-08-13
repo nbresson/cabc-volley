@@ -68,7 +68,8 @@
         "bouton": "Nous contacter",
         "lien": "contact.html"
       },
-      "effectif": []
+      "effectif": [],
+      "photo": "assets/uploads/jeunes_3.jpeg"
     },
     {
       "nom": "École de volley",
