@@ -184,7 +184,11 @@ p{margin:0}
 .section{border-bottom:2px solid var(--encre)}
 .pad{padding:56px 48px}
 .muted{color:#4a4438}
-.lien{border-bottom:2px solid var(--encre)}
+/* currentColor et non --encre : le trait doit suivre son texte. Code en dur, il
+   restait encre sur fond encre des qu une carte .link s inversait au survol, ou
+   qu un .lien se posait sur fond sombre. Partout ailleurs la couleur heritee est
+   deja l encre, donc le rendu ne bouge pas. */
+.lien{border-bottom:2px solid currentColor}
 /* .pad.vide en plus de .vide seul : specificite superieure a .pad (deux classes
    contre une), pour que l'espacement de .vide resiste au .pad du palier 880 px
    quel que soit l'ordre des regles dans ce fichier. */
