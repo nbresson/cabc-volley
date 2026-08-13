@@ -93,6 +93,13 @@
       "categorie": "Volley Santé",
       "photo": "assets/uploads/fit_volley.jpg",
       "creneau": "Jeu. 20h à 21h40 · Saint Germain"
+    },
+    {
+      "groupe": null,
+      "nom": "UFOLEP",
+      "slug": "ufolep",
+      "categorie": "UFOLEP",
+      "creneau": "Mer. 20h-22h et Jeu. 20h-22h · Gymnase d'Arsonval"
     }
   ]
 }
