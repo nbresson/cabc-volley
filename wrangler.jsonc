@@ -2,10 +2,15 @@
 // Le connecteur OAuth de l'admin a sa propre config dans decap-oauth-worker/.
 {
   "name": "cabc-volley",
+  // Le worker se place devant les assets pour tenir le brouillon hors des index
+  // tant qu il n a pas remplace le site officiel. Voir worker.js.
+  "main": "worker.js",
   "compatibility_date": "2026-08-11",
   "assets": {
     "directory": "./site",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": true
   },
   "observability": {
     "enabled": false,
