@@ -216,8 +216,14 @@ p{margin:0}
 /* Contre une section sombre, le bandeau se fondrait dans elle : ce filet les
    separe. Permanent, il ouvrirait une fente creme sous le filet de fin de
    section, qui lui est encre — d ou le selecteur, qui ne le trace que la ou
-   il sert. */
-.dark+.socialbar{border-top:2px solid var(--creme)}
+   il sert.
+   Deux formes parce que le bandeau a deux positions possibles. Depuis que le
+   contenu est enveloppe dans un <main>, le bandeau pose avant le pied de page
+   suit ce <main> et non plus la section : c est alors la derniere section
+   contenue qui decide. La premiere forme reste utile a une page qui place son
+   propre <div id="reseaux"> juste apres une section sombre. */
+.dark+.socialbar,
+main:has(>.dark:last-child)+.socialbar{border-top:2px solid var(--creme)}
 
 /* Header */
 .site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:2px solid var(--encre);background:var(--creme);position:sticky;top:0;z-index:50}
