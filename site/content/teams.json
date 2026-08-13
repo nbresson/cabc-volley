@@ -83,7 +83,8 @@
         "bouton": "Nous contacter",
         "lien": "contact.html"
       },
-      "effectif": []
+      "effectif": [],
+      "photo": "assets/uploads/ecole.jpg"
     }
   ]
 }
