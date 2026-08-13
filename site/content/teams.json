@@ -85,6 +85,14 @@
       },
       "effectif": [],
       "photo": "assets/uploads/ecole.jpg"
+    },
+    {
+      "groupe": null,
+      "nom": "Volley Santé",
+      "slug": "volley-sante",
+      "categorie": "Volley Santé",
+      "photo": "assets/uploads/fit_volley.jpg",
+      "creneau": "Jeu. 20h à 21h40 · Saint Germain"
     }
   ]
 }
