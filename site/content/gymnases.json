@@ -2,57 +2,51 @@
   "secteur": "Brive-la-Gaillarde",
   "items": [
     {
-      "nom": "Gymnase Rollinat",
-      "slug": "rollinat",
-      "etiquette": "Salle principale",
-      "adresse": "49 rue Maurice Rollinat, 19100 Brive",
       "usage": "Matchs seniors · École de volley",
+      "slug": "rollinat",
+      "nom": "Gymnase Rollinat",
+      "adresse": "49 rue Maurice Rollinat, 19100 Brive",
       "acces": "Parking gratuit · Accès PMR",
-      "itineraire": "https://maps.app.goo.gl/sp3o7qABfTf4Xta79",
       "photo": "assets/uploads/gymnase_rollinat.webp",
+      "blocs": [],
+      "itineraire": "https://maps.app.goo.gl/sp3o7qABfTf4Xta79",
       "description": "Mis en service en 1982, le Rollinat est la salle principale du club : c'est là que se jouent les matchs des équipes seniors, et là que l'école de volley accueille les plus jeunes le samedi matin.\n\nSon aire de jeu mesure 40 mètres sur 20, et la salle compte quatre vestiaires.",
-      "blocs": [
-        {
-          "titre": "Une salle partagée",
-          "texte": "Le Rollinat n'est pas qu'une salle de volley. On y pratique aussi le beach-volley et le green-volley en compétition nationale, et la ville y accueille le basket-ball, le handball et le tir à l'arc, principalement en usage scolaire.\n\nC'est ce qui explique que les créneaux du club y soient comptés : chaque heure de filet se négocie.",
-          "photo": ""
-        }
-      ]
+      "etiquette": "Salle principale"
     },
     {
-      "nom": "Beach Park de Tujac",
-      "slug": "beach-park-tujac",
-      "etiquette": "Beach",
-      "adresse": "Plaine des Jeux de Tujac, 19100 Brive-la-Gaillarde",
       "usage": "Terrains de beach · mai à septembre",
+      "slug": "beach-park-tujac",
+      "nom": "Beach Park de Tujac",
+      "adresse": "Plaine des Jeux de Tujac, 19100 Brive-la-Gaillarde",
       "acces": "",
-      "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
       "photo": "assets/uploads/beach_park.webp",
+      "blocs": [],
+      "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
       "description": "De mai à septembre, le club quitte le parquet pour le sable. Le Beach Park de Tujac accueille les entraînements et les tournois de beach-volley, en 2 contre 2 comme en 4 contre 4.",
-      "blocs": []
+      "etiquette": "Beach"
     },
     {
-      "nom": "Gymnase Saint-Germain",
-      "slug": "saint-germain",
-      "etiquette": "Salle secondaire",
-      "adresse": "6 Bd Marx Dormoy, 19100 Brive-la-Gaillarde",
       "usage": "Entraînements · Matchs Ufolep",
+      "slug": "saint-germain",
+      "nom": "Gymnase Saint-Germain",
+      "adresse": "6 Bd Marx Dormoy, 19100 Brive-la-Gaillarde",
       "acces": "Parking gratuit",
-      "itineraire": "https://maps.app.goo.gl/RSmFdNEa5tYgZyMU9",
       "photo": "assets/uploads/gymnase_saint-germain.jpg",
+      "blocs": [],
+      "itineraire": "https://maps.app.goo.gl/RSmFdNEa5tYgZyMU9",
       "description": "Salle secondaire du club, Saint-Germain accueille une partie des entraînements seniors, les matchs Ufolep, et la séance de Volley Santé du jeudi soir.",
-      "blocs": []
+      "etiquette": "Salle secondaire"
     },
     {
-      "nom": "Gymnase d'Arsonval",
-      "slug": "arsonval",
-      "etiquette": "",
-      "adresse": "2 Rue Paul Pradaud, 19100 Brive-La-Gaillarde",
       "usage": "Entraînements",
-      "itineraire": "https://maps.app.goo.gl/yWWyHS9yrF1YgMYf7",
+      "slug": "arsonval",
+      "nom": "Gymnase d'Arsonval",
+      "adresse": "2 Rue Paul Pradaud, 19100 Brive-La-Gaillarde",
       "photo": "assets/uploads/gymnase_darsonval.webp",
+      "blocs": [],
+      "itineraire": "https://maps.app.goo.gl/yWWyHS9yrF1YgMYf7",
       "description": "",
-      "blocs": []
+      "etiquette": ""
     }
   ]
 }
