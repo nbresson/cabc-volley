@@ -215,9 +215,14 @@ p{margin:0}
    ne se trace que precede d une section sombre. Un mur clair s intercale sans
    rien casser, la transition se voyant d elle-meme. Le noeud est retire quand
    aucun partenaire n est saisi, pour que l adjacence sombre revienne. */
-.murlogos{background:var(--sable);border-top:2px solid var(--encre);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:20px 38px;padding:22px 24px}
-.murlogos img{height:40px;width:auto;max-width:132px;object-fit:contain}
-.murlogos a{display:block}
+/* Grille plutot que flex-wrap : le wrap remplissait chaque ligne jusqu a
+   saturation et laissait le reste orphelin — treize logos puis deux. Le nombre
+   de colonnes et la hauteur des logos sont poses par disposerMur(), qui les
+   calcule d apres le nombre de partenaires et la largeur disponible. Les deux
+   valeurs de repli servent le temps que le fichier soit lu. */
+.murlogos{background:var(--sable);border-top:2px solid var(--encre);display:grid;grid-template-columns:repeat(var(--colonnes,auto-fit),minmax(90px,1fr));justify-items:center;align-items:center;gap:18px 26px;padding:22px 24px}
+.murlogos img{height:var(--h-logo,46px);width:auto;max-width:100%;object-fit:contain}
+.murlogos a{display:block;max-width:100%}
 .murlogos a:hover img,.murlogos a:focus-visible img{opacity:.6}
 /* Cadre a logo : contrairement a .ph qui recadre une photo en la rognant, il
    montre le logo entier sur un fond uni — un logo rogne ne vaut rien. */
