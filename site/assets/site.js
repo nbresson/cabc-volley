@@ -30,6 +30,32 @@ function gymnaseUrl(slug){return "gymnase.html?g="+encodeURIComponent(slug);}
 // un fichier : ainsi rien n est insere tant qu on ne sait pas s il y a des
 // partenaires, et le bandeau reseaux garde son adjacence avec la derniere
 // section jusqu a preuve du contraire. Aucun noeud vide n est laisse.
+// Choisit la hauteur des logos et le nombre de colonnes. Deux idees :
+// moins il y a de partenaires, plus on peut les montrer grands ; et le nombre
+// de colonnes se deduit du nombre de lignes necessaires, pas l inverse — c est
+// ce qui donne 5 + 5 + 5 la ou un simple wrap donnait 13 + 2.
+// La largeur minimale d une colonne suit la hauteur des logos : un logo plus
+// grand a besoin de plus de place autour de lui.
+function disposerMur(mur,nombre){
+  // 48 = les deux paddings lateraux declares dans .murlogos
+  const dispo=Math.max(1,mur.clientWidth-48);
+  // Plafond de hauteur : moins ils sont nombreux, plus on peut les montrer grands.
+  const plafond=nombre<=6?76:nombre<=12?62:54;
+  // Le nombre de colonnes se decide sur une hauteur PLANCHER, pas sur le
+  // plafond : sinon six logos reclamaient des colonnes si larges qu ils
+  // tenaient sur deux lignes au lieu d une seule. Le plancher est plus bas sur
+  // telephone, sans quoi quinze logos y faisaient un mur de 540 px de haut.
+  const plancher=dispo<560?30:38;
+  const colonnesMax=Math.max(2,Math.floor(dispo/(plancher*3)));
+  const lignes=Math.ceil(nombre/colonnesMax);
+  const colonnes=Math.ceil(nombre/lignes);
+  // La hauteur finale profite de la place reellement laissee par la colonne,
+  // sans jamais depasser le plafond fixe par le nombre.
+  const hauteur=Math.min(plafond,Math.round(dispo/colonnes/2.8));
+  mur.style.setProperty("--h-logo",hauteur+"px");
+  mur.style.setProperty("--colonnes",colonnes);
+}
+
 async function murPartenaires(){
   const barre=document.querySelector(".socialbar");
   if(!barre)return;
@@ -41,6 +67,15 @@ async function murPartenaires(){
   barre.insertAdjacentHTML("beforebegin",`<div class="murlogos">${items.map(p=>
     `<a href="partenaires.html" title="${p.nom||""}"><img src="${p.logo}" alt="${p.nom||""}" loading="lazy"></a>`
   ).join("")}</div>`);
+  const mur=document.querySelector(".murlogos");
+  disposerMur(mur,items.length);
+  // Le nombre de colonnes depend de la largeur : il se recalcule au
+  // redimensionnement, mais pas a chaque pixel parcouru.
+  let attente;
+  window.addEventListener("resize",()=>{
+    clearTimeout(attente);
+    attente=setTimeout(()=>disposerMur(mur,items.length),150);
+  });
 }
 async function getJSON(p){try{const r=await fetch(p,{cache:"no-store"});if(!r.ok)throw 0;return await r.json();}catch(e){return null;}}
 function here(){const p=location.pathname.split("/").pop();return p||"index.html";}
