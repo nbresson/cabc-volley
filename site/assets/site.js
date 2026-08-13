@@ -1,7 +1,7 @@
 // Site CABC Volley — header/footer partagés + rendu du contenu JSON (Decap)
 const NAV=[["index.html","Accueil"],["club.html","Le Club"],["equipes.html","Équipes"],["calendrier.html","Calendrier"],["actualites.html","Actualités"],["boutique.html","Boutique"],["infos.html","Infos"],["contact.html","Contact"]];
 // Pages enfants : elles allument l'entree de nav de leur page parente.
-const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html"};
+const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","partenaires.html":"club.html","gymnase.html":"contact.html"};
 // Reseaux du club. Seule source des deux adresses, pour le bandeau ci-dessous
 // comme pour tout <div id="reseaux"> pose dans une page.
 const RESEAUX=[
@@ -21,6 +21,27 @@ function barreReseaux(){return `<div class="socialbar">${RESEAUX.map(([nom,url,g
 // Seul endroit du code qui construit l'URL d'une page equipe.
 // Passer a des URLs propres plus tard ne touchera que cette fonction.
 function teamUrl(slug){return "equipe.html?e="+encodeURIComponent(slug);}
+// Jumelle de teamUrl, pour la meme raison : une seule ligne a changer le jour
+// ou les fiches de salle prendront une URL propre.
+function gymnaseUrl(slug){return "gymnase.html?g="+encodeURIComponent(slug);}
+
+// Mur de partenaires, insere juste avant le bandeau reseaux sur toutes les
+// pages. Pose apres coup plutot que dans renderChrome, parce qu il faut lire
+// un fichier : ainsi rien n est insere tant qu on ne sait pas s il y a des
+// partenaires, et le bandeau reseaux garde son adjacence avec la derniere
+// section jusqu a preuve du contraire. Aucun noeud vide n est laisse.
+async function murPartenaires(){
+  const barre=document.querySelector(".socialbar");
+  if(!barre)return;
+  const data=await getJSON("content/partenaires.json");
+  const items=(data?.items||[]).filter(p=>p.logo);
+  if(!items.length)return;
+  // Tous les logos menent a la page Partenaires, jamais au site du partenaire :
+  // le mur sert a faire connaitre la page, pas a envoyer le visiteur ailleurs.
+  barre.insertAdjacentHTML("beforebegin",`<div class="murlogos">${items.map(p=>
+    `<a href="partenaires.html" title="${p.nom||""}"><img src="${p.logo}" alt="${p.nom||""}" loading="lazy"></a>`
+  ).join("")}</div>`);
+}
 async function getJSON(p){try{const r=await fetch(p,{cache:"no-store"});if(!r.ok)throw 0;return await r.json();}catch(e){return null;}}
 function here(){const p=location.pathname.split("/").pop();return p||"index.html";}
 function renderChrome(){
@@ -95,8 +116,8 @@ function mdToHtml(md){if(!md)return"";
 // Carte d une salle. Partagee par Contact (« Nos gymnases ») et Club
 // (« Nos infrastructures ») : une seule definition, les deux pages ne peuvent
 // donc plus diverger. Le titre de section reste propre a chaque page.
-function salleCard(v){return `
-    <div class="card shadow">
+function salleCard(v){
+  const dedans=`
       <div class="ph" style="aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
         ${v.photo?`<img src="${v.photo}" alt="${v.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}
         ${v.etiquette?`<span class="badge" style="position:absolute;top:12px;left:12px">${v.etiquette}</span>`:''}
@@ -106,8 +127,15 @@ function salleCard(v){return `
         ${v.adresse?`<span class="muted" style="font-size:13px">${v.adresse}</span>`:''}
         ${v.usage?`<span class="muted" style="font-size:13px">${v.usage}</span>`:''}
         ${v.acces?`<span class="mono" style="font-size:10px">${v.acces}</span>`:''}
-        ${v.itineraire?`<a href="${v.itineraire}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;margin-top:6px;font-size:11px;color:var(--encre)">Itinéraire ↗</a>`:''}
-      </div>
+      </div>`;
+  // Une salle sans slug reste affichee mais n est pas cliquable, exactement
+  // comme une equipe sans slug : une saisie incomplete degrade la carte, elle
+  // ne fabrique pas de lien mort. Le lien d itineraire ne survit qu a la forme
+  // non cliquable — imbriquer un lien dans un lien n est pas du HTML valide,
+  // et la fiche porte de toute facon son propre bouton d itineraire.
+  if(v.slug)return `<a class="card link shadow" href="${gymnaseUrl(v.slug)}">${dedans}</a>`;
+  return `<div class="card shadow">${dedans}
+      ${v.itineraire?`<div class="body" style="padding:0 20px 20px"><a href="${v.itineraire}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;font-size:11px;color:var(--encre)">Itinéraire ↗</a></div>`:''}
     </div>`;}
 // Remplit la grille et le sous-titre d une section gymnases. Chaque element est
 // cherche par identifiant et ignore s il manque : une page peut n avoir que la
@@ -136,4 +164,4 @@ function initForms(){
     });
   });
 }
-document.addEventListener("DOMContentLoaded",()=>{renderChrome();initForms();if(window.__pageInit)window.__pageInit();});
+document.addEventListener("DOMContentLoaded",()=>{renderChrome();initForms();if(window.__pageInit)window.__pageInit();murPartenaires();});
