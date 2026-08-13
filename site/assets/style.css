@@ -56,6 +56,11 @@ p{margin:0}
 .socialbar{background:var(--encre);color:var(--creme);display:flex;flex-wrap:wrap;justify-content:center;gap:34px;padding:12px 20px 16px}
 .socialbar .social{font-size:17px}
 .socialbar .social svg{width:20px;height:20px}
+/* Contre une section sombre, le bandeau se fondrait dans elle : ce filet les
+   separe. Permanent, il ouvrirait une fente creme sous le filet de fin de
+   section, qui lui est encre — d ou le selecteur, qui ne le trace que la ou
+   il sert. */
+.dark+.socialbar{border-top:2px solid var(--creme)}
 
 /* Header */
 .site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:2px solid var(--encre);background:var(--creme);position:sticky;top:0;z-index:50}
