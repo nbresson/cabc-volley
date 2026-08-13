@@ -1,5 +1,5 @@
 {
-  "maj": "2026-08-11",
+  "maj": "2026-08-13",
   "editeur": {
     "denomination": "C.A. Brive Corrèze Volley",
     "statut": "Association loi 1901",
@@ -28,7 +28,7 @@
     },
     {
       "titre": "Cookies et mesure d'audience",
-      "corps": "Ce site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience et n'affiche aucune publicité.\n\nLes polices de caractères sont chargées depuis les serveurs de Google Fonts, ce qui transmet votre adresse IP à Google. Aucune autre donnée n'est communiquée à un tiers."
+      "corps": "Ce site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience et n'affiche aucune publicité.\n\nLes polices de caractères sont hébergées sur ce site : aucune donnée n'est transmise à un tiers du seul fait de votre visite.\n\nLes formulaires de contact et d'adhésion font exception, mais uniquement lorsque vous les envoyez : leur contenu transite alors par le service Web3Forms, comme indiqué plus haut."
     },
     {
       "titre": "Liens vers d'autres sites",
