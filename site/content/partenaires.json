@@ -111,6 +111,12 @@
       "logo": "assets/uploads/partenaire_dubois.webp",
       "lien": "https://www.dubois-et-associes.fr/",
       "mot": ""
+    },
+    {
+      "groupe": "Entreprises",
+      "lien": "https://www.vandb.fr/nos-magasins/v-and-b-brive-la-gaillarde",
+      "nom": "V&B",
+      "logo": "assets/uploads/vandb.png"
     }
   ]
 }
