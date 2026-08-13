@@ -1,6 +1,6 @@
 // Controle des invariants de contenu edite via Decap.
 // Lance par `npm run check`.
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 
 const lire = (nom) =>
   JSON.parse(readFileSync(new URL(`../site/content/${nom}`, import.meta.url), "utf8"));
@@ -59,6 +59,31 @@ if (notres > 1) {
   erreurs.push(`Classement : ${notres} lignes marquées « notre club », une seule doit l'être`);
 }
 
+// Un chemin d image casse ne se voit pas : la page affiche « photo a venir » et
+// la compilation passe. On parcourt donc tout le contenu plutot que d enumerer
+// les champs, parce que Decap peut en ajouter et qu une liste se perimerait.
+const racineSite = new URL("../site/", import.meta.url);
+const cheminsCites = new Map();
+const parcourir = (valeur, source) => {
+  if (typeof valeur === "string") {
+    if (valeur.startsWith("assets/")) cheminsCites.set(valeur, source);
+  } else if (Array.isArray(valeur)) {
+    for (const v of valeur) parcourir(v, source);
+  } else if (valeur && typeof valeur === "object") {
+    for (const v of Object.values(valeur)) parcourir(v, source);
+  }
+};
+const fichiersContenu = readdirSync(new URL("../site/content/", import.meta.url)).filter((n) =>
+  n.endsWith(".json"),
+);
+for (const nom of fichiersContenu) parcourir(lire(nom), nom);
+
+for (const [chemin, source] of cheminsCites) {
+  if (!existsSync(new URL(chemin, racineSite))) {
+    erreurs.push(`${source} : image introuvable « ${chemin} »`);
+  }
+}
+
 if (erreurs.length) {
   console.error("Contenu invalide :");
   for (const e of erreurs) console.error("  -", e);
@@ -67,5 +92,5 @@ if (erreurs.length) {
 
 const tagues = matchs.filter((m) => m.equipe).length;
 console.log(
-  `OK — ${equipes.length} équipes, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} lignes de classement.`,
+  `OK — ${equipes.length} équipes, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} lignes de classement, ${cheminsCites.size} images toutes présentes.`,
 );
