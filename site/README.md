@@ -11,7 +11,7 @@ site/
   design-system.html  ← galerie du design system, non liée depuis aucun menu,
                          s'atteint en saisissant son adresse
   assets/      style.css · site.js · logo.png · uploads/ (images du CMS) · documents/ (fichiers du CMS)
-  content/     settings/news/matches/teams/products/gymnases/club/legal/infos .json  ← contenu éditable
+  content/     settings/news/matches/classement/teams/products/gymnases/club/legal/infos .json  ← contenu éditable
   admin/       index.html · config.yml                     ← interface Decap CMS
 ```
 `equipe.html` est le gabarit de la page d'une équipe (accessible via l'identifiant
@@ -94,6 +94,7 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 ## 5 · Ce que le bureau peut modifier (menus Decap)
 - **Actualités** — articles (titre, date, catégorie, chapô, contenu Markdown, image, « à la une »)
 - **Matchs & résultats** — matchs à venir et scores ; « match à la une » = celui du compte à rebours d'accueil
+- **Classement** — titre de la section, lignes du tableau (équipe, J, V, D, points) et phrase affichée sous le tableau ; le rang n'est pas saisi, c'est l'ordre des lignes
 - **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo) ; chaque équipe a aussi son identifiant URL, son groupe, sa photo d'équipe, son lien de classement FFVB et son bloc infos pratiques (pour les équipes sans calendrier de matchs)
 - **Boutique** — produits (nom, prix, statut dispo/nouveau/épuisé, photo)
 - **Réglages** — email, téléphone, permanence, **lien classement FFVB**
@@ -102,8 +103,8 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 - **Mentions légales** — date de mise à jour, éditeur du site, hébergeur, articles
 - **Infos & documents** — blocs de texte libre, chacun avec ses documents téléversés (PDF de préférence) ou ses liens externes
 
-Les classements/calendriers détaillés restent sur la FFVB (bouton présent sur la page Calendrier) ;
-seuls les matchs mis en avant sont saisis à la main.
+Le classement affiché sur la page Calendrier est saisi à la main, dans l'espace « Classement » ;
+les calendriers et classements détaillés restent sur la FFVB (bouton présent sur la page Calendrier).
 
 ### Formats d'images recommandés
 Chaque emplacement a un cadre de proportions fixes : l'image est recadrée **au centre**
