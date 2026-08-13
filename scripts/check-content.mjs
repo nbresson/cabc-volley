@@ -1,6 +1,6 @@
 // Controle des invariants de contenu edite via Decap.
 // Lance par `npm run check`.
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 
 const lire = (nom) =>
   JSON.parse(readFileSync(new URL(`../site/content/${nom}`, import.meta.url), "utf8"));
@@ -78,10 +78,25 @@ const fichiersContenu = readdirSync(new URL("../site/content/", import.meta.url)
 );
 for (const nom of fichiersContenu) parcourir(lire(nom), nom);
 
+// Le README fixe 400 Ko par image. On avertit sans bloquer : le bureau publie
+// depuis Decap, et faire echouer la compilation parce qu une photo d actualite
+// pese un peu trop empecherait une publication legitime. L avertissement suffit
+// a rendre la derive visible dans le journal de compilation.
+const LIMITE_IMAGE = 400 * 1024;
+const lourdes = [];
+
 for (const [chemin, source] of cheminsCites) {
-  if (!existsSync(new URL(chemin, racineSite))) {
+  const fichier = new URL(chemin, racineSite);
+  if (!existsSync(fichier)) {
     erreurs.push(`${source} : image introuvable « ${chemin} »`);
+    continue;
   }
+  const taille = statSync(fichier).size;
+  if (taille > LIMITE_IMAGE) lourdes.push({ chemin, ko: Math.round(taille / 1024) });
+}
+
+for (const { chemin, ko } of lourdes) {
+  console.warn(`Attention — ${chemin} pèse ${ko} Ko, au-dessus des 400 Ko conseillés par le README.`);
 }
 
 if (erreurs.length) {

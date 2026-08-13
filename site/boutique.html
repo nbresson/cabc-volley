@@ -26,7 +26,7 @@ window.__pageInit=async function(){
   document.getElementById("products").innerHTML=(data?.items||[]).map(p=>{
     const off=p.statut==="epuise";
     return `<div class="card ${off?'':'shadow'}" style="${off?'border-color:var(--taupe);opacity:.75':''}">
-      <div class="ph" style="aspect-ratio:1/1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${p.image?`<img src="${p.image}" alt="${p.nom}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover${off?';filter:grayscale(1)':''}">`:`<span class="mono" style="color:var(--mention)">[ ${p.nom} ]</span>`}${badge[p.statut]||''}</div>
+      <div class="ph" style="aspect-ratio:1/1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${p.image?`<img src="${p.image}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover${off?';filter:grayscale(1)':''}">`:`<span class="mono" style="color:var(--mention)">[ ${p.nom} ]</span>`}${badge[p.statut]||''}</div>
       <div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1;${off?'color:var(--taupe)':''}">${p.nom}</strong>
       <div class="row" style="justify-content:space-between;align-items:baseline"><span class="mono" style="font-size:15px;${off?'color:var(--taupe)':'color:var(--encre)'}">${p.prix}</span>${off?'<span class="badge-muted">Épuisé</span>':'<span class="mono" style="font-size:10px;letter-spacing:.14em">'+p.detail+'</span>'}</div></div></div>`;
   }).join("");
