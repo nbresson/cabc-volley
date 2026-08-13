@@ -169,7 +169,7 @@ body        → Archivo 15px / 16px
   </article>
 
   <article class="gal-item" data-classes="dark">
-    <div class="gal-meta"><div class="gal-name">.dark</div><p class="gal-note">Inverse le bloc. Attention : les boutons ordinaires y deviennent illisibles, il faut passer à <code>.btn-inverse</code> ou <code>.btn-outline-light</code>.</p><div class="gal-demo"></div></div>
+    <div class="gal-meta"><div class="gal-name">.dark</div><p class="gal-note">Inverse le bloc. Attention : les boutons ordinaires y deviennent illisibles, il faut passer à <code>.btn-inverse</code> ou <code>.btn-outline-light</code>. Le texte en <code>.muted</code> y est rattrapé automatiquement — sa couleur propre gagnerait sinon sur celle héritée du bloc, ce qui rend illisible tout Markdown posé sur fond sombre, <code>mdToHtml()</code> produisant des <code>&lt;p class="muted"&gt;</code>.</p><div class="gal-demo"></div></div>
     <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
     <template><div class="dark pad">Bloc inversé, texte crème sur encre.</div></template>
   </article>
