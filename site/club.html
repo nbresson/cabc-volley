@@ -27,13 +27,20 @@
   <div id="bureau" class="cols-4"></div>
 </section>
 <section class="section pad">
+  <div class="section-head"><h2>Nos infrastructures</h2><span class="mono" id="infra-sub"></span></div>
+  <div id="infrastructures" class="cols-3"></div>
+</section>
+<section class="section pad">
   <div class="section-head"><h2 id="galerie-titre"></h2><span class="mono" id="galerie-legende"></span></div>
   <div class="cols-3" id="galerie"></div>
 </section>
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const d=await getJSON("content/club.json");
+  const [d,gym]=await Promise.all([getJSON("content/club.json"),getJSON("content/gymnases.json")]);
+  // Rendu avant le retour anticipe : les infrastructures ne dependent pas de
+  // club.json, un souci sur ce fichier ne doit pas les faire disparaitre.
+  renderGymnases("infrastructures","infra-sub",gym);
   if(!d)return;
   const nl=s=>String(s||"").replace(/\n/g,"<br>");
   const gras=s=>String(s||"").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");

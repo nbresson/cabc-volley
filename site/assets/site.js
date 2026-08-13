@@ -46,6 +46,33 @@ function mdToHtml(md){if(!md)return"";
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';
     if(/^[-*] /.test(b))return '<ul class="ds-list">'+b.split("\n").map(l=>'<li>'+inl(l.replace(/^[-*] +/,""))+'</li>').join("")+'</ul>';
     return '<p class="muted" style="line-height:1.8;margin-bottom:18px">'+inl(b)+'</p>';}).join("");}
+// Carte d une salle. Partagee par Contact (« Nos gymnases ») et Club
+// (« Nos infrastructures ») : une seule definition, les deux pages ne peuvent
+// donc plus diverger. Le titre de section reste propre a chaque page.
+function salleCard(v){return `
+    <div class="card shadow">
+      <div class="ph" style="aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        ${v.photo?`<img src="${v.photo}" alt="${v.nom}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}
+        ${v.etiquette?`<span class="badge" style="position:absolute;top:12px;left:12px">${v.etiquette}</span>`:''}
+      </div>
+      <div class="body" style="padding:20px">
+        <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${v.nom}</strong>
+        ${v.adresse?`<span class="muted" style="font-size:13px">${v.adresse}</span>`:''}
+        ${v.usage?`<span class="muted" style="font-size:13px">${v.usage}</span>`:''}
+        ${v.acces?`<span class="mono" style="font-size:10px">${v.acces}</span>`:''}
+        ${v.itineraire?`<a href="${v.itineraire}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;margin-top:6px;font-size:11px;color:var(--encre)">Itinéraire ↗</a>`:''}
+      </div>
+    </div>`;}
+// Remplit la grille et le sous-titre d une section gymnases. Chaque element est
+// cherche par identifiant et ignore s il manque : une page peut n avoir que la
+// grille. « sites » et non « salles » : le Beach Park n en est pas une.
+function renderGymnases(idGrille,idSousTitre,data){
+  const salles=data?.items||[];
+  const sub=document.getElementById(idSousTitre);
+  if(sub)sub.textContent=[salles.length+(salles.length>1?" sites":" site"),data?.secteur].filter(Boolean).join(" · ");
+  const grille=document.getElementById(idGrille);
+  if(grille)grille.innerHTML=salles.map(salleCard).join("")||'<p class="muted">Les sites seront renseignés prochainement.</p>';
+}
 // Formulaires (adhésion & contact) — envoi par Web3Forms, message de confirmation inline.
 function initForms(){
   document.querySelectorAll("form[data-web3forms]").forEach(form=>{
