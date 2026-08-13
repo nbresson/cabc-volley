@@ -25,15 +25,26 @@ async function getJSON(p){try{const r=await fetch(p,{cache:"no-store"});if(!r.ok
 function here(){const p=location.pathname.split("/").pop();return p||"index.html";}
 function renderChrome(){
   const cur=PARENT[here()]||here();
-  const links=NAV.map(([h,t])=>`<a href="${h}" class="${h===cur?'active':''}">${t}</a>`).join("");
+  // aria-current double la classe active : le soulignement ne dit rien a qui
+  // n a pas l ecran, et les neuf liens s annoncaient jusqu ici a l identique.
+  const links=NAV.map(([h,t])=>`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}>${t}</a>`).join("");
   const header=document.getElementById("header");
   if(header)header.innerHTML=`
     <div class="topbar">CLUB ATHLÉTIQUE DE BRIVE — SECTION VOLLEY-BALL — DEPUIS 1946</div>
     <header class="site-header">
-      <button class="burger" aria-label="Menu" onclick="document.getElementById('mainnav').classList.toggle('open')"><span></span><span></span><span></span></button>
+      <button class="burger" type="button" aria-label="Menu" aria-controls="mainnav" aria-expanded="false"><span></span><span></span><span></span></button>
       <a class="logo" href="index.html"><img src="assets/logo.png" alt="C.A. Brive Corrèze Volley"></a>
       <nav id="mainnav">${links}<a href="adhesion.html" class="btn btn-primary" style="padding:9px 20px">ADHÉRER</a></nav>
     </header>`;
+  // Le onclick en ligne a laisse la place a un ecouteur : il fallait un endroit
+  // ou tenir aria-expanded a jour. Sans lui, le bouton annonce « Menu » sans
+  // jamais dire s il est ouvert ou ferme.
+  const burger=header&&header.querySelector(".burger");
+  if(burger)burger.addEventListener("click",()=>{
+    const nav=document.getElementById("mainnav");
+    if(!nav)return;
+    burger.setAttribute("aria-expanded",String(nav.classList.toggle("open")));
+  });
   const footer=document.getElementById("footer");
   // Le bandeau est pose en frere du pied de page, jamais dedans : c est ce qui
   // permet a .dark+.socialbar de voir une section sombre juste au-dessus et de
