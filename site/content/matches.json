@@ -137,6 +137,17 @@
       "statut": "a_venir",
       "equipe": "n3-masculin",
       "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Complexe de Kercado",
+      "adversaire": "Vannes Volley 56",
+      "date": "2027-02-14T14:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
     }
   ]
 }
