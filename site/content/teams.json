@@ -42,7 +42,7 @@
       "slug": "r1-feminin",
       "groupe": "Séniors",
       "categorie": "Régional 1",
-      "creneau": "Mar. 20h00-22h00 · Rollinat ; Alternance Ven. 20h30-22h30 · Rollinat ou 20h00-20h00 · Saint-Germain",
+      "creneau": "Mar. 20h00-22h00 · Rollinat ; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
       "photo": "assets/uploads/r1f_v2.png",
       "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RFB"
     },
@@ -51,7 +51,7 @@
       "slug": "r1-masculin",
       "groupe": "Séniors",
       "categorie": "Régional",
-      "creneau": "Mar. 20h30-22h30, Ven. 20h30-22h30 · Saint-Germain",
+      "creneau": "Mar. 20h30-22h30 · Saint-Germain; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
       "effectif": [],
       "photo": "assets/uploads/r1m.png",
       "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RMB"
