@@ -58,11 +58,15 @@ window.__pageInit=async function(){
     const d=new Date(nm.date);
     const diff=Math.max(0,d-new Date());
     const j=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),mn=Math.floor(diff%36e5/6e4);
+    // Date, heure, competition, lieu : l ordre « competition puis lieu » est
+    // celui de matchRow() et des autres pages. filter(Boolean) evite le « · »
+    // orphelin si un champ venait a manquer.
+    const infos=[d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"}),d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),nm.competition,nm.lieu].filter(Boolean).join(" · ");
     el.innerHTML=`<div class="pad duo" style="--b:auto;gap:32px;align-items:center">
       <div>
         <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${nm.domicile?"à domicile":"à l'extérieur"}</div>
         <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${nm.adversaire}</h2>
-        <div class="mono" style="color:var(--mention-sombre)">${d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})} · ${nm.lieu}</div>
+        <div class="mono" style="color:var(--mention-sombre)">${infos}</div>
       </div>
       <div class="countdown"><div><strong>${String(j).padStart(2,"0")}</strong><span>JOURS</span></div><div><strong>${String(h).padStart(2,"0")}</strong><span>HEURES</span></div><div><strong>${String(mn).padStart(2,"0")}</strong><span>MIN</span></div></div>
     </div>`;
