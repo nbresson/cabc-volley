@@ -1,46 +1,102 @@
 {
-  "titre": "Classement Prénationale F",
-  "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+  "titre": "Classement National 3 M",
   "items": [
     {
-      "equipe": "Ussel VB",
-      "joues": 6,
-      "victoires": 6,
+      "joues": 0,
+      "victoires": 0,
       "defaites": 0,
-      "points": 18,
-      "notre_club": false
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Tours Volley-ball 3"
     },
     {
-      "equipe": "C.A. Brive Corrèze Volley",
-      "joues": 6,
-      "victoires": 5,
-      "defaites": 1,
-      "points": 15,
-      "notre_club": true
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Sporting Club de l'Ouest"
     },
     {
-      "equipe": "Limoges VB",
-      "joues": 6,
-      "victoires": 4,
-      "defaites": 2,
-      "points": 13,
-      "notre_club": false
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "C.A. Brive Corrèze Volley"
     },
     {
-      "equipe": "Tulle VB",
-      "joues": 6,
-      "victoires": 2,
-      "defaites": 4,
-      "points": 8,
-      "notre_club": false
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "AS Saint-Barthélémy d'Anjou V.B."
     },
     {
-      "equipe": "Ussac VB",
-      "joues": 6,
-      "victoires": 1,
-      "defaites": 5,
-      "points": 4,
-      "notre_club": false
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "La Rochelle Volley-ball"
+    },
+    {
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Entente Choletaise Volley-ball"
+    },
+    {
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Saint-Avertin Sports"
+    },
+    {
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "US Bouguenais Volley-ball"
+    },
+    {
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Vannes Volley 56"
+    },
+    {
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Alterna Stade Poitevin Volley-ball 3"
+    },
+    {
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Sport Athlétique Mérignacais 2"
+    },
+    {
+      "joues": 0,
+      "victoires": 0,
+      "defaites": 0,
+      "points": 0,
+      "notre_club": false,
+      "equipe": "Club Municipal Floirac"
     }
-  ]
+  ],
+  "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB."
 }
