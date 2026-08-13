@@ -148,6 +148,83 @@
       "statut": "a_venir",
       "equipe": "n3-masculin",
       "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Gymnase Yves Du Manoir",
+      "adversaire": "Club Municipal de Floirac",
+      "date": "2027-02-20T20:30",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "US Bouguenais Volley-ball",
+      "date": "2027-02-27T20:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Saint-Avertin Sports",
+      "date": "2027-03-21T15:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle Robert Grenon",
+      "adversaire": "Tours Volley-ball 3",
+      "date": "2027-03-28T13:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Entente Choletaise Volley-ball",
+      "date": "2027-04-04T15:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Gymnase Alice Millat",
+      "adversaire": "Club Athlétique Mérignacais 2",
+      "date": "2027-04-18T13:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "La Rochelle Volley-ball",
+      "date": "2027-04-24T20:00",
+      "statut": "a_venir",
+      "equipe": "n3-masculin",
+      "competition": "National 3 (3MD)"
     }
   ]
 }
