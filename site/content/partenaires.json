@@ -117,6 +117,12 @@
       "lien": "https://www.vandb.fr/nos-magasins/v-and-b-brive-la-gaillarde",
       "nom": "V&B",
       "logo": "assets/uploads/vnb_logo.svg"
+    },
+    {
+      "groupe": "Institutions",
+      "nom": "Département de la Corrèze",
+      "logo": "assets/uploads/conseil-departemental-de-la-correze.svg",
+      "lien": "https://www.correze.fr/"
     }
   ]
 }
