@@ -51,6 +51,64 @@ function estBrouillon(hote) {
   return hote.endsWith(".workers.dev");
 }
 
+// Redirections depuis l ancien site WordPress. L inventaire complet et le
+// raisonnement de chaque ligne sont dans
+// docs/superpowers/specs/2026-08-13-anciennes-urls-inventaire.md
+//
+// Les cibles s ecrivent SANS extension : Cloudflare sert /contact et repond 307
+// sur /contact.html. Viser la forme .html produirait une chaine 301 puis 307,
+// un saut de plus a chaque visite et un signal dilue pour les moteurs.
+const REDIRECTIONS = new Map([
+  ["/lhistoire-du-club/", "/club"],
+  ["/constitution-du-bureau/", "/club"],
+  ["/contacts/", "/contact"],
+  ["/devenir-benevole/", "/contact"],
+  ["/inscription/", "/adhesion"],
+  ["/seances-dessais/", "/adhesion"],
+  ["/guide-des-parents/", "/infos"],
+  ["/informations-importantes/", "/infos"],
+  ["/proces-verbaux/", "/infos"],
+  ["/mentions-legales/", "/mentions-legales"],
+  ["/boutique-2/", "/boutique"],
+  ["/sur-les-reseaux/", "/"],
+  ["/senior-masculin-n3/", "/equipe?e=n3-masculin"],
+  ["/regional-1-masculin/", "/equipe?e=r1-masculin"],
+  ["/regional-1-feminine/", "/equipe?e=r1-feminin"],
+  ["/ecole-de-volley/", "/equipe?e=ecole-de-volley"],
+  // Baby et Kids ont ete fondus dans la fiche Ecole de volley.
+  ["/baby-kids-volley/", "/equipe?e=ecole-de-volley"],
+  ["/volley-sante/", "/equipe?e=volley-sante"],
+  ["/ufolep/", "/equipe?e=ufolep"],
+  // Ces trois pages n etaient plus liees par l ancien site lui-meme et n ont
+  // pas d equipe correspondante : la liste est la cible la plus honnete.
+  ["/prenational-feminin/", "/equipes"],
+  ["/pre-national-feminine/", "/equipes"],
+  ["/m21-moins/", "/equipes"],
+  // Deux URLs laides mais bien vivantes : page-d-exemple s intitulait « Nos
+  // partenaires », typography « Le Gymnase ».
+  ["/page-d-exemple/", "/partenaires"],
+  ["/devenir-partenaire/", "/partenaires"],
+  ["/typography/", "/gymnase?g=rollinat"]
+]);
+
+// Prefixes engendres par le plugin SportsPress, plus les pages de demonstration
+// du theme. Cent quarante-quatre URLs sans equivalent : un 410 dit « cette page
+// a existe et n existera plus », ce que Google traite plus vite qu un 404.
+// Les fiches /player/ sont volontairement de celles-la : ce sont des donnees
+// personnelles de licencies, et le nouveau site n a deliberement pas d
+// equivalent.
+const PREFIXES_DISPARUS = [
+  "/player/", "/team/", "/venue/", "/position/", "/season/", "/league/",
+  "/list/", "/role/", "/staff/", "/event/", "/medias/", "/author/",
+  "/donations/", "/page-1/"
+];
+
+// Les anciennes adresses finissaient toutes par une barre oblique, mais un lien
+// recopie a la main peut l avoir perdue : on cherche les deux formes.
+function cibleRedirection(chemin) {
+  return REDIRECTIONS.get(chemin) || REDIRECTIONS.get(chemin + "/");
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -63,6 +121,21 @@ export default {
           "cache-control": "public, max-age=3600"
         }
       });
+    }
+
+    const cible = cibleRedirection(url.pathname);
+    if (cible) {
+      return Response.redirect(new URL(cible, url.origin).toString(), 301);
+    }
+
+    // Le 410 reutilise la page 404 du site : un humain qui suit un vieux lien
+    // merite autre chose qu une ligne de texte nu, et le statut suffit a dire
+    // aux moteurs que la page ne reviendra pas.
+    if (PREFIXES_DISPARUS.some((p) => url.pathname.startsWith(p))) {
+      const page = await env.ASSETS.fetch(new URL("/404.html", url.origin));
+      const entetes = new Headers(page.headers);
+      if (brouillon) entetes.set("X-Robots-Tag", "noindex, nofollow");
+      return new Response(page.body, { status: 410, statusText: "Gone", headers: entetes });
     }
 
     const reponse = await env.ASSETS.fetch(request);
