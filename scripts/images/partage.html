@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:900;font-display:block;
+  src:url('../../site/assets/fonts/barlowcondensed-900-normal-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD;}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:900;font-display:block;
+  src:url('../../site/assets/fonts/barlowcondensed-900-normal-latin-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+1E00-1E9F,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:block;
+  src:url('../../site/assets/fonts/dmmono-500-normal-latin.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD;}
+:root{--encre:#17150F;--creme:#EFE9DB;--mention-sombre:#a89e87}
+*{margin:0;box-sizing:border-box}
+body{width:1200px;height:630px;overflow:hidden}
+.carte{position:relative;width:1200px;height:630px;background:var(--encre);color:var(--creme);
+  padding:84px 92px 88px;display:flex;flex-direction:column;overflow:hidden}
+/* Meme rythme que .hero .lines du site, teinte inversee : sur fond encre la
+   rayure a 5 % d encre ne se voit pas. */
+.lines{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 118px,rgba(239,233,219,.05) 118px 120px)}
+.carte>*:not(.lines){position:relative}
+.logo{height:104px;width:auto;align-self:flex-start;display:block;filter:invert(1) brightness(.93)}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;
+  line-height:.92;letter-spacing:.02em;font-size:134px;margin-top:46px}
+.pied{font-family:'DM Mono',monospace;font-weight:500;font-size:19px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--mention-sombre);margin-top:auto}
+</style></head><body>
+<div class="carte">
+  <div class="lines"></div>
+  <img class="logo" src="../../site/assets/logo.png" alt="">
+  <h1>La fiert&eacute;<br>gaillarde</h1>
+  <div class="pied">C.A. Brive Corr&egrave;ze Volley &mdash; depuis 1946</div>
+</div>
+</body></html>
