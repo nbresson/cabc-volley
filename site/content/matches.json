@@ -236,6 +236,17 @@
       "statut": "a_venir",
       "equipe": "r1-masculin",
       "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Avant Garde Jeanne d'Arc Caudéran",
+      "date": "2026-10-10T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "competition": "Régional 1 M (RMB)"
     }
   ]
 }
