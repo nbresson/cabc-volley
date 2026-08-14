@@ -30,7 +30,11 @@ window.__pageInit=async function(){
   </section>`;
 
   const mine=(matches?.items||[]).filter(m=>m.equipe===t.slug);
-  const avenir=mine.filter(m=>m.statut==="a_venir").sort((a,b)=>new Date(a.date)-new Date(b.date)).slice(0,3);
+  // Le premier match a venir passe dans le bandeau, les suivants dans la liste :
+  // ici les deux se touchent, alors que l accueil les separe de trois sections.
+  const tousAvenir=mine.filter(m=>m.statut==="a_venir").sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const prochain=tousAvenir[0];
+  const avenir=tousAvenir.slice(1,4);
   const finis=mine.filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,3);
 
   // Ligne de resultat : score et badge sont groupes dans une seule cellule,
@@ -80,6 +84,11 @@ window.__pageInit=async function(){
       <a href="calendrier.html" class="btn btn-primary">Calendrier complet</a></div>
   </section>`;
 
-  el.innerHTML=entete+blocInfos+blocAvenir+blocResultats+blocClassement+blocEffectif+pied;
+  // Le bandeau se pose juste sous la photo d equipe, comme sur l accueil il
+  // suit le heros. Absent si l equipe n a aucun match a venir — l ecole de
+  // volley n en a jamais.
+  const blocProchain=prochain?`<section class="section dark" style="padding:0">${bandeauProchainMatch(prochain)}</section>`:"";
+
+  el.innerHTML=entete+blocProchain+blocInfos+blocAvenir+blocResultats+blocClassement+blocEffectif+pied;
 };
 </script></body></html>

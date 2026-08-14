@@ -135,6 +135,30 @@ function matchRow(m){const d=new Date(m.date);return `
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
+// Bandeau du prochain match, partage par l accueil et les fiches d equipe.
+// Il rend l interieur d une section .dark, et non la section elle-meme :
+// l accueil la declare dans son HTML quand la fiche d equipe la fabrique.
+// Le compte a rebours est fige au chargement, comme il l a toujours ete —
+// le faire battre demanderait un minuteur sur toutes les pages pour gagner
+// une minute d exactitude.
+function bandeauProchainMatch(m){
+  if(!m)return"";
+  const d=new Date(m.date);
+  const diff=Math.max(0,d-new Date());
+  const j=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),mn=Math.floor(diff%36e5/6e4);
+  // Date, heure, competition, lieu : l ordre « competition puis lieu » est
+  // celui de matchRow() et des autres pages. filter(Boolean) evite le « · »
+  // orphelin si un champ venait a manquer.
+  const infos=[d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"}),d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),m.competition,m.lieu].filter(Boolean).join(" · ");
+  return `<div class="pad duo" style="--b:auto;gap:32px;align-items:center">
+        <div>
+          <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${m.domicile?"à domicile":"à l'extérieur"}</div>
+          <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${m.adversaire}</h2>
+          <div class="mono" style="color:var(--mention-sombre)">${infos}</div>
+        </div>
+        <div class="countdown"><div><strong>${String(j).padStart(2,"0")}</strong><span>JOURS</span></div><div><strong>${String(h).padStart(2,"0")}</strong><span>HEURES</span></div><div><strong>${String(mn).padStart(2,"0")}</strong><span>MIN</span></div></div>
+      </div>`;
+}
 // Vignette : cadrage "entier" montre l'image complète sur le fond hachuré (affiches),
 // sinon elle remplit le cadre quitte à être recadrée (photos).
 function vignette(src,alt,cadrage){if(!src)return"";
