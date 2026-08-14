@@ -218,6 +218,17 @@ collections:
                   - {name: titre, label: Titre, widget: string, required: false}
                   - {name: texte, label: Texte, widget: text, required: false}
                   - {name: photo, label: Photo, widget: image, required: false, hint: "Paysage : 1600 × 1000 px, moins de 400 Ko."}
+              - name: photos
+                label: Photos de la salle
+                label_singular: Photo
+                widget: list
+                required: false
+                collapsed: true
+                summary: "{{fields.legende}}"
+                hint: "Galerie affichée tout en bas de la page, en trois colonnes. Chaque photo peut porter sa propre légende. Une entrée sans photo est ignorée."
+                fields:
+                  - {name: image, label: Photo, widget: image, hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko."}
+                  - {name: legende, label: Légende, widget: string, required: false, hint: "Ce qu'on voit sur la photo, ex. Les gradins un soir de match. Laissée vide, la photo s'affiche sans texte."}
 
   - name: club
     label: Page Club

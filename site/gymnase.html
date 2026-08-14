@@ -47,6 +47,20 @@ window.__pageInit=async function(){
     return `<section class="section split">${i%2===0?image+texte:texte+image}</section>`;
   }).join("");
 
-  el.innerHTML=entete+description+blocs;
+  // Galerie legendee. <figure> et <figcaption> plutot que des div : la legende
+  // appartient a son image, et le dire en HTML evite d inventer une classe que
+  // la galerie du design system devrait ensuite documenter.
+  // Une entree sans image est ignoree — une legende seule n a rien a montrer.
+  const avecImage=(v.photos||[]).filter(p=>p.image);
+  const galerie=avecImage.length?`<section class="section pad">
+    <div class="section-head"><h2>En images</h2><span class="mono">${avecImage.length} photo${avecImage.length>1?"s":""}</span></div>
+    <div class="cols-3">${avecImage.map(p=>`
+      <figure style="margin:0">
+        <div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden;border:2px solid var(--encre)">${vignette(p.image,p.legende||v.nom)}</div>
+        ${p.legende?`<figcaption class="mono" style="font-size:11px;letter-spacing:.12em;margin-top:10px;text-transform:none">${p.legende}</figcaption>`:""}
+      </figure>`).join("")}</div>
+  </section>`:"";
+
+  el.innerHTML=entete+description+blocs+galerie;
 };
 </script></body></html>
