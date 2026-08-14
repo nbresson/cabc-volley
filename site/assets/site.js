@@ -130,8 +130,10 @@ async function ajusterLiensReglables(){
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
 // Ligne d un match a venir. Exactement 3 enfants directs : .match-row est
 // une grille a 3 colonnes qui deborde au-dela.
+// Le surlignage des matchs a domicile et l attribut de filtre voyagent avec la
+// ligne : le calendrier comme la fiche d equipe en profitent sans y toucher.
 function matchRow(m){const d=new Date(m.date);return `
-    <div class="match-row">
+    <div class="match-row${m.domicile?' hl':''}"${m.equipe?` data-filtre="${m.equipe}"`:""}>
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
@@ -175,6 +177,23 @@ function battreCompteARebours(){
     c.querySelectorAll("[data-u]").forEach(el=>el.textContent=String(v[el.dataset.u]).padStart(2,"0"));
   };
   maj();setInterval(maj,1000);
+}
+// Filtre par chips : les elements de `conteneur` portant data-filtre sont
+// montres ou masques selon la chip active, « tout » les reaffichant tous.
+// L ecouteur est pose sur le groupe et non sur chaque bouton : les chips sont
+// fabriquees apres coup, et une delegation evite de les recabler.
+function initChips(idChips,idConteneur){
+  const chips=document.getElementById(idChips),cont=document.getElementById(idConteneur);
+  if(!chips||!cont)return;
+  chips.addEventListener("click",e=>{
+    const b=e.target.closest(".chip");if(!b)return;
+    chips.querySelectorAll(".chip").forEach(c=>c.classList.remove("actif"));
+    b.classList.add("actif");
+    const v=b.dataset.valeur;
+    cont.querySelectorAll("[data-filtre]").forEach(el=>{
+      el.style.display=(v==="tout"||el.dataset.filtre===v)?"":"none";
+    });
+  });
 }
 // Revele les sections au defilement. La premiere reste visible d emblee, sans
 // quoi le haut de page clignoterait au chargement. Les classes ne sont jamais

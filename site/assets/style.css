@@ -460,3 +460,27 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
 .gazette .breves{display:flex;flex-direction:column;gap:28px}
 .gazette .breves .card{flex:1}
 @media(max-width:880px){.gazette{grid-template-columns:1fr}}
+
+/* ===== Polissage pages interieures ===== */
+/* Chips de filtre : matchs par equipe, actus par categorie. Ce sont des
+   <button>, donc actionnables au clavier sans rien ajouter. */
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:5px 14px;border:1px solid var(--encre);background:transparent;color:var(--encre);cursor:pointer}
+.chip:hover{background:var(--sable)}
+.chip.actif{background:var(--encre);color:var(--creme);padding:6px 14px;border:none}
+
+/* Bandeau « notre position », pose au-dessus du classement. */
+.position-band{display:grid;grid-template-columns:repeat(3,1fr);background:var(--encre);color:var(--creme);margin-bottom:24px}
+.position-band>div{padding:26px;text-align:center;border-right:1px solid #3a352b}
+.position-band>div:last-child{border-right:none}
+.position-band strong{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(38px,5vw,52px);line-height:1}
+.position-band span{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)}
+@media(max-width:880px){.position-band>div{padding:18px 10px}}
+
+/* Sommaire d ancres de la page Equipes. */
+.ancres{display:flex;gap:10px;flex-wrap:wrap;border-top:2px solid var(--encre);padding-top:20px;margin-top:24px}
+.ancres a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:8px 18px;border:2px solid var(--encre)}
+.ancres a:hover{background:var(--encre);color:var(--creme);opacity:1}
+/* L en-tete est colle en haut : sans cette marge, l ancre viendrait se ranger
+   dessous et le titre du groupe resterait invisible. */
+[id^="g-"]{scroll-margin-top:110px}

@@ -11,18 +11,20 @@
   <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Calendrier &amp; résultats</span></div>
   <h1 style="font-size:clamp(38px,9vw,88px)">Calendrier<br>&amp; résultats</h1>
 </section>
-<section class="section" id="last-result" style="padding:0"></section>
+<section class="section dark" id="last-result" style="padding:0"></section>
 <section class="section split" style="--b:1.5fr">
   <div class="pad">
     <div class="eyebrow">— Prochaines journées</div>
     <h2 style="font-size:clamp(32px,5vw,52px);margin:14px 0 18px">Les matchs<br>à venir</h2>
     <p class="muted" style="max-width:38ch">Entrée libre pour tous les matchs à domicile. La buvette ouvre une heure avant le coup d'envoi.</p>
+    <div class="chips" id="chips-equipes" style="margin-top:20px"></div>
     <a id="ffvb1" class="btn btn-secondary" style="margin-top:20px" target="_blank" rel="noopener">Calendrier complet FFVB ↗</a>
   </div>
   <div id="upcoming" class="match-list"></div>
 </section>
 <section class="section pad">
   <div class="section-head"><h2 id="cl-titre">Classement</h2><a id="ffvb2" class="mono lien" style="color:var(--encre)" target="_blank" rel="noopener">Classement FFVB officiel →</a></div>
+  <div class="position-band" id="cl-position" style="display:none"></div>
   <div class="table-wrap" id="cl-tableau"><table class="ds"><thead><tr><th>#</th><th>Équipe</th><th style="text-align:center">J</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:right">Pts</th></tr></thead>
   <tbody id="cl-lignes"></tbody></table></div>
   <p class="vide muted" id="cl-vide" style="display:none">Classement à venir.</p>
@@ -32,7 +34,7 @@
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const [matches,settings,classement]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json"),getJSON("content/classement.json")]);
+  const [matches,settings,classement,teams]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json"),getJSON("content/classement.json"),getJSON("content/teams.json")]);
   if(settings?.ffvb_classement){document.getElementById("ffvb1").href=settings.ffvb_classement;document.getElementById("ffvb2").href=settings.ffvb_classement;}
   // Le rang n est pas stocke : c est la position dans la liste. Reordonner les
   // lignes dans Decap suffit, aucun numero n est a saisir.
@@ -45,6 +47,16 @@ window.__pageInit=async function(){
     document.getElementById("cl-lignes").innerHTML=lignes.map((e,i)=>`
       <tr${e.notre_club?' class="hl"':''}><td>${i+1}</td><td>${e.equipe||""}</td><td style="text-align:center">${n(e.joues)}</td><td style="text-align:center">${n(e.victoires)}</td><td style="text-align:center">${n(e.defaites)}</td><td style="text-align:right"><strong class="display-s">${n(e.points)}</strong></td></tr>`).join("");
     document.getElementById("cl-vide").remove();
+    // Le bandeau ne parait que si une ligne porte « notre club » : sans lui,
+    // aucune position a annoncer.
+    const iNous=lignes.findIndex(e=>e.notre_club);
+    if(iNous>-1){
+      const nous=lignes[iNous],pos=document.getElementById("cl-position");
+      pos.innerHTML=`<div><strong>${iNous+1}<span style="font-size:.5em">e</span></strong><span>NOTRE POSITION</span></div>
+        <div><strong>${n(nous.points)}</strong><span>POINTS</span></div>
+        <div><strong>${n(nous.victoires)} – ${n(nous.defaites)}</strong><span>VICTOIRES – DÉFAITES</span></div>`;
+      pos.style.display="";
+    }
   }else{
     // Sans lignes, le tableau disparait mais la section reste : son titre et le
     // lien vers le classement officiel FFVB gardent leur utilite.
@@ -56,8 +68,19 @@ window.__pageInit=async function(){
   const last=(matches?.items||[]).filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
   const lr=document.getElementById("last-result");
   if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
-    lr.innerHTML=`<div class="pad"><div class="eyebrow" style="margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
-      <div class="match-band" style="padding:0"><strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--taupe)'}">${a}</strong><span class="score">${last.score||"–"}</span><strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--taupe)':''}">${b}</strong></div></div>`;}
+    // Le bandeau est passe sur fond sombre : les gris et la bordure du score
+    // suivent, sinon ils disparaissent dans l encre. Le badge n apparait que si
+    // le champ « gagne » a ete renseigne — sans lui, le score parle seul.
+    const cabGagne=last.gagne;
+    lr.innerHTML=`<div class="pad"><div class="eyebrow" style="color:var(--mention-sombre);margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
+      <div class="match-band" style="padding:0">
+        <strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--mention-sombre)'}">${a}</strong>
+        <span class="row" style="align-items:center;justify-content:center;gap:18px">
+          <span class="score" style="border-color:var(--creme)">${last.score||"–"}</span>
+          ${cabGagne!==undefined?`<span class="badge" style="background:var(--creme);color:var(--encre)">${cabGagne?"Victoire":"Défaite"}</span>`:""}
+        </span>
+        <strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--mention-sombre)':''}">${b}</strong>
+      </div></div>`;}
   // Tri chronologique : l ordre de saisie dans Decap ne garantit rien, et les
   // premiers matchs affiches doivent bien etre les prochains joues.
   const avenir=(matches?.items||[]).filter(m=>m.statut==="a_venir").sort((a,b)=>new Date(a.date)-new Date(b.date));
@@ -71,6 +94,16 @@ window.__pageInit=async function(){
   else{
     up.innerHTML=(replie?avenir.slice(0,VISIBLES):avenir).map(matchRow).join("")
       +(replie?`<details class="acc"><summary>Voir les ${reste.length} autres matchs de la saison</summary><div class="acc-body" style="padding:0">${reste.map(matchRow).join("")}</div></details>`:"");
+  }
+  // Chips par equipe, seulement si plusieurs equipes ont des matchs a venir :
+  // un unique bouton « Toutes » ne filtrerait rien.
+  const nomEquipe=s=>(teams?.items||[]).find(t=>t.slug===s)?.nom||s;
+  const slugs=[...new Set(avenir.map(m=>m.equipe).filter(Boolean))];
+  const chips=document.getElementById("chips-equipes");
+  if(chips&&slugs.length>1){
+    chips.innerHTML=`<button class="chip actif" data-valeur="tout">Toutes</button>`+
+      slugs.map(s=>`<button class="chip" data-valeur="${s}">${nomEquipe(s)}</button>`).join("");
+    initChips("chips-equipes","upcoming");
   }
 };
 </script></body></html>
