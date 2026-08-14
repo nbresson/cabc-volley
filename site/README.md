@@ -140,18 +140,29 @@ redimensionnez pas. Dans le menu Actualités, réglez « Affichage de l'image »
 **Affiche** — l'image est alors montrée en entier, sans jamais être coupée, centrée sur
 le fond hachuré. Réservez « Photo » aux vraies photographies en paysage.
 
+### Deux images ne viennent pas de Decap
+`assets/partage.png` (la vignette qui s'affiche quand on partage un lien du site) et
+`assets/carte-gymnases.webp` (la carte de la page Contact) sont **fabriquées**, pas
+photographiées. Leurs sources sont dans [`scripts/images/`](../scripts/images/) :
+lancez un serveur local **à la racine du dépôt** — elles chargent les polices du site
+par un chemin relatif — ouvrez la page, et capturez la fenêtre à la taille exacte,
+1200 × 630 pour la vignette, 1200 × 515 pour la carte.
+
+Les positions des gymnases dans `carte.html` se relèvent sur le champ `!3d!4d` de
+l'URL Google Maps dépliée, **jamais sur le `@` qui la précède** : ce dernier donne le
+centre de la carte, que le panneau latéral décale d'environ 200 m vers l'ouest.
+
 ## 6 · Formulaires (adhésion & contact)
-Ils sont branchés sur **Web3Forms** (gratuit, 250 envois/mois, sans compte). Il ne
-manque que la clé d'accès :
-1. Allez sur <https://web3forms.com> → « Create your Access Key » → entrez l'email
-   du club (celui qui recevra les messages) → la clé arrive par email.
-2. Dans `adhesion.html` et `contact.html`, remplacez `VOTRE-CLE-WEB3FORMS` par cette
-   clé (champ caché `access_key`, présent une fois dans chaque fichier).
+Ils sont branchés sur **Web3Forms** (gratuit, 250 envois/mois, sans compte). La clé
+d'accès du club est **déjà en place** dans `adhesion.html` et `contact.html` (champ
+caché `access_key`, une fois par fichier). Pour la changer :
+<https://web3forms.com> → « Create your Access Key » → entrez l'email qui recevra les
+messages.
 Cette clé n'est pas un secret : elle peut rester visible dans le code. Un anti-spam
 (champ piège `botcheck`) est déjà en place ; en cas d'échec d'envoi, un message
 d'erreur s'affiche sous le bouton.
 
 ## Notes design
 Palette verrouillée (encre/crème/sable/taupe/lin + brique erreurs), pas d'arrondis, pas de dégradés,
-bordures 2 px, ombres dures. Polices : Barlow Condensed / Archivo / DM Mono (chargées via Google Fonts ;
-pour le RGPD strict, auto-hébergez-les dans `assets/`).
+bordures 2 px, ombres dures. Polices : Barlow Condensed / Archivo / DM Mono, auto-hébergées en WOFF2 dans
+`assets/fonts/` — aucune requête vers Google Fonts, donc rien à déclarer de ce côté.

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<style>
+/* Polices du site plutot que Google Fonts : meme rendu, et rien a demander
+   a un tiers pendant la capture. */
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:block;
+  src:url('../../site/assets/fonts/barlowcondensed-700-normal-latin.woff2') format('woff2');}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:block;
+  src:url('../../site/assets/fonts/dmmono-500-normal-latin.woff2') format('woff2');}
+body{margin:0}
+#map{width:1200px;height:515px;background:#EFE9DB;position:relative}
+/* Teinte encre/creme sur les tuiles OSM */
+.leaflet-tile-pane{filter:grayscale(1) sepia(.32) saturate(.55) brightness(1.06) contrast(.88)}
+.marqueur{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.marqueur .n{width:26px;height:26px;background:#17150F;color:#EFE9DB;display:grid;place-items:center;font:500 13px 'DM Mono',monospace;box-shadow:3px 3px 0 rgba(23,21,15,.3);flex:none}
+.marqueur .lbl{font:700 15px 'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.02em;background:#EFE9DB;color:#17150F;padding:2px 8px;border:1.5px solid #17150F}
+.marqueur.principal .n{width:30px;height:30px;outline:2px solid #17150F;outline-offset:2px}
+.marqueur.principal .lbl{background:#17150F;color:#EFE9DB;font-size:17px}
+.leaflet-control-attribution{font:11px/1.4 'DM Mono',monospace;background:rgba(239,233,219,.92)!important;color:#17150F;border:1px solid #17150F;border-radius:0;margin:10px!important}
+.leaflet-control-attribution a{color:#17150F}
+.cadre{position:absolute;inset:0;border:2px solid #17150F;pointer-events:none;z-index:1000}
+.titre{position:absolute;top:14px;left:14px;z-index:1000;background:#17150F;color:#EFE9DB;font:500 11px 'DM Mono',monospace;letter-spacing:.2em;text-transform:uppercase;padding:6px 12px}
+</style>
+</head><body>
+<div id="map"><div class="cadre"></div><div class="titre">Nos gymnases &agrave; Brive-la-Gaillarde</div></div>
+<script>
+// Positions relevees sur les fiches Google Maps de gymnases.json (champ !3d!4d),
+// et non sur le centre de carte de l URL, decale d environ 200 m vers l ouest
+// par le panneau lateral. Rollinat et Saint-Germain tombent sur les entites
+// OSM du meme nom, ce qui confirme la lecture.
+const sites=[
+  {n:1,nom:"Gymnase Rollinat",pos:[45.1493901,1.5545316],principal:true},
+  {n:2,nom:"Beach Park de Tujac",pos:[45.162123,1.4953897]},
+  {n:3,nom:"Saint-Germain",pos:[45.1678581,1.5410489]},
+  {n:4,nom:"Arsonval",pos:[45.161191,1.530377]}
+];
+const map=L.map('map',{zoomControl:false,attributionControl:false});
+L.control.attribution({prefix:false}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+sites.forEach(s=>{
+  L.marker(s.pos,{icon:L.divIcon({className:'',html:`<div class="marqueur${s.principal?' principal':''}"><span class="n">${s.n}</span><span class="lbl">${s.nom}</span></div>`,iconSize:null,iconAnchor:[13,13]})}).addTo(map);
+});
+map.fitBounds(L.latLngBounds(sites.map(s=>s.pos)),{paddingTopLeft:[60,60],paddingBottomRight:[240,60],maxZoom:15});
+document.title="zoom "+map.getZoom();
+</script>
+</body></html>
