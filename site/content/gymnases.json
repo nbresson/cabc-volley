@@ -11,7 +11,8 @@
       "blocs": [],
       "itineraire": "https://maps.app.goo.gl/sp3o7qABfTf4Xta79",
       "description": "Mis en service en 1982, le Rollinat est la salle principale du club : c'est là que se jouent les matchs des équipes seniors, et là que l'école de volley accueille les plus jeunes le samedi matin.\n\nSon aire de jeu mesure 40 mètres sur 20, et la salle compte quatre vestiaires.",
-      "etiquette": "Salle principale"
+      "etiquette": "Salle principale",
+      "photos": []
     },
     {
       "usage": "Terrains de beach · mai à septembre",
@@ -23,7 +24,8 @@
       "blocs": [],
       "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
       "description": "De mai à septembre, le club quitte le parquet pour le sable. Le Beach Park de Tujac accueille les entraînements et les tournois de beach-volley, en 2 contre 2 comme en 4 contre 4.",
-      "etiquette": "Beach"
+      "etiquette": "Beach",
+      "photos": []
     },
     {
       "usage": "Entraînements · Matchs Ufolep",
@@ -35,7 +37,8 @@
       "blocs": [],
       "itineraire": "https://maps.app.goo.gl/RSmFdNEa5tYgZyMU9",
       "description": "Salle secondaire du club, Saint-Germain accueille une partie des entraînements seniors, les matchs Ufolep, et la séance de Volley Santé du jeudi soir.",
-      "etiquette": "Salle secondaire"
+      "etiquette": "Salle secondaire",
+      "photos": []
     },
     {
       "usage": "Entraînements",
@@ -46,7 +49,8 @@
       "blocs": [],
       "itineraire": "https://maps.app.goo.gl/yWWyHS9yrF1YgMYf7",
       "description": "",
-      "etiquette": ""
+      "etiquette": "",
+      "photos": []
     }
   ]
 }
