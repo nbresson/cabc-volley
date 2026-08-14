@@ -10,18 +10,55 @@
 <section class="pad section">
   <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Actualités</span></div>
   <h1 style="font-size:clamp(38px,9vw,88px)">La gazette<br>du filet</h1>
+  <div class="chips" id="chips-cat" style="margin-top:24px"></div>
 </section>
-<section class="section pad"><div id="news-list" class="cols-3"></div></section>
+<section class="section pad">
+  <!-- Les deux zones partagent un parent : le filtre s y pose une seule fois,
+       au lieu d un ecouteur par zone sur le meme groupe de chips. -->
+  <div id="news-zone">
+    <div id="news-une" class="gazette" style="margin-bottom:28px"></div>
+    <div id="news-list" class="cols-3"></div>
+  </div>
+</section>
 </main>
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
   const data=await getJSON("content/news.json");
-  document.getElementById("news-list").innerHTML=(data?.items||[]).map(n=>`
-    <a class="card link shadow" href="article.html?slug=${encodeURIComponent(n.slug||"")}">
-      <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}</div>
-      <div class="body"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}</span>
-      <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${n.titre}</strong>
-      <span class="muted" style="font-size:13px">${n.extrait}</span></div></a>`).join("")||'<p class="vide muted">Aucune actualité pour le moment.</p>';
+  const items=data?.items||[];
+  const carte=(n,une)=>`
+    <a class="card link shadow" href="article.html?slug=${encodeURIComponent(n.slug||"")}" data-filtre="${n.categorie||""}">
+      ${une||!n.breve?`<div class="ph" style="aspect-ratio:${une?"16/8":"16/9"};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}</div>`:""}
+      <div class="body"${une?' style="padding:22px 24px"':''}>
+        <span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}${une?" · À la une":""}</span>
+        <strong class="${une?'display-xl':'display-m'}" style="font-weight:900;line-height:.95;text-transform:uppercase">${n.titre}</strong>
+        <span class="muted" style="font-size:13px">${n.extrait||""}</span>
+      </div>
+    </a>`;
+  if(!items.length){document.getElementById("news-list").innerHTML='<p class="vide muted">Aucune actualité pour le moment.</p>';return;}
+  // Une « une » illustree, deux breves sans photo, puis la grille du reste.
+  const [une,...reste]=items;
+  const breves=reste.slice(0,2).map(n=>({...n,breve:true}));
+  document.getElementById("news-une").innerHTML=
+    carte(une,true)+`<div class="breves">${breves.map(n=>carte(n,false)).join("")}</div>`;
+  document.getElementById("news-list").innerHTML=reste.slice(2).map(n=>carte(n,false)).join("");
+  // Chips par categorie, seulement s il y en a plusieurs : une seule categorie
+  // ne se filtre pas.
+  const cats=[...new Set(items.map(n=>n.categorie).filter(Boolean))];
+  const chips=document.getElementById("chips-cat");
+  if(chips&&cats.length>1){
+    chips.innerHTML=`<button class="chip actif" data-valeur="tout">Tout</button>`+
+      cats.map(c=>`<button class="chip" data-valeur="${c}">${c}</button>`).join("");
+    initChips("chips-cat","news-zone");
+    // Une « une » masquee laisserait sa colonne vide dans la grille : on replie
+    // la zone entiere des qu elle n a plus rien a montrer.
+    chips.addEventListener("click",()=>{
+      const zone=document.getElementById("news-une");
+      const reste=document.getElementById("news-list");
+      const visible=s=>[...s.querySelectorAll("[data-filtre]")].some(e=>e.style.display!=="none");
+      zone.style.display=visible(zone)?"":"none";
+      reste.style.display=visible(reste)?"":"none";
+    });
+  }
 };
 </script></body></html>
