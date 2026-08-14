@@ -247,6 +247,28 @@
       "statut": "a_venir",
       "equipe": "r1-masculin",
       "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle Pierre Favre",
+      "adversaire": "Association Sportive Illacaise Volley-ball",
+      "date": "2026-10-03T17:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Volley-ball Le Haillan",
+      "date": "2026-10-10T17:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "competition": "Régional 1 F (RFB)"
     }
   ]
 }
