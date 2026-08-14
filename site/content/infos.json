@@ -31,6 +31,10 @@
           "libelle": "Questionnaire de Santé FFVB Sportif Mineur"
         },
         {
+          "type": "intertitre",
+          "libelle": "Certificats médicaux"
+        },
+        {
           "type": "lien",
           "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_CERTIFICAT_MEDICAL_A.pdf",
           "libelle": "Certificat Médical - Fiche A (standard)"
@@ -73,7 +77,8 @@
         {
           "type": "lien",
           "url": "https://szps.pl/wp-content/uploads/2025/08/casebook-2025.pdf",
-          "libelle": "Casebook FIVB 2025 (english)"
+          "libelle": "Casebook FIVB 2025 (english)",
+          "langue": "EN"
         },
         {
           "type": "lien",
@@ -87,5 +92,58 @@
         }
       ]
     }
-  ]
+  ],
+  "essentiel": {
+    "titre": "Quel document te faut-il ?",
+    "cas": [
+      {
+        "titre": "Nouveau · majeur",
+        "documents": [
+          {
+            "libelle": "Demande de licence 2026/2027",
+            "url": "https://extranet.ffvb.org/data/Files/documents/licences/Formulaire_demande_licences_2026_2027.pdf"
+          },
+          {
+            "libelle": "Questionnaire de santé majeur",
+            "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_qs_sport_2025-26.pdf"
+          },
+          {
+            "libelle": "Certificat médical — fiche A",
+            "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_CERTIFICAT_MEDICAL_A.pdf"
+          }
+        ]
+      },
+      {
+        "titre": "Nouveau · mineur",
+        "documents": [
+          {
+            "libelle": "Demande de licence 2026/2027",
+            "url": "https://extranet.ffvb.org/data/Files/documents/licences/Formulaire_demande_licences_2026_2027.pdf"
+          },
+          {
+            "libelle": "Questionnaire de santé mineur",
+            "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_qs_sport_sportifs_mineurs_2025-26.pdf"
+          },
+          {
+            "libelle": "Note certificat médical mineur",
+            "url": "https://extranet.ffvb.org/data/Files/documents/licences/FFvolley_Notice_CM_Sportif_Mineur.pdf"
+          }
+        ]
+      },
+      {
+        "titre": "Renouvellement",
+        "note": "Attestation santé suffisante si toutes les réponses sont « non ».",
+        "documents": [
+          {
+            "libelle": "Demande de licence 2026/2027",
+            "url": "https://extranet.ffvb.org/data/Files/documents/licences/Formulaire_demande_licences_2026_2027.pdf"
+          },
+          {
+            "libelle": "Questionnaire de santé (majeur ou mineur)",
+            "url": "https://extranet.ffvb.org/data/Files/documents/medical/FFvolley_qs_sport_2025-26.pdf"
+          }
+        ]
+      }
+    ]
+  }
 }
