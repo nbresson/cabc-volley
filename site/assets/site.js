@@ -178,6 +178,37 @@ function battreCompteARebours(){
   };
   maj();setInterval(maj,1000);
 }
+// Compte de 0 jusqu a la valeur cible quand la bande de statistiques entre dans
+// l ecran. Seuls les entiers nus sont animes : « 80 ans » reste fige, son texte
+// ne se reduisant pas exactement a son nombre. Une annee saisie seule, « 1946 »,
+// defilerait en revanche depuis zero — le bureau la mettra plutot sous une forme
+// parlante s il veut l afficher.
+function animerChiffres(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const bande=document.getElementById("chiffres");
+  if(!bande)return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    io.disconnect();
+    bande.querySelectorAll("strong").forEach(el=>{
+      const cible=parseInt(el.textContent.replace(/\s/g,""),10);
+      if(!Number.isFinite(cible)||String(cible)!==el.textContent.trim())return;
+      const debut=performance.now(),duree=1400;
+      const pas=now=>{
+        // Bornee des deux cotes : requestAnimationFrame recoit l horodatage du
+        // debut de la frame, qui peut preceder le performance.now() capture
+        // juste avant. Sans le plancher, la progression devient negative, le
+        // cube l amplifie, et le compteur affiche brievement « -28 ».
+        const p=Math.min(1,Math.max(0,(now-debut)/duree));
+        el.textContent=Math.round(cible*(1-Math.pow(1-p,3)));
+        if(p<1)requestAnimationFrame(pas);
+      };
+      requestAnimationFrame(pas);
+    });
+  }),{threshold:.4});
+  io.observe(bande);
+}
+
 // Filtre par chips : les elements de `conteneur` portant data-filtre sont
 // montres ou masques selon la chip active, « tout » les reaffichant tous.
 // L ecouteur est pose sur le groupe et non sur chaque bouton : les chips sont

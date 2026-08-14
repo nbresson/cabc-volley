@@ -61,6 +61,7 @@ window.__pageInit=async function(){
   const bande=document.getElementById("chiffres");
   bande.style.setProperty("--n",chiffres.length||1);
   bande.innerHTML=chiffres.map(c=>`<div><strong>${c.valeur}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)">${c.libelle}</span></div>`).join("");
+  animerChiffres();
 
   // Histoire
   const h=d.histoire||{};
