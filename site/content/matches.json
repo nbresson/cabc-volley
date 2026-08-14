@@ -225,6 +225,17 @@
       "statut": "a_venir",
       "equipe": "n3-masculin",
       "competition": "National 3 (3MD)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Gymnase du Collège La Boétie",
+      "adversaire": "Volley-ball Sarladais",
+      "date": "2026-10-03T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "competition": "Régional 1 M (RMB)"
     }
   ]
 }
