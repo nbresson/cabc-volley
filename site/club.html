@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="assets/style.css">
 </head><body>
 <div id="header"></div>
-<main>
+<main id="main">
 <section class="hero section">
   <div class="lines"></div>
   <div class="eyebrow" id="hero-eyebrow"></div>
@@ -109,5 +109,6 @@ window.__pageInit=async function(){
   document.getElementById("galerie").innerHTML=photos.map(src=>`
     <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${vignette(src,"")}</div>`).join("")
     ||'<p class="muted">Les photos de la saison arrivent bientôt.</p>';
+  initLightbox("galerie",photos.map(src=>({src})));
 };
 </script></body></html>

@@ -507,7 +507,7 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
 .ancres a:hover{background:var(--encre);color:var(--creme);opacity:1}
 /* L en-tete est colle en haut : sans cette marge, l ancre viendrait se ranger
    dessous et le titre du groupe resterait invisible. */
-[id^="g-"],[id^="b-"]{scroll-margin-top:110px}
+[id^="g-"],[id^="b-"],#essentiel{scroll-margin-top:110px}
 
 /* ===== Micro-interactions ===== */
 /* Ombre decalee au survol, meme langage que .card.shadow, et enfoncement a
@@ -572,3 +572,20 @@ a.doc-row:hover .mono,a.doc-row:hover .muted{color:inherit}
   .doc-inter{grid-template-columns:1fr}
   .doc-inter span:first-child{display:none}
 }
+
+/* ===== Lightbox de galerie ===== */
+/* <dialog> natif : Echap ferme, le focus reste dedans, aucun piege a ecrire. */
+dialog.lightbox{border:none;padding:0;background:var(--encre);color:var(--creme);max-width:min(1100px,92vw);width:100%}
+dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
+.lightbox .corps{padding:28px;display:flex;align-items:center;gap:18px}
+.lightbox img{flex:1;min-width:0;max-height:76vh;object-fit:contain;border:2px solid var(--creme)}
+.lightbox .nav{background:none;border:none;color:var(--creme);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;cursor:pointer;padding:8px}
+.lightbox .fermer{position:absolute;top:14px;right:20px;background:none;border:none;color:var(--creme);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:26px;cursor:pointer}
+.lightbox .legende{display:flex;justify-content:space-between;padding:0 28px 22px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mention-sombre)}
+
+/* ===== Lien d evitement ===== */
+/* Hors ecran jusqu au premier Tab : la souris ne le voit jamais, le clavier le
+   trouve avant tout le reste. */
+.evitement{position:fixed;top:-100px;left:14px;z-index:100;background:var(--encre);color:var(--creme);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:11px 22px}
+.evitement:focus-visible{top:14px;opacity:1}
+#main{scroll-margin-top:0}

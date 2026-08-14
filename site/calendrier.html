@@ -13,12 +13,16 @@
 <link rel="stylesheet" href="assets/style.css">
 </head><body>
 <div id="header"></div>
-<main>
+<main id="main">
 <section class="pad section">
   <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Calendrier &amp; résultats</span></div>
   <h1 style="font-size:clamp(38px,9vw,88px)">Calendrier<br>&amp; résultats</h1>
 </section>
 <section class="section dark" id="last-result" style="padding:0"></section>
+<section class="section" id="resultats" style="display:none">
+  <div class="pad"><h2 class="eyebrow" style="font-weight:400;line-height:1.65">— Derniers résultats</h2></div>
+  <div class="match-list" id="resultats-liste"></div>
+</section>
 <section class="section split" style="--b:1.5fr">
   <div class="pad">
     <div class="eyebrow">— Prochaines journées</div>
@@ -26,6 +30,7 @@
     <p class="muted" style="max-width:38ch">Entrée libre pour tous les matchs à domicile. La buvette ouvre une heure avant le coup d'envoi.</p>
     <div class="chips" id="chips-equipes" style="margin-top:20px"></div>
     <a id="ffvb1" class="btn btn-secondary" style="margin-top:20px" target="_blank" rel="noopener">Calendrier complet FFVB ↗</a>
+    <button type="button" id="ics-saison" class="btn btn-secondary" style="margin-top:12px;display:none">↓ Toute la saison dans mon agenda</button>
   </div>
   <div id="upcoming" class="match-list"></div>
 </section>
@@ -102,6 +107,19 @@ window.__pageInit=async function(){
     up.innerHTML=(replie?avenir.slice(0,VISIBLES):avenir).map(matchRow).join("")
       +(replie?`<details class="acc"><summary>Voir les ${reste.length} autres matchs de la saison</summary><div class="acc-body" style="padding:0">${reste.map(matchRow).join("")}</div></details>`:"");
   }
+  // Toute la saison dans l agenda. Le bouton ne parait qu avec des matchs.
+  const bIcs=document.getElementById("ics-saison");
+  if(avenir.length){bIcs.style.display="";bIcs.addEventListener("click",()=>telechargerICS(avenir,"cab-saison-2026-2027.ics"));}
+
+  // Derniers resultats. Le tout premier est deja dans le bandeau sombre : la
+  // liste montre les trois suivants, et disparait s il n y en a pas.
+  const finis=(matches?.items||[]).filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const suivants=finis.slice(1,4);
+  if(suivants.length){
+    document.getElementById("resultats-liste").innerHTML=suivants.map(ligneResultat).join("");
+    document.getElementById("resultats").style.display="";
+  }
+
   // Chips par equipe, seulement si plusieurs equipes ont des matchs a venir :
   // un unique bouton « Toutes » ne filtrerait rien.
   const nomEquipe=s=>(teams?.items||[]).find(t=>t.slug===s)?.nom||s;
