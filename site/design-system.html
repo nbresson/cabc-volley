@@ -267,6 +267,12 @@ body        → Archivo 15px / 16px
         <template><div class="dark pad"><div class="countdown"><div><strong>12</strong><span>JOURS</span></div><div><strong>04</strong><span>HEURES</span></div><div><strong>37</strong><span>MIN</span></div><div class="sec"><strong>08</strong><span>SEC</span></div></div></div></template>
       </article>
 
+      <article class="gal-item" data-classes="match-sticky titre sur">
+        <div class="gal-meta"><div class="gal-name">.match-sticky &middot; .titre &middot; .sur</div><p class="gal-note">Barre du prochain match, collée en bas de l'écran sur mobile uniquement. Elle ne paraît que pour un match <strong>à domicile</strong> — inviter à venir voir un déplacement n'aurait pas de sens — et s'efface tant que le bandeau sombre de l'accueil est à l'écran, sinon la même information serait affichée deux fois.<br><br>Le pied de page reçoit un <code>padding-bottom</code> sous 880 px pour ne pas finir caché dessous. La démonstration ci-contre force son affichage ; en usage réel, <code>initBarreMatchMobile()</code> pose la classe <code>.visible</code>.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="match-sticky" style="position:static;display:grid"><div style="min-width:0"><div class="sur">Prochain match · sam. 26 sept. · 20:00</div><div class="titre">CAB — Alterna Stade Poitevin · J-42</div></div><a class="btn">J'y vais</a></div></template>
+      </article>
+
       <article class="gal-item" data-classes="chips chip actif">
         <div class="gal-meta"><div class="gal-name">.chips &middot; .chip &middot; .actif</div><p class="gal-note">Filtres du calendrier et des actualités. Ce sont des <code>&lt;button&gt;</code> et non des liens : rien ne navigue, et le clavier les atteint sans qu'on ajoute quoi que ce soit. La chip active s'inverse et perd sa bordure, son remplissage compensant les deux pixels.<br><br><code>initChips()</code> pose un seul écouteur sur le groupe et masque, dans le conteneur désigné, les éléments dont <code>data-filtre</code> ne correspond pas. La valeur <code>tout</code> les réaffiche tous.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>

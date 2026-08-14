@@ -83,7 +83,9 @@ function renderChrome(){
   const cur=PARENT[here()]||here();
   // aria-current double la classe active : le soulignement ne dit rien a qui
   // n a pas l ecran, et les neuf liens s annoncaient jusqu ici a l identique.
-  const links=NAV.map(([h,t])=>`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}>${t}</a>`).join("");
+  // Le libelle est enveloppe : sur mobile, le soulignement de l entree active
+  // ne doit porter que sur lui, pas sur le numero qui le precede.
+  const links=NAV.map(([h,t],i)=>`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}><span class="num">${String(i+1).padStart(2,"0")}</span><span>${t}</span></a>`).join("");
   const header=document.getElementById("header");
   if(header)header.innerHTML=`
     <div class="topbar">CLUB ATHLÉTIQUE DE BRIVE — SECTION VOLLEY-BALL — DEPUIS 1946</div>
@@ -99,7 +101,12 @@ function renderChrome(){
   if(burger)burger.addEventListener("click",()=>{
     const nav=document.getElementById("mainnav");
     if(!nav)return;
-    burger.setAttribute("aria-expanded",String(nav.classList.toggle("open")));
+    const ouvert=nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded",String(ouvert));
+    // Le menu couvre l ecran : sans ce verrou, la page continuerait de defiler
+    // derriere lui. Il se leve a la fermeture, et de toute facon au changement
+    // de page, qui recharge le document.
+    document.body.style.overflow=ouvert?"hidden":"";
   });
   const footer=document.getElementById("footer");
   // Le bandeau est pose en frere du pied de page, jamais dedans : c est ce qui
@@ -178,6 +185,29 @@ function battreCompteARebours(){
   };
   maj();setInterval(maj,1000);
 }
+// Barre « prochain match » collee en bas sur mobile. Elle ne parait que pour un
+// match a domicile — inviter a venir voir un deplacement n aurait pas de sens —
+// et s efface tant que le bandeau sombre de l accueil est a l ecran, sinon la
+// meme information serait affichee deux fois.
+function initBarreMatchMobile(m){
+  if(!m||!m.domicile)return;
+  const d=new Date(m.date);
+  const j=Math.max(0,Math.floor((d-new Date())/864e5));
+  document.body.insertAdjacentHTML("beforeend",`<div class="match-sticky">
+    <div style="min-width:0">
+      <div class="sur">Prochain match · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</div>
+      <div class="titre">CAB — ${m.adversaire} · J-${j}</div>
+    </div>
+    <a href="calendrier.html" class="btn">J'y vais</a></div>`);
+  const barre=document.querySelector(".match-sticky");
+  const bandeau=document.getElementById("next-match");
+  // Sur une page sans bandeau, rien ne fait doublon : la barre reste montree.
+  if(!bandeau){barre.classList.add("visible");return;}
+  new IntersectionObserver(es=>es.forEach(e=>{
+    barre.classList.toggle("visible",!e.isIntersecting);
+  })).observe(bandeau);
+}
+
 // Compte de 0 jusqu a la valeur cible quand la bande de statistiques entre dans
 // l ecran. Seuls les entiers nus sont animes : « 80 ans » reste fige, son texte
 // ne se reduisant pas exactement a son nombre. Une annee saisie seule, « 1946 »,

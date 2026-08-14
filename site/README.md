@@ -73,6 +73,19 @@ Sans débrancher l'ancien site tout de suite :
 - Quand tout est prêt : page du worker → **Domains & Routes** → ajoutez `www.cabc-volley.fr`
   (le domaine doit être géré par Cloudflare, ou créez un CNAME vers le `.workers.dev`).
 
+**Le jour de la bascule, deux choses ne se corrigent pas toutes seules.**
+
+1. Les balises `og:image` de toutes les pages désignent
+   `https://cabc-volley.nkobrs21.workers.dev/assets/partage.png`. Une adresse absolue est
+   obligatoire — les réseaux sociaux ne savent pas résoudre un chemin relatif — mais elle
+   devra pointer sur le domaine définitif, sans quoi la vignette de partage cessera de
+   s'afficher. Un `grep -rl workers.dev site/` les trouve toutes.
+2. Les redirections depuis l'ancien site, décrites dans
+   [`docs/superpowers/specs/2026-08-13-anciennes-urls-inventaire.md`](../docs/superpowers/specs/2026-08-13-anciennes-urls-inventaire.md),
+   sont déjà écrites dans `worker.js` : rien à faire, mais tout à vérifier au `curl -I`.
+
+Le barrage d'indexation, lui, tombe seul : il se juge sur l'hôte.
+
 ## 4 · Activer Decap CMS (édition par le bureau)
 L'admin est sur `https://VOTRE-SITE/admin/`. Authentification GitHub — au choix :
 

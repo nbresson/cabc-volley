@@ -252,6 +252,10 @@ main:has(>.dark:last-child)+.socialbar{border-top:2px solid var(--creme)}
 .site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:2px solid var(--encre);background:var(--creme);position:sticky;top:0;z-index:50}
 .site-header nav{display:flex;gap:30px;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
 .site-header nav a.active{border-bottom:3px solid var(--encre);padding-bottom:2px}
+/* Les numeros n existent que dans le menu mobile. La regle vit ici, avant le
+   bloc media qui les rallume : posee apres, elle l emporterait a specificite
+   egale et ils resteraient invisibles. */
+.site-header nav .num{display:none}
 .site-header .logo img{height:54px}
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:6px 2px;cursor:pointer}
 .burger span{width:26px;height:2.5px;background:var(--encre)}
@@ -422,10 +426,30 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
      en dessous. Ces regles vivaient dans le bloc 880 px, qui porte aussi le corps
      a 16 px et les grilles en une colonne — d ou le deplacement plutot qu un
      changement de seuil. */
-  .site-header nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--creme);border-bottom:2px solid var(--encre);padding:18px 22px;gap:16px}
+  /* Plein ecran plutot qu un tiroir : huit entrees et un bouton tiennent mal
+     dans un panneau, et le pouce atteint mieux une liste centree. z-index 40 le
+     place sous l en-tete colle, qui est a 50 — logo et croix restent visibles
+     par-dessus le panneau. */
+  /* align-items:stretch annule le center herite du menu de bureau : sans lui,
+     les entrees se retrecissent a leur contenu, les numeros ne s alignent plus
+     a gauche et le bouton Adherer n est pas pleine largeur. */
+  .site-header nav{display:none;position:fixed;inset:0;flex-direction:column;justify-content:center;align-items:stretch;background:var(--creme);padding:96px 22px 22px;gap:2px;overflow:auto;z-index:40}
   .site-header nav.open{display:flex}
-  .burger{display:flex}
-  .site-header nav a{padding:6px 0}
+  .burger{display:flex;position:relative;z-index:60}
+  .site-header nav a{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--lin);font-size:30px;line-height:1}
+  .site-header nav a:last-of-type{border-bottom:none}
+  /* L entree active ne souligne que son libelle, jamais son numero. */
+  .site-header nav a.active{border-bottom:1px solid var(--lin);padding-bottom:7px}
+  .site-header nav a.active>*:last-child{border-bottom:3px solid var(--encre)}
+  .site-header nav .num{display:inline;font-family:'DM Mono',monospace;font-size:10px;color:var(--taupe)}
+  /* Adherer descend en pied de menu, pleine largeur. */
+  /* justify-content et non text-align seul : la regle des entrees fait aussi du
+     bouton un conteneur flex, ou le centrage de texte n a pas prise. */
+  .site-header nav .btn{margin-top:auto;justify-content:center;text-align:center;font-size:18px;border-bottom:2px solid var(--encre)}
+  /* Le burger devient une croix quand le menu est ouvert. */
+  .burger[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 }
 @media(max-width:880px){
   .match-list .match-row{padding:20px 22px}
@@ -500,3 +524,20 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
    fond blanc et ombre portee — d ou l exception, qui evite un double contour. */
 :focus-visible{outline:2px solid currentColor;outline-offset:3px}
 input:focus-visible,textarea:focus-visible,select:focus-visible{outline:none}
+
+/* ===== Mobile : menu et barre match ===== */
+.burger span{transition:transform .18s ease,opacity .18s ease}
+@media(prefers-reduced-motion:reduce){.burger span{transition:none}}
+
+/* Barre « prochain match » collee en bas, mobile seulement. La classe .visible
+   est posee par initBarreMatchMobile() : la barre s efface tant que le bandeau
+   sombre de l accueil est a l ecran, sinon l information serait en double. */
+.match-sticky{position:fixed;left:0;right:0;bottom:0;z-index:45;display:none;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:12px 16px;background:var(--encre);color:var(--creme);border-top:2px solid var(--creme)}
+.match-sticky .titre{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;line-height:1;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.match-sticky .sur{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mention-sombre)}
+.match-sticky .btn{padding:11px 16px;font-size:16px;border-color:var(--creme);background:var(--creme);color:var(--encre)}
+@media(max-width:880px){
+  .match-sticky.visible{display:grid}
+  /* Sans quoi le pied de page finirait cache sous la barre. */
+  .site-footer{padding-bottom:88px}
+}
