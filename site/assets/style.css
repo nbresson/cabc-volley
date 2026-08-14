@@ -484,3 +484,19 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
 /* L en-tete est colle en haut : sans cette marge, l ancre viendrait se ranger
    dessous et le titre du groupe resterait invisible. */
 [id^="g-"]{scroll-margin-top:110px}
+
+/* ===== Micro-interactions ===== */
+/* Ombre decalee au survol, meme langage que .card.shadow, et enfoncement a
+   l appui. La transition vit sur .btn et non sur :hover, pour jouer aussi au
+   retour du survol. */
+.btn{transition:box-shadow .12s ease,transform .12s ease}
+.btn:hover{box-shadow:5px 5px 0 var(--taupe)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--taupe)}
+@media(prefers-reduced-motion:reduce){.btn{transition:none}}
+
+/* Contour de focus uniforme, au clavier seulement : :focus-visible ne se
+   declenche pas au clic souris. Il suit currentColor, donc reste lisible sur
+   fond sombre comme sur fond creme. Les champs gardent leur focus propre —
+   fond blanc et ombre portee — d ou l exception, qui evite un double contour. */
+:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+input:focus-visible,textarea:focus-visible,select:focus-visible{outline:none}

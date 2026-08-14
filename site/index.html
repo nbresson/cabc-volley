@@ -72,7 +72,7 @@ window.__pageInit=async function(){
   // en diagonale, l image y volerait la place du titre.
   const news=(newsData?.items||[]).slice(0,3);
   const carte=(n,une)=>`
-    <a class="card link shadow" href="actualites.html">
+    <a class="card link shadow" href="${n.slug?`article.html?slug=${encodeURIComponent(n.slug)}`:"actualites.html"}">
       ${une?`<div class="ph" style="aspect-ratio:16/8;position:relative;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span>[ photo à venir ]</span>'}</div>`:""}
       <div class="body"${une?' style="padding:22px 24px"':''}>
         <span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}${une?" · À la une":""}</span>
