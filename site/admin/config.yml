@@ -123,7 +123,7 @@ collections:
             fields:
               - {name: nom, label: Nom de l'équipe, widget: string}
               - {name: slug, label: Identifiant URL, widget: string, hint: "Sans espaces ni accents, en minuscules, ex. n3-masculin. Ne le modifiez plus une fois la page en ligne : les liens déjà partagés cesseraient de fonctionner."}
-              - {name: groupe, label: Groupe, widget: select, options: ["Séniors","Jeunes","Formation"], default: "Séniors", required: false, hint: "Regroupe les équipes sur la page Équipes."}
+              - {name: groupe, label: Groupe, widget: select, options: ["Séniors","Jeunes","Formation","Loisir"], default: "Séniors", required: false, hint: "Regroupe les équipes sur la page Équipes, dans cet ordre. « Loisir » pour les pratiques sans compétition, comme le Volley Santé. Laissé vide, le groupe devient « Autres », affiché en dernier."}
               - {name: categorie, label: Catégorie / niveau, widget: string}
               - {name: creneau, label: Créneau, widget: string}
               - {name: photo, label: Photo d'équipe, widget: image, required: false, hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko."}

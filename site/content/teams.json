@@ -87,7 +87,7 @@
       "photo": "assets/uploads/ecole.jpg"
     },
     {
-      "groupe": null,
+      "groupe": "Loisir",
       "nom": "Volley Santé",
       "slug": "volley-sante",
       "categorie": "Volley Santé",
@@ -95,7 +95,7 @@
       "creneau": "Jeu. 20h à 21h40 · Saint Germain"
     },
     {
-      "groupe": null,
+      "groupe": "Loisir",
       "nom": "UFOLEP",
       "slug": "ufolep",
       "categorie": "UFOLEP",
