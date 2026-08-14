@@ -13,9 +13,9 @@
   <h1>La fierté<br>gaillarde</h1>
   <div class="sep" style="margin:14px 0">Corrèze · Volley · Passion</div>
   <p class="muted" style="max-width:56ch;margin:0 auto">Quatre-vingts ans de volley au cœur de la Gaillarde. Des équipes seniors aux plus jeunes pousses, le CAB fait vivre le ballon au filet, saison après saison.</p>
-  <div class="row" style="justify-content:center;margin-top:24px">
+  <div class="row" style="justify-content:center;align-items:center;gap:26px;margin-top:24px">
     <a href="equipes.html" class="btn btn-primary">Nos équipes</a>
-    <a href="club.html" class="btn btn-secondary">L'histoire du club</a>
+    <a href="club.html" class="mono lien" style="color:var(--encre)">L'histoire du club →</a>
   </div>
 </section>
 
@@ -28,7 +28,7 @@
 
 <section class="section pad">
   <div class="section-head"><h2>La gazette du filet</h2><a href="actualites.html" class="mono lien" style="color:var(--encre)">Toutes les actus →</a></div>
-  <div id="news" class="cols-3"></div>
+  <div id="news" class="gazette"></div>
 </section>
 
 <section class="section">
@@ -57,29 +57,38 @@ window.__pageInit=async function(){
   const el=document.getElementById("next-match");
   // Le bandeau vit dans site.js depuis que la fiche d equipe le montre aussi.
   if(el)el.innerHTML=bandeauProchainMatch(nm);
+  battreCompteARebours();
   // Matchs à venir
   const up=document.getElementById("upcoming");
   const list=(matches?.items||[]).filter(m=>m.statut==="a_venir").slice(0,4);
   up.innerHTML=list.map(m=>{const d=new Date(m.date);return `
-    <div class="match-row" style="padding:22px 0;border-bottom:1px solid var(--lin)">
+    <div class="match-row${m.domicile?' hl':''}" style="padding:22px 24px;border-bottom:1px solid var(--lin)">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span>
     </div>`;}).join("")||'<p class="vide muted">Aucun match programmé pour le moment.</p>';
-  // Actus
-  document.getElementById("news").innerHTML=(newsData?.items||[]).slice(0,3).map(n=>`
+  // Gazette : la premiere actu en « une » avec sa photo, les deux suivantes
+  // en breves empilees a cote. Sans photo pour les breves : elles se lisent
+  // en diagonale, l image y volerait la place du titre.
+  const news=(newsData?.items||[]).slice(0,3);
+  const carte=(n,une)=>`
     <a class="card link shadow" href="actualites.html">
-      <div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span>[ photo à venir ]</span>'}</div>
-      <div class="body"><span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}</span>
-      <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${n.titre}</strong>
-      <span class="muted" style="font-size:13px">${n.extrait}</span></div>
-    </a>`).join("");
+      ${une?`<div class="ph" style="aspect-ratio:16/8;position:relative;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span>[ photo à venir ]</span>'}</div>`:""}
+      <div class="body"${une?' style="padding:22px 24px"':''}>
+        <span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}${une?" · À la une":""}</span>
+        <strong class="${une?'display-xl':'display-m'}" style="font-weight:900;line-height:.95;text-transform:uppercase">${n.titre}</strong>
+        <span class="muted" style="font-size:13px">${n.extrait}</span>
+      </div>
+    </a>`;
+  document.getElementById("news").innerHTML=news.length?
+    carte(news[0],true)+`<div class="breves">${news.slice(1).map(n=>carte(n,false)).join("")}</div>`:"";
   // Équipes
   document.getElementById("teams").innerHTML=(teamsData?.items||[]).map(t=>`
     <a class="card link" ${t.slug?`href="${teamUrl(t.slug)}"`:'href="equipes.html"'} style="padding:26px 24px;gap:8px">
       <span class="mono" style="font-size:10px;letter-spacing:.18em;opacity:.6">${t.categorie}</span>
       <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${t.nom}</strong>
       <span class="muted" style="font-size:13px">${t.creneau}</span>
+      <span class="display-s" style="font-weight:700;margin-top:6px">→</span>
     </a>`).join("");
 };
 </script>
