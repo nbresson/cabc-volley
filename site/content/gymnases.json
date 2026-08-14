@@ -18,6 +18,10 @@
           "texte": "Photo à venir",
           "titre": "Aire de jeu",
           "photo": "assets/uploads/gymnase_rollinat.webp"
+        },
+        {
+          "titre": "Terrain de foot (Green-volley)",
+          "photo": "assets/uploads/green-volley.jpg"
         }
       ],
       "itineraire": "https://maps.app.goo.gl/sp3o7qABfTf4Xta79",
