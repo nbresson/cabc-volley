@@ -20,6 +20,7 @@ const EXCLUES = new Map([
   ["vu", "etat d apparition pose par revelerSections(), jamais ecrit dans le HTML"],
   ["num", "numero des entrees du menu mobile, indissociable du chrome de page"],
   ["visible", "etat de la barre match pose par initBarreMatchMobile(), jamais ecrit dans le HTML"],
+  ["evitement", "lien d evitement du chrome de page, hors ecran sauf au clavier"],
   ["wrap", "conteneur de largeur, sans rendu propre a montrer"],
   ["grid", "utilitaire nu (display:grid;gap:0), jamais employe sans styles inline"],
 ]);

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="assets/style.css">
 </head><body>
 <div id="header"></div>
-<main>
+<main id="main">
 <div id="equipe"></div>
 </main>
 <div id="footer"></div><script src="assets/site.js"></script>
@@ -43,16 +43,6 @@ window.__pageInit=async function(){
   const prochain=tousAvenir[0];
   const avenir=tousAvenir.slice(1,4);
   const finis=mine.filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,3);
-
-  // Ligne de resultat : score et badge sont groupes dans une seule cellule,
-  // .match-row n acceptant que 3 enfants directs.
-  const ligneResultat=m=>{return `
-    <div class="match-row">
-      <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${fmtDate(m.date)}</span>
-      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
-      <span class="row" style="align-items:center;gap:12px">
-        <strong class="display-m" style="font-weight:900">${m.score||"–"}</strong>
-        <span class="${m.gagne?'badge':'badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;};
 
   const blocAvenir=avenir.length?`<section class="section">
     <div class="pad"><h2 class="eyebrow" style="font-weight:400;line-height:1.65">— Prochains matchs</h2></div>
@@ -98,5 +88,7 @@ window.__pageInit=async function(){
 
   el.innerHTML=entete+blocProchain+blocInfos+blocAvenir+blocResultats+blocClassement+blocEffectif+pied;
   battreCompteARebours();
+  const btnIcs=document.querySelector("[data-ics]");
+  if(btnIcs)btnIcs.addEventListener("click",()=>telechargerICS([prochain],"cab-prochain-match.ics"));
 };
 </script></body></html>

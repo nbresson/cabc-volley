@@ -36,7 +36,7 @@
 </head><body>
 <div class="gal-page">
   <nav class="gal-nav" id="gal-nav"></nav>
-  <main class="gal-main">
+  <main class="gal-main" id="main">
     <header class="gal-head">
       <h1 style="font-size:clamp(32px,6vw,64px)">Design system</h1>
       <p class="gal-note" style="max-width:60ch">Cette page n'est liée depuis aucun menu du site : elle s'atteint en saisissant son adresse. Elle charge la vraie feuille de style, donc ce qu'on y voit est ce que le site produit. Un contrôle automatisé vérifie qu'aucune classe de <code>style.css</code> n'y manque.</p>
@@ -265,6 +265,12 @@ body        → Archivo 15px / 16px
         <div class="gal-meta"><div class="gal-name">.countdown &middot; .sec</div><p class="gal-note">Compte à rebours du prochain match. Bordures crème : il est prévu pour un fond sombre. La cellule des secondes porte <code>.sec</code>, à peine posée sur le fond — l'œil doit suivre les jours, pas le défilement des secondes.<br><br>Les valeurs sont écrites par <code>battreCompteARebours()</code>, qui lit <code>data-cible</code> sur le conteneur et remplit les <code>[data-u]</code> chaque seconde. Elles naissent à <code>--</code> : le bandeau reste lisible si le minuteur ne démarre jamais.</p><div class="gal-demo"></div></div>
         <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
         <template><div class="dark pad"><div class="countdown"><div><strong>12</strong><span>JOURS</span></div><div><strong>04</strong><span>HEURES</span></div><div><strong>37</strong><span>MIN</span></div><div class="sec"><strong>08</strong><span>SEC</span></div></div></div></template>
+      </article>
+
+      <article class="gal-item" data-classes="lightbox corps nav fermer legende">
+        <div class="gal-meta"><div class="gal-name">.lightbox &middot; .corps &middot; .nav &middot; .fermer &middot; .legende</div><p class="gal-note">Visionneuse des galeries, page Club et fiches de gymnase. Bâtie sur un <code>&lt;dialog&gt;</code> natif : Échap ferme, le focus reste dedans, et le fond assombri vient de <code>::backdrop</code> — rien de tout cela n'est à écrire à la main. Un clic hors du cadre ferme également.<br><br><code>initLightbox(idConteneur, photos)</code> délègue le clic au conteneur : les images ajoutées après coup fonctionnent sans recâblage. Les flèches bouclent, le compteur suit. La démonstration ci-contre montre le contenu du dialogue, forcé visible.</p><div class="gal-demo"></div></div>
+        <div><pre class="gal-code"></pre><button class="gal-copy">Copier</button></div>
+        <template><div class="lightbox" style="position:relative;background:var(--encre);color:var(--creme)"><button class="fermer" aria-label="Fermer">✕</button><div class="corps"><button class="nav" aria-label="Précédente">←</button><img src="assets/uploads/equipe_n3m.webp" alt="" style="max-height:200px"><button class="nav" aria-label="Suivante">→</button></div><div class="legende"><span>L'équipe de National 3 masculin</span><span>2 / 5</span></div></div></template>
       </article>
 
       <article class="gal-item" data-classes="doc-liste doc-row doc-inter source type fleche">

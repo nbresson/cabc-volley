@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="assets/style.css">
 </head><body>
 <div id="header"></div>
-<main>
+<main id="main">
 <section class="hero section">
   <div class="lines"></div>
   <div class="eyebrow">Brive-la-Gaillarde · Corrèze</div>
@@ -66,6 +66,8 @@ window.__pageInit=async function(){
   if(el)el.innerHTML=bandeauProchainMatch(nm);
   battreCompteARebours();
   initBarreMatchMobile(nm);
+  const btnIcs=document.querySelector("[data-ics]");
+  if(btnIcs)btnIcs.addEventListener("click",()=>telechargerICS([nm],"cab-prochain-match.ics"));
   // Matchs à venir
   const up=document.getElementById("upcoming");
   const list=(matches?.items||[]).filter(m=>m.statut==="a_venir").slice(0,4);

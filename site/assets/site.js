@@ -88,6 +88,7 @@ function renderChrome(){
   const links=NAV.map(([h,t],i)=>`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}><span class="num">${String(i+1).padStart(2,"0")}</span><span>${t}</span></a>`).join("");
   const header=document.getElementById("header");
   if(header)header.innerHTML=`
+    <a class="evitement" href="#main">Aller au contenu ↓</a>
     <div class="topbar">CLUB ATHLÉTIQUE DE BRIVE — SECTION VOLLEY-BALL — DEPUIS 1946</div>
     <header class="site-header">
       <button class="burger" type="button" aria-label="Menu" aria-controls="mainnav" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -144,6 +145,74 @@ function matchRow(m){const d=new Date(m.date);return `
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
+// Ligne de resultat. Le score et le badge sont groupes dans une seule cellule,
+// .match-row n acceptant que trois enfants directs. Partagee par la fiche
+// d equipe et le calendrier depuis que ce dernier montre les derniers matchs.
+function ligneResultat(m){return `
+    <div class="match-row">
+      <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${fmtDate(m.date)}</span>
+      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
+      <span class="row" style="align-items:center;gap:12px">
+        <strong class="display-m" style="font-weight:900">${m.score||"–"}</strong>
+        <span class="${m.gagne?'badge':'badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;}
+
+// Fichier .ics fabrique dans le navigateur, sans service tiers. Duree fixee a
+// deux heures. Les dates sont ecrites en heure locale avec TZID Europe/Paris :
+// un match a 20 h reste a 20 h, en hiver comme en ete.
+function icsDate(d){const p=n=>String(n).padStart(2,"0");
+  return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"T"+p(d.getHours())+p(d.getMinutes())+"00";}
+function icsEvenement(m){
+  const deb=new Date(m.date),fin=new Date(deb.getTime()+72e5);
+  const lieu=(m.lieu||"").replace(/[,;]/g,"\\$&");
+  return ["BEGIN:VEVENT","UID:"+deb.getTime()+"-"+(m.adversaire||"").replace(/\W/g,"")+"@cabc-volley",
+    "DTSTART;TZID=Europe/Paris:"+icsDate(deb),"DTEND;TZID=Europe/Paris:"+icsDate(fin),
+    "SUMMARY:Volley — CAB vs "+(m.adversaire||""),
+    "LOCATION:"+lieu,"DESCRIPTION:"+(m.competition||"")+(m.domicile?" · Domicile — entrée libre":" · Extérieur"),
+    "END:VEVENT"].join("\r\n");
+}
+function telechargerICS(matchs,nomFichier){
+  const corps=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//CABC Volley//FR",
+    matchs.map(icsEvenement).join("\r\n"),"END:VCALENDAR"].join("\r\n");
+  const url=URL.createObjectURL(new Blob([corps],{type:"text/calendar"}));
+  const a=Object.assign(document.createElement("a"),{href:url,download:nomFichier||"cab-volley.ics"});
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4e3);
+}
+
+// Lightbox partagee. initLightbox(idConteneur, photos) ou photos vaut
+// [{src, legende}]. Un <dialog> natif : Echap ferme tout seul et le focus
+// reste dedans, sans qu on ait a le pieger a la main.
+function initLightbox(idConteneur,photos){
+  const cont=document.getElementById(idConteneur);
+  if(!cont||!photos.length)return;
+  let dlg=document.querySelector("dialog.lightbox");
+  if(!dlg){
+    document.body.insertAdjacentHTML("beforeend",`<dialog class="lightbox">
+      <button class="fermer" aria-label="Fermer">✕</button>
+      <div class="corps"><button class="nav" data-sens="-1" aria-label="Précédente">←</button><img alt=""><button class="nav" data-sens="1" aria-label="Suivante">→</button></div>
+      <div class="legende"><span data-legende></span><span data-compte></span></div></dialog>`);
+    dlg=document.querySelector("dialog.lightbox");
+    dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close();});
+    dlg.querySelector(".fermer").addEventListener("click",()=>dlg.close());
+  }
+  let liste=[],i=0;
+  const montrer=n=>{i=(n+liste.length)%liste.length;const p=liste[i];
+    dlg.querySelector("img").src=p.src;dlg.querySelector("img").alt=p.legende||"";
+    dlg.querySelector("[data-legende]").textContent=p.legende||"";
+    dlg.querySelector("[data-compte]").textContent=(i+1)+" / "+liste.length;};
+  dlg.querySelectorAll(".nav").forEach(b=>b.onclick=()=>montrer(i+Number(b.dataset.sens)));
+  cont.addEventListener("click",e=>{
+    const img=e.target.closest("img");if(!img)return;
+    liste=photos;
+    // findIndex rend -1 si l image n est pas retrouvee : on retombe alors sur
+    // la premiere plutot que d ouvrir une vue vide.
+    const trouve=photos.findIndex(p=>img.src.endsWith(p.src));
+    montrer(trouve<0?0:trouve);
+    dlg.showModal();
+  });
+  cont.querySelectorAll("img").forEach(img=>img.style.cursor="zoom-in");
+}
+
 // Bandeau du prochain match, partage par l accueil et les fiches d equipe.
 // Il rend l interieur d une section .dark, et non la section elle-meme :
 // l accueil la declare dans son HTML quand la fiche d equipe la fabrique.
@@ -165,7 +234,10 @@ function bandeauProchainMatch(m){
           <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${m.domicile?"à domicile":"à l'extérieur"}</div>
           <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${m.adversaire}</h2>
           <div class="mono" style="color:var(--mention-sombre)">${infos}</div>
-          ${m.domicile?`<a href="calendrier.html" class="btn btn-outline-light" style="margin-top:22px">Venir au match — entrée libre</a>`:""}
+          <div class="row" style="margin-top:22px;align-items:center">
+            ${m.domicile?`<a href="calendrier.html" class="btn btn-outline-light">Venir au match — entrée libre</a>`:""}
+            <button type="button" class="chip" data-ics style="border-color:var(--mention-sombre);color:var(--creme);padding:12px 18px">+ Mon agenda (.ics)</button>
+          </div>
         </div>
         <div class="countdown" data-cible="${m.date}">
           ${cell("j","JOURS")}${cell("h","HEURES")}${cell("m","MIN")}${cell("s","SEC","sec")}

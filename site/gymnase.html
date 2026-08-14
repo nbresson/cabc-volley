@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="assets/style.css">
 </head><body>
 <div id="header"></div>
-<main>
+<main id="main">
 <div id="gymnase"></div>
 </main>
 <div id="footer"></div><script src="assets/site.js"></script>
@@ -59,7 +59,7 @@ window.__pageInit=async function(){
   // la galerie du design system devrait ensuite documenter.
   // Une entree sans image est ignoree — une legende seule n a rien a montrer.
   const avecImage=(v.photos||[]).filter(p=>p.image);
-  const galerie=avecImage.length?`<section class="section pad">
+  const galerie=avecImage.length?`<section class="section pad" id="galerie-gym">
     <div class="section-head"><h2>En images</h2><span class="mono">${avecImage.length} photo${avecImage.length>1?"s":""}</span></div>
     <div class="cols-3">${avecImage.map(p=>`
       <figure style="margin:0">
@@ -69,5 +69,6 @@ window.__pageInit=async function(){
   </section>`:"";
 
   el.innerHTML=entete+description+blocs+galerie;
+  initLightbox("galerie-gym",avecImage.map(p=>({src:p.image,legende:p.legende})));
 };
 </script></body></html>
