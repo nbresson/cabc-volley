@@ -2,19 +2,29 @@
   "secteur": "Brive-la-Gaillarde",
   "items": [
     {
+      "photos": [],
       "usage": "Matchs seniors · École de volley",
       "slug": "rollinat",
       "nom": "Gymnase Rollinat",
       "adresse": "49 rue Maurice Rollinat, 19100 Brive",
       "acces": "Parking gratuit · Accès PMR",
       "photo": "assets/uploads/gymnase_rollinat.webp",
-      "blocs": [],
+      "blocs": [
+        {
+          "titre": "Photo extérieur",
+          "texte": "Photo à venir"
+        },
+        {
+          "texte": "Photo à venir",
+          "titre": "Aire de jeu"
+        }
+      ],
       "itineraire": "https://maps.app.goo.gl/sp3o7qABfTf4Xta79",
-      "description": "Mis en service en 1982, le Rollinat est la salle principale du club : c'est là que se jouent les matchs des équipes seniors, et là que l'école de volley accueille les plus jeunes le samedi matin.\n\nSon aire de jeu mesure 40 mètres sur 20, et la salle compte quatre vestiaires.",
-      "etiquette": "Salle principale",
-      "photos": []
+      "description": "Le Gymnase Rollinat situé Rue Maurice Rollinat à Brive-la-Gaillarde a été mis en service en 1982. Il est équipé de 4 vestiaires, dispose d’une aire d’évolution de 40 x 20 mètres. Les activités suivantes peuvent y être pratiquées : Volley-ball / Volley-ball de plage (beach-volley) / Green-Volley (sur le terrain de foot adjacent), Basket-Ball (Scolaire), Handball / Mini hand / Handball de plage (Scolaire), Tir à l’arc (Entrainement), .",
+      "etiquette": "Salle principale"
     },
     {
+      "photos": [],
       "usage": "Terrains de beach · mai à septembre",
       "slug": "beach-park-tujac",
       "nom": "Beach Park de Tujac",
@@ -24,10 +34,10 @@
       "blocs": [],
       "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
       "description": "De mai à septembre, le club quitte le parquet pour le sable. Le Beach Park de Tujac accueille les entraînements et les tournois de beach-volley, en 2 contre 2 comme en 4 contre 4.",
-      "etiquette": "Beach",
-      "photos": []
+      "etiquette": "Beach"
     },
     {
+      "photos": [],
       "usage": "Entraînements · Matchs Ufolep",
       "slug": "saint-germain",
       "nom": "Gymnase Saint-Germain",
@@ -37,10 +47,10 @@
       "blocs": [],
       "itineraire": "https://maps.app.goo.gl/RSmFdNEa5tYgZyMU9",
       "description": "Salle secondaire du club, Saint-Germain accueille une partie des entraînements seniors, les matchs Ufolep, et la séance de Volley Santé du jeudi soir.",
-      "etiquette": "Salle secondaire",
-      "photos": []
+      "etiquette": "Salle secondaire"
     },
     {
+      "photos": [],
       "usage": "Entraînements",
       "slug": "arsonval",
       "nom": "Gymnase d'Arsonval",
@@ -49,8 +59,7 @@
       "blocs": [],
       "itineraire": "https://maps.app.goo.gl/yWWyHS9yrF1YgMYf7",
       "description": "",
-      "etiquette": "",
-      "photos": []
+      "etiquette": ""
     }
   ]
 }
