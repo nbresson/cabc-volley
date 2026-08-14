@@ -507,7 +507,7 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
 .ancres a:hover{background:var(--encre);color:var(--creme);opacity:1}
 /* L en-tete est colle en haut : sans cette marge, l ancre viendrait se ranger
    dessous et le titre du groupe resterait invisible. */
-[id^="g-"]{scroll-margin-top:110px}
+[id^="g-"],[id^="b-"]{scroll-margin-top:110px}
 
 /* ===== Micro-interactions ===== */
 /* Ombre decalee au survol, meme langage que .card.shadow, et enfoncement a
@@ -540,4 +540,35 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:none}
   .match-sticky.visible{display:grid}
   /* Sans quoi le pied de page finirait cache sous la barre. */
   .site-footer{padding-bottom:88px}
+}
+
+/* ===== Page Infos : bibliotheque de documents ===== */
+/* Rangee de document : numero, libelle et source, badge de type, fleche. Toute
+   la rangee est cliquable et s inverse au survol, comme .card.link. */
+.doc-liste{border:2px solid var(--encre)}
+.doc-row{display:grid;grid-template-columns:56px 1fr auto auto;align-items:center;gap:20px;padding:16px 24px;border-bottom:1px solid var(--lin)}
+.doc-liste>:last-child{border-bottom:none}
+a.doc-row:hover{background:var(--encre);color:var(--creme);opacity:1}
+a.doc-row:hover .mono,a.doc-row:hover .muted{color:inherit}
+.doc-row .titre{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;line-height:1.1;text-transform:uppercase;display:block}
+.doc-row .source{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;opacity:.6}
+.doc-row .type{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;padding:4px 10px;border:1px solid currentColor;white-space:nowrap}
+.doc-row .num{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;opacity:.55}
+.doc-row .fleche{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px}
+/* Intertitre au fil de la liste, ex. « Certificats medicaux ». */
+.doc-inter{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:12px 24px;background:var(--sable);border-bottom:1px solid var(--lin)}
+.doc-inter span:last-child{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe)}
+/* Bloc « L essentiel » : une colonne par cas, sur fond encre. */
+.essentiel-grille{display:grid;grid-template-columns:repeat(var(--n,3),1fr)}
+.essentiel-grille>div{padding:24px 32px 36px;border-top:1px solid #3a352b;border-right:1px solid #3a352b}
+.essentiel-grille>div:last-child{border-right:none}
+.essentiel-grille .cas{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase}
+.essentiel-grille a{display:block;color:var(--creme);font-size:13px;line-height:1.5;border-bottom:1px solid var(--mention-sombre);padding:8px 0}
+.essentiel-grille a:last-of-type{border-bottom:none}
+@media(max-width:880px){
+  .essentiel-grille{grid-template-columns:1fr}
+  .doc-row{grid-template-columns:1fr auto;gap:6px 14px}
+  .doc-row .num,.doc-row .fleche{display:none}
+  .doc-inter{grid-template-columns:1fr}
+  .doc-inter span:first-child{display:none}
 }
