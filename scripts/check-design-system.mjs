@@ -16,6 +16,8 @@ const EXCLUES = new Map([
   ["lines", "filets decoratifs du heros, indissociables du gabarit de page"],
   ["active", "etat de la navigation, indissociable du chrome de page"],
   ["open", "etat du menu deplie, indissociable du chrome de page"],
+  ["reveal", "etat d apparition pose par revelerSections(), jamais ecrit dans le HTML"],
+  ["vu", "etat d apparition pose par revelerSections(), jamais ecrit dans le HTML"],
   ["wrap", "conteneur de largeur, sans rendu propre a montrer"],
   ["grid", "utilitaire nu (display:grid;gap:0), jamais employe sans styles inline"],
 ]);

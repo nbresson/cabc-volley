@@ -430,3 +430,33 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
 @media(max-width:880px){
   .match-list .match-row{padding:20px 22px}
 }
+
+/* ===== Polissage 2026 ===== */
+/* Derive lente des lignes du hero. La periode du degrade fait 120px, l animation
+   parcourt 240px : deux periodes exactement, donc la boucle ne se voit pas. */
+@keyframes derive{to{background-position:240px 0}}
+.hero .lines{animation:derive 40s linear infinite}
+
+/* Apparition au defilement. Les classes sont posees par revelerSections() et
+   jamais ecrites dans le HTML : si le JS ne s execute pas, rien n est masque. */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vu{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  .hero .lines{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+
+/* Match a domicile surligne, meme langage que la ligne mise en avant d un
+   tableau : fond sable et filet encre a gauche. */
+.match-row.hl{background:var(--sable);box-shadow:inset 6px 0 0 var(--encre)}
+
+/* Cellule des secondes : a peine posee sur le fond, pour que l oeil suive les
+   jours plutot que le defilement des secondes. */
+.countdown .sec{background:rgba(239,233,219,.08)}
+
+/* Gazette : une « une » a gauche, les breves empilees a droite. */
+.gazette{display:grid;grid-template-columns:2fr 1fr;gap:28px}
+.gazette .breves{display:flex;flex-direction:column;gap:28px}
+.gazette .breves .card{flex:1}
+@media(max-width:880px){.gazette{grid-template-columns:1fr}}

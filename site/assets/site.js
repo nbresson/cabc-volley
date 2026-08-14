@@ -144,20 +144,48 @@ function matchRow(m){const d=new Date(m.date);return `
 function bandeauProchainMatch(m){
   if(!m)return"";
   const d=new Date(m.date);
-  const diff=Math.max(0,d-new Date());
-  const j=Math.floor(diff/864e5),h=Math.floor(diff%864e5/36e5),mn=Math.floor(diff%36e5/6e4);
   // Date, heure, competition, lieu : l ordre « competition puis lieu » est
   // celui de matchRow() et des autres pages. filter(Boolean) evite le « · »
   // orphelin si un champ venait a manquer.
   const infos=[d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"}),d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),m.competition,m.lieu].filter(Boolean).join(" · ");
+  // Les cellules naissent a « -- » et sont remplies par battreCompteARebours().
+  // Le bandeau reste donc lisible meme si le minuteur ne demarre jamais.
+  const cell=(u,lbl,cls)=>`<div${cls?` class="${cls}"`:""}><strong data-u="${u}">--</strong><span>${lbl}</span></div>`;
   return `<div class="pad duo" style="--b:auto;gap:32px;align-items:center">
         <div>
           <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${m.domicile?"à domicile":"à l'extérieur"}</div>
           <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${m.adversaire}</h2>
           <div class="mono" style="color:var(--mention-sombre)">${infos}</div>
+          ${m.domicile?`<a href="calendrier.html" class="btn btn-outline-light" style="margin-top:22px">Venir au match — entrée libre</a>`:""}
         </div>
-        <div class="countdown"><div><strong>${String(j).padStart(2,"0")}</strong><span>JOURS</span></div><div><strong>${String(h).padStart(2,"0")}</strong><span>HEURES</span></div><div><strong>${String(mn).padStart(2,"0")}</strong><span>MIN</span></div></div>
+        <div class="countdown" data-cible="${m.date}">
+          ${cell("j","JOURS")}${cell("h","HEURES")}${cell("m","MIN")}${cell("s","SEC","sec")}
+        </div>
       </div>`;
+}
+// Fait battre le compte a rebours a la seconde. A appeler apres l insertion du
+// bandeau, l accueil et la fiche d equipe le posant a des moments differents.
+function battreCompteARebours(){
+  const c=document.querySelector(".countdown[data-cible]");
+  if(!c)return;
+  const cible=new Date(c.dataset.cible);
+  const maj=()=>{
+    const diff=Math.max(0,cible-new Date());
+    const v={j:Math.floor(diff/864e5),h:Math.floor(diff%864e5/36e5),m:Math.floor(diff%36e5/6e4),s:Math.floor(diff%6e4/1e3)};
+    c.querySelectorAll("[data-u]").forEach(el=>el.textContent=String(v[el.dataset.u]).padStart(2,"0"));
+  };
+  maj();setInterval(maj,1000);
+}
+// Revele les sections au defilement. La premiere reste visible d emblee, sans
+// quoi le haut de page clignoterait au chargement. Les classes ne sont jamais
+// ecrites dans le HTML : sans JavaScript, rien n est masque.
+function revelerSections(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const els=[...document.querySelectorAll("main>.section")].slice(1);
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add("vu");io.unobserve(e.target);}
+  }),{threshold:.12});
+  els.forEach(el=>{el.classList.add("reveal");io.observe(el);});
 }
 // Vignette : cadrage "entier" montre l'image complète sur le fond hachuré (affiches),
 // sinon elle remplit le cadre quitte à être recadrée (photos).
@@ -223,4 +251,4 @@ function initForms(){
     });
   });
 }
-document.addEventListener("DOMContentLoaded",()=>{renderChrome();initForms();if(window.__pageInit)window.__pageInit();murPartenaires();});
+document.addEventListener("DOMContentLoaded",()=>{renderChrome();initForms();if(window.__pageInit)window.__pageInit();murPartenaires();revelerSections();});
