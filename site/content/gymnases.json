@@ -16,7 +16,8 @@
         },
         {
           "texte": "Photo à venir",
-          "titre": "Aire de jeu"
+          "titre": "Aire de jeu",
+          "photo": "assets/uploads/gymnase_rollinat.webp"
         }
       ],
       "itineraire": "https://maps.app.goo.gl/sp3o7qABfTf4Xta79",
