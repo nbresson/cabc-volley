@@ -61,6 +61,7 @@ collections:
             widget: list
             summary: "{{fields.adversaire}} — {{fields.date}}"
             fields:
+              - {name: numero, label: "Numéro de match (FFVB)", widget: string, required: false, hint: "Le code de la rencontre chez la fédération, ex. RMB002 ou 3MD014. Il figure dans le calendrier publié sur ffvbbeach.org. N'apparaît pas sur le site : il sert d'identifiant unique pour rapprocher un jour les résultats officiels. Deux matchs ne peuvent pas porter le même."}
               - {name: date, label: Date & heure, widget: datetime, format: "YYYY-MM-DDTHH:mm"}
               - {name: adversaire, label: Adversaire, widget: string}
               - {name: competition, label: Compétition, widget: string}

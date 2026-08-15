@@ -114,7 +114,7 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 
 ## 5 · Ce que le bureau peut modifier (menus Decap)
 - **Actualités** — articles (titre, date, catégorie, chapô, contenu Markdown, image, « à la une »)
-- **Matchs & résultats** — matchs à venir et scores ; « match à la une » = celui du compte à rebours d'accueil
+- **Matchs & résultats** — matchs à venir et scores ; « match à la une » = celui du compte à rebours d'accueil. Le **numéro de match** est facultatif et n'apparaît pas sur le site : c'est le code de la rencontre chez la fédération, qui servira à rapprocher les résultats officiels. Deux matchs ne peuvent pas porter le même, la vérification est bloquante
 - **Classement** — titre de la section, lignes du tableau (équipe, J, V, D, points) et phrase affichée sous le tableau ; le rang n'est pas saisi, c'est l'ordre des lignes
 - **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo) ; chaque équipe a aussi son identifiant URL, son groupe, sa photo d'équipe, son lien de classement FFVB et son bloc infos pratiques (pour les équipes sans calendrier de matchs)
 - **Boutique** — produits (nom, prix, statut dispo/nouveau/épuisé, photo)
