@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place.
+Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ».
 
 ---
 
@@ -59,11 +59,9 @@ de « Venir au match » et « Mon agenda ».
 **Trois questions à trancher au moment de le faire**, notées ici pour ne pas les
 redécouvrir :
 
-1. **Lien sortant ou vidéo intégrée ?** Facebook fournit un embed, mais il charge ses
-   scripts et dépose ses traceurs. Le site a délibérément auto-hébergé ses polices
-   pour n'appeler aucun tiers ; une intégration reviendrait sur ce choix et
-   demanderait une bannière de consentement. Un lien sortant ne coûte rien de tout
-   cela. **Recommandation : lien sortant.**
+1. **Lien sortant ou vidéo intégrée ?** Même arbitrage que pour les publications,
+   développé sous « Afficher les publications Facebook et Instagram » ci-dessous.
+   **Recommandation : lien sortant.**
 2. **Quand le montrer ?** Un bouton « Regarder le direct » affiché trois semaines
    avant le match ment. Le plus simple qui fonctionne : ne l'afficher qu'à partir
    d'une heure avant le coup d'envoi, et le laisser jusqu'au lendemain — le compte à
@@ -73,6 +71,41 @@ redécouvrir :
 
 Rien de tout cela n'est bloquant : le champ peut arriver d'abord, l'affichage
 ensuite.
+
+### Afficher les publications Facebook et Instagram
+**Demandé le 15 août.** Le site renvoie vers les deux réseaux sans jamais en montrer
+le contenu. Un visiteur doit le quitter pour voir la vie du club.
+
+**Le statique n'est pas ce qui bloque** — un widget est du JavaScript de navigateur,
+n'importe quelle page peut en porter un. Trois choses bloquent, elles :
+
+- **Les traceurs.** Le SDK de Meta dépose ses cookies avant tout clic. En droit
+  français cela impose une bannière de consentement, et le contenu ne paraît qu'après
+  acceptation. Le site ne charge **aucun script externe** aujourd'hui : c'est
+  précisément ce qui lui évite cette bannière.
+- **L'API d'Instagram s'est fermée.** L'API Basic Display a disparu fin 2024. Il faut
+  désormais un compte Professionnel ou Créateur relié à une Page Facebook, une
+  application Meta déclarée, et un jeton à renouveler tous les deux mois. *À
+  revérifier le jour venu : Meta change ces règles souvent.*
+- **Un site statique n'a pas où cacher un jeton.** Mais celui-ci a un worker
+  Cloudflare devant lui — un serveur, qui peut détenir un secret, appeler l'API,
+  mettre en cache et servir du HTML ordinaire.
+
+| Option | Traceurs | Effort | Automatique |
+| --- | --- | --- | --- |
+| **A** · Rester aux liens sortants | aucun | nul | — |
+| **B** · Widget officiel Meta | oui + bannière | faible | oui |
+| **C** · Le worker moissonne l'API | **aucun** | élevé | oui |
+| **D** · Le bureau recopie dans Decap | aucun | nul, déjà en place | non |
+
+**Recommandation : D maintenant, C plus tard si le manuel s'essouffle.** La collection
+Actualités accepte déjà titre, date, photo et texte. Deux raisons de ne pas
+industrialiser tout de suite : personne n'a encore publié une actualité à la main
+(voir section 1), et le contenu recopié survit à une panne de Meta, à un changement
+d'API ou à la fermeture d'un compte — ce qu'un mur alimenté par API ne fait pas.
+
+**Préalable à vérifier avant tout chiffrage de C :** le compte `cabcvolley` est-il un
+compte Professionnel ? Sinon rien n'est possible sans le convertir d'abord.
 
 ### Navigation entre fiches d'équipe
 En pied de fiche, à côté de « Toutes les équipes » : ← équipe précédente / suivante →.
