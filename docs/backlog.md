@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Le classement FFVB et le score en direct sont analysés, pas commencés — et partagent la même page source.
+Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Deux sujets FFVB distincts, à ne pas confondre : les **résultats** publiés après match, et le **score en direct** depuis l'application de feuille de match.
 
 ---
 
@@ -47,7 +47,7 @@ site/`). Le sitemap et le robots.txt, eux, n'attendent rien — voir
 
 ## 3 · Ajouts et finitions
 
-### Récupérer le classement sur le site de la FFVB
+### Récupérer le classement et les résultats sur le site de la FFVB
 **Analysé le 15 août.** Le classement est saisi à la main chaque week-end alors qu'il
 existe déjà chez la fédération. **Le concept tient**, vérifié sur les vraies pages.
 
@@ -98,46 +98,55 @@ disparaît pas, elle devient le filet.
   poules, c'est défendable — mais ça se demande à la ligue plutôt que ça ne se suppose.
   **Un mail avant d'écrire le code.**
 
+**Les résultats des matchs sont sur la même page**, et viennent de la même source : la
+remontée des feuilles de match électroniques. Pour chaque rencontre jouée, le score set
+par set (`22:25, 20:25, 21:25`), le total de points (`063-075`), les arbitres, et un
+lien vers la feuille : `ffvolley_fdme.php?saison=…&codent=LIAQ&codmatch=RMB002`.
+
+**Ces données ne remontent qu'une fois le match terminé** — confirmé par le bureau, qui
+connaît la chaîne. Ce n'est donc pas une source de score en direct, et il ne sert à
+rien d'aller l'observer pendant un match. Le direct est un sujet séparé, voir l'entrée
+suivante.
+
+**Un identifiant commun manque.** Aujourd'hui rien ne relie un match saisi dans Decap à
+son homologue chez la fédération : il faudrait rapprocher sur la date et le nom de
+l'adversaire, ce qui casse au premier report ou à la première orthographe différente.
+
+Le code de match de la FFVB (`RMB002`, `3MD014`…) est un identifiant unique et stable,
+déjà présent dans le calendrier publié. **Ajouter un champ « Numéro de match » à la
+collection Matchs de Decap** le rendrait saisissable, et tout rapprochement ultérieur
+deviendrait exact plutôt qu'approximatif.
+
+C'est un petit pas indépendant : le champ peut être posé maintenant et rester vide
+longtemps sans gêner personne, mais rien de sérieux ne se construira sans lui.
+
 **Prochain pas utile :** prototyper l'extraction sur la saison passée — parser les
 trois poules et sortir un `classement.json` complet, sans rien brancher. Une heure
 pour savoir si le concept résiste au réel.
 
-### Score en direct pendant le match
-**Idée du 15 août, à creuser.** La nouvelle feuille de match électronique permettrait
-de diffuser le score au fil de la saisie. Les détails techniques manquent — l'entrée
-note ce qui est **vérifié** et ce qui reste **ouvert**, pour ne pas confondre les deux.
+### Score en direct depuis l'application de feuille de match
+**Idée du 15 août, documentation manquante.** La nouvelle version de la feuille de
+match électronique offrirait une fonctionnalité de diffusion du score **au fil de la
+saisie**, intégrée à l'application elle-même.
 
-**Ce qui est vérifié.** La page `vbspo_calendrier.php` — celle-là même qui porte le
-classement — contient déjà, pour chaque match joué :
+**À ne pas confondre avec l'entrée précédente.** Le portail de résultats de la FFVB
+publie les scores *après* la rencontre : c'est la même chaîne de données, mais à
+l'autre bout. Ce sujet-ci se joue dans l'application du marqueur, pendant le match.
 
-- le score set par set (`22:25, 20:25, 21:25`),
-- le total de points (`063-075`),
-- le nom des arbitres,
-- un lien vers la feuille électronique :
-  `ffvolley_fdme.php?saison=2025/2026&codent=LIAQ&codmatch=RMB002`.
+**Ce qui bloque n'est pas technique, c'est documentaire.** Rien ne dit aujourd'hui :
 
-Le code de match (`RMB002`) est déjà présent dans le calendrier de la saison en cours.
-Il n'y a donc rien à deviner pour cibler une rencontre précise.
+- si la diffusion produit une adresse publique, un flux, ou seulement un affichage
+  dans un écran de la fédération ;
+- si elle s'active par match, par club, ou pour toute une compétition ;
+- s'il faut une autorisation, un compte, ou un jeton ;
+- si le format est exploitable par un site tiers.
 
-**Ce qui reste ouvert, et ne peut se vérifier qu'en direct :** ces valeurs
-apparaissent-elles **pendant** le match, ou seulement après validation de la feuille ?
-C'est toute la différence entre un score en direct et un résultat publié le lendemain.
-Aucune page ne peut le dire aujourd'hui : la saison n'a pas commencé.
+**Prochain pas :** obtenir la documentation — auprès de la ligue, de la fédération, ou
+du marqueur du club qui utilise l'application. Une capture d'écran des réglages de
+diffusion suffirait déjà à savoir de quoi l'on parle.
 
-**Comment trancher :** interroger `vbspo_calendrier.php` toutes les deux minutes
-pendant un match à domicile, et regarder si les sets se remplissent au fil du jeu.
-**Premier match le 3 octobre 2026, Gymnase Rollinat.** Une demi-heure d'observation
-répond définitivement, et sans rien écrire.
-
-**Si la réponse est oui**, le travail est en grande partie fait par l'entrée
-précédente : même page, même analyse, même worker. Seule la cadence change — le samedi
-soir plutôt qu'une fois par heure. **Si la réponse est non**, il faudra chercher du
-côté de l'application elle-même, et la question devient : la fédération expose-t-elle
-un flux, ou faut-il passer par le marqueur du club ?
-
-**Attention au vocabulaire :** « la nouvelle version de la feuille de match » désigne
-peut-être une application distincte de ce portail de résultats, avec sa propre
-diffusion. Le vérifier avant de s'appuyer sur ce qui est écrit ci-dessus.
+Tant que ce point n'est pas éclairci, **rien ne peut être chiffré ni conçu** : selon la
+réponse, c'est une heure de travail ou un projet entier.
 
 ### Lien vers le direct Facebook du match
 **Demandé le 15 août.** Le club diffuse certains matchs en direct sur sa page
