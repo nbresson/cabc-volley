@@ -146,6 +146,15 @@ async function ajusterLiensReglables(){
   if(!reglages)return;
   cibles.forEach(a=>{const url=reglages[a.dataset.reglage];if(url)a.href=url;});
 }
+// Nomme la page une fois pour toutes : le titre de l onglet et og:title ne
+// peuvent plus diverger. Les robots des reseaux sociaux lisent le HTML brut et
+// gardent le titre generique de la balise ; les outils qui lisent le DOM
+// — extensions, apercus internes, lecteurs — recoivent le vrai.
+function titrePage(titre){
+  document.title=titre+" — C.A. Brive Corrèze Volley";
+  const og=document.querySelector('meta[property="og:title"]');
+  if(og)og.setAttribute("content",document.title);
+}
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
 // Ligne d un match a venir. Exactement 3 enfants directs : .match-row est
 // une grille a 3 colonnes qui deborde au-dela.

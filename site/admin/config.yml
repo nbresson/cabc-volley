@@ -34,7 +34,7 @@ collections:
               - {name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false}
               - {name: categorie, label: Catégorie, widget: select, options: ["Résumé","Club","Jeunes"]}
               - {name: extrait, label: Chapô / extrait, widget: text}
-              - {name: une, label: À la une ?, widget: boolean, default: false, required: false}
+              - {name: une, label: "À la une ?", widget: boolean, default: false, required: false}
               - {name: image, label: Image, widget: image, required: false, hint: "Photo : 1600 × 900 px (format paysage 16/9), moins de 400 Ko. Affiche carrée ou verticale : choisissez « Affiche » juste en dessous."}
               - name: cadrage
                 label: Affichage de l'image
@@ -79,11 +79,11 @@ collections:
                 display_fields: ["items.*.nom"]
                 hint: "Nécessaire pour que le match apparaisse sur la page de l'équipe. Sans équipe, il reste affiché sur la page Calendrier."
               - {name: lieu, label: Lieu, widget: string}
-              - {name: domicile, label: À domicile ?, widget: boolean, default: true}
+              - {name: domicile, label: "À domicile ?", widget: boolean, default: true}
               - {name: statut, label: Statut, widget: select, options: ["a_venir","termine"], default: "a_venir"}
               - {name: score, label: Score (si terminé), widget: string, required: false, hint: "Format court, ex. 3-1. Le détail des sets n'est pas affiché."}
-              - {name: gagne, label: Victoire ?, widget: boolean, default: false, required: false, hint: "À cocher pour une victoire. Si elle reste décochée, la rencontre s'affiche « Défaite » sur la page de l'équipe."}
-              - {name: une, label: Match à la une ?, widget: boolean, default: false, required: false}
+              - {name: gagne, label: "Victoire ?", widget: boolean, default: false, required: false, hint: "À cocher pour une victoire. Si elle reste décochée, la rencontre s'affiche « Défaite » sur la page de l'équipe."}
+              - {name: une, label: "Match à la une ?", widget: boolean, default: false, required: false}
 
   - name: classement
     label: Classement
@@ -106,7 +106,7 @@ collections:
               - {name: victoires, label: Victoires (V), widget: number, value_type: int, min: 0, default: 0}
               - {name: defaites, label: Défaites (D), widget: number, value_type: int, min: 0, default: 0}
               - {name: points, label: Points (Pts), widget: number, value_type: int, min: 0, default: 0}
-              - {name: notre_club, label: Notre club ?, widget: boolean, default: false, required: false, hint: "Met la ligne en avant sur fond sable. À cocher sur une seule ligne."}
+              - {name: notre_club, label: "Notre club ?", widget: boolean, default: false, required: false, hint: "Met la ligne en avant sur fond sable. À cocher sur une seule ligne."}
 
   - name: teams
     label: Équipes & effectifs
@@ -273,7 +273,7 @@ collections:
                 fields:
                   - {name: annee, label: Année, widget: string}
                   - {name: texte, label: Texte, widget: text, hint: "Encadrez un passage de deux astérisques pour le mettre en gras : **comme ceci**."}
-                  - {name: une, label: Mettre en avant ?, widget: boolean, default: false, required: false, hint: "Affiche la ligne sur fond sable. Réservez-le à une seule date."}
+                  - {name: une, label: "Mettre en avant ?", widget: boolean, default: false, required: false, hint: "Affiche la ligne sur fond sable. Réservez-le à une seule date."}
           - name: bureau
             label: Le bureau
             widget: object

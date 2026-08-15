@@ -35,7 +35,7 @@
 window.__pageInit=async function(){
   const data=await getJSON("content/infos.json");
   const titre=data?.titre||"Infos & documents";
-  document.title=titre+" — C.A. Brive Corrèze Volley";
+  titrePage(titre);
   document.getElementById("titre").textContent=titre;
   const chapo=document.getElementById("chapo");
   if(data?.chapo)chapo.textContent=data.chapo; else chapo.remove();

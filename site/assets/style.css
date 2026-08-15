@@ -229,8 +229,15 @@ p{margin:0}
 .murlogos a{display:block;max-width:100%}
 /* Cadre a logo : contrairement a .ph qui recadre une photo en la rognant, il
    montre le logo entier sur un fond uni — un logo rogne ne vaut rien. */
-.logo-cadre{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--creme);border-bottom:2px solid var(--encre)}
-.logo-cadre img{max-height:100%;max-width:100%;width:auto;object-fit:contain}
+/* Le cadre imposait sa proportion sans y parvenir : la hauteur derivee d un
+   aspect-ratio ne resout pas les pourcentages, donc max-height:100% ne bornait
+   rien et un logo carre s affichait a la largeur du cadre, le poussant de 163 a
+   263 px. Les logos larges, eux, restaient dans le ratio — d ou des rangees
+   inegales. L image sort du flux, comme dans .ph, ou la meme technique marche.
+   4/3 plutot que 16/10 : la plupart des logos fournis sont carres, et le ratio
+   large les reduisait d un tiers. */
+.logo-cadre{aspect-ratio:4/3;position:relative;padding:20px;background:var(--creme);border-bottom:2px solid var(--encre)}
+.logo-cadre img{position:absolute;inset:20px;margin:auto;width:auto;height:auto;max-width:calc(100% - 40px);max-height:calc(100% - 40px);object-fit:contain}
 .card.link:hover .logo-cadre{background:var(--creme)}
 .socialbar{background:var(--encre);color:var(--creme);display:flex;flex-wrap:wrap;justify-content:center;gap:34px;padding:12px 20px 16px}
 .socialbar .social{font-size:17px}
