@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Le classement FFVB est analysé, pas commencé.
+Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Le classement FFVB et le score en direct sont analysés, pas commencés — et partagent la même page source.
 
 ---
 
@@ -101,6 +101,43 @@ disparaît pas, elle devient le filet.
 **Prochain pas utile :** prototyper l'extraction sur la saison passée — parser les
 trois poules et sortir un `classement.json` complet, sans rien brancher. Une heure
 pour savoir si le concept résiste au réel.
+
+### Score en direct pendant le match
+**Idée du 15 août, à creuser.** La nouvelle feuille de match électronique permettrait
+de diffuser le score au fil de la saisie. Les détails techniques manquent — l'entrée
+note ce qui est **vérifié** et ce qui reste **ouvert**, pour ne pas confondre les deux.
+
+**Ce qui est vérifié.** La page `vbspo_calendrier.php` — celle-là même qui porte le
+classement — contient déjà, pour chaque match joué :
+
+- le score set par set (`22:25, 20:25, 21:25`),
+- le total de points (`063-075`),
+- le nom des arbitres,
+- un lien vers la feuille électronique :
+  `ffvolley_fdme.php?saison=2025/2026&codent=LIAQ&codmatch=RMB002`.
+
+Le code de match (`RMB002`) est déjà présent dans le calendrier de la saison en cours.
+Il n'y a donc rien à deviner pour cibler une rencontre précise.
+
+**Ce qui reste ouvert, et ne peut se vérifier qu'en direct :** ces valeurs
+apparaissent-elles **pendant** le match, ou seulement après validation de la feuille ?
+C'est toute la différence entre un score en direct et un résultat publié le lendemain.
+Aucune page ne peut le dire aujourd'hui : la saison n'a pas commencé.
+
+**Comment trancher :** interroger `vbspo_calendrier.php` toutes les deux minutes
+pendant un match à domicile, et regarder si les sets se remplissent au fil du jeu.
+**Premier match le 3 octobre 2026, Gymnase Rollinat.** Une demi-heure d'observation
+répond définitivement, et sans rien écrire.
+
+**Si la réponse est oui**, le travail est en grande partie fait par l'entrée
+précédente : même page, même analyse, même worker. Seule la cadence change — le samedi
+soir plutôt qu'une fois par heure. **Si la réponse est non**, il faudra chercher du
+côté de l'application elle-même, et la question devient : la fédération expose-t-elle
+un flux, ou faut-il passer par le marqueur du club ?
+
+**Attention au vocabulaire :** « la nouvelle version de la feuille de match » désigne
+peut-être une application distincte de ce portail de résultats, avec sa propre
+diffusion. Le vérifier avant de s'appuyer sur ce qui est écrit ci-dessus.
 
 ### Lien vers le direct Facebook du match
 **Demandé le 15 août.** Le club diffuse certains matchs en direct sur sa page
