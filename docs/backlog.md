@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Deux sujets FFVB distincts, à ne pas confondre : les **résultats** publiés après match, et le **score en direct** depuis l'application de feuille de match.
+Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Deux sujets FFVB distincts, à ne pas confondre : les **résultats** publiés après match, et le **score en direct** depuis l'application de feuille de match. Les livrets d'accueil sont entrés le même jour.
 
 ---
 
@@ -206,6 +206,37 @@ d'API ou à la fermeture d'un compte — ce qu'un mur alimenté par API ne fait 
 
 **Préalable à vérifier avant tout chiffrage de C :** le compte `cabcvolley` est-il un
 compte Professionnel ? Sinon rien n'est possible sans le convertir d'abord.
+
+### Quatre livrets d'accueil
+**Demandé le 15 août.** Un livret par public — licencié majeur, licencié mineur (et ses
+parents), bénévole, entraîneur — sur une architecture **tronc commun + module**, pour
+qu'une correction du socle se répercute partout.
+
+Le sommaire détaillé, les neuf sections du tronc commun et les quatre modules sont dans
+[`docs/superpowers/specs/2026-08-15-livrets-accueil-sommaire.md`](superpowers/specs/2026-08-15-livrets-accueil-sommaire.md),
+avec l'analyse complète. Trois points en ressortent :
+
+**Le sommaire fourni se trompe sur la pile.** Il évoque « Astro + Decap » : le site
+n'est pas en Astro, sa seule dépendance est `wrangler`. Toute recommandation appuyée
+sur des composants Astro est à réécrire.
+
+**Six des neuf sections du tronc commun existent déjà** sur le site — histoire, chiffres
+clés, gouvernance, gymnases, licence et tarifs, partenaires, RGPD. Les recopier dans
+quatre livrets crée huit versions de la même information. Les tarifs sont l'exemple
+type : ils changent chaque saison, et un PDF distribué en septembre survit à sa propre
+péremption. Le tronc commun devrait **renvoyer** au site plutôt que le répéter.
+
+**Le chemin le moins cher est déjà ouvert.** La bibliothèque Infos accepte des
+documents téléversés — elle en compte seize. Le bureau peut rédiger, exporter en PDF et
+déposer **sans une ligne de code**. Le chemin intermédiaire, des pages web nourries par
+les JSON existants avec une feuille de style d'impression, est le seul où une
+correction de tarif se propage d'elle-même ; il ne se justifie que si le manuel
+s'essouffle.
+
+**Ce projet est surtout de l'écriture** : une cinquantaine de pages, dont une bonne part
+relève de décisions du bureau qui n'existent pas encore par écrit — charte du club,
+charte des parents supporters, politique vestiaires, référent intégrité, plan de
+formation. Le code n'est pas le chemin critique.
 
 ### Navigation entre fiches d'équipe
 En pied de fiche, à côté de « Toutes les équipes » : ← équipe précédente / suivante →.
