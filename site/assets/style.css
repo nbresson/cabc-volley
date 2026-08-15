@@ -227,7 +227,6 @@ p{margin:0}
 .murlogos{background:var(--sable);border-top:2px solid var(--encre);display:grid;grid-template-columns:repeat(var(--colonnes,auto-fit),minmax(90px,1fr));justify-items:center;align-items:center;gap:18px 26px;padding:22px 24px}
 .murlogos img{height:var(--h-logo,46px);width:auto;max-width:100%;object-fit:contain}
 .murlogos a{display:block;max-width:100%}
-.murlogos a:hover img,.murlogos a:focus-visible img{opacity:.6}
 /* Cadre a logo : contrairement a .ph qui recadre une photo en la rognant, il
    montre le logo entier sur un fond uni — un logo rogne ne vaut rien. */
 .logo-cadre{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--creme);border-bottom:2px solid var(--encre)}
@@ -589,3 +588,15 @@ dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
 .evitement{position:fixed;top:-100px;left:14px;z-index:100;background:var(--encre);color:var(--creme);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase;padding:11px 22px}
 .evitement:focus-visible{top:14px;opacity:1}
 #main{scroll-margin-top:0}
+
+/* ===== Partenaires : logos unifies ===== */
+/* Niveaux de gris teinte encre : le mur reste calme quels que soient les
+   logos fournis. La couleur revient au survol — remplace l ancien opacity:.6,
+   qui faisait palir le logo au moment ou l on s y interessait. */
+.murlogos img,.logo-cadre img{filter:grayscale(1) sepia(.3) saturate(.6) brightness(.92);opacity:.8;transition:filter .15s ease,opacity .15s ease}
+.murlogos a:hover img,.murlogos a:focus-visible img,
+.card:hover .logo-cadre img,.card.link:hover .logo-cadre img{filter:none;opacity:1}
+/* L en-tete traverse toutes les colonnes de la grille du mur. Il passe avant
+   les logos, donc disposerMur() continue de ne compter que ceux-ci. */
+.mur-tete{grid-column:1/-1;justify-self:stretch;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;padding-bottom:4px}
+@media(prefers-reduced-motion:reduce){.murlogos img,.logo-cadre img{transition:none}}

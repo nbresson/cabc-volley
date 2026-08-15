@@ -439,7 +439,8 @@ collections:
             hint: "Le bloc sombre en bas de page. Laissez le titre vide pour ne rien afficher."
             fields:
               - {name: titre, label: Titre, widget: string, required: false, hint: "Laissez vide pour masquer complètement le bloc."}
-              - {name: texte, label: Texte, widget: text, required: false}
+              - {name: texte, label: Texte, widget: text, required: false, hint: "Le texte long du bloc sombre en bas de page."}
+              - {name: accroche, label: "Accroche (carte en fin de grille)", widget: string, required: false, hint: "Une phrase — ex. Maillots, déplacements, tournois : votre logo ici."}
               - {name: bouton, label: Libellé du bouton, widget: string, required: false, hint: "Le bouton n'apparaît que si le libellé ET le lien sont remplis."}
               - {name: lien, label: Lien du bouton, widget: string, required: false, hint: "Ex. contact.html"}
           - name: items

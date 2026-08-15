@@ -64,9 +64,13 @@ async function murPartenaires(){
   if(!items.length)return;
   // Tous les logos menent a la page Partenaires, jamais au site du partenaire :
   // le mur sert a faire connaitre la page, pas a envoyer le visiteur ailleurs.
-  barre.insertAdjacentHTML("beforebegin",`<div class="murlogos">${items.map(p=>
-    `<a href="partenaires.html" title="${p.nom||""}"><img src="${p.logo}" alt="${p.nom||""}" loading="lazy"></a>`
-  ).join("")}</div>`);
+  barre.insertAdjacentHTML("beforebegin",`<div class="murlogos">
+  <div class="mur-tete">
+    <span class="eyebrow">Ils nous soutiennent</span>
+    <a href="partenaires.html" class="mono lien" style="color:var(--encre)">Tous nos partenaires →</a>
+  </div>
+  ${items.map(p=>`<a href="partenaires.html" title="${p.nom||""}"><img src="${p.logo}" alt="${p.nom||""}" loading="lazy"></a>`).join("")}
+</div>`);
   const mur=document.querySelector(".murlogos");
   disposerMur(mur,items.length);
   // Le nombre de colonnes depend de la largeur : il se recalcule au

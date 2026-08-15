@@ -62,7 +62,7 @@ window.__pageInit=async function(){
       :`<span class="mono" style="color:var(--mention)">[ logo à venir ]</span>`}</div>
       <div class="body" style="padding:16px 18px">
         <strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1.05">${p.nom||""}</strong>
-        ${p.mot?`<span class="muted" style="font-size:13px">${p.mot}</span>`:""}
+        ${p.mot?`<span class="muted" style="font-size:13px;font-style:italic;border-left:3px solid var(--encre);padding-left:10px;line-height:1.5">« ${p.mot} »</span>`:""}
         ${p.lien?`<span class="mono lien" style="font-size:11px;letter-spacing:.12em">Voir le site ↗</span>`:""}
       </div>`;
     // Un partenaire sans adresse reste affiche, simplement pas cliquable :
@@ -72,15 +72,26 @@ window.__pageInit=async function(){
       :`<div class="card shadow">${dedans}</div>`;
   };
 
-  document.getElementById("p-listes").innerHTML=[...groupes].filter(([,l])=>l.length).map(([nom,liste])=>`
+  // La carte d appel ferme la DERNIERE grille affichee : la ou l oeil finit.
+  // Elle reutilise le contenu du bloc « devenir » et ne parait que s il est
+  // rempli ; le grand bloc sombre du bas de page reste tel quel.
+  const d=data?.devenir;
+  const carteAppel=d?.titre?`
+    <div class="dark" style="border:2px solid var(--encre);display:flex;flex-direction:column;justify-content:center;gap:12px;padding:28px">
+      <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${d.titre}</strong>
+      ${d.accroche?`<span style="font-size:13px;color:var(--texte-sombre);line-height:1.6">${d.accroche}</span>`:""}
+      ${d.bouton?`<a href="${d.lien||"contact.html"}" class="btn btn-inverse" style="align-self:flex-start;padding:9px 20px;font-size:16px">${d.bouton}</a>`:""}
+    </div>`:"";
+
+  const visibles=[...groupes].filter(([,l])=>l.length);
+  document.getElementById("p-listes").innerHTML=visibles.map(([nom,liste],i)=>`
     <div style="margin-bottom:56px">
       <div class="section-head" style="margin-bottom:20px"><h2>${nom}</h2><span class="mono">${liste.length}</span></div>
-      <div class="cols-4">${liste.map(carte).join("")}</div>
+      <div class="cols-4">${liste.map(carte).join("")}${i===visibles.length-1?carteAppel:""}</div>
     </div>`).join("")||'<p class="vide muted">Les partenaires seront présentés prochainement.</p>';
 
   // Le bloc reste masque tant qu il n a pas de titre : meme convention que le
   // bloc « infos » des equipes, ou un titre vide masque tout.
-  const d=data?.devenir;
   if(d?.titre){
     document.getElementById("p-devenir").style.display="";
     document.getElementById("p-dev-titre").textContent=d.titre;
