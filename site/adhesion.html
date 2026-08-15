@@ -51,10 +51,27 @@
     <div style="grid-column:span 2"><button class="btn btn-primary" type="submit">Envoyer ma demande</button><p class="ok mono">✓ Demande envoyée — on te répond sous 48 h.</p><p class="ko mono">✗ L'envoi a échoué — réessaie, ou écris-nous directement (voir page Contact).</p><p class="muted" style="font-size:12px;margin-top:14px;max-width:62ch">Les informations saisies sont transmises au club par le service Web3Forms, uniquement pour traiter ton adhésion. Elles ne sont ni revendues, ni conservées sur ce site. <a href="mentions-legales.html" class="lien">En savoir plus</a>.</p></div>
   </form>
 </section>
-<section class="section pad">
-  <h2 style="margin-bottom:24px">Avant de te lancer</h2>
-  <details class="acc" open><summary>Combien coûte la licence ?</summary><div class="acc-body muted">De 90 € (école de volley) à 160 € (seniors compétition), maillot d'entraînement compris. Pass'Sport accepté, paiement en trois fois possible.</div></details><details class="acc"><summary>Quels documents fournir ?</summary><div class="acc-body muted">Le formulaire de licence FFVB signé, un certificat médical (ou attestation santé pour un renouvellement) et une photo d'identité.</div></details><details class="acc"><summary>Peut-on essayer avant de s'inscrire ?</summary><div class="acc-body muted">Oui — la première séance est gratuite, sans engagement. Viens simplement en tenue de sport à l'horaire de ta catégorie.</div></details><details class="acc"><summary>Quels sont les horaires d'entraînement ?</summary><div class="acc-body muted">Consulte la page Calendrier ou passe à la permanence du mercredi — les créneaux varient selon la catégorie et le gymnase.</div></details>
+<section class="section pad" id="faq" style="display:none">
+  <h2 id="faq-titre" style="margin-bottom:24px"></h2>
+  <div id="faq-liste"></div>
 </section>
 </main>
 <div id="footer"></div><script src="assets/site.js"></script>
-<script>window.__pageInit=async function(){const s=await getJSON("content/settings.json");if(s?.permanence)document.getElementById("perm").textContent="Permanences : "+s.permanence;};</script></body></html>
+<script>
+window.__pageInit=async function(){
+  const [s,a]=await Promise.all([getJSON("content/settings.json"),getJSON("content/adhesion.json")]);
+  if(s?.permanence)document.getElementById("perm").textContent="Permanences : "+s.permanence;
+  // Meme convention que les autres blocs pilotes par Decap : sans question
+  // saisie la section entiere disparait, plutot que de laisser un titre seul.
+  // La premiere reponse s ouvre, comme avant le passage a Decap.
+  const faq=a?.faq,questions=(faq?.items||[]).filter(q=>q.question);
+  if(!questions.length)return;
+  document.getElementById("faq-titre").textContent=faq.titre||"Avant de te lancer";
+  document.getElementById("faq-liste").innerHTML=questions.map((q,i)=>`
+    <details class="acc"${i===0?" open":""}>
+      <summary>${q.question}</summary>
+      <div class="acc-body muted">${mdToHtml(q.reponse)}</div>
+    </details>`).join("");
+  document.getElementById("faq").style.display="";
+};
+</script></body></html>
