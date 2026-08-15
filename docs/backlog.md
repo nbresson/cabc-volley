@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Deux sujets FFVB distincts, à ne pas confondre : les **résultats** publiés après match, et le **score en direct** depuis l'application de feuille de match. Les livrets d'accueil sont entrés le même jour.
+Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Les trois finitions de la relecture d'août sont faites. Deux sujets FFVB distincts, à ne pas confondre : les **résultats** publiés après match, et le **score en direct** depuis l'application de feuille de match. Les livrets d'accueil sont entrés le même jour.
 
 ---
 
@@ -238,30 +238,6 @@ relève de décisions du bureau qui n'existent pas encore par écrit — charte 
 charte des parents supporters, politique vestiaires, référent intégrité, plan de
 formation. Le code n'est pas le chemin critique.
 
-### Navigation entre fiches d'équipe
-En pied de fiche, à côté de « Toutes les équipes » : ← équipe précédente / suivante →.
-L'ordre est celui de `teams.json`, déjà l'ordre éditorial du bureau. Les équipes sans
-slug sont sautées.
-
-### Timeline du Club — la période dite deux fois
-La colonne affiche « 1960 » quand le texte commence par « Années 1960–1983 — ».
-
-**Attention au format :** sur huit entrées, six portent un préfixe de période, mais
-sous **trois formes différentes** — `Après-guerre 39/45 —`, `Années 1960–1983 —`, et
-`1987–1997 —`. La huitième (2026) n'en a aucun. Une règle qui ne reconnaîtrait que
-`AAAA–AAAA —` n'en attraperait que cinq sur six.
-
-Rien à changer côté Decap : le bureau continue d'écrire comme aujourd'hui, c'est
-l'affichage qui remonte la période dans la grande colonne.
-
-### L'entraîneur n'est pas un numéro de maillot
-Jean-Pierre Delost porte `num: "E"`, affiché en grand sur sa photo comme un numéro.
-Proposition : quand `num` n'est pas numérique, remplacer le grand chiffre par un badge
-« Staff » en DM Mono sous le nom, et classer ces cartes en fin de grille. Aucun
-changement de données — c'est le seul cas aujourd'hui.
-
----
-
 ## 4 · Pas du code — une chasse aux photos
 
 Le design attend déjà ces images ; il n'y a rien à développer.
@@ -306,6 +282,12 @@ Barrage d'indexation · redirections des anciennes URL · images en WebP · poli
 auto-hébergées · page Partenaires et fiches de gymnase · formulaires Web3Forms ·
 carte des gymnases et vignette de partage · page Adhésion entièrement sous Decap ·
 mini-classement · favicon et sitemap.
+
+**15 août** — les trois finitions de la relecture d'août, avec leurs entrées de galerie
+dans le même commit : navigation entre fiches d'équipe, période remontée dans la colonne
+de la frise, badge « Staff » pour l'encadrement. Au passage, l'« écart connu » des
+variantes de badge est résorbé — cinq usages et non deux, la relecture ayant omis
+`boutique.html` et la liste de l'accueil, et cité `equipe.html` où il n'y en avait aucun.
 
 **15 août** — le réglage « Nom du club », qui n'était lu nulle part : un éditeur
 pouvait le modifier sans que rien ne change. Retiré plutôt qu'affiché — le nom est

@@ -69,16 +69,29 @@ window.__pageInit=async function(){
     ${i.bouton&&i.lien?`<a class="btn btn-primary" style="margin-top:20px" href="${i.lien}">${i.bouton}</a>`:""}
   </section>`:"";
 
-  const eff=t.effectif||[];
+  // Un numero non numerique designe l encadrement : « E » pour l entraineur.
+  // Ces cartes n ont pas de dossard a montrer, et passent en fin de grille —
+  // l effectif se lit par les joueurs, le staff le referme.
+  const estStaff=p=>p.num&&!/^\d+$/.test(String(p.num).trim());
+  const eff=(t.effectif||[]).slice().sort((a,b)=>estStaff(a)-estStaff(b));
   const blocEffectif=eff.length?`<section class="pad section">
     <div class="section-head"><h2>L'effectif</h2><span class="mono">${eff.length} membre${eff.length>1?"s":""}</span></div>
     <div class="cols-4">${eff.map(p=>`
-      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden">${p.photo?`<img src="${p.photo}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ portrait ]</span>'}<strong class="display-xl" style="position:absolute;top:8px;right:14px;font-weight:900;text-shadow:0 0 6px var(--creme)">${p.num||""}</strong></div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1">${p.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.14em">${p.poste||""}</span></div></div>`).join("")}</div>
+      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden">${p.photo?`<img src="${p.photo}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ portrait ]</span>'}${estStaff(p)?"":`<strong class="display-xl" style="position:absolute;top:8px;right:14px;font-weight:900;text-shadow:0 0 6px var(--creme)">${p.num||""}</strong>`}</div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1">${p.nom}</strong>${estStaff(p)?'<span class="badge badge-outline" style="align-self:flex-start">Staff</span>':""}<span class="mono" style="font-size:11px;letter-spacing:.14em">${p.poste||""}</span></div></div>`).join("")}</div>
   </section>`:"";
 
+  // Navigation entre fiches, dans l ordre editorial de teams.json. Les equipes
+  // sans slug sont sautees : elles n ont pas de fiche ou aller. Aux extremites
+  // le bouton n est pas rendu du tout, plutot que rendu inerte.
+  const fiches=(teams?.items||[]).filter(x=>x.slug);
+  const ici=fiches.findIndex(x=>x.slug===slug);
+  const prec=ici>0?fiches[ici-1]:null;
+  const suiv=ici>=0&&ici<fiches.length-1?fiches[ici+1]:null;
   const pied=`<section class="pad section" style="border-bottom:none">
     <div class="row" style="justify-content:space-between;padding-top:24px;border-top:2px solid var(--encre)">
-      <a href="equipes.html" class="btn btn-secondary">← Toutes les équipes</a>
+      ${prec?`<a href="${teamUrl(prec.slug)}" class="btn btn-secondary">← ${prec.nom}</a>`:""}
+      <a href="equipes.html" class="btn btn-secondary">Toutes les équipes</a>
+      ${suiv?`<a href="${teamUrl(suiv.slug)}" class="btn btn-secondary">${suiv.nom} →</a>`:""}
       <a href="calendrier.html" class="btn btn-primary">Calendrier complet</a></div>
   </section>`;
 

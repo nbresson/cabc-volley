@@ -88,7 +88,7 @@ window.__pageInit=async function(){
     <div class="match-row${m.domicile?' hl':''}" style="padding:22px 24px;border-bottom:1px solid var(--lin)">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
-      <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span>
+      <span class="badge${m.domicile?'':' badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span>
     </div>`;}).join("")||'<p class="vide muted">Aucun match programmé pour le moment.</p>';
   // Mini-classement. Masque tant que la saison n a pas commence : avant la
   // premiere journee toutes les equipes sont a zero et une 1re place ne veut
