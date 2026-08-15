@@ -20,7 +20,7 @@
   <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(56px,9vw,88px)">Porte les<br>couleurs</h1><span class="mono" style="align-self:flex-end">Retrait au gymnase · pas de livraison</span></div>
 </section>
 <section class="section dark pad" style="padding-top:22px;padding-bottom:22px">
-  <div class="row" style="align-items:center;gap:20px"><span class="badge-outline" style="border-color:var(--creme);color:var(--creme)">Édition limitée</span><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(20px,3vw,30px)">Collection 80 ans — série numérotée, jusqu'en juin</strong></div>
+  <div class="row" style="align-items:center;gap:20px"><span class="badge badge-outline" style="border-color:var(--creme);color:var(--creme)">Édition limitée</span><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(20px,3vw,30px)">Collection 80 ans — série numérotée, jusqu'en juin</strong></div>
 </section>
 <section class="pad" style="padding-bottom:0">
   <div class="commander">
@@ -57,7 +57,7 @@ window.__pageInit=async function(){
     return `<div class="card ${off?'':'shadow'}" style="${off?'border-color:var(--taupe);opacity:.75':''}">
       <div class="ph" style="aspect-ratio:1/1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${p.image?`<img src="${p.image}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover${off?';filter:grayscale(1)':''}">`:`<span class="mono" style="color:var(--mention)">[ ${p.nom} ]</span>`}${badge[p.statut]||''}</div>
       <div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1;${off?'color:var(--taupe)':''}">${p.nom}</strong>
-      <div class="row" style="justify-content:space-between;align-items:baseline"><span class="mono" style="font-size:15px;${off?'color:var(--taupe)':'color:var(--encre)'}">${p.prix}</span>${off?'<span class="badge-muted">Épuisé</span>':'<span class="mono" style="font-size:10px;letter-spacing:.14em">'+p.detail+'</span>'}</div></div></div>`;
+      <div class="row" style="justify-content:space-between;align-items:baseline"><span class="mono" style="font-size:15px;${off?'color:var(--taupe)':'color:var(--encre)'}">${p.prix}</span>${off?'<span class="badge badge-muted">Épuisé</span>':'<span class="mono" style="font-size:10px;letter-spacing:.14em">'+p.detail+'</span>'}</div></div></div>`;
   }).join("");
 };
 </script></body></html>

@@ -164,7 +164,7 @@ function matchRow(m){const d=new Date(m.date);return `
     <div class="match-row${m.domicile?' hl':''}"${m.equipe?` data-filtre="${m.equipe}"`:""}>
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
-      <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
+      <span class="badge${m.domicile?'':' badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
 // Ligne de resultat. Le score et le badge sont groupes dans une seule cellule,
 // .match-row n acceptant que trois enfants directs. Partagee par la fiche
 // d equipe et le calendrier depuis que ce dernier montre les derniers matchs.
@@ -174,7 +174,7 @@ function ligneResultat(m){return `
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
       <span class="row" style="align-items:center;gap:12px">
         <strong class="display-m" style="font-weight:900">${m.score||"–"}</strong>
-        <span class="${m.gagne?'badge':'badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;}
+        <span class="badge${m.gagne?'':' badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;}
 
 // Fichier .ics fabrique dans le navigateur, sans service tiers. Duree fixee a
 // deux heures. Les dates sont ecrites en heure locale avec TZID Europe/Paris :

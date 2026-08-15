@@ -74,11 +74,20 @@ window.__pageInit=async function(){
   document.getElementById("histoire-photo").innerHTML=`
     <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${h.photo?vignette(h.photo,h.legende):'<span class="mono" style="letter-spacing:.1em;color:var(--mention)">[ photo d\'archive ]</span>'}</div>
     ${h.legende?`<div class="mono" style="padding:12px 18px;border-top:2px solid var(--encre)">${h.legende}</div>`:""}`;
+  // La periode se lit souvent en tete du texte — « Annees 1960-1983 — … » — et
+  // repete alors l annee de la colonne. On la remonte, abregee, et on l ote du
+  // texte. Le bureau continue d ecrire comme aujourd hui dans Decap.
+  // « Apres-guerre 39/45 — » n est pas une plage d annees et reste dans le
+  // texte : la colonne y montre 1946, qui ne fait pas doublon.
+  const periode=s=>{
+    const m=String(s||"").match(/^(?:Années\s+)?(\d{4})\s*[–-]\s*(\d{4})\s+—\s+/);
+    return m?{libelle:m[1]+"–"+m[2].slice(2),reste:s.slice(m[0].length)}:null;
+  };
   const dates=h.dates||[];
   document.getElementById("histoire-dates").innerHTML=dates.map((t,i)=>`
     <div class="pad timeline" style="padding-top:30px;padding-bottom:30px;${t.une?"background:var(--sable);":""}${i<dates.length-1?"border-bottom:1px solid var(--lin)":""}">
-      <strong class="display-2xl" style="font-weight:900;line-height:1">${t.annee}</strong>
-      <p class="muted" style="align-self:center;font-size:14px">${gras(t.texte)}</p>
+      <strong class="display-2xl" style="font-weight:900;line-height:1${periode(t.texte)?";font-size:30px":""}">${periode(t.texte)?.libelle||t.annee}</strong>
+      <p class="muted" style="align-self:center;font-size:14px">${gras(periode(t.texte)?.reste||t.texte)}</p>
     </div>`).join("");
 
   // Le bureau
