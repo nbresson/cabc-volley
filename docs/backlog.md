@@ -113,12 +113,11 @@ son homologue chez la fédération : il faudrait rapprocher sur la date et le no
 l'adversaire, ce qui casse au premier report ou à la première orthographe différente.
 
 Le code de match de la FFVB (`RMB002`, `3MD014`…) est un identifiant unique et stable,
-déjà présent dans le calendrier publié. **Ajouter un champ « Numéro de match » à la
-collection Matchs de Decap** le rendrait saisissable, et tout rapprochement ultérieur
-deviendrait exact plutôt qu'approximatif.
+déjà présent dans le calendrier publié. **Le champ « Numéro de match » a été ajouté à la
+collection Matchs le 15 août** : facultatif, invisible sur le site, et unique — deux
+rencontres ne peuvent pas porter le même code, la vérification étant bloquante.
 
-C'est un petit pas indépendant : le champ peut être posé maintenant et rester vide
-longtemps sans gêner personne, mais rien de sérieux ne se construira sans lui.
+Reste à le remplir. Vingt-cinq matchs sont saisis, aucun n'a encore son numéro.
 
 **Prochain pas utile :** prototyper l'extraction sur la saison passée — parser les
 trois poules et sortir un `classement.json` complet, sans rien brancher. Une heure

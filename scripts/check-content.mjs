@@ -26,10 +26,24 @@ for (const e of equipes) {
   slugs.add(e.slug);
 }
 
+const numeros = new Map();
 for (const m of matchs) {
   if (m.equipe && !slugs.has(m.equipe)) {
     erreurs.push(`Match contre « ${m.adversaire} » : équipe inconnue « ${m.equipe} »`);
   }
+  // Le numero de match est facultatif, mais s il est saisi il doit rester unique :
+  // c est sa seule raison d etre. Deux rencontres partageant le meme code feraient
+  // rapprocher les resultats de l une avec ceux de l autre. Comparaison en
+  // majuscules, la federation ecrivant RMB002 mais une saisie a la main pouvant
+  // donner rmb002.
+  const num = typeof m.numero === "string" ? m.numero.trim().toUpperCase() : "";
+  if (!num) continue;
+  if (numeros.has(num)) {
+    erreurs.push(
+      `Numéro de match « ${num} » porté deux fois : « ${numeros.get(num)} » et « ${m.adversaire} »`,
+    );
+  }
+  numeros.set(num, m.adversaire);
 }
 
 // Le rang n est pas un champ : c est l ordre des lignes. On controle donc le
