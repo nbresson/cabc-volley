@@ -598,5 +598,10 @@ dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
 .card:hover .logo-cadre img,.card.link:hover .logo-cadre img{filter:none;opacity:1}
 /* L en-tete traverse toutes les colonnes de la grille du mur. Il passe avant
    les logos, donc disposerMur() continue de ne compter que ceux-ci. */
-.mur-tete{grid-column:1/-1;justify-self:stretch;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;padding-bottom:4px}
+.mur-tete{grid-column:1/-1;justify-self:stretch;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;padding:6px 0 10px}
+/* Meme taille que les titres de section : le mur reprend le bloc retire de la
+   page Club, il doit peser pareil. */
+.mur-tete h2{font-size:clamp(34px,5vw,52px)}
+.mur-tete>div{max-width:62ch}
+.mur-tete p{margin-top:12px;font-size:14px}
 @media(prefers-reduced-motion:reduce){.murlogos img,.logo-cadre img{transition:none}}
