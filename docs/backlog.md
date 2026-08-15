@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**.
+Dernière revue : **15 août 2026**. Section 2 vidée le même jour.
 
 ---
 
@@ -24,36 +24,7 @@ site/`). Le sitemap et le robots.txt, eux, n'attendent rien — voir
 
 ---
 
-## 2 · Défauts réels
-
-### `og:title` doublé sur trois pages
-**Relevé le 15 août.** `equipe.html`, `gymnase.html` et `article.html` portent
-toutes trois :
-
-> `C.A. Brive Corrèze Volley — La fierté gaillarde — C.A. Brive Corrèze Volley`
-
-Le suffixe a été appliqué deux fois par un remplacement mécanique des balises OG.
-La relecture n'en signalait qu'une, il y en a trois.
-
-À corriger en `"Nos équipes — C.A. Brive Corrèze Volley"` et équivalents. Tant qu'on
-y est : faire suivre `og:title` quand le JS règle `document.title`, utile aux outils
-qui lisent le DOM — les robots des réseaux sociaux, eux, lisent le HTML brut et n'en
-profiteront pas.
-
-### Cadres à logo de hauteurs inégales — page Partenaires
-Dans une même rangée, « Région Nouvelle-Aquitaine » et « Netto » ont un cadre plus
-court que leurs voisins. Défaut **antérieur** au lot du 14 août, vérifié par
-comparaison avec la production d'alors.
-
-### Six libellés YAML fragiles
-`site/admin/config.yml` porte six valeurs finissant par `?` sans guillemets dans une
-accolade — `label: À la une ?`, `label: Victoire ?` et quatre autres. Un analyseur
-YAML strict les refuse ; Decap les accepte et l'admin fonctionne. Fragilité dormante :
-des guillemets suffiraient.
-
----
-
-## 3 · Finitions
+## 2 · Finitions
 
 ### Navigation entre fiches d'équipe
 En pied de fiche, à côté de « Toutes les équipes » : ← équipe précédente / suivante →.
@@ -79,7 +50,7 @@ changement de données — c'est le seul cas aujourd'hui.
 
 ---
 
-## 4 · Pas du code — une chasse aux photos
+## 3 · Pas du code — une chasse aux photos
 
 Le design attend déjà ces images ; il n'y a rien à développer.
 
@@ -96,7 +67,7 @@ Le design attend déjà ces images ; il n'y a rien à développer.
 
 ---
 
-## 5 · Décisions en attente
+## 4 · Décisions en attente
 
 **Description du gymnase Rollinat** — trois reformulations proposées le 13 août, aucune
 retenue. Le texte officiel actuel manque de charme.
@@ -109,3 +80,7 @@ Barrage d'indexation · redirections des anciennes URL · images en WebP · poli
 auto-hébergées · page Partenaires et fiches de gymnase · formulaires Web3Forms ·
 carte des gymnases et vignette de partage · page Adhésion entièrement sous Decap ·
 mini-classement · favicon et sitemap.
+
+**15 août** — les trois défauts de la section 2 : `og:title` doublé sur trois pages
+(et `titrePage()` qui le fait désormais suivre `document.title`), cadres à logo de
+hauteurs inégales, six libellés YAML sans guillemets.

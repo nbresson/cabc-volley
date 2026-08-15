@@ -5,7 +5,7 @@
 <meta name="description" content="80 ans de volley au cœur de la Gaillarde. Équipes, calendrier, adhésion — rejoins la maison.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="C.A. Brive Corrèze Volley">
-<meta property="og:title" content="C.A. Brive Corrèze Volley — La fierté gaillarde — C.A. Brive Corrèze Volley">
+<meta property="og:title" content="Actualités — C.A. Brive Corrèze Volley">
 <meta property="og:description" content="80 ans de volley au cœur de la Gaillarde. Équipes, calendrier, adhésion — rejoins la maison.">
 <meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -25,7 +25,7 @@ window.__pageInit=async function(){
   const n=(data?.items||[]).find(x=>x.slug===slug)||(data?.items||[])[0];
   const el=document.getElementById("article");
   if(!n){el.innerHTML='<p class="muted">Article introuvable. <a href="actualites.html">Retour aux actualités</a></p>';return;}
-  document.title=n.titre+" — C.A. Brive Corrèze Volley";
+  titrePage(n.titre);
   // Deux autres actualites : d abord celles de la meme categorie, completees
   // par les plus recentes. Le bloc disparait si l article est le seul.
   const autres=[...(data?.items||[]).filter(x=>x.slug!==n.slug&&x.categorie===n.categorie),

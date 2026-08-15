@@ -5,7 +5,7 @@
 <meta name="description" content="80 ans de volley au cœur de la Gaillarde. Équipes, calendrier, adhésion — rejoins la maison.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="C.A. Brive Corrèze Volley">
-<meta property="og:title" content="C.A. Brive Corrèze Volley — La fierté gaillarde — C.A. Brive Corrèze Volley">
+<meta property="og:title" content="Nos gymnases — C.A. Brive Corrèze Volley">
 <meta property="og:description" content="80 ans de volley au cœur de la Gaillarde. Équipes, calendrier, adhésion — rejoins la maison.">
 <meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -25,7 +25,7 @@ window.__pageInit=async function(){
   const el=document.getElementById("gymnase");
   const v=(data?.items||[]).find(x=>x.slug&&x.slug===slug);
   if(!v){el.innerHTML='<section class="pad section"><p class="muted">Site introuvable. <a href="contact.html" class="lien">Retour à nos gymnases</a></p></section>';return;}
-  document.title=v.nom+" — C.A. Brive Corrèze Volley";
+  titrePage(v.nom);
 
   const entete=`<section class="pad section">
     <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="contact.html">Nos gymnases</a><span>/</span><span style="color:var(--encre)">${v.nom}</span></div>
