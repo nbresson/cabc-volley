@@ -5,6 +5,9 @@ Cloudflare, Decap, formats d'images, notes de charte. **À lire avant toute modi
 de fond.** Ce fichier-ci ne le répète pas ; il note ce qui ne s'y trouve pas et ce qui se
 paie cher quand on l'ignore.
 
+Ce qui reste a faire vit dans [`docs/backlog.md`](docs/backlog.md), classe par valeur
+et date. Le tenir a jour fait partie du travail : on y retire plus qu on y ajoute.
+
 ## Le projet en trois phrases
 
 Site statique du C.A. Brive Corrèze Volley. Aucune étape de build : des fichiers
