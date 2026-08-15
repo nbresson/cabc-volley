@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place.
+Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Le classement FFVB est analysé, pas commencé.
 
 ---
 
@@ -47,6 +47,61 @@ site/`). Le sitemap et le robots.txt, eux, n'attendent rien — voir
 
 ## 3 · Ajouts et finitions
 
+### Récupérer le classement sur le site de la FFVB
+**Analysé le 15 août.** Le classement est saisi à la main chaque week-end alors qu'il
+existe déjà chez la fédération. **Le concept tient**, vérifié sur les vraies pages.
+
+| | |
+| --- | --- |
+| Rendu | côté serveur — le tableau est dans le HTML livré, aucun JavaScript à exécuter |
+| Réponse | 57 à 125 Ko en 0,3 s |
+| Encodage | latin-1, à convertir à la lecture |
+| `robots.txt` | absent (404) — aucune consigne d'exploration |
+
+Le tableau contient exactement les champs de `classement.json` : rang, équipe, points,
+joués, gagnés, perdus, puis le détail des sets et les ratios.
+
+**Trois découvertes qui changent la mise en œuvre :**
+
+1. **Le lien des réglages n'est pas le bon.** `planning_club_class.php` affiche, malgré
+   son titre « Classement des Equipes », la composition des poules — le « 05 » à côté
+   du CAB est son rang dans une liste administrative, pas au classement. Le vrai
+   tableau est sur `vbspo_calendrier.php`, une page par poule.
+2. **Le club a trois poules.** 3MD (Nationale 3 masculine poule D), RFB et RMB en
+   régional. Les régionales s'atteignent par `codent=LIAQ&poule=RMB`. La nationale est
+   étiquetée `NAT` dans la page du club, mais le bon paramètre reste à trouver.
+3. **Le tableau n'existe pas avant le premier match.** Zéro ligne sur 2026/2027,
+   tableau complet sur 2025/2026. Le moissonneur doit tolérer son absence — ce que le
+   site fait déjà, le mini-classement se masquant tant que rien n'est joué.
+
+**Cadence retenue : toutes les heures, samedi et dimanche seulement.** Le cron de
+Cloudflare l'exprime en `0 * * * 6,0` — 48 déclenchements par semaine au lieu de 168.
+Les crons sont en UTC, ce qui tombe bien : la fenêtre couvre le samedi matin jusqu'au
+lundi 1 h ou 2 h du matin en heure française, donc les résultats saisis tard le samedi
+soir. *À surveiller la première saison : si la fédération valide certains résultats le
+lundi, il faudra y ajouter deux ou trois passages.*
+
+**Architecture pressentie :** le worker interroge la FFVB, garde le résultat en KV, et
+sert `content/classement.json` depuis le cache quand il est frais. **Repli sur le
+fichier saisi à la main dès que quoi que ce soit échoue** — la saisie manuelle ne
+disparaît pas, elle devient le filet.
+
+**Deux réserves à porter :**
+
+- **Fragilité.** Ce HTML est d'une autre époque — balises en majuscules, `bgcolor`,
+  Apache 2.2. Stable depuis des années parce que personne n'y touche, mais une refonte
+  casserait l'analyse **en silence**. D'où le repli, et un signal visible quand le
+  moissonnage échoue.
+- **Droit.** L'absence de `robots.txt` n'est pas une autorisation. Il existe en France
+  un droit du producteur de base de données, et republier un classement n'est pas le
+  consulter. Le club étant membre de la fédération et n'affichant que ses propres
+  poules, c'est défendable — mais ça se demande à la ligue plutôt que ça ne se suppose.
+  **Un mail avant d'écrire le code.**
+
+**Prochain pas utile :** prototyper l'extraction sur la saison passée — parser les
+trois poules et sortir un `classement.json` complet, sans rien brancher. Une heure
+pour savoir si le concept résiste au réel.
+
 ### Lien vers le direct Facebook du match
 **Demandé le 15 août.** Le club diffuse certains matchs en direct sur sa page
 Facebook. Un visiteur qui arrive sur le site un soir de match ne trouve rien qui l'y
@@ -59,11 +114,9 @@ de « Venir au match » et « Mon agenda ».
 **Trois questions à trancher au moment de le faire**, notées ici pour ne pas les
 redécouvrir :
 
-1. **Lien sortant ou vidéo intégrée ?** Facebook fournit un embed, mais il charge ses
-   scripts et dépose ses traceurs. Le site a délibérément auto-hébergé ses polices
-   pour n'appeler aucun tiers ; une intégration reviendrait sur ce choix et
-   demanderait une bannière de consentement. Un lien sortant ne coûte rien de tout
-   cela. **Recommandation : lien sortant.**
+1. **Lien sortant ou vidéo intégrée ?** Même arbitrage que pour les publications,
+   développé sous « Afficher les publications Facebook et Instagram » ci-dessous.
+   **Recommandation : lien sortant.**
 2. **Quand le montrer ?** Un bouton « Regarder le direct » affiché trois semaines
    avant le match ment. Le plus simple qui fonctionne : ne l'afficher qu'à partir
    d'une heure avant le coup d'envoi, et le laisser jusqu'au lendemain — le compte à
@@ -73,6 +126,41 @@ redécouvrir :
 
 Rien de tout cela n'est bloquant : le champ peut arriver d'abord, l'affichage
 ensuite.
+
+### Afficher les publications Facebook et Instagram
+**Demandé le 15 août.** Le site renvoie vers les deux réseaux sans jamais en montrer
+le contenu. Un visiteur doit le quitter pour voir la vie du club.
+
+**Le statique n'est pas ce qui bloque** — un widget est du JavaScript de navigateur,
+n'importe quelle page peut en porter un. Trois choses bloquent, elles :
+
+- **Les traceurs.** Le SDK de Meta dépose ses cookies avant tout clic. En droit
+  français cela impose une bannière de consentement, et le contenu ne paraît qu'après
+  acceptation. Le site ne charge **aucun script externe** aujourd'hui : c'est
+  précisément ce qui lui évite cette bannière.
+- **L'API d'Instagram s'est fermée.** L'API Basic Display a disparu fin 2024. Il faut
+  désormais un compte Professionnel ou Créateur relié à une Page Facebook, une
+  application Meta déclarée, et un jeton à renouveler tous les deux mois. *À
+  revérifier le jour venu : Meta change ces règles souvent.*
+- **Un site statique n'a pas où cacher un jeton.** Mais celui-ci a un worker
+  Cloudflare devant lui — un serveur, qui peut détenir un secret, appeler l'API,
+  mettre en cache et servir du HTML ordinaire.
+
+| Option | Traceurs | Effort | Automatique |
+| --- | --- | --- | --- |
+| **A** · Rester aux liens sortants | aucun | nul | — |
+| **B** · Widget officiel Meta | oui + bannière | faible | oui |
+| **C** · Le worker moissonne l'API | **aucun** | élevé | oui |
+| **D** · Le bureau recopie dans Decap | aucun | nul, déjà en place | non |
+
+**Recommandation : D maintenant, C plus tard si le manuel s'essouffle.** La collection
+Actualités accepte déjà titre, date, photo et texte. Deux raisons de ne pas
+industrialiser tout de suite : personne n'a encore publié une actualité à la main
+(voir section 1), et le contenu recopié survit à une panne de Meta, à un changement
+d'API ou à la fermeture d'un compte — ce qu'un mur alimenté par API ne fait pas.
+
+**Préalable à vérifier avant tout chiffrage de C :** le compte `cabcvolley` est-il un
+compte Professionnel ? Sinon rien n'est possible sans le convertir d'abord.
 
 ### Navigation entre fiches d'équipe
 En pied de fiche, à côté de « Toutes les équipes » : ← équipe précédente / suivante →.
