@@ -330,6 +330,10 @@ details.acc[open] summary::after{content:"–"}
 details.acc summary:hover{background:var(--sable)}
 details.acc[open] summary:hover{background:var(--encre)}
 details.acc .acc-body{padding:20px 26px}
+/* mdToHtml pose sa marge basse en style inline, qui bat une regle de
+   feuille : sans le !important le corps de l accordeon gardait 38 px sous le
+   texte pour 20 au-dessus. C est le cas ou l exception se justifie. */
+details.acc .acc-body p:last-child{margin-bottom:0 !important}
 
 /* Listes (contenu markdown) */
 ul.ds-list{margin:0 0 18px;padding:0;list-style:none}
@@ -506,7 +510,7 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
 .ancres a:hover{background:var(--encre);color:var(--creme);opacity:1}
 /* L en-tete est colle en haut : sans cette marge, l ancre viendrait se ranger
    dessous et le titre du groupe resterait invisible. */
-[id^="g-"],[id^="b-"],#essentiel{scroll-margin-top:110px}
+[id^="g-"],[id^="b-"],#essentiel,#faq{scroll-margin-top:110px}
 
 /* ===== Micro-interactions ===== */
 /* Ombre decalee au survol, meme langage que .card.shadow, et enfoncement a
