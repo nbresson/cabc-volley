@@ -319,6 +319,42 @@ collections:
         label: Page Adhésion
         file: site/content/adhesion.json
         fields:
+          - name: bandeau
+            label: "Bandeau d'accueil"
+            widget: object
+            fields:
+              - {name: eyebrow, label: Surtitre, widget: string, required: false, hint: "Ex. — Saison 2026–2027"}
+              - {name: titre, label: Titre, widget: text, hint: "Un retour à la ligne coupe le titre en deux — c'est ce qui lui donne son allure."}
+              - {name: chapo, label: Chapô, widget: text, required: false}
+              - name: tarifs
+                label: Tarifs
+                label_singular: Tarif
+                widget: list
+                required: false
+                summary: "{{fields.montant}} — {{fields.libelle}}"
+                hint: "Affichés deux par ligne. En nombre impair, le dernier occupe toute la largeur."
+                fields:
+                  - {name: montant, label: Montant, widget: string, hint: "Ex. 120 €"}
+                  - {name: libelle, label: "Ce qu'il couvre", widget: string, hint: "Ex. Jeunes / Loisir"}
+          - name: etapes
+            label: Les trois étapes
+            label_singular: Étape
+            widget: list
+            required: false
+            summary: "{{fields.titre}}"
+            hint: "Le numéro (01, 02…) vient du rang : inutile de le saisir, il se renumérote tout seul quand vous en ajoutez une."
+            fields:
+              - {name: titre, label: Titre, widget: string}
+              - {name: texte, label: Texte, widget: text, required: false}
+              - {name: lien_libelle, label: "Libellé du lien", widget: string, required: false, hint: "Facultatif. Le lien n'apparaît que si le libellé ET l'adresse sont remplis."}
+              - {name: lien, label: Adresse du lien, widget: string, required: false, hint: "Ex. infos.html#essentiel"}
+          - name: formulaire
+            label: En-tête du formulaire
+            widget: object
+            hint: "Seuls le titre et l'introduction se modifient. Les champs du formulaire restent figés : ils portent la clé d'envoi et le libellé des emails reçus."
+            fields:
+              - {name: titre, label: Titre, widget: string, required: false}
+              - {name: chapo, label: "Texte d'introduction", widget: text, required: false}
           - name: faq
             label: "« Avant de te lancer » — les questions fréquentes"
             widget: object

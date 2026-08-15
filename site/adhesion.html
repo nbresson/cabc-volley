@@ -18,26 +18,18 @@
   <div class="lines"></div>
   <div class="duo" style="--a:1.2fr;gap:48px;align-items:center">
     <div>
-      <div class="eyebrow" style="color:var(--mention-sombre)">— Saison 2026–2027</div>
-      <h1 style="font-size:clamp(38px,9vw,84px);margin:14px 0">Rejoins<br>la maison</h1>
-      <p style="color:var(--texte-sombre);max-width:50ch">Débutant·e ou confirmé·e, de 6 à 66 ans : il y a une place pour toi au CAB. La première séance d'essai est gratuite — viens avec des baskets, on s'occupe du reste.</p>
+      <div class="eyebrow" id="ad-eyebrow" style="color:var(--mention-sombre)"></div>
+      <h1 id="ad-titre" style="font-size:clamp(38px,9vw,84px);margin:14px 0"></h1>
+      <p id="ad-chapo" style="color:var(--texte-sombre);max-width:50ch"></p>
       <p class="mono" style="color:var(--mention-sombre);margin-top:14px" id="perm">Permanences : Tous les jours de 18h-20h.</p>
     </div>
-    <div class="cols-2" style="gap:14px">
-      <div style="border:2px solid var(--creme);padding:22px;text-align:center"><strong class="display-2xl" style="font-weight:900;display:block">90 €</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:var(--mention-sombre)">École de volley</span></div>
-      <div style="border:2px solid var(--creme);padding:22px;text-align:center"><strong class="display-2xl" style="font-weight:900;display:block">120 €</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:var(--mention-sombre)">Jeunes / Loisir</span></div>
-      <div style="border:2px solid var(--creme);padding:22px;text-align:center;grid-column:span 2"><strong class="display-2xl" style="font-weight:900;display:block">160 €</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:var(--mention-sombre)">Seniors compétition · maillot inclus</span></div>
-    </div>
+    <div class="cols-2" id="ad-tarifs" style="gap:14px"></div>
   </div>
 </section>
-<section class="section band" style="--n:3">
-  <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">01</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Viens essayer</strong><span class="muted" style="font-size:14px">Première séance gratuite, sans engagement. Des baskets suffisent.</span></div>
-  <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">02</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Remplis le dossier</strong><span class="muted" style="font-size:14px">Formulaire ci-dessous + certificat médical. Réponse sous 48 h.</span><a href="infos.html#essentiel" class="mono lien" style="font-size:11px;color:var(--encre);align-self:flex-start">Les documents qu'il te faut →</a></div>
-  <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">03</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Licence validée</strong><span class="muted" style="font-size:14px">Règlement à la permanence — Pass'Sport accepté, paiement en trois fois possible.</span></div>
-</section>
+<section class="section band" id="ad-etapes"></section>
 <section class="section pad">
-  <h2>Demande de licence</h2>
-  <p class="muted" style="margin:12px 0 24px;max-width:60ch">Remplis ce formulaire — on te répond sous 48 h. Le règlement se fait à la permanence (Pass'Sport accepté, paiement en trois fois possible).</p>
+  <h2 id="ad-form-titre"></h2>
+  <p class="muted" id="ad-form-chapo" style="margin:12px 0 24px;max-width:60ch"></p>
   <form class="cols-2" style="gap:22px;align-items:start" data-web3forms>
     <input type="hidden" name="access_key" value="c7ca591e-3255-407e-9eb3-6bb5b06f91b3">
     <input type="hidden" name="subject" value="Nouvelle demande de licence — site CABC Volley">
@@ -61,6 +53,37 @@
 window.__pageInit=async function(){
   const [s,a]=await Promise.all([getJSON("content/settings.json"),getJSON("content/adhesion.json")]);
   if(s?.permanence)document.getElementById("perm").textContent="Permanences : "+s.permanence;
+  const pose=(id,valeur,html)=>{const e=document.getElementById(id);if(e)e[html?"innerHTML":"textContent"]=valeur||"";};
+
+  // Bandeau. Le titre garde ses retours a la ligne : c est lui qui donne au
+  // heros ses deux lignes, une seule les tasserait.
+  const b=a?.bandeau||{};
+  pose("ad-eyebrow",b.eyebrow);
+  pose("ad-titre",String(b.titre||"").replace(/\n/g,"<br>"),true);
+  pose("ad-chapo",b.chapo);
+
+  // Tarifs. Un nombre impair laisse le dernier occuper les deux colonnes :
+  // sans cela il flotterait seul a gauche, ce que la maquette evitait deja en
+  // codant l etalement en dur sur le troisieme.
+  const tarifs=(b.tarifs||[]).filter(t=>t.montant||t.libelle);
+  pose("ad-tarifs",tarifs.map((t,i)=>`
+    <div style="border:2px solid var(--creme);padding:22px;text-align:center${i===tarifs.length-1&&tarifs.length%2?";grid-column:span 2":""}"><strong class="display-2xl" style="font-weight:900;display:block">${t.montant||""}</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:var(--mention-sombre)">${t.libelle||""}</span></div>`).join(""),true);
+
+  // Etapes. Le numero vient du rang, le bureau n a donc pas a le saisir ni a
+  // le renumeroter quand il en insere une. --n nourrit la grille de .band.
+  const etapes=(a?.etapes||[]).filter(e=>e.titre||e.texte);
+  const bande=document.getElementById("ad-etapes");
+  if(bande){
+    bande.style.setProperty("--n",etapes.length||1);
+    bande.innerHTML=etapes.map((e,i)=>`
+    <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">${String(i+1).padStart(2,"0")}</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">${e.titre||""}</strong><span class="muted" style="font-size:14px">${e.texte||""}</span>${e.lien&&e.lien_libelle?`<a href="${e.lien}" class="mono lien" style="font-size:11px;color:var(--encre);align-self:flex-start">${e.lien_libelle}</a>`:""}</div>`).join("");
+  }
+
+  // En-tete du formulaire. Le formulaire lui-meme reste en dur : ses champs
+  // portent la cle Web3Forms et le libelle des emails recus.
+  pose("ad-form-titre",a?.formulaire?.titre);
+  pose("ad-form-chapo",a?.formulaire?.chapo);
+
   // Meme convention que les autres blocs pilotes par Decap : sans question
   // saisie la section entiere disparait, plutot que de laisser un titre seul.
   // La premiere reponse s ouvre, comme avant le passage a Decap.
