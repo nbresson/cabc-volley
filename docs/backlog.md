@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Section 2 vidée le même jour.
+Dernière revue : **15 août 2026**. Section 2 vidée le même jour ; le live Facebook y est entré.
 
 ---
 
@@ -24,7 +24,34 @@ site/`). Le sitemap et le robots.txt, eux, n'attendent rien — voir
 
 ---
 
-## 2 · Finitions
+## 2 · Ajouts et finitions
+
+### Lien vers le direct Facebook du match
+**Demandé le 15 août.** Le club diffuse certains matchs en direct sur sa page
+Facebook. Un visiteur qui arrive sur le site un soir de match ne trouve rien qui l'y
+mène.
+
+Forme pressentie : un champ `live` par match dans `matches.json` — l'adresse de la
+vidéo, saisie depuis Decap — et un bouton dans le bandeau du prochain match, à côté
+de « Venir au match » et « Mon agenda ».
+
+**Trois questions à trancher au moment de le faire**, notées ici pour ne pas les
+redécouvrir :
+
+1. **Lien sortant ou vidéo intégrée ?** Facebook fournit un embed, mais il charge ses
+   scripts et dépose ses traceurs. Le site a délibérément auto-hébergé ses polices
+   pour n'appeler aucun tiers ; une intégration reviendrait sur ce choix et
+   demanderait une bannière de consentement. Un lien sortant ne coûte rien de tout
+   cela. **Recommandation : lien sortant.**
+2. **Quand le montrer ?** Un bouton « Regarder le direct » affiché trois semaines
+   avant le match ment. Le plus simple qui fonctionne : ne l'afficher qu'à partir
+   d'une heure avant le coup d'envoi, et le laisser jusqu'au lendemain — le compte à
+   rebours sait déjà lire la date du match.
+3. **Et après le match ?** L'adresse d'un direct terminé reste valide et devient un
+   replay. Faut-il le laisser paraître sur la fiche d'équipe, ou disparaître ?
+
+Rien de tout cela n'est bloquant : le champ peut arriver d'abord, l'affichage
+ensuite.
 
 ### Navigation entre fiches d'équipe
 En pied de fiche, à côté de « Toutes les équipes » : ← équipe précédente / suivante →.
