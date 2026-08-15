@@ -5,12 +5,13 @@ const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","par
 // Reseaux du club. Seule source des deux adresses, pour le bandeau ci-dessous
 // comme pour tout <div id="reseaux"> pose dans une page.
 const RESEAUX=[
-  ["Instagram","https://www.instagram.com/cabcvolley/",'<rect class="frame" x="2" y="2" width="20" height="20"/><circle cx="12" cy="12" r="4.6"/><rect x="16.3" y="5.7" width="2.5" height="2.5" fill="currentColor" stroke="none"/>'],
-  ["Facebook","https://www.facebook.com/cabvolley19/",'<rect class="frame" x="2" y="2" width="20" height="20"/><path d="M14.5 6.5H12.2V17.5M9.5 11H14.5"/>'],
+  ["Instagram","https://www.instagram.com/cabcvolley/",'<rect class="frame" x="2" y="2" width="20" height="20"/><circle cx="12" cy="12" r="4.6"/><rect x="16.3" y="5.7" width="2.5" height="2.5" fill="currentColor" stroke="none"/>',"instagram"],
+  ["Facebook","https://www.facebook.com/cabvolley19/",'<rect class="frame" x="2" y="2" width="20" height="20"/><path d="M14.5 6.5H12.2V17.5M9.5 11H14.5"/>',"facebook"],
   // Le 4e champ nomme une cle de settings.json qui fait autorite sur l adresse.
-  // Celle du classement porte la saison : elle change tous les etes, et le club
-  // doit pouvoir la corriger depuis Decap sans toucher au code. L URL ci-dessous
-  // n est qu un secours, si le fichier ne repond pas.
+  // Les trois en portent une : le club change de page Facebook ou de compte
+  // Instagram sans toucher au code, et l adresse du classement porte la saison,
+  // qui change tous les etes. Les URL ecrites ici ne sont que des secours, si le
+  // fichier ne repond pas ou si le champ est laisse vide.
   ["FFVB","https://www.ffvbbeach.org/ffvbapp/resu/planning_club_class.php?cnclub=0198049&saison=2026%2F2027",'<rect class="frame" x="2" y="2" width="20" height="20"/><path d="M7.6 17.4V12.4M12 17.4V6.6M16.4 17.4V9.6"/>',"ffvb_classement"]
 ];
 // Bandeau reseaux : bloc autonome sur fond encre. Pose par defaut juste
@@ -238,7 +239,10 @@ function bandeauProchainMatch(m){
   const infos=[d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"}),d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),m.competition,m.lieu].filter(Boolean).join(" · ");
   // Les cellules naissent a « -- » et sont remplies par battreCompteARebours().
   // Le bandeau reste donc lisible meme si le minuteur ne demarre jamais.
-  const cell=(u,lbl,cls)=>`<div${cls?` class="${cls}"`:""}><strong data-u="${u}">--</strong><span>${lbl}</span></div>`;
+  // aria-hidden sur chaque cellule : sans cela un lecteur d ecran reannonce le
+  // compteur a chaque seconde ecoulee. La date en clair, juste apres, dit la
+  // meme chose une fois pour toutes.
+  const cell=(u,lbl,cls)=>`<div${cls?` class="${cls}"`:""} aria-hidden="true"><strong data-u="${u}">--</strong><span>${lbl}</span></div>`;
   return `<div class="pad duo" style="--b:auto;gap:32px;align-items:center">
         <div>
           <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${m.domicile?"à domicile":"à l'extérieur"}</div>
@@ -249,8 +253,11 @@ function bandeauProchainMatch(m){
             <button type="button" class="chip" data-ics style="border-color:var(--mention-sombre);color:var(--creme);padding:12px 18px">+ Mon agenda (.ics)</button>
           </div>
         </div>
-        <div class="countdown" data-cible="${m.date}">
-          ${cell("j","JOURS")}${cell("h","HEURES")}${cell("m","MIN")}${cell("s","SEC","sec")}
+        <div>
+          <div class="countdown" data-cible="${m.date}" role="timer" aria-label="Compte à rebours avant le match">
+            ${cell("j","JOURS")}${cell("h","HEURES")}${cell("m","MIN")}${cell("s","SEC","sec")}
+          </div>
+          <span class="sr-only">Match le ${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})} à ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}.</span>
         </div>
       </div>`;
 }

@@ -84,6 +84,14 @@ Sans débrancher l'ancien site tout de suite :
    [`docs/superpowers/specs/2026-08-13-anciennes-urls-inventaire.md`](../docs/superpowers/specs/2026-08-13-anciennes-urls-inventaire.md),
    sont déjà écrites dans `worker.js` : rien à faire, mais tout à vérifier au `curl -I`.
 
+**Le sitemap et le robots.txt, eux, n'attendent rien.** `site/sitemap.xml` porte déjà
+les onze adresses publiques en `www.cabc-volley.fr`, et `worker.js` sert un
+`robots.txt` différent selon l'hôte — barrage tant qu'on est sur `.workers.dev`, vrai
+fichier ensuite, avec l'adresse du sitemap. Les deux deviennent exacts le jour de la
+bascule sans qu'on y touche. C'est aussi pourquoi il ne faut **pas** créer de
+`site/robots.txt` : le worker intercepte cette adresse avant les fichiers statiques, un
+fichier ne serait jamais servi.
+
 Le barrage d'indexation, lui, tombe seul : il se juge sur l'hôte.
 
 ## 4 · Activer Decap CMS (édition par le bureau)
@@ -110,11 +118,13 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 - **Classement** — titre de la section, lignes du tableau (équipe, J, V, D, points) et phrase affichée sous le tableau ; le rang n'est pas saisi, c'est l'ordre des lignes
 - **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo) ; chaque équipe a aussi son identifiant URL, son groupe, sa photo d'équipe, son lien de classement FFVB et son bloc infos pratiques (pour les équipes sans calendrier de matchs)
 - **Boutique** — produits (nom, prix, statut dispo/nouveau/épuisé, photo)
-- **Réglages** — email, téléphone, permanence, **lien classement FFVB**
+- **Réglages** — email, téléphone, permanence, **lien classement FFVB**, adresses Instagram et Facebook (laissées vides, celles inscrites dans le code sont conservées)
 - **Gymnases** — secteur affiché et salles (nom, étiquette, adresse, ce qui s'y passe, accès, lien itinéraire, photo)
 - **Page Club** — bandeau d'accueil et chiffres clés, notre histoire (dates clés), le bureau (membres, encart appel aux bénévoles), la vie du club (photos)
 - **Mentions légales** — date de mise à jour, éditeur du site, hébergeur, articles
 - **Infos & documents** — blocs de texte libre, chacun avec ses documents téléversés (PDF de préférence) ou ses liens externes
+- **Partenaires** — chapô de la page, partenaires (nom, logo, groupe, mot, adresse) et bloc « Devenir partenaire ». Le chapô sert deux fois : en haut de la page, et sous le titre du bandeau de logos posé sur toutes les pages
+- **Page Adhésion** — bandeau d'accueil et tarifs, les trois étapes, l'en-tête du formulaire et les questions fréquentes. Les tarifs s'affichent deux par ligne, le dernier occupant toute la largeur s'ils sont en nombre impair ; le numéro des étapes vient de leur rang
 
 Le classement affiché sur la page Calendrier est saisi à la main, dans l'espace « Classement » ;
 les calendriers et classements détaillés restent sur la FFVB (bouton présent sur la page Calendrier).

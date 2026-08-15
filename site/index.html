@@ -9,7 +9,8 @@
 <meta property="og:description" content="80 ans de volley au cœur de la Gaillarde. Équipes, calendrier, adhésion — rejoins la maison.">
 <meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/logo.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/style.css">
 </head><body>
 <div id="header"></div>
@@ -31,6 +32,17 @@
 <section class="section pad">
   <div class="section-head"><h2>Les prochaines journées</h2><a href="calendrier.html" class="mono lien" style="color:var(--encre)">Tout le calendrier →</a></div>
   <div id="upcoming"></div>
+</section>
+
+<section class="section pad" id="mini-classement" style="display:none">
+  <div class="classement-teaser">
+    <div class="rang">
+      <span class="eyebrow" id="mc-comp" style="color:var(--mention-sombre)"></span>
+      <span class="pos" id="mc-pos"></span>
+      <span class="mono" id="mc-bilan" style="font-size:11px;letter-spacing:.14em;color:var(--mention-sombre)"></span>
+    </div>
+    <div class="voisins" id="mc-voisins"></div>
+  </div>
 </section>
 
 <section class="section pad">
@@ -57,8 +69,9 @@
 <div id="footer"></div><script src="assets/site.js"></script></body></html>
 <script>
 window.__pageInit=async function(){
-  const [matches,newsData,teamsData,settings]=await Promise.all([
-    getJSON("content/matches.json"),getJSON("content/news.json"),getJSON("content/teams.json"),getJSON("content/settings.json")]);
+  const [matches,newsData,teamsData,settings,classement]=await Promise.all([
+    getJSON("content/matches.json"),getJSON("content/news.json"),getJSON("content/teams.json"),
+    getJSON("content/settings.json"),getJSON("content/classement.json")]);
   // Prochain match à la une
   const nm=(matches?.items||[]).find(m=>m.une&&m.statut==="a_venir")||(matches?.items||[]).find(m=>m.statut==="a_venir");
   const el=document.getElementById("next-match");
@@ -77,6 +90,28 @@ window.__pageInit=async function(){
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
       <span class="${m.domicile?'badge':'badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span>
     </div>`;}).join("")||'<p class="vide muted">Aucun match programmé pour le moment.</p>';
+  // Mini-classement. Masque tant que la saison n a pas commence : avant la
+  // premiere journee toutes les equipes sont a zero et une 1re place ne veut
+  // rien dire. Masque aussi si aucune ligne ne porte notre_club.
+  const lignes=classement?.items||[];
+  const iNous=lignes.findIndex(l=>l.notre_club);
+  if(iNous>=0&&lignes.some(l=>l.joues>0)){
+    const n=lignes[iNous];
+    document.getElementById("mc-comp").textContent=(classement.titre||"Classement").replace(/^Classement\s*/i,"");
+    document.getElementById("mc-pos").innerHTML=`${iNous+1}<small>${iNous?"e":"er"}</small><span class="sur"> / ${lignes.length}</span>`;
+    document.getElementById("mc-bilan").textContent=`${n.victoires} V · ${n.defaites} D · ${n.points} pts`;
+    // Trois lignes autour de la notre. Le decalage est borne des deux cotes :
+    // premier ou dernier du classement, on montre quand meme trois lignes.
+    const de=Math.max(0,Math.min(iNous-1,lignes.length-3));
+    document.getElementById("mc-voisins").innerHTML=
+      lignes.slice(de,de+3).map((l,k)=>`<div class="ligne${l.notre_club?" nous":""}">
+        <span class="mono" style="font-size:12px">${de+k+1}</span><span class="nom">${l.equipe}</span>
+        <span class="mono" style="font-size:12px">${l.points} pts</span>
+        <span class="mono" style="font-size:11px;color:var(--taupe)">${l.victoires}V ${l.defaites}D</span></div>`).join("")+
+      `<a class="tout" href="calendrier.html#classement">Classement complet →</a>`;
+    document.getElementById("mini-classement").style.display="";
+  }
+
   // Gazette : la premiere actu en « une » avec sa photo, les deux suivantes
   // en breves empilees a cote. Sans photo pour les breves : elles se lisent
   // en diagonale, l image y volerait la place du titre.
