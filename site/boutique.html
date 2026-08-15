@@ -9,7 +9,8 @@
 <meta property="og:description" content="Maillots et produits du club, retrait au gymnase.">
 <meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/logo.png">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/style.css">
 </head><body>
 <div id="header"></div>
@@ -21,15 +22,32 @@
 <section class="section dark pad" style="padding-top:22px;padding-bottom:22px">
   <div class="row" style="align-items:center;gap:20px"><span class="badge-outline" style="border-color:var(--creme);color:var(--creme)">Édition limitée</span><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(20px,3vw,30px)">Collection 80 ans — série numérotée, jusqu'en juin</strong></div>
 </section>
+<section class="pad" style="padding-bottom:0">
+  <div class="commander">
+    <strong class="display-l" style="font-weight:900;text-transform:uppercase;line-height:1">Pour<br>commander</strong>
+    <span class="muted" style="font-size:13px;line-height:1.6" id="cmd-texte">Pas de paiement en ligne : réserve ton article à la permanence ou par téléphone. Retrait et essayage au gymnase.</span>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+      <a id="cmd-tel" class="btn btn-primary" style="padding:10px 20px;font-size:16px"></a>
+      <a href="contact.html" class="mono lien" style="font-size:11px;color:var(--encre)">Nous écrire →</a>
+    </div>
+  </div>
+</section>
 <section class="section pad"><div id="products" class="cols-4"></div></section>
 <section class="section band" style="--n:3">
-  <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">01</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Commande en ligne</strong><span class="muted" style="font-size:14px">Ajoute tes articles au panier et valide — aucun paiement en ligne n'est demandé.</span></div><div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">02</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Retrait au gymnase</strong><span class="muted" style="font-size:14px">Récupère ta commande à la permanence du mercredi ou un soir de match, à la buvette.</span></div><div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">03</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Paiement sur place</strong><span class="muted" style="font-size:14px">Espèces, chèque ou carte. Chaque achat finance les déplacements des jeunes.</span></div>
+  <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">01</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Réserve ton article</strong><span class="muted" style="font-size:14px">Par téléphone ou à la permanence : dis-nous la taille, on te le met de côté.</span></div><div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">02</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Retrait au gymnase</strong><span class="muted" style="font-size:14px">Récupère ta commande à la permanence du mercredi ou un soir de match, à la buvette.</span></div><div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">03</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Paiement sur place</strong><span class="muted" style="font-size:14px">Espèces, chèque ou carte. Chaque achat finance les déplacements des jeunes.</span></div>
 </section>
 </main>
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const data=await getJSON("content/products.json");
+  const [data,settings]=await Promise.all([getJSON("content/products.json"),getJSON("content/settings.json")]);
+  // Le champ telephone tient deux numeros separes par «/» : on compose le
+  // premier, et le bouton disparait plutot que d afficher un lien mort.
+  const tel=(settings?.telephone||"").split("/")[0].trim();
+  const bt=document.getElementById("cmd-tel");
+  if(tel){bt.textContent=tel;bt.href="tel:+33"+tel.replace(/\s/g,"").slice(1);}else bt.remove();
+  if(settings?.permanence)document.getElementById("cmd-texte").textContent=
+    `Pas de paiement en ligne : réserve ton article à la permanence (${settings.permanence.replace(/\.$/,"").toLowerCase()}) ou par téléphone. Retrait et essayage au gymnase.`;
   const badge={nouveau:'<span class="badge" style="position:absolute;top:12px;left:12px">Nouveau</span>',epuise:'',dispo:''};
   // Les epuises passent en fin de grille. Le tri est stable, donc l ordre voulu
   // par le bureau dans Decap survit a l interieur de chaque groupe.

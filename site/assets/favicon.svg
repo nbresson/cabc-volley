@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="C.A. Brive Corrèze Volley">
+  <!-- Le blason plutot qu un monogramme : trois lettres sont illisibles a 16 px,
+       et un <text> dependrait des polices installees chez le visiteur. -->
+  <rect width="64" height="64" fill="#17150F"/>
+  <path d="M22 9 H42 L58 27 L32 58 L6 27 Z" fill="#EFE9DB"/>
+  <circle cx="32" cy="29" r="7" fill="#17150F"/>
+</svg>

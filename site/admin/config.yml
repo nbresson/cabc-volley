@@ -182,6 +182,8 @@ collections:
           - {name: permanence, label: Permanence, widget: string}
           - {name: email, label: Email, widget: string}
           - {name: telephone, label: Téléphone, widget: string}
+          - {name: instagram, label: Instagram (adresse), widget: string, required: false, hint: "Adresse complète de la page. Laissée vide, celle inscrite dans le code est conservée."}
+          - {name: facebook, label: Facebook (adresse), widget: string, required: false, hint: "Adresse complète de la page. Laissée vide, celle inscrite dans le code est conservée."}
 
   - name: gymnases
     label: Gymnases
