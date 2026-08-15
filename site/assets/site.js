@@ -64,11 +64,17 @@ async function murPartenaires(){
   if(!items.length)return;
   // Tous les logos menent a la page Partenaires, jamais au site du partenaire :
   // le mur sert a faire connaitre la page, pas a envoyer le visiteur ailleurs.
-  barre.insertAdjacentHTML("beforebegin",`<div class="murlogos">
-  <div class="mur-tete">
-    <span class="eyebrow">Ils nous soutiennent</span>
+  // Sur la page Partenaires, l en-tete repeterait mot pour mot le titre et le
+  // chapo affiches en haut, et son lien pointerait sur la page courante.
+  // Cloudflare sert les pages sans extension, d ou les deux formes.
+  const tete=/^partenaires(.html)?$/.test(here())?"":`<div class="mur-tete">
+    <div>
+      <h2>Ils nous soutiennent</h2>
+      ${data?.chapo?`<p class="muted">${data.chapo}</p>`:""}
+    </div>
     <a href="partenaires.html" class="mono lien" style="color:var(--encre)">Tous nos partenaires →</a>
-  </div>
+  </div>`;
+  barre.insertAdjacentHTML("beforebegin",`<div class="murlogos">${tete}
   ${items.map(p=>`<a href="partenaires.html" title="${p.nom||""}"><img src="${p.logo}" alt="${p.nom||""}" loading="lazy"></a>`).join("")}
 </div>`);
   const mur=document.querySelector(".murlogos");
