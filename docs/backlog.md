@@ -4,11 +4,32 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **15 août 2026**. Section 2 vidée le même jour ; le live Facebook y est entré.
+Dernière revue : **15 août 2026**. Relecture du même jour : trois entrées ajoutées, une réglée sur place.
 
 ---
 
-## 1 · Ce qui bloque la bascule vers `www.cabc-volley.fr`
+## 1 · Personne d'autre ne peut publier
+
+**Relevé le 15 août.** Le dépôt compte **257 commits, un seul auteur, zéro
+collaborateur, zéro invitation en attente.** Tous les enregistrements Decap —
+« Update Matchs & résultats », « Update Gymnases », « Update Partenaires » — portent
+le même nom.
+
+Le bureau n'a jamais ouvert le CMS, et ne le peut pas : Decap commite sur GitHub, ce
+qui exige un accès en écriture au dépôt.
+
+Ça change la lecture de la section 4. Les portraits manquants, les six équipes sans
+effectif, les galeries vides ne sont peut-être pas un problème de photos : personne
+n'a la clé.
+
+C'est aussi le seul point qui remet en cause la promesse du projet — un site que le
+club entretient lui-même. Aujourd'hui c'est un site entretenu **pour** le club.
+
+**À faire :** ajouter deux ou trois éditeurs du bureau comme collaborateurs du dépôt
+(Settings → Collaborators), puis les faire se connecter une fois sur `/admin/` pour
+vérifier que le parcours tient de bout en bout.
+
+## 2 · Ce qui bloque la bascule vers `www.cabc-volley.fr`
 
 ### Socle SEO — canonical et JSON-LD
 Dernier lot technique. Les descriptions, l'Open Graph, la vignette de partage, le
@@ -24,7 +45,7 @@ site/`). Le sitemap et le robots.txt, eux, n'attendent rien — voir
 
 ---
 
-## 2 · Ajouts et finitions
+## 3 · Ajouts et finitions
 
 ### Lien vers le direct Facebook du match
 **Demandé le 15 août.** Le club diffuse certains matchs en direct sur sa page
@@ -77,7 +98,7 @@ changement de données — c'est le seul cas aujourd'hui.
 
 ---
 
-## 3 · Pas du code — une chasse aux photos
+## 4 · Pas du code — une chasse aux photos
 
 Le design attend déjà ces images ; il n'y a rien à développer.
 
@@ -94,7 +115,21 @@ Le design attend déjà ces images ; il n'y a rien à développer.
 
 ---
 
-## 4 · Décisions en attente
+## 5 · Gouvernance et mesure
+
+### Le club ne saura pas s'il est lu
+Aucune mesure d'audience. Après la bascule, personne ne saura si le site reçoit dix
+ou mille visites, ni quelles pages servent. Cloudflare Web Analytics est gratuit,
+sans cookie et sans bannière de consentement — le seul tiers qui resterait cohérent
+avec le choix d'avoir tout auto-hébergé. Décision à prendre, pas une évidence.
+
+### Tout tient sur un seul compte
+Le worker, le dépôt et le connecteur OAuth vivent sur des comptes Cloudflare et
+GitHub personnels. Si leur titulaire s'éloigne, le club ne peut plus ni déployer, ni
+corriger, ni récupérer le site autrement qu'en clonant le dépôt public. Pas urgent —
+mais ça se prépare mieux à froid qu'à chaud.
+
+## 6 · Décisions en attente
 
 **Description du gymnase Rollinat** — trois reformulations proposées le 13 août, aucune
 retenue. Le texte officiel actuel manque de charme.
@@ -107,6 +142,13 @@ Barrage d'indexation · redirections des anciennes URL · images en WebP · poli
 auto-hébergées · page Partenaires et fiches de gymnase · formulaires Web3Forms ·
 carte des gymnases et vignette de partage · page Adhésion entièrement sous Decap ·
 mini-classement · favicon et sitemap.
+
+**15 août** — le réglage « Nom du club », qui n'était lu nulle part : un éditeur
+pouvait le modifier sans que rien ne change. Retiré plutôt qu'affiché — le nom est
+écrit en dur à 34 endroits, dont 15 `<title>` et 15 `og:site_name` que les moteurs
+lisent et qu'un JSON ne peut pas nourrir. Un champ ne gouvernant que les 3 rendus par
+JS aurait produit un site incohérent. La dénomination officielle reste modifiable
+dans Mentions légales, là où un changement de nom compte vraiment.
 
 **15 août** — les trois défauts de la section 2 : `og:title` doublé sur trois pages
 (et `titrePage()` qui le fait désormais suivre `document.title`), cadres à logo de

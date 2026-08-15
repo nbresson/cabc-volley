@@ -177,7 +177,6 @@ collections:
         label: Coordonnées & liens
         file: site/content/settings.json
         fields:
-          - {name: club_nom, label: Nom du club, widget: string}
           - {name: ffvb_classement, label: Lien classement FFVB, widget: string}
           - {name: permanence, label: Permanence, widget: string}
           - {name: email, label: Email, widget: string}
