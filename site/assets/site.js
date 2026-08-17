@@ -53,6 +53,11 @@ function disposerMur(mur,nombre){
   // La hauteur finale profite de la place reellement laissee par la colonne,
   // sans jamais depasser le plafond fixe par le nombre.
   const hauteur=Math.min(plafond,Math.round(dispo/colonnes/2.8));
+  // Largeur exacte d une colonne, gouttieres deduites : c est elle qui sert de
+  // base aux logos en flex. Sans base fixe, le wrap saturerait chaque ligne.
+  // Elle remplace le minmax(90px,1fr) de la grille, qui refusait de descendre
+  // sous 90 px et faisait deborder la page entre 500 et 540 px de large.
+  mur.style.setProperty("--base-logo",(dispo-(colonnes-1)*26)/colonnes+"px");
   mur.style.setProperty("--h-logo",hauteur+"px");
   mur.style.setProperty("--colonnes",colonnes);
 }
