@@ -219,14 +219,19 @@ p{margin:0}
    ne se trace que precede d une section sombre. Un mur clair s intercale sans
    rien casser, la transition se voyant d elle-meme. Le noeud est retire quand
    aucun partenaire n est saisi, pour que l adjacence sombre revienne. */
-/* Grille plutot que flex-wrap : le wrap remplissait chaque ligne jusqu a
-   saturation et laissait le reste orphelin — treize logos puis deux. Le nombre
-   de colonnes et la hauteur des logos sont poses par disposerMur(), qui les
-   calcule d apres le nombre de partenaires et la largeur disponible. Les deux
-   valeurs de repli servent le temps que le fichier soit lu. */
-.murlogos{background:var(--sable);border-top:2px solid var(--encre);display:grid;grid-template-columns:repeat(var(--colonnes,auto-fit),minmax(90px,1fr));justify-items:center;align-items:center;gap:18px 26px;padding:22px 24px}
+/* Flex a base fixe plutot que grille. Un flex-wrap a largeur libre avait deja
+   ete ecarte : il saturait chaque ligne et laissait le reste orphelin — treize
+   logos puis deux. Ici chaque logo occupe exactement la largeur de colonne
+   calculee par disposerMur(), donc le wrap tombe la ou tombait la grille.
+   Ce que la grille, elle, ne savait pas faire : centrer la ligne incomplete.
+   Dix-sept logos sur neuf colonnes laissaient un trou de 160 px au bord droit,
+   lu comme une marge droite plus large que la gauche. Le nombre de colonnes, la
+   base et la hauteur sont poses par disposerMur(), qui les calcule d apres le
+   nombre de partenaires et la largeur disponible. Les valeurs de repli servent
+   le temps que le fichier soit lu. */
+.murlogos{background:var(--sable);border-top:2px solid var(--encre);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 26px;padding:22px 24px}
 .murlogos img{height:var(--h-logo,46px);width:auto;max-width:100%;object-fit:contain}
-.murlogos a{display:block;max-width:100%}
+.murlogos>a{display:block;flex:0 0 var(--base-logo,90px);max-width:100%;text-align:center}
 /* Cadre a logo : contrairement a .ph qui recadre une photo en la rognant, il
    montre le logo entier sur un fond uni — un logo rogne ne vaut rien. */
 /* Le cadre imposait sa proportion sans y parvenir : la hauteur derivee d un
@@ -607,9 +612,9 @@ dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
 .murlogos img,.logo-cadre img{filter:grayscale(1) sepia(.3) saturate(.6) brightness(.92);opacity:.8;transition:filter .15s ease,opacity .15s ease}
 .murlogos a:hover img,.murlogos a:focus-visible img,
 .card:hover .logo-cadre img,.card.link:hover .logo-cadre img{filter:none;opacity:1}
-/* L en-tete traverse toutes les colonnes de la grille du mur. Il passe avant
-   les logos, donc disposerMur() continue de ne compter que ceux-ci. */
-.mur-tete{grid-column:1/-1;justify-self:stretch;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;padding:6px 0 10px}
+/* L en-tete tient une ligne entiere du wrap. Il passe avant les logos, donc
+   disposerMur() continue de ne compter que ceux-ci. */
+.mur-tete{width:100%;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;padding:6px 0 10px}
 /* Meme taille que les titres de section : le mur reprend le bloc retire de la
    page Club, il doit peser pareil. */
 .mur-tete h2{font-size:clamp(34px,5vw,52px)}
