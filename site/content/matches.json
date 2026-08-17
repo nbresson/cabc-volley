@@ -558,6 +558,78 @@
       "equipe": "r1-feminin",
       "numero": "RFB052",
       "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Cognac Volley",
+      "date": "2027-01-30T17:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "numero": "RFB059",
+      "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle de l'Alba",
+      "adversaire": "AS SP VB Bergeracois",
+      "date": "2027-02-13T18:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "numero": "RFB063",
+      "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "ASPTT Périgueux",
+      "date": "2027-02-06T17:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "numero": "RFB068",
+      "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle Yves Du Manoir",
+      "adversaire": "Club Municipal Floirac",
+      "date": "2027-03-06T18:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "numero": "RFB074",
+      "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "ASPTT Marmande Volley-ball",
+      "date": "2027-03-20T17:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "numero": "RFB077",
+      "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle Olympie",
+      "adversaire": "AS Saint-Médard-en-Jalles",
+      "date": "2027-04-03T18:00",
+      "statut": "a_venir",
+      "equipe": "r1-feminin",
+      "numero": "RFB085",
+      "competition": "Régional 1 F (RFB)"
     }
   ]
 }
