@@ -256,6 +256,7 @@
       "date": "2026-10-03T20:00",
       "statut": "a_venir",
       "equipe": "r1-masculin",
+      "numero": "RMB005",
       "competition": "Régional 1 M (RMB)"
     },
     {
@@ -267,6 +268,7 @@
       "date": "2026-10-10T20:00",
       "statut": "a_venir",
       "equipe": "r1-masculin",
+      "numero": "RMB007",
       "competition": "Régional 1 M (RMB)"
     },
     {
@@ -278,6 +280,7 @@
       "date": "2026-10-03T17:00",
       "statut": "a_venir",
       "equipe": "r1-feminin",
+      "numero": "RFB005",
       "competition": "Régional 1 F (RFB)"
     },
     {
@@ -289,6 +292,7 @@
       "date": "2026-10-10T17:00",
       "statut": "a_venir",
       "equipe": "r1-feminin",
+      "numero": "RFB007",
       "competition": "Régional 1 F (RFB)"
     }
   ]
