@@ -44,7 +44,15 @@
       "categorie": "Régional 1",
       "creneau": "Mar. 20h00-22h00 · Rollinat ; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
       "photo": "assets/uploads/equipe_r1f_seniors.webp",
-      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RFB"
+      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RFB",
+      "effectif": [
+        {
+          "num": "E",
+          "nom": "Jean-Christian DUPRE",
+          "poste": "Entraîneur",
+          "photo": "assets/uploads/dupre.jpg"
+        }
+      ]
     },
     {
       "nom": "Régional 1 masculin",
