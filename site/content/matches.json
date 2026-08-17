@@ -294,6 +294,138 @@
       "equipe": "r1-feminin",
       "numero": "RFB007",
       "competition": "Régional 1 F (RFB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle jules Ferry",
+      "adversaire": "Cognac Volley",
+      "date": "2026-10-17T18:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB014",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "AS SP VB Bergerac",
+      "date": "2026-10-31T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB018",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Gymnase Abbé Rousselot",
+      "adversaire": "Etoile Sportive des Champniers Angoulême",
+      "date": "2026-11-08T16:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB023",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Ass. Sportive Illacaise Volley-ball",
+      "date": "2026-11-21T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB029",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle Maître Jean",
+      "adversaire": "J.S.A. Bordeaux",
+      "date": "2026-11-28T19:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB032",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Union Sportive Talençaise",
+      "date": "2026-12-05T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB040",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Volley-ball Sarladais",
+      "date": "2027-01-09T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB050",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Salle Jules Ferry",
+      "adversaire": "Avant Garde Jeanne d'Arc Caudéran",
+      "date": "2027-01-16T21:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB052",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Cognac Volley",
+      "date": "2027-01-30T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB059",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": false,
+      "une": false,
+      "lieu": "Gymnase de l'Alba",
+      "adversaire": "AS SP VB Bergerac",
+      "date": "2027-02-13T21:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB063",
+      "competition": "Régional 1 M (RMB)"
+    },
+    {
+      "gagne": false,
+      "domicile": true,
+      "une": false,
+      "lieu": "Gymnase Rollinat",
+      "adversaire": "Etoile Sportive de Champniers Angoulême",
+      "date": "2027-02-27T20:00",
+      "statut": "a_venir",
+      "equipe": "r1-masculin",
+      "numero": "RMB068",
+      "competition": "Régional 1 M (RMB)"
     }
   ]
 }
