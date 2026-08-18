@@ -102,6 +102,9 @@ function renderChrome(){
   // Le libelle est enveloppe : sur mobile, le soulignement de l entree active
   // ne doit porter que sur lui, pas sur le numero qui le precede.
   const links=NAV.map(([h,t],i)=>`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}><span class="num">${String(i+1).padStart(2,"0")}</span><span>${t}</span></a>`).join("");
+  // Adherer est un appel a l action, pas une entree de NAV : son etat courant
+  // se calcule a part, sans quoi la page Adhesion eteint toute la navigation.
+  const surAdhesion=here()==="adhesion.html";
   const header=document.getElementById("header");
   if(header)header.innerHTML=`
     <a class="evitement" href="#main">Aller au contenu ↓</a>
@@ -109,7 +112,7 @@ function renderChrome(){
     <header class="site-header">
       <button class="burger" type="button" aria-label="Menu" aria-controls="mainnav" aria-expanded="false"><span></span><span></span><span></span></button>
       <a class="logo" href="index.html"><img src="assets/logo.png" alt="C.A. Brive Corrèze Volley"></a>
-      <nav id="mainnav">${links}<a href="adhesion.html" class="btn btn-primary" style="padding:9px 20px">ADHÉRER</a></nav>
+      <nav id="mainnav">${links}<a href="adhesion.html" class="btn btn-primary${surAdhesion?" active":""}"${surAdhesion?' aria-current="page"':''} style="padding:9px 20px">ADHÉRER</a></nav>
     </header>`;
   // Le onclick en ligne a laisse la place a un ecouteur : il fallait un endroit
   // ou tenir aria-expanded a jour. Sans lui, le bouton annonce « Menu » sans
