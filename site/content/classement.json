@@ -1,102 +1,122 @@
 {
-  "titre": "Classement National 3 M",
   "items": [
     {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Tours Volley-ball 3"
+      "equipe": "n3-masculin",
+      "titre": "Classement National 3 M",
+      "une": true,
+      "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+      "lignes": [
+        {
+          "club": "Tours Volley-ball 3",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "Sporting Club de l'Ouest",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "C.A. Brive Corrèze Volley",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": true
+        },
+        {
+          "club": "AS Saint-Barthélémy d'Anjou V.B.",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "La Rochelle Volley-ball",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "Entente Choletaise Volley-ball",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "Saint-Avertin Sports",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "US Bouguenais Volley-ball",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "Vannes Volley 56",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "Alterna Stade Poitevin Volley-ball 3",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "Sport Athlétique Mérignacais 2",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        },
+        {
+          "club": "Club Municipal Floirac",
+          "joues": 0,
+          "victoires": 0,
+          "defaites": 0,
+          "points": 0,
+          "notre_club": false
+        }
+      ]
     },
     {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Sporting Club de l'Ouest"
+      "equipe": "r1-masculin",
+      "titre": "Classement Régional 1 masculin",
+      "une": false,
+      "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+      "lignes": []
     },
     {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": true,
-      "equipe": "C.A. Brive Corrèze Volley"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "AS Saint-Barthélémy d'Anjou V.B."
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "La Rochelle Volley-ball"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Entente Choletaise Volley-ball"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Saint-Avertin Sports"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "US Bouguenais Volley-ball"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Vannes Volley 56"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Alterna Stade Poitevin Volley-ball 3"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Sport Athlétique Mérignacais 2"
-    },
-    {
-      "joues": 0,
-      "victoires": 0,
-      "defaites": 0,
-      "points": 0,
-      "notre_club": false,
-      "equipe": "Club Municipal Floirac"
+      "equipe": "r1-feminin",
+      "titre": "Classement Régional 1 féminin",
+      "une": false,
+      "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+      "lignes": []
     }
-  ],
-  "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB."
+  ]
 }
