@@ -5,6 +5,7 @@
 import { normaliserNom, saisonDe } from "../ffvb/noms.mjs";
 import { readFileSync } from "node:fs";
 import { analyserCalendrier } from "../ffvb/calendrier.mjs";
+import { analyserClassement } from "../ffvb/classement.mjs";
 
 const erreurs = [];
 // Compteur incremente par verifier(), affiche a la fin : ne pas laisser un
@@ -74,6 +75,35 @@ const penalise = cal25.matchs.find((m) => m.code === "RMB009");
 verifier("RMB009 — marque a domicile", penalise.marqueDomicile, "P");
 verifier("RMB009 — sets du penalise", penalise.setsDomicile, 0);
 verifier("RMB009 — sets de l adversaire", penalise.setsExterieur, 3);
+
+const cl25 = analyserClassement(rmb25);
+verifier("RMB 2025/2026 — neuf equipes classees", cl25.length, 9);
+
+const brive25 = cl25.find((l) => normaliserNom(l.club).includes("BRIVE"));
+verifier("RMB 2025/2026 — Brive, points", brive25.points, 34);
+verifier("RMB 2025/2026 — Brive, joues", brive25.joues, 16);
+verifier("RMB 2025/2026 — Brive, victoires", brive25.victoires, 11);
+verifier("RMB 2025/2026 — Brive, defaites", brive25.defaites, 5);
+
+// Cosmic Volley porte une penalisation : la ligue lui retire un point. Le
+// classement publie dit 5 la ou le bareme 3/2/1/0 donnerait 6. C est la preuve
+// qu on lit le tableau et qu on ne le recalcule jamais.
+const cosmic = cl25.find((l) => normaliserNom(l.club).includes("COSMIC"));
+verifier("RMB 2025/2026 — Cosmic, points publies", cosmic.points, 5);
+
+// Saison precedente : US Talence a declare un forfait, compte en colonne F.
+const rmb24 = echantillon("rmb-2024-2025.html");
+const cl24 = analyserClassement(rmb24);
+const talence = cl24.find((l) => normaliserNom(l.club).includes("TALENCE"));
+verifier("RMB 2024/2025 — Talence, points publies", talence.points, 12);
+verifier("RMB 2024/2025 — Talence, forfaits", talence.forfaits, 1);
+
+// Et son forfait porte bien une marque dans le calendrier.
+const cal24 = analyserCalendrier(rmb24, "RMB");
+const forfait = cal24.matchs.find((m) => m.marqueDomicile === "F" || m.marqueExterieur === "F");
+verifier("RMB 2024/2025 — un forfait marque", forfait.code, "RMB002");
+verifier("RMB 2024/2025 — sets du forfaitaire", forfait.setsExterieur, 0);
+verifier("RMB 2024/2025 — sets de l adversaire", forfait.setsDomicile, 3);
 
 if (erreurs.length) {
   console.error("Parseurs FFVB — contrôle échoué :");
