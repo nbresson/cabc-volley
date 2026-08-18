@@ -150,6 +150,7 @@ collections:
               - {name: creneau, label: Créneau, widget: string}
               - {name: photo, label: Photo d'équipe, widget: image, required: false, hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko."}
               - {name: classement, label: Lien classement FFVB de l'équipe, widget: string, required: false, hint: "Chaque équipe a sa poule, donc son propre classement. Ouvrez le classement de cette équipe sur le site de la FFVB et collez ici l'adresse de la page. Laissé vide, le lien général des « Réglages du club » est utilisé — et seulement si l'équipe a des matchs."}
+              - {name: ffvb_nom, label: Nom de l'équipe chez la FFVB, widget: string, required: false, hint: "À remplir seulement si le club aligne deux équipes dans la même poule — la fédération écrit alors « C.A. BRIVE 1 » et « C.A. BRIVE 2 ». Recopiez le nom tel qu'il figure au classement. Laissé vide, l'équipe est reconnue automatiquement."}
               - name: infos
                 label: Infos pratiques
                 widget: object
