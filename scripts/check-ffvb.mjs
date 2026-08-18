@@ -268,6 +268,42 @@ try {
 verifier("moisson — poule en echec omise", Object.keys(partiel), ["RMB"]);
 verifier("moisson — trace emise pour la poule en echec", tracesMoisson.length, 1);
 
+// Un match non joue (sets vides) ne doit produire aucun resultat via
+// moissonner : la regle est ecrite dans le code
+// (`if (m.setsDomicile === null || m.setsExterieur === null) continue;`) mais
+// aucun echantillon reel ne l exerce - rmb-2024-2025.html et
+// rmb-2025-2026.html sont deux saisons entierement jouees, championnat clos,
+// sans une seule rencontre a venir. Le HTML de ce cas est donc construit ici
+// a la main plutot que telecharge : douze cellules par ligne, separateur vide
+// en position 4, comme une vraie ligne de calendrier FFVB (voir la structure
+// documentee en tete de ffvb/calendrier.mjs). Les deux rencontres impliquent
+// Brive, sinon la rencontre non jouee serait de toute facon ecartee par le
+// filtre "hors du club" et le test ne prouverait rien sur la regle visee.
+const calendrierPartiel = `
+  <table>
+    <tr>
+      <td>RMB101</td><td>01/02/26</td><td>20:00</td>
+      <td>C.A. BRIVE/CORREZE VOLLEY</td><td></td>
+      <td>AUTRE CLUB</td><td>3</td><td>1</td>
+      <td>25:20, 25:20, 20:25, 25:20</td><td>100-085</td>
+      <td>ARBITRE UN/ARBITRE DEUX</td><td></td>
+    </tr>
+    <tr>
+      <td>RMB102</td><td>08/02/26</td><td>20:00</td>
+      <td>AUTRE CLUB 2</td><td></td>
+      <td>C.A. BRIVE/CORREZE VOLLEY</td><td></td><td></td>
+      <td></td><td></td>
+      <td></td><td></td>
+    </tr>
+  </table>
+`;
+const moissonPartiel = await moissonner(["RMB"], "2025/2026", async () => calendrierPartiel);
+verifier(
+  "moisson — match joue produit un resultat, match non joue aucun",
+  Object.keys(moissonPartiel.RMB.resultats),
+  ["RMB101"],
+);
+
 if (erreurs.length) {
   console.error("Parseurs FFVB — contrôle échoué :");
   for (const e of erreurs) console.error("  -", e);
