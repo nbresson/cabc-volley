@@ -19,6 +19,22 @@ const verifier = (nom, obtenu, attendu) => {
   if (o !== a) erreurs.push(`${nom} : attendu ${a}, obtenu ${o}`);
 };
 
+// Certains cas nominaux du moissonneur tracent volontairement au journal.
+// Sans capture, ce bruit attendu se melerait a la sortie de npm run check a
+// chaque lancement ; capture() le detourne le temps de l appel et le rend a
+// son tour verifiable, plutot que de le laisser polluer la console.
+const capture = (fn) => {
+  const messages = [];
+  const original = console.error;
+  console.error = (...args) => messages.push(args.join(" "));
+  try {
+    fn();
+  } finally {
+    console.error = original;
+  }
+  return messages;
+};
+
 // La federation ecrit le meme club de trois facons. Les quatre ecritures
 // doivent se ramener a une seule cle, sans quoi la ligne du club serait perdue
 // au hasard des poules et des saisons.
@@ -175,6 +191,32 @@ verifier("une poule, deux classements — pas de debordement", fc2.items[1].lign
 const moissonVide = { "2026/2027": { RMB: { fait_le: "x", resultats: {}, classement: [] } } };
 const fcv = fusionnerClassement(fichierClassement, moissonVide, {}, { "r1-masculin": "RMB" });
 verifier("fusion classement — vide ne remplace rien", fcv.items[0].lignes[0].club, "saisie a la main");
+
+// Plusieurs correspondances : la federation ecrit "C.A. BRIVE 1" et
+// "C.A. BRIVE 2" quand deux equipes du club jouent la meme poule. Champ FFVB
+// laisse vide ici, donc repli sur la sous-chaine BRIVE, qui matche les deux
+// lignes. Aucune ne doit etre marquee, et l ambiguite doit laisser une trace.
+const moissonAmbigue = {
+  "2026/2027": {
+    RMB: {
+      fait_le: "x",
+      resultats: {},
+      classement: [
+        { club: "C.A. BRIVE 1", points: 3, joues: 1, victoires: 1, defaites: 0, forfaits: 0 },
+        { club: "C.A. BRIVE 2", points: 0, joues: 1, victoires: 0, defaites: 1, forfaits: 0 },
+      ],
+    },
+  },
+};
+const fichierAmbigu = {
+  items: [{ equipe: "r1-masculin", lignes: [{ club: "saisie a la main", joues: 0, victoires: 0, defaites: 0, points: 0, notre_club: true }] }],
+};
+let fa;
+const tracesAmbigu = capture(() => {
+  fa = fusionnerClassement(fichierAmbigu, moissonAmbigue, {}, { "r1-masculin": "RMB" });
+});
+verifier("fusion classement — plusieurs correspondances, aucune marquee", fa.items[0].lignes.some((l) => l.notre_club), false);
+verifier("fusion classement — plusieurs correspondances, trace emise", tracesAmbigu.length, 1);
 
 if (erreurs.length) {
   console.error("Parseurs FFVB — contrôle échoué :");

@@ -52,6 +52,18 @@ export function fusionnerClassement(fichier, moisson, nomsFfvb, poules) {
         return attendu ? cle === attendu : cle.includes("BRIVE");
       };
       const marquees = lignes.filter((l) => estNotre(l.club)).length;
+      // Zero ou plusieurs correspondances : rien a marquer, mais silence total
+      // serait pire qu une fausse alerte. Sans cette trace, une faute de frappe
+      // dans le champ FFVB casserait le surlignage sans que personne ne le sache.
+      if (marquees !== 1) {
+        const nomAttendu = (nomsFfvb || {})[tableau.equipe];
+        console.error(
+          `fusionnerClassement : ${marquees} correspondance(s) pour l equipe "${tableau.equipe}"` +
+            (nomAttendu
+              ? ` (nom FFVB attendu : "${nomAttendu}")`
+              : " (champ FFVB vide, repli sur la sous-chaine BRIVE)"),
+        );
+      }
       return {
         ...tableau,
         lignes: lignes.map((l) => ({
