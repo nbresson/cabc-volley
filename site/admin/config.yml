@@ -83,7 +83,7 @@ collections:
               - {name: domicile, label: "À domicile ?", widget: boolean, default: true}
               - {name: statut, label: Statut, widget: select, options: ["a_venir","termine"], default: "a_venir"}
               - {name: score, label: Score (si terminé), widget: string, required: false, hint: "Format court, ex. 3-1. Le détail des sets n'est pas affiché."}
-              - {name: gagne, label: "Victoire ?", widget: boolean, default: false, required: false, hint: "À cocher pour une victoire. Si elle reste décochée, la rencontre s'affiche « Défaite » sur la page de l'équipe."}
+              - {name: gagne, label: "Victoire ?", widget: boolean, default: false, required: false, hint: "À cocher pour une victoire. Le badge Victoire ou Défaite n'apparaît qu'une fois le score saisi : sans score, la rencontre s'affiche « En attente de résultat »."}
               - {name: une, label: "Match à la une ?", widget: boolean, default: false, required: false}
 
   - name: classement

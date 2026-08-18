@@ -185,13 +185,20 @@ function matchRow(m){const d=new Date(m.date);return `
 // Ligne de resultat. Le score et le badge sont groupes dans une seule cellule,
 // .match-row n acceptant que trois enfants directs. Partagee par la fiche
 // d equipe et le calendrier depuis que ce dernier montre les derniers matchs.
+// C est l absence de score, et non le champ « gagne », qui dit qu un resultat
+// manque : gagne vaut false par defaut dans Decap, donc une rencontre jouee mais
+// non saisie s annoncait « Defaite ». Le site affirmait une contre-verite sur son
+// propre club, et il l aurait fait des le lendemain du premier match.
+function resultatConnu(m){return String(m&&m.score||"").trim()!=="";}
 function ligneResultat(m){return `
     <div class="match-row">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${fmtDate(m.date)}</span>
       <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
       <span class="row" style="align-items:center;gap:12px">
         <strong class="display-m" style="font-weight:900">${m.score||"–"}</strong>
-        <span class="badge${m.gagne?'':' badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span></span></div>`;}
+        ${resultatConnu(m)
+          ?`<span class="badge${m.gagne?'':' badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span>`
+          :`<span class="badge badge-outline">En attente de résultat</span>`}</span></div>`;}
 
 // Fichier .ics fabrique dans le navigateur, sans service tiers. Duree fixee a
 // deux heures. Les dates sont ecrites en heure locale avec TZID Europe/Paris :
