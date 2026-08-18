@@ -7,6 +7,7 @@ import { readFileSync } from "node:fs";
 import { analyserCalendrier } from "../ffvb/calendrier.mjs";
 import { analyserClassement } from "../ffvb/classement.mjs";
 import { fusionnerMatchs, fusionnerClassement } from "../ffvb/fusion.mjs";
+import { poulesDeMatchs, moissonner, URL_POULE } from "../ffvb/moisson.mjs";
 
 const erreurs = [];
 // Compteur incremente par verifier(), affiche a la fin : ne pas laisser un
@@ -217,6 +218,55 @@ const tracesAmbigu = capture(() => {
 });
 verifier("fusion classement — plusieurs correspondances, aucune marquee", fa.items[0].lignes.some((l) => l.notre_club), false);
 verifier("fusion classement — plusieurs correspondances, trace emise", tracesAmbigu.length, 1);
+
+// La liste des poules se deduit de matches.json, elle n est pas ecrite en dur.
+// Une poule peut nourrir plusieurs classements : deux equipes du club dans la
+// meme competition portent le meme prefixe et des slugs differents.
+const matchesFactice = {
+  items: [
+    { numero: "3MD005", equipe: "n3-masculin" },
+    { numero: "RMB007", equipe: "r1-masculin" },
+    { numero: "RMB009", equipe: "r1-masculin" },
+    { numero: "RFB002", equipe: "r1-feminin" },
+    { numero: "", equipe: "jeunes" },
+  ],
+};
+verifier("poules deduites", poulesDeMatchs(matchesFactice), {
+  "n3-masculin": "3MD",
+  "r1-masculin": "RMB",
+  "r1-feminin": "RFB",
+});
+
+// codent est une constante de la federation, pas une donnee du club.
+verifier("URL nationale", URL_POULE("2026/2027", "3MD").includes("codent=ABCCS"), true);
+verifier("URL regionale", URL_POULE("2026/2027", "RMB").includes("codent=LIAQ"), true);
+verifier("URL saison encodee", URL_POULE("2026/2027", "RMB").includes("saison=2026%2F2027"), true);
+
+// Le moissonnage n a pas besoin du reseau : on lui injecte de quoi recuperer.
+const moissonne = await moissonner(["RMB"], "2025/2026", async () => rmb25);
+verifier("moisson — une poule", Object.keys(moissonne), ["RMB"]);
+verifier("moisson — neuf equipes classees", moissonne.RMB.classement.length, 9);
+verifier("moisson — RMB009 gagne par Brive", moissonne.RMB.resultats.RMB009.score, "3-0");
+verifier("moisson — RMB002 perdu par Brive", moissonne.RMB.resultats.RMB002.score, "0-3");
+// Une poule injoignable ne fait pas tomber les autres. moissonner est async : la
+// trace part apres un await, donc apres que capture() ait deja restaure
+// console.error dans son bloc finally synchrone — capture() ne convient qu aux
+// verifications entierement synchrones. On reproduit son motif a la main pour
+// garder npm run check silencieux et asserer que la trace part bien.
+const tracesMoisson = [];
+const consoleErreurOriginal = console.error;
+console.error = (...args) => tracesMoisson.push(args.join(" "));
+let partiel;
+try {
+  partiel = await moissonner(["RMB", "RFB"], "2025/2026", async (url) => {
+    if (url.includes("RFB")) throw new Error("injoignable");
+    return rmb25;
+  });
+} finally {
+  console.error = consoleErreurOriginal;
+}
+verifier("moisson — poule en echec omise", Object.keys(partiel), ["RMB"]);
+verifier("moisson — trace emise pour la poule en echec", tracesMoisson.length, 1);
 
 if (erreurs.length) {
   console.error("Parseurs FFVB — contrôle échoué :");
