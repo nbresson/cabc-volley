@@ -98,15 +98,15 @@ window.__pageInit=async function(){
   const lr=document.getElementById("last-result");
   if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
     // Le bandeau est passe sur fond sombre : les gris et la bordure du score
-    // suivent, sinon ils disparaissent dans l encre. Le badge n apparait que si
-    // le champ « gagne » a ete renseigne — sans lui, le score parle seul.
+    // suivent, sinon ils disparaissent dans l encre. Le badge dit « en attente »
+    // tant que le score n est pas saisi — voir resultatConnu() dans site.js.
     const cabGagne=last.gagne;
     lr.innerHTML=`<div class="pad"><div class="eyebrow" style="color:var(--mention-sombre);margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
       <div class="match-band" style="padding:0">
         <strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--mention-sombre)'}">${a}</strong>
         <span class="row" style="align-items:center;justify-content:center;gap:18px">
           <span class="score" style="border-color:var(--creme)">${last.score||"–"}</span>
-          ${cabGagne!==undefined?`<span class="badge" style="background:var(--creme);color:var(--encre)">${cabGagne?"Victoire":"Défaite"}</span>`:""}
+          ${resultatConnu(last)?`<span class="badge" style="background:var(--creme);color:var(--encre)">${cabGagne?"Victoire":"Défaite"}</span>`:`<span class="badge" style="background:transparent;border:1px solid var(--mention-sombre);color:var(--mention-sombre);padding:4px 12px">En attente de résultat</span>`}
         </span>
         <strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--mention-sombre)':''}">${b}</strong>
       </div></div>`;}
