@@ -105,19 +105,33 @@ Per. · F. · 3-0 · 3-1 · 3-2 · 2-3 · 1-3 · 0-3 · Set.P · Set.C · Coeff.
 Pts.C · Coeff.P`. `F.` compte les **forfaits déclarés**.
 
 #### Le classement se lit, il ne se recalcule pas
-Démontré plutôt que supposé. Un `P` dans une colonne de sets signale une
-**pénalisation** : le match est perdu pour l'équipe qui la porte, et la ligue lui
-retire un point au classement.
+Démontré plutôt que supposé, sur deux saisons.
 
-Sur RMB 2025/2026, Cosmic Volley totalise une victoire 3-1 et trois défaites 2-3,
-soit **6 points** au barème 3/2/1/0. La fédération en publie **5**. Le même calcul
-donne 34 points pour Brive, et la fédération en publie 34 : le barème est bon,
-l'écart est bien le retrait.
+Deux marques peuvent remplacer le nombre de sets d'une équipe, et toutes deux
+valent match perdu, enregistré 0-3 avec un détail `25:0, 25:0, 25:0` :
 
-**Et ce retrait est invisible dans le tableau** — la colonne `F.` de Cosmic est
-vide, rien ne le signale. Un moissonneur qui reconstruirait le classement depuis
-les résultats afficherait cette équipe à 6 points toute la saison sans que personne
-ne comprenne pourquoi.
+- **`P` — pénalisation.** La ligue retire un point au classement.
+- **`F` — forfait déclaré.** Il est compté dans la colonne `F.` du tableau. Selon
+  les circonstances, un forfait peut **en plus** donner lieu à pénalisation — le
+  cas cité par le bureau est le forfait sur le dernier match de la saison.
+
+Les deux produisent un ajustement de points que les résultats ne permettent pas de
+deviner, et qui n'est pas le même :
+
+| Saison, poule | Club | Marque | Recalculé | Publié | Écart |
+| --- | --- | --- | --- | --- | --- |
+| 2025/2026 RMB | Cosmic Volley | `P` | 6 | 5 | **−1** |
+| 2024/2025 RMB | US Talence | `F` | 15 | 12 | **−3** |
+
+Le barème 3/2/1/0 est confirmé sur **quinze bilans de clubs** — les deux poules
+entières — sans une seule divergence ailleurs que sur ces deux lignes. L'écart
+n'est donc pas une erreur de barème, c'est bien un ajustement de la ligue.
+
+**Et cet ajustement ne se lit nulle part.** La colonne `F.` compte les forfaits,
+pas les pénalisations : elle est vide pour Cosmic Volley, qui porte pourtant un
+`P` et perd un point. Un moissonneur qui reconstruirait le classement depuis les
+résultats afficherait cette équipe à 6 points toute la saison sans que personne ne
+comprenne pourquoi. **Le classement se lit tel qu'il est publié.**
 
 #### Architecture
 Le worker interroge la FFVB, garde le résultat en KV, et sert le contenu depuis le
@@ -137,10 +151,14 @@ la première saison : si la fédération valide certains résultats le lundi, il
 deux ou trois passages de plus.*
 
 #### Ce que le parseur doit refuser de deviner
-Sur les trois poules de 2025/2026, la seule valeur non numérique rencontrée dans les
-colonnes de sets est `P`, une fois par poule. Aucune marque de forfait n'a été vue.
-Toute valeur inconnue doit donc **mettre le match de côté avec une alerte visible**,
-jamais produire un score inventé.
+Deux valeurs non numériques sont connues dans les colonnes de sets : `P` et `F`,
+toutes deux valant zéro set pour l'équipe qui les porte. Elles sont rares — une
+par poule et par saison sur ce qui a été balayé — et **il a fallu remonter à
+2024/2025 pour rencontrer un `F`** : un parseur éprouvé sur une seule saison ne
+les verra pas toutes.
+
+Toute autre valeur inconnue doit **mettre le match de côté avec une alerte
+visible**, jamais produire un score inventé.
 
 **Fragilité.** Ce HTML est d'une autre époque — balises en majuscules, `bgcolor`,
 Apache 2.2. Stable depuis des années parce que personne n'y touche, mais une refonte
