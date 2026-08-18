@@ -6,6 +6,7 @@ import { normaliserNom, saisonDe } from "../ffvb/noms.mjs";
 import { readFileSync } from "node:fs";
 import { analyserCalendrier } from "../ffvb/calendrier.mjs";
 import { analyserClassement } from "../ffvb/classement.mjs";
+import { fusionnerMatchs, fusionnerClassement } from "../ffvb/fusion.mjs";
 
 const erreurs = [];
 // Compteur incremente par verifier(), affiche a la fin : ne pas laisser un
@@ -104,6 +105,76 @@ const forfait = cal24.matchs.find((m) => m.marqueDomicile === "F" || m.marqueExt
 verifier("RMB 2024/2025 — un forfait marque", forfait.code, "RMB002");
 verifier("RMB 2024/2025 — sets du forfaitaire", forfait.setsExterieur, 0);
 verifier("RMB 2024/2025 — sets de l adversaire", forfait.setsDomicile, 3);
+
+// La fusion des resultats : la saisie manuelle l emporte, jamais ecrasee.
+const moisson = {
+  "2026/2027": {
+    RMB: {
+      fait_le: "2026-10-03T18:00:00.000Z",
+      resultats: { RMB005: { score: "3-1", gagne: true }, RMB007: { score: "0-3", gagne: false } },
+      classement: [
+        { club: "C.A. BRIVE/CORREZE VOLLEY", points: 6, joues: 2, victoires: 2, defaites: 0, forfaits: 0 },
+        { club: "COSMIC VOLLEY", points: 0, joues: 2, victoires: 0, defaites: 2, forfaits: 0 },
+      ],
+    },
+  },
+};
+
+const fichierMatchs = {
+  items: [
+    { numero: "RMB005", date: "2026-10-03T20:00", statut: "a_venir", score: "", adversaire: "A" },
+    // Score deja saisi a la main : il ne doit jamais etre ecrase.
+    { numero: "RMB007", date: "2026-10-10T20:00", statut: "termine", score: "3-2", gagne: true, adversaire: "B" },
+    // Poule non moissonnee : le match doit ressortir intact.
+    { numero: "3MD005", date: "2026-09-26T20:00", statut: "a_venir", score: "", adversaire: "C" },
+  ],
+};
+
+const fm = fusionnerMatchs(fichierMatchs, moisson);
+verifier("fusion — score injecte", fm.items[0].score, "3-1");
+verifier("fusion — vainqueur injecte", fm.items[0].gagne, true);
+verifier("fusion — statut bascule", fm.items[0].statut, "termine");
+verifier("fusion — saisie manuelle preservee", fm.items[1].score, "3-2");
+verifier("fusion — poule absente intacte", fm.items[2].score, "");
+verifier("fusion — fichier d origine non modifie", fichierMatchs.items[0].score, "");
+
+const fichierClassement = {
+  items: [
+    { equipe: "r1-masculin", titre: "R1 M", une: true, lignes: [{ club: "saisie a la main", joues: 0, victoires: 0, defaites: 0, points: 0, notre_club: true }] },
+    { equipe: "n3-masculin", titre: "N3 M", une: false, lignes: [{ club: "intacte", joues: 0, victoires: 0, defaites: 0, points: 0, notre_club: true }] },
+  ],
+};
+// La poule d un classement se deduit du prefixe des numeros de match de son equipe.
+const fc = fusionnerClassement(fichierClassement, moisson, { "r1-masculin": "C.A. BRIVE/CORREZE VOLLEY" }, { "r1-masculin": "RMB" });
+verifier("fusion classement — lignes remplacees", fc.items[0].lignes.length, 2);
+verifier("fusion classement — notre ligne designee", fc.items[0].lignes[0].notre_club, true);
+verifier("fusion classement — ligne adverse non marquee", fc.items[0].lignes[1].notre_club, false);
+verifier("fusion classement — poule absente intacte", fc.items[1].lignes[0].club, "intacte");
+
+// Deux equipes du club dans la meme poule : le meme tableau nourrit les deux
+// entrees, chacune surlignant sa propre ligne. C est le cas qui a fait naitre le
+// champ « Nom de l equipe chez la FFVB ».
+const deuxEquipes = {
+  items: [
+    { equipe: "r1-masculin", lignes: [] },
+    { equipe: "r1-masculin-2", lignes: [] },
+  ],
+};
+const fc2 = fusionnerClassement(
+  deuxEquipes,
+  moisson,
+  { "r1-masculin": "C.A. BRIVE/CORREZE VOLLEY", "r1-masculin-2": "COSMIC VOLLEY" },
+  { "r1-masculin": "RMB", "r1-masculin-2": "RMB" },
+);
+verifier("une poule, deux classements — premier", fc2.items[0].lignes[0].notre_club, true);
+verifier("une poule, deux classements — second", fc2.items[1].lignes[1].notre_club, true);
+verifier("une poule, deux classements — pas de debordement", fc2.items[1].lignes[0].notre_club, false);
+
+// Un classement moissonne vide ne remplace rien : avant la premiere journee la
+// federation publie un tableau sans lignes, et le fichier saisi doit rester.
+const moissonVide = { "2026/2027": { RMB: { fait_le: "x", resultats: {}, classement: [] } } };
+const fcv = fusionnerClassement(fichierClassement, moissonVide, {}, { "r1-masculin": "RMB" });
+verifier("fusion classement — vide ne remplace rien", fcv.items[0].lignes[0].club, "saisie a la main");
 
 if (erreurs.length) {
   console.error("Parseurs FFVB — contrôle échoué :");
