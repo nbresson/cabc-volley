@@ -46,31 +46,52 @@ for (const m of matchs) {
   numeros.set(num, m.adversaire);
 }
 
-// Le rang n est pas un champ : c est l ordre des lignes. On controle donc le
-// contenu de chaque ligne, jamais sa numerotation.
-let notres = 0;
-classement.forEach((ligne, i) => {
-  const rang = i + 1;
-  const nom = typeof ligne.equipe === "string" ? ligne.equipe.trim() : "";
-  if (!nom) {
-    erreurs.push(`Classement, ligne ${rang} : nom d'équipe manquant`);
+// Un classement par poule, rattache a une equipe du club par son slug — le
+// meme rattachement que les matchs. Le rang n est pas un champ : c est l ordre
+// des lignes. On controle donc le contenu de chaque ligne, jamais sa
+// numerotation.
+let auneUne = 0;
+classement.forEach((tableau, t) => {
+  const oule = tableau.titre ? `« ${tableau.titre} »` : `n° ${t + 1}`;
+  if (!tableau.equipe) {
+    erreurs.push(`Classement ${oule} : aucune équipe rattachée`);
+  } else if (!slugs.has(tableau.equipe)) {
+    erreurs.push(`Classement ${oule} : équipe inconnue « ${tableau.equipe} »`);
   }
-  for (const champ of ["joues", "victoires", "defaites", "points"]) {
-    const valeur = ligne[champ];
-    if (!Number.isInteger(valeur) || valeur < 0) {
-      erreurs.push(
-        `Classement, ligne ${rang} (${nom || "sans nom"}) : « ${champ} » doit être un entier positif ou nul, reçu ${JSON.stringify(valeur)}`,
-      );
+  if (tableau.une) auneUne += 1;
+
+  const lignes = Array.isArray(tableau.lignes) ? tableau.lignes : [];
+  let notres = 0;
+  lignes.forEach((ligne, i) => {
+    const rang = i + 1;
+    const nom = typeof ligne.club === "string" ? ligne.club.trim() : "";
+    if (!nom) {
+      erreurs.push(`Classement ${oule}, ligne ${rang} : nom de club manquant`);
     }
+    for (const champ of ["joues", "victoires", "defaites", "points"]) {
+      const valeur = ligne[champ];
+      if (!Number.isInteger(valeur) || valeur < 0) {
+        erreurs.push(
+          `Classement ${oule}, ligne ${rang} (${nom || "sans nom"}) : « ${champ} » doit être un entier positif ou nul, reçu ${JSON.stringify(valeur)}`,
+        );
+      }
+    }
+    if (ligne.notre_club) notres += 1;
+  });
+  // Le surlignage se compte par tableau et non plus sur tout le fichier : le
+  // club figure une fois dans chacune de ses poules, c est le cas normal.
+  // Deux lignes surlignees dans le meme tableau restent l erreur de saisie la
+  // plus probable, et celle que la relecture visuelle rate le plus facilement.
+  // La coherence de joues avec victoires + defaites n est volontairement pas
+  // controlee : un forfait ou un match a rejouer la rend fausse a raison.
+  if (notres > 1) {
+    erreurs.push(`Classement ${oule} : ${notres} lignes marquées « notre club », une seule doit l'être`);
   }
-  if (ligne.notre_club) notres += 1;
 });
-// Deux lignes surlignees : l erreur de saisie la plus probable, et celle que la
-// relecture visuelle rate le plus facilement. La coherence de joues avec
-// victoires + defaites n est volontairement pas controlee : un forfait ou un
-// match a rejouer la rend fausse a raison.
-if (notres > 1) {
-  erreurs.push(`Classement : ${notres} lignes marquées « notre club », une seule doit l'être`);
+// L accueil ne montre qu un classement : sans « a la une » il prendrait le
+// premier venu, avec deux il en cacherait un sans le dire.
+if (auneUne > 1) {
+  erreurs.push(`Classement : ${auneUne} tableaux marqués « à la une », un seul doit l'être`);
 }
 
 // Un chemin d image casse ne se voit pas : la page affiche « photo a venir » et
@@ -120,6 +141,7 @@ if (erreurs.length) {
 }
 
 const tagues = matchs.filter((m) => m.equipe).length;
+const lignesClassement = classement.reduce((n, t) => n + (Array.isArray(t.lignes) ? t.lignes.length : 0), 0);
 console.log(
-  `OK — ${equipes.length} équipes, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} lignes de classement, ${cheminsCites.size} images toutes présentes.`,
+  `OK — ${equipes.length} équipes, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes.`,
 );
