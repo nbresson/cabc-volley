@@ -262,14 +262,14 @@ main:has(>.dark:last-child)+.socialbar{border-top:2px solid var(--creme)}
 /* Header */
 .site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:2px solid var(--encre);background:var(--creme);position:sticky;top:0;z-index:50}
 .site-header nav{display:flex;gap:30px;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
-/* Le trait seul ne suffisait pas : 3 px d encre sous un libelle d encre,
-   parmi huit libelles de meme graisse et de meme casse. Il passe a 5 px et
-   le libelle a 900 — l epaisseur et la graisse, deux canaux au lieu d un.
-   Le 900 est deja charge, les titres l emploient. */
-.site-header nav a.active:not(.btn){font-weight:900;border-bottom:5px solid var(--encre);padding-bottom:3px}
-/* Adherer est deja encre plein : ni trait ni graisse n y porteraient, le
-   bouton etant deja en 700 sur fond sombre. Il garde donc un lisere creme
-   interieur, dans l idiome des inset du reste de la feuille. */
+/* Trait porte de 3 a 5 px, et seul canal de l etat courant : la graisse 900
+   a ete essayee puis retiree. Ce qui rendait l indicateur introuvable n etait
+   pas sa finesse mais here(), qui ne reconnaissait aucune page hors de
+   l accueil — voir le commentaire de cette fonction dans site.js. */
+.site-header nav a.active:not(.btn){border-bottom:5px solid var(--encre);padding-bottom:3px}
+/* Adherer est deja encre plein : un trait d encre n y porterait pas. Il
+   garde donc un lisere creme interieur, dans l idiome des inset du reste
+   de la feuille. */
 .site-header nav a.btn.active{box-shadow:inset 0 0 0 2px var(--creme)}
 /* Les numeros n existent que dans le menu mobile. La regle vit ici, avant le
    bloc media qui les rallume : posee apres, elle l emporterait a specificite
@@ -467,7 +467,7 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
      compte huit. D ou aussi le filet ramene a 1 px de lin : sans cela le
      trait de 5 px de la regle bureau epaissirait la separation de la ligne,
      et l entree courante porterait deux traits au lieu d un. */
-  .site-header nav a.active:not(.btn){font-weight:900;border-bottom:1px solid var(--lin);padding-bottom:7px}
+  .site-header nav a.active:not(.btn){border-bottom:1px solid var(--lin);padding-bottom:7px}
   .site-header nav a.active:not(.btn)>*:last-child{border-bottom:5px solid var(--encre);padding-bottom:2px}
   .site-header nav .num{display:inline;font-family:'DM Mono',monospace;font-size:10px;color:var(--taupe)}
   /* Adherer descend en pied de menu, pleine largeur. */
