@@ -262,13 +262,14 @@ main:has(>.dark:last-child)+.socialbar{border-top:2px solid var(--creme)}
 /* Header */
 .site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:2px solid var(--encre);background:var(--creme);position:sticky;top:0;z-index:50}
 .site-header nav{display:flex;gap:30px;align-items:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-transform:uppercase}
-/* Pave plein plutot que trait. Le soulignement de 3 px encre tombait 2 px
-   au-dessus de la bordure encre de l en-tete : deux filets de meme couleur
-   dans la meme bande, que l oeil lit comme du decor. L inversion ajoute un
-   second canal — le fond — la ou il n y en avait qu un. */
-.site-header nav a.active:not(.btn){background:var(--encre);color:var(--creme);padding:5px 12px}
-/* Adherer est deja encre plein : l inverser ne dirait rien. Il porte donc un
-   lisere creme interieur, dans l idiome des inset du reste de la feuille. */
+/* Le trait seul ne suffisait pas : 3 px d encre sous un libelle d encre,
+   parmi huit libelles de meme graisse et de meme casse. Il passe a 5 px et
+   le libelle a 900 — l epaisseur et la graisse, deux canaux au lieu d un.
+   Le 900 est deja charge, les titres l emploient. */
+.site-header nav a.active:not(.btn){font-weight:900;border-bottom:5px solid var(--encre);padding-bottom:3px}
+/* Adherer est deja encre plein : ni trait ni graisse n y porteraient, le
+   bouton etant deja en 700 sur fond sombre. Il garde donc un lisere creme
+   interieur, dans l idiome des inset du reste de la feuille. */
 .site-header nav a.btn.active{box-shadow:inset 0 0 0 2px var(--creme)}
 /* Les numeros n existent que dans le menu mobile. La regle vit ici, avant le
    bloc media qui les rallume : posee apres, elle l emporterait a specificite
@@ -460,14 +461,14 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
   .burger{display:flex;position:relative;z-index:60}
   .site-header nav a{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--lin);font-size:30px;line-height:1}
   .site-header nav a:last-of-type{border-bottom:none}
-  /* Barre pleine largeur. Les huit entrees sont deja separees par un filet :
-     un filet plus epais s y perdait, c etait un jeu des sept erreurs. Les
-     marges negatives la font mordre sur les 22 px de retrait du menu, pour
-     qu elle touche les deux bords de l ecran. */
-  .site-header nav a.active:not(.btn){background:var(--encre);color:var(--creme);border-bottom-color:transparent;padding:7px 22px;margin:0 -22px}
-  /* Le taupe des numeros est illisible sur encre : la mention claire prend
-     le relais, comme partout ailleurs sur fond sombre. */
-  .site-header nav a.active .num{color:var(--mention-sombre)}
+  /* Le trait ne porte que le libelle, jamais le numero, et c est ce qui le
+     sauve : les filets de separation, eux, courent sur toute la ligne. Un
+     trait pleine largeur serait un filet de plus dans une liste qui en
+     compte huit. D ou aussi le filet ramene a 1 px de lin : sans cela le
+     trait de 5 px de la regle bureau epaissirait la separation de la ligne,
+     et l entree courante porterait deux traits au lieu d un. */
+  .site-header nav a.active:not(.btn){font-weight:900;border-bottom:1px solid var(--lin);padding-bottom:7px}
+  .site-header nav a.active:not(.btn)>*:last-child{border-bottom:5px solid var(--encre);padding-bottom:2px}
   .site-header nav .num{display:inline;font-family:'DM Mono',monospace;font-size:10px;color:var(--taupe)}
   /* Adherer descend en pied de menu, pleine largeur. */
   /* justify-content et non text-align seul : la regle des entrees fait aussi du
