@@ -72,8 +72,7 @@ async function murPartenaires(){
   // le mur sert a faire connaitre la page, pas a envoyer le visiteur ailleurs.
   // Sur la page Partenaires, l en-tete repeterait mot pour mot le titre et le
   // chapo affiches en haut, et son lien pointerait sur la page courante.
-  // Cloudflare sert les pages sans extension, d ou les deux formes.
-  const tete=/^partenaires(.html)?$/.test(here())?"":`<div class="mur-tete">
+  const tete=here()==="partenaires.html"?"":`<div class="mur-tete">
     <div>
       <h2>Ils nous soutiennent</h2>
       ${data?.chapo?`<p class="muted">${data.chapo}</p>`:""}
@@ -94,7 +93,17 @@ async function murPartenaires(){
   });
 }
 async function getJSON(p){try{const r=await fetch(p,{cache:"no-store"});if(!r.ok)throw 0;return await r.json();}catch(e){return null;}}
-function here(){const p=location.pathname.split("/").pop();return p||"index.html";}
+// Cloudflare sert les pages sans extension : /club.html repond 307 vers /club.
+// En production, pathname ne porte donc jamais le .html que NAV et PARENT
+// ecrivent, et aucune entree ne s allumait — sauf l accueil, seule a tomber
+// dans le repli, sa racine « / » ne laissant aucun segment. On normalise ici,
+// une fois, plutot que d accepter les deux formes a chaque comparaison.
+// filter(Boolean) et non pop() seul : « /club/ » perdrait sinon son segment.
+function here(){
+  const seg=location.pathname.split("/").filter(Boolean).pop();
+  if(!seg)return "index.html";
+  return seg.includes(".")?seg:seg+".html";
+}
 function renderChrome(){
   const cur=PARENT[here()]||here();
   // aria-current double la classe active : le soulignement ne dit rien a qui
