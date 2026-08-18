@@ -86,6 +86,12 @@ RMB007 + equipe: r1-masculin   ->  poule RMB  ->  classement de r1-masculin
 Le club engage une équipe et saisit ses matchs : le moissonneur suit sans qu'on touche au
 code.
 
+**Une poule peut nourrir plusieurs classements.** Deux équipes du club dans la même
+compétition — c'est déjà arrivé — portent des matchs au même préfixe mais des slugs
+différents. Le tableau moissonné est alors recopié dans chaque entrée de
+`classement.json`, chacune surlignant sa propre ligne. C'est le comportement voulu : la
+fiche de chaque équipe montre la position de cette équipe.
+
 Seul le `codent` ne se déduit pas — c'est une constante de la fédération, pas une donnée
 du club. Table dans le worker : `RMB` et `RFB` vers `LIAQ`, `3MD` vers `ABCCS`, repli sur
 `LIAQ` et trace au journal pour une poule inconnue. Le demander à un bénévole dans Decap
@@ -153,9 +159,48 @@ L'équipe à domicile est toujours à gauche.
 - Toute autre valeur non numérique met **ce match seul** de côté, avec une trace au
   journal. Les autres passent. Le moissonneur ne produit jamais un score inventé.
 
-Le classement est recopié tel quel, **jamais recalculé**. `notre_club` est posé sur la
-ligne dont le nom contient « BRIVE » : c'est une heuristique assumée, la fédération
-écrivant « C.A. BRIVE/CORREZE VOLLEY », et rien de plus fiable n'est disponible.
+Le classement est recopié tel quel, **jamais recalculé**.
+
+## Reconnaître notre ligne au classement
+
+La fédération n'écrit pas le nom du club de façon stable. Trois orthographes coexistent
+dans les seules pages relevées :
+
+| Écriture | Occurrences |
+| --- | --- |
+| `C.A. BRIVE/CORREZE VOLLEY` | 83 |
+| `C.A.BRIVE/CORREZE VOLLEY` | 20 |
+| `C.A. BRIVE CORREZE VOLLEY` | 15 |
+
+Une comparaison exacte casserait donc au hasard des poules et des saisons. Et chercher
+« BRIVE » par sous-chaîne échoue dans le cas qui compte : **deux équipes du club dans la
+même poule**, que la fédération écrit alors « C.A. BRIVE 1 » et « C.A. BRIVE 2 ». Les
+deux lignes seraient marquées, ce que `check-content.mjs` interdit à raison.
+
+D'où un champ facultatif sur l'équipe dans Decap, **« Nom de l'équipe chez la FFVB »**,
+à côté du lien de classement qui y vit déjà, et une comparaison **normalisée** :
+majuscules, accents retirés, tout ce qui n'est ni lettre ni chiffre supprimé.
+
+```
+C.A. BRIVE/CORREZE VOLLEY  ┐
+C.A.BRIVE/CORREZE VOLLEY   ├─► CABRIVECORREZEVOLLEY
+C.A. BRIVE CORREZE VOLLEY  │
+C.A. Brive Corrèze Volley  ┘
+
+C.A. BRIVE 1  ►  CABRIVE1     distincts, et c'est tout l'objet
+C.A. BRIVE 2  ►  CABRIVE2
+```
+
+Trois comportements :
+
+- **champ rempli** — la ligne est désignée par comparaison normalisée ;
+- **champ vide** — repli sur la sous-chaîne « BRIVE », suffisante tant qu'une seule
+  équipe du club joue la poule, ce qui est le cas ordinaire ;
+- **zéro ou plusieurs correspondances** — aucune ligne marquée, trace au journal. Le
+  moissonneur ne devine pas plus ici qu'ailleurs.
+
+Le champ ne sert qu'à cela. Les matchs se rapprochent par leur numéro et n'en ont pas
+besoin.
 
 ## Éprouver sans réseau
 
