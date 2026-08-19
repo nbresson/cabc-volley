@@ -204,7 +204,11 @@ for (const [, source, cible] of worker.matchAll(
 )) {
   renvois += 1;
   if (!slugs.has(cible)) {
-    erreurs.push(`worker.js : « ${source} » renvoie vers l'équipe inconnue « ${cible} »`);
+    erreurs.push(
+      `worker.js : « ${source} » renvoie vers l'équipe « ${cible} », qui n'existe plus. ` +
+        `Corriger la ligne dans worker.js pour viser une équipe de teams.json — ` +
+        `sans quoi ce déploiement et tous les suivants resteront bloqués.`,
+    );
   }
 }
 
