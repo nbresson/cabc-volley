@@ -47,15 +47,10 @@
       "annees": "",
       "montant": "100 €",
       "mise_en_avant": false
-    },
-    {
-      "libelle": "NB : cas de plusieurs licences dans la même famille, réduction de -20% dès la deuxième licence.",
-      "annees": "",
-      "montant": "-20%",
-      "mise_en_avant": false
     }
   ],
   "comprend": "",
   "pass_sport": "Pass'Sport accepté.",
-  "paiement": "Possibilité de payer en plusieurs fois."
+  "paiement": "Possibilité de payer en plusieurs fois.",
+  "nota": "En cas de plusieurs licences dans la même famille, **réduction de 20 % dès la deuxième licence**."
 }

@@ -19,7 +19,7 @@
   <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Tarifs &amp; licences</span></div>
   <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(38px,9vw,88px)">Tarifs<br>&amp; licences</h1><span class="mono" id="saison" style="align-self:flex-end"></span></div>
 </section>
-<section class="section pad"><div id="tarifs"></div></section>
+<section class="section pad"><div id="tarifs"></div><div id="nota"></div></section>
 <section class="section pad" id="precisions" style="display:none"><div id="precisions-liste"></div></section>
 <section class="section pad">
   <div class="row">
@@ -61,6 +61,12 @@ window.__pageInit=async function(){
       <th>Nº</th><th>Catégorie</th><th>Années de naissance</th><th style="text-align:right">Licence</th>
     </tr></thead><tbody>${tarifs.map(ligne).join("")}</tbody></table>`
     :'<p class="vide muted">Les tarifs de la saison seront publiés prochainement.</p>';
+
+  // La mention vaut pour toute la grille sans etre une ligne. Elle se pose
+  // sous le tableau et non dedans, ou elle passait pour une categorie de
+  // licence — capitales et prix compris.
+  const nota=document.getElementById("nota");
+  if(data?.nota&&data.nota.trim())nota.innerHTML=`<div class="nota">${mdToHtml(data.nota)}</div>`;
 
   // Trois precisions facultatives, vides a la creation de la collection : le
   // club les ecrit depuis Decap. Tant qu elles le sont, la section entiere
