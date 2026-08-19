@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **18 août 2026**. Le moissonnage FFVB a été sondé ce jour-là : l'accord de la ligue est obtenu, le rapprochement est validé sur les 53 matchs, et les deux sujets FFVB qui n'en font plus qu'un — classement **et** résultats viennent de la même page — sont fondus en une seule entrée. Reste distinct, et à ne pas confondre : le **score en direct** depuis l'application de feuille de match. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Les livrets d'accueil sont entrés le 15 août.
+Dernière revue : **19 août 2026**. Quatre chantiers livrés ce jour-là : le moissonnage FFVB, le vieillissement des matchs, l'échappement du contenu éditorial et le contrôle des adresses écrites dans les pages. `npm run check` est passé d'un garde-fou à quatre. Ce qui reste du moissonnage n'est plus du développement mais de l'observation, consigné sous « Surveiller le moissonnage ». Reste distinct, et à ne pas confondre avec lui : le **score en direct** depuis l'application de feuille de match. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Les livrets d'accueil sont entrés le 15 août.
 
 ---
 
@@ -47,135 +47,49 @@ site/`). Le sitemap et le robots.txt, eux, n'attendent rien — voir
 
 ## 3 · Ajouts et finitions
 
-### Moissonner classements et résultats sur le site de la FFVB
-**Analysé le 15 août, sondé le 18 août — le concept tient, et l'obstacle juridique
-est levé.** Le classement et les résultats sont saisis à la main alors qu'ils
-existent déjà chez la fédération.
+### Surveiller le moissonnage FFVB sa première saison
+**Livré le 19 août.** Le worker interroge les trois poules le week-end, garde le
+résultat en cache et l'injecte à la volée dans `matches.json` et `classement.json`.
+Il n'écrit jamais dans le dépôt : une saisie manuelle l'emporte toujours sur un score
+moissonné. Le raisonnement complet est dans
+[`docs/superpowers/specs/2026-08-18-moissonnage-ffvb-design.md`](superpowers/specs/2026-08-18-moissonnage-ffvb-design.md).
 
-**L'accord de la ligue est obtenu.** C'était la seule réserve qui ne se levait pas
-avec du code ; elle est réglée, le chantier peut commencer.
+Ce qui reste n'est plus du développement, c'est de l'observation. Quatre points, par
+ordre d'échéance.
 
-**Un seul chantier, pas deux.** Les résultats sont sur la même page que le
-classement : même requête, même cadence, même repli. Trois requêtes HTTP par
-passage suffisent pour tout.
+**Le premier week-end de championnat, regarder les journaux.** Le journal Cloudflare
+est le **seul** canal d'alerte du dispositif : pas d'email, pas de mention sur la
+page. C'était un choix assumé pour démarrer — on saura vite si les pannes sont
+fréquentes avant d'investir dans une alerte. Personne n'est prévenu, il faut penser à
+regarder.
 
-| | |
-| --- | --- |
-| Adresse | `vbspo_calendrier.php?saison=AAAA/AAAA&codent=…&poule=…` |
-| Poules | `codent=LIAQ&poule=RMB`, `codent=LIAQ&poule=RFB`, `codent=ABCCS&poule=3MD` |
-| Rendu | côté serveur — tout est dans le HTML livré, aucun JavaScript à exécuter |
-| Réponse | 125 Ko en 0,6 s |
-| Encodage | latin-1, à convertir à la lecture |
+**Une page mêlant matchs joués et à venir n'a jamais été analysée.** La fédération
+publie onze colonnes pour un match programmé et douze pour un match joué, en mettant
+le gymnase là où iront les sets. Les deux cas sont éprouvés séparément, sur des
+échantillons réels ; leur mélange n'existera qu'à partir du 26 septembre.
 
-**Le paramètre de la nationale était la dernière inconnue : c'est `codent=ABCCS`.**
-Il ne figure nulle part sur la page du club, qui renvoie vers
-`resu/seniors/2026-2027/index_3md.htm` — un frameset FrontPage dont le cadre
-intérieur appelle le même `vbspo_calendrier.php` que les régionales. D'où un seul
-parseur pour les trois poules, et non deux formats.
+**Le classement du National 3 n'a jamais été moissonné pour de vrai.** La fédération
+ne publie aucun tableau avant la première journée. La voie de remplacement — le
+moissonnage écrase les lignes saisies — n'a donc tourné que sur des données
+fabriquées. Le champ « Nom de l'équipe chez la FFVB » est renseigné pour les trois
+équipes seniors et vérifié contre les vraies pages : chacun désigne exactement un
+club de sa poule.
 
-#### Le rapprochement est validé sur la totalité
-**53 matchs sur 53** : code présent chez la fédération, date identique au jour près,
-dans les trois poules. La saisie du club est bonne d'un bout à l'autre, et le champ
-« Numéro de match » est renseigné partout — ce n'était pas le cas le 15 août.
+**Faut-il moissonner hors week-end ?** Si la fédération valide certains résultats le
+lundi, il faudra deux ou trois passages de plus. À observer, pas à décider maintenant.
 
-**Mais le code n'est pas unique d'une saison à l'autre.** RMB001–090 et 3MD001–132
-sont identiques en 2025/2026 et en 2026/2027. La clé de rapprochement est donc
-**(saison, code)**, la saison se déduisant de la date du match : aucun champ à
-ajouter. Conséquence immédiate, **ne jamais saisir dans Decap un match d'une saison
-passée** : `check-content.mjs` refuserait le doublon de numéro et bloquerait le
-déploiement. Ce contrôle deviendra faux le jour où l'on voudra un historique — à
-traiter alors, pas avant.
-
-#### Structure des données de la page
-Une ligne de calendrier compte douze cellules, **dont des vides qui portent
-l'alignement** : les retirer décale toutes les colonnes.
-
-```
-0 code · 1 date · 2 heure · 3 équipe à domicile · 4 séparateur vide
-5 équipe en déplacement · 6 sets dom. · 7 sets ext. · 8 détail des sets
-9 total de points · 10 arbitres
-```
-
-L'équipe à domicile est **toujours** à gauche. Une rencontre dont une équipe est
-`xxxxx` est une journée d'exemption, pas un match : neuf équipes en R1 masculin,
-donc deux exemptions par équipe sur dix-huit journées.
-
-Le tableau de classement vit sur la même page, colonnes `Points · Jou. · Gag. ·
-Per. · F. · 3-0 · 3-1 · 3-2 · 2-3 · 1-3 · 0-3 · Set.P · Set.C · Coeff.S · Pts.P ·
-Pts.C · Coeff.P`. `F.` compte les **forfaits déclarés**.
-
-#### Le classement se lit, il ne se recalcule pas
-Démontré plutôt que supposé, sur deux saisons.
-
-Deux marques peuvent remplacer le nombre de sets d'une équipe, et toutes deux
-valent match perdu, enregistré 0-3 avec un détail `25:0, 25:0, 25:0` :
-
-- **`P` — pénalisation.** La ligue retire un point au classement.
-- **`F` — forfait déclaré.** Il est compté dans la colonne `F.` du tableau. Selon
-  les circonstances, un forfait peut **en plus** donner lieu à pénalisation — le
-  cas cité par le bureau est le forfait sur le dernier match de la saison.
-
-Les deux produisent un ajustement de points que les résultats ne permettent pas de
-deviner, et qui n'est pas le même :
-
-| Saison, poule | Club | Marque | Recalculé | Publié | Écart |
-| --- | --- | --- | --- | --- | --- |
-| 2025/2026 RMB | Cosmic Volley | `P` | 6 | 5 | **−1** |
-| 2024/2025 RMB | US Talence | `F` | 15 | 12 | **−3** |
-
-Le barème 3/2/1/0 est confirmé sur **quinze bilans de clubs** — les deux poules
-entières — sans une seule divergence ailleurs que sur ces deux lignes. L'écart
-n'est donc pas une erreur de barème, c'est bien un ajustement de la ligue.
-
-**Et cet ajustement ne se lit nulle part.** La colonne `F.` compte les forfaits,
-pas les pénalisations : elle est vide pour Cosmic Volley, qui porte pourtant un
-`P` et perd un point. Un moissonneur qui reconstruirait le classement depuis les
-résultats afficherait cette équipe à 6 points toute la saison sans que personne ne
-comprenne pourquoi. **Le classement se lit tel qu'il est publié.**
-
-#### Architecture
-Le worker interroge la FFVB, garde le résultat en KV, et sert le contenu depuis le
-cache quand il est frais. **Repli sur le fichier saisi à la main dès que quoi que ce
-soit échoue** — la saisie manuelle ne disparaît pas, elle devient le filet.
-
-**Le worker ne doit pas écrire dans `matches.json`.** C'est le fichier que le bureau
-édite dans Decap ; le réécrire effacerait une saisie en cours. Il expose les
-résultats moissonnés à côté, indexés par (saison, code), et la page fusionne à la
-lecture : **un score saisi à la main gagne toujours sur un score moissonné**. Le
-classement, lui, peut être servi directement — personne d'autre ne le touche.
-
-**Cadence : toutes les heures, samedi et dimanche seulement**, soit `0 * * * 6,0` —
-48 déclenchements par semaine au lieu de 168. Les crons sont en UTC, ce qui couvre
-le samedi matin jusqu'au lundi 1 h ou 2 h du matin en heure française. *À surveiller
-la première saison : si la fédération valide certains résultats le lundi, il faudra
-deux ou trois passages de plus.*
-
-#### Ce que le parseur doit refuser de deviner
-Deux valeurs non numériques sont connues dans les colonnes de sets : `P` et `F`,
-toutes deux valant zéro set pour l'équipe qui les porte. Elles sont rares — une
-par poule et par saison sur ce qui a été balayé — et **il a fallu remonter à
-2024/2025 pour rencontrer un `F`** : un parseur éprouvé sur une seule saison ne
-les verra pas toutes.
-
-Toute autre valeur inconnue doit **mettre le match de côté avec une alerte
-visible**, jamais produire un score inventé.
-
-**Fragilité.** Ce HTML est d'une autre époque — balises en majuscules, `bgcolor`,
-Apache 2.2. Stable depuis des années parce que personne n'y touche, mais une refonte
-casserait l'analyse **en silence**. D'où le repli, et un signal visible quand le
-moissonnage échoue.
-
-**Prochain pas :** écrire le moissonneur. Le sondage a validé l'extraction des
-résultats et du classement sur la saison passée ; le code du sondage était jetable et
-n'a pas été conservé.
-
-**Les feuilles de match** restent accessibles par
-`ffvolley_fdme.php?saison=…&codent=…&codmatch=RMB002` si l'on veut un jour lier le
-détail officiel d'une rencontre.
-
-**Ces données ne remontent qu'une fois le match terminé** — confirmé par le bureau,
-qui connaît la chaîne. Ce n'est donc pas une source de score en direct. Le direct est
-un sujet séparé, voir l'entrée suivante.
+#### Points mineurs différés, aucun bloquant
+Relevés pendant l'exécution et jugés non bloquants par la relecture finale :
+duplication des utilitaires d'analyse entre `ffvb/calendrier.mjs` et
+`ffvb/classement.mjs` · `capture()` du fichier de contrôle est synchrone et son nom
+ne le dit pas, un appelant asynchrone y perdrait sa trace · `fusionnerMatchs` lève si
+le cache n'a pas de champ `resultats`, là où `fusionnerClassement` garde le même accès
+· la non-mutation n'est éprouvée qu'au premier niveau, et seulement pour les matchs ·
+`date`, `detail` et `forfaits` sont produits par les parseurs sans que personne ne les
+lise · le journal trace un écart par match plutôt qu'un résumé par poule, ce qui
+amplifierait un vrai changement de format · `X-Robots-Tag` manque sur `/robots.txt` et
+sur les redirections 301, défaut antérieur au chantier · la fenêtre de dédoublonnage
+des traces suit la durée de vie de l'isolat, sans délai explicite.
 
 ### Score en direct depuis l'application de feuille de match
 **Idée du 15 août, documentation manquante.** La nouvelle version de la feuille de
@@ -336,6 +250,8 @@ Barrage d'indexation · redirections des anciennes URL · images en WebP · poli
 auto-hébergées · page Partenaires et fiches de gymnase · formulaires Web3Forms ·
 carte des gymnases et vignette de partage · page Adhésion entièrement sous Decap ·
 mini-classement · favicon et sitemap.
+
+**19 août** — le moissonnage FFVB des classements et des résultats, du sondage sur données réelles jusqu'à la mise en ligne. Trois autres chantiers le même jour, tous nés de la relecture du 17 août : une rencontre vieillit désormais avec sa date et non avec sa saisie — sans quoi l'accueil aurait annoncé un prochain match déjà joué dès le lendemain du 26 septembre ; le contenu éditorial est échappé avant insertion, avec un garde-fou qui refuse toute interpolation non protégée ; et le contrôle vérifie enfin les adresses écrites en dur dans les seize pages, trou par lequel un logo cassé était passé.
 
 **15 août** — les trois finitions de la relecture d'août, avec leurs entrées de galerie
 dans le même commit : navigation entre fiches d'équipe, période remontée dans la colonne
