@@ -172,6 +172,28 @@ function titrePage(titre){
   const og=document.querySelector('meta[property="og:title"]');
   if(og)og.setAttribute("content",document.title);
 }
+// Le statut d un match est saisi a la main : sans ces deux predicats, une
+// rencontre jouee resterait « a venir » jusqu a ce que quelqu un ouvre Decap.
+// Le lendemain du premier match, l accueil annoncerait encore un prochain match
+// deja joue, compte a rebours fige a zero.
+//
+// Le jour meme, le match reste a venir : c est le jour ou le bandeau sert le
+// plus, et un compteur a zero dit « c est maintenant ». Des le lendemain il
+// bascule dans les resultats, ou il attend son score sous « En attente de
+// resultat » — les resultats de la federation mettent au plus un jour a
+// paraitre, et le bureau peut toujours saisir le score a la main.
+//
+// La bascule se juge dans le fuseau du visiteur : le public est correzien.
+function jourPasse(iso){
+  const d=new Date(iso);
+  if(Number.isNaN(d.getTime()))return false;
+  return Date.now()>new Date(d.getFullYear(),d.getMonth(),d.getDate(),23,59,59,999).getTime();
+}
+// joue() est la negation exacte de aVenir() : un match est dans l un ou dans
+// l autre, jamais dans les deux ni dans aucun. C est ce qui empeche une
+// rencontre de disparaitre du site entre sa date et la saisie de son score.
+function aVenir(m){return m&&m.statut==="a_venir"&&!jourPasse(m.date);}
+function joue(m){return !aVenir(m);}
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
 // Ligne d un match a venir. Exactement 3 enfants directs : .match-row est
 // une grille a 3 colonnes qui deborde au-dela.
