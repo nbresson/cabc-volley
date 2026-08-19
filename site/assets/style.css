@@ -279,17 +279,22 @@ main:has(>.dark:last-child)+.socialbar{border-top:2px solid var(--creme)}
    .nav-infos : c est ce qui lui donne la pleine largeur. L en-tete etant
    sticky, il fait deja bloc de reference pour un enfant absolu — inutile,
    et nuisible, de poser position:relative sur l entree elle-meme. */
-.nav-infos{align-self:stretch;display:flex;align-items:center}
-/* Le pointeur doit pouvoir descendre du libelle au panneau sans traverser
-   de vide : l entree mord sur le rembourrage bas de l en-tete, sinon le
-   panneau se referme entre les deux. */
-.nav-infos-toggle{display:flex;align-items:center;gap:7px;align-self:stretch;padding-bottom:16px;margin-bottom:-16px}
+/* Le pont vers le panneau est porte par le conteneur, jamais par le lien.
+   Etirer le lien sur la hauteur de l en-tete descendait sa ligne de base sous
+   celle de ses voisines, et posait son trait d entree active au ras du bord
+   au lieu de le poser sous le texte. Le conteneur, lui, peut s allonger sans
+   rien deplacer : sa marge negative annule sa propre hauteur, donc le centrage
+   de la barre continue de porter sur le texte seul.
+   Un pseudo-element aurait fait le meme pont, mais il se serait ancre sur
+   l en-tete sticky et non sur l entree — le meme piege que pour le panneau. */
+.nav-infos{display:flex;align-items:center;padding-bottom:16px;margin-bottom:-16px}
+.nav-infos-toggle{display:inline-flex;align-items:center;gap:7px}
 .chev{font-family:'DM Mono',monospace;font-size:9px}
 .mega{position:absolute;top:100%;left:0;right:0;display:none;grid-template-columns:1.1fr 1fr 1fr 1fr;background:var(--encre);color:var(--creme);border-bottom:2px solid var(--encre)}
 /* Au survol et au focus : sans focus-within, le panneau serait inatteignable
    au clavier, donc invisible pour qui ne se sert pas d une souris. */
 .nav-infos:hover .mega,.nav-infos:focus-within .mega{display:grid}
-.nav-infos:hover .nav-infos-toggle{background:var(--encre);color:var(--creme)}
+.nav-infos:hover .nav-infos-toggle,.nav-infos:focus-within .nav-infos-toggle{background:var(--encre);color:var(--creme);padding:6px 12px;margin:-6px -12px}
 .mega-col{padding:28px 30px;border-right:1px solid #3a352b;display:flex;flex-direction:column}
 .mega-col:last-child{border-right:none}
 .mega-intro .eyebrow{color:var(--mention-sombre)}
