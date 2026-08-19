@@ -1,4 +1,16 @@
 // Site CABC Volley — header/footer partagés + rendu du contenu JSON (Decap)
+// Tout le contenu editorial vient de Decap et repart dans du HTML par
+// innerHTML. Un partenaire nomme  Ville de Brive "la Gaillarde"  refermait
+// l attribut title des son premier guillemet : le navigateur inventait trois
+// attributs et l infobulle etait tronquee. Un  <  dans un titre d article
+// ferait pire encore. Ces cinq caracteres couvrent le texte comme l attribut,
+// apostrophe comprise - le code ne delimite aujourd hui qu avec des guillemets
+// doubles, mais rien n oblige la prochaine ligne ecrite a s y tenir.
+// null et undefined rendent "" et non "null" : presque tous les champs de
+// Decap sont facultatifs, et la plupart arrivent ici absents.
+function echapper(v){return v==null?"":String(v)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
 const NAV=[["index.html","Accueil"],["club.html","Le Club"],["equipes.html","Équipes"],["calendrier.html","Calendrier"],["actualites.html","Actualités"],["boutique.html","Boutique"],["infos.html","Infos"],["contact.html","Contact"]];
 // Pages enfants : elles allument l'entree de nav de leur page parente.
 const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","partenaires.html":"club.html","gymnase.html":"contact.html"};
@@ -75,12 +87,12 @@ async function murPartenaires(){
   const tete=here()==="partenaires.html"?"":`<div class="mur-tete">
     <div>
       <h2>Ils nous soutiennent</h2>
-      ${data?.chapo?`<p class="muted">${data.chapo}</p>`:""}
+      ${data?.chapo?`<p class="muted">${echapper(data.chapo)}</p>`:""}
     </div>
     <a href="partenaires.html" class="mono lien" style="color:var(--encre)">Tous nos partenaires →</a>
   </div>`;
   barre.insertAdjacentHTML("beforebegin",`<div class="murlogos">${tete}
-  ${items.map(p=>`<a href="partenaires.html" title="${p.nom||""}"><img src="${p.logo}" alt="${p.nom||""}" loading="lazy"></a>`).join("")}
+  ${items.map(p=>`<a href="partenaires.html" title="${echapper(p.nom)}"><img src="${echapper(p.logo)}" alt="${echapper(p.nom)}" loading="lazy"></a>`).join("")}
 </div>`);
   const mur=document.querySelector(".murlogos");
   disposerMur(mur,items.length);
@@ -200,9 +212,9 @@ function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekd
 // Le surlignage des matchs a domicile et l attribut de filtre voyagent avec la
 // ligne : le calendrier comme la fiche d equipe en profitent sans y toucher.
 function matchRow(m){const d=new Date(m.date);return `
-    <div class="match-row${m.domicile?' hl':''}"${m.equipe?` data-filtre="${m.equipe}"`:""}>
+    <div class="match-row${m.domicile?' hl':''}"${m.equipe?` data-filtre="${echapper(m.equipe)}"`:""}>
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
-      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
+      <div><strong class="display-m">CAB — ${echapper(m.adversaire)}</strong><div class="muted" style="font-size:13px">${echapper(m.competition)} · ${echapper(m.lieu)}</div></div>
       <span class="badge${m.domicile?'':' badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span></div>`;}
 // Ligne de resultat. Le score et le badge sont groupes dans une seule cellule,
 // .match-row n acceptant que trois enfants directs. Partagee par la fiche
@@ -215,9 +227,9 @@ function resultatConnu(m){return String(m&&m.score||"").trim()!=="";}
 function ligneResultat(m){return `
     <div class="match-row">
       <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${fmtDate(m.date)}</span>
-      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition}</div></div>
+      <div><strong class="display-m">CAB — ${echapper(m.adversaire)}</strong><div class="muted" style="font-size:13px">${echapper(m.competition)}</div></div>
       <span class="row" style="align-items:center;gap:12px">
-        <strong class="display-m" style="font-weight:900">${m.score||"–"}</strong>
+        <strong class="display-m" style="font-weight:900">${echapper(m.score)||"–"}</strong>
         ${resultatConnu(m)
           ?`<span class="badge${m.gagne?'':' badge-muted'}">${m.gagne?"Victoire":"Défaite"}</span>`
           :`<span class="badge badge-outline">En attente de résultat</span>`}</span></div>`;}
@@ -291,7 +303,7 @@ function bandeauProchainMatch(m){
   // Date, heure, competition, lieu : l ordre « competition puis lieu » est
   // celui de matchRow() et des autres pages. filter(Boolean) evite le « · »
   // orphelin si un champ venait a manquer.
-  const infos=[d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"}),d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),m.competition,m.lieu].filter(Boolean).join(" · ");
+  const infos=[d.toLocaleDateString("fr-FR",{weekday:"long",day:"2-digit",month:"long"}),d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}),echapper(m.competition),echapper(m.lieu)].filter(Boolean).join(" · ");
   // Les cellules naissent a « -- » et sont remplies par battreCompteARebours().
   // Le bandeau reste donc lisible meme si le minuteur ne demarre jamais.
   // aria-hidden sur chaque cellule : sans cela un lecteur d ecran reannonce le
@@ -301,7 +313,7 @@ function bandeauProchainMatch(m){
   return `<div class="pad duo" style="--b:auto;gap:32px;align-items:center">
         <div>
           <div class="eyebrow" style="color:var(--mention-sombre)">Prochain match ${m.domicile?"à domicile":"à l'extérieur"}</div>
-          <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${m.adversaire}</h2>
+          <h2 style="color:var(--creme);font-size:clamp(32px,5vw,52px);margin:10px 0">C.A. Brive — ${echapper(m.adversaire)}</h2>
           <div class="mono" style="color:var(--mention-sombre)">${infos}</div>
           <div class="row" style="margin-top:22px;align-items:center">
             ${m.domicile?`<a href="calendrier.html" class="btn btn-outline-light">Venir au match — entrée libre</a>`:""}
@@ -309,7 +321,7 @@ function bandeauProchainMatch(m){
           </div>
         </div>
         <div>
-          <div class="countdown" data-cible="${m.date}" role="timer" aria-label="Compte à rebours avant le match">
+          <div class="countdown" data-cible="${echapper(m.date)}" role="timer" aria-label="Compte à rebours avant le match">
             ${cell("j","JOURS")}${cell("h","HEURES")}${cell("m","MIN")}${cell("s","SEC","sec")}
           </div>
           <span class="sr-only">Match le ${d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})} à ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}.</span>
@@ -340,7 +352,7 @@ function initBarreMatchMobile(m){
   document.body.insertAdjacentHTML("beforeend",`<div class="match-sticky">
     <div style="min-width:0">
       <div class="sur">Prochain match · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})} · ${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</div>
-      <div class="titre">CAB — ${m.adversaire} · J-${j}</div>
+      <div class="titre">CAB — ${echapper(m.adversaire)} · J-${j}</div>
     </div>
     <a href="calendrier.html" class="btn">J'y vais</a></div>`);
   const barre=document.querySelector(".match-sticky");
@@ -415,10 +427,38 @@ function revelerSections(){
 // sinon elle remplit le cadre quitte à être recadrée (photos).
 function vignette(src,alt,cadrage){if(!src)return"";
   const entier=cadrage==="entier";
-  return `<img src="${src}" alt="${alt||""}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${entier?"contain":"cover"}${entier?";padding:14px":""}">`;}
+  return `<img src="${echapper(src)}" alt="${echapper(alt)}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${entier?"contain":"cover"}${entier?";padding:14px":""}">`;}
+// Adresses admises dans un lien saisi : les chemins relatifs, http, https,
+// mailto et tel. Les deux derniers n executent rien et sont des liens
+// legitimes - le site en porte deja en dur, et  [nous ecrire](mailto:...)
+// dans un article est un usage ordinaire. Tout autre schema est refuse : un
+// [texte](javascript:alert(1)) saisi dans un article s executait au clic.
+// Le refus rend le texte du lien seul, ou fait disparaitre le bouton : une
+// phrase sans lien se lit encore, un lien mort trompe le visiteur.
+function lienSur(u){
+  const s=String(u==null?"":u).trim();
+  // Le vrai garde-fou. Un caractere de controle glisse au travers du test de
+  // schema, alors que le navigateur, lui, suit  java<TAB>script:  comme du
+  // javascript.
+  if(/[\u0000-\u001f\u007f]/.test(s))return "";
+  const schema=s.match(/^([a-z][a-z0-9+.-]*):/i);
+  return !schema||/^(https?|mailto|tel)$/i.test(schema[1])?s:"";
+}
 // Markdown minimal (Decap) : paragraphes, ## titres, > citations, - listes, **gras**, [lien](url)
+// Les marqueurs de bloc se lisent sur le texte brut, l echappement ne vient
+// qu ensuite. L ordre inverse obligeait a chercher la citation sous la forme
+// que echapper() lui donne,  &gt; , et liait ainsi les deux fonctions a
+// distance : assouplir un jour echapper() sur le chevron - il n est dangereux
+// que dans de rares contextes - aurait fait disparaitre toutes les citations
+// des articles sans que rien ne bronche.
 function mdToHtml(md){if(!md)return"";
-  const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2" class="lien">$1</a>');
+  // inl() est le passage oblige des quatre sortes de blocs : ce qui vient de
+  // l article y est echappe avant qu une seule balise soit ecrite, et les
+  // balises ecrites ensuite le sont par le code. L adresse d un lien arrive
+  // donc a lienSur() deja echappee, ce qui prive au passage un
+  // &#106;avascript: de son detour par les entites.
+  const inl=s=>echapper(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+    .replace(/\[(.+?)\]\((.+?)\)/g,(t,texte,url)=>{const u=lienSur(url);return u?`<a href="${u}" class="lien">${texte}</a>`:texte;});
   return md.split(/\n\n+/).map(b=>{b=b.trim();if(!b)return"";
     if(b.startsWith("> "))return '<blockquote class="ds"><p>'+inl(b.slice(2).replace(/\n/g," "))+'</p></blockquote>';
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';
@@ -430,14 +470,14 @@ function mdToHtml(md){if(!md)return"";
 function salleCard(v){
   const dedans=`
       <div class="ph" style="aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
-        ${v.photo?`<img src="${v.photo}" alt="${v.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}
-        ${v.etiquette?`<span class="badge" style="position:absolute;top:12px;left:12px">${v.etiquette}</span>`:''}
+        ${v.photo?`<img src="${echapper(v.photo)}" alt="${echapper(v.nom)}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}
+        ${v.etiquette?`<span class="badge" style="position:absolute;top:12px;left:12px">${echapper(v.etiquette)}</span>`:''}
       </div>
       <div class="body" style="padding:20px">
-        <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${v.nom}</strong>
-        ${v.adresse?`<span class="muted" style="font-size:13px">${v.adresse}</span>`:''}
-        ${v.usage?`<span class="muted" style="font-size:13px">${v.usage}</span>`:''}
-        ${v.acces?`<span class="mono" style="font-size:10px">${v.acces}</span>`:''}
+        <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${echapper(v.nom)}</strong>
+        ${v.adresse?`<span class="muted" style="font-size:13px">${echapper(v.adresse)}</span>`:''}
+        ${v.usage?`<span class="muted" style="font-size:13px">${echapper(v.usage)}</span>`:''}
+        ${v.acces?`<span class="mono" style="font-size:10px">${echapper(v.acces)}</span>`:''}
       </div>`;
   // Une salle sans slug reste affichee mais n est pas cliquable, exactement
   // comme une equipe sans slug : une saisie incomplete degrade la carte, elle
@@ -445,8 +485,15 @@ function salleCard(v){
   // non cliquable — imbriquer un lien dans un lien n est pas du HTML valide,
   // et la fiche porte de toute facon son propre bouton d itineraire.
   if(v.slug)return `<a class="card link shadow" href="${gymnaseUrl(v.slug)}">${dedans}</a>`;
+  // Echapper l adresse empechait la sortie d attribut, pas le schema : un
+  // itineraire saisi  javascript:...  restait cliquable. lienSur() juge
+  // l adresse mais ne l echappe pas - ici elle arrive brute, quand mdToHtml()
+  // la lui passe deja echappee - d ou le echapper() conserve juste apres.
+  // Une adresse refusee fait disparaitre le bouton plutot que de le laisser
+  // pointer dans le vide : un bouton mort est pire que pas de bouton.
+  const iti=lienSur(v.itineraire);
   return `<div class="card shadow">${dedans}
-      ${v.itineraire?`<div class="body" style="padding:0 20px 20px"><a href="${v.itineraire}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;font-size:11px;color:var(--encre)">Itinéraire ↗</a></div>`:''}
+      ${iti?`<div class="body" style="padding:0 20px 20px"><a href="${echapper(iti)}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;font-size:11px;color:var(--encre)">Itinéraire ↗</a></div>`:''}
     </div>`;}
 // Remplit la grille et le sous-titre d une section gymnases. Chaque element est
 // cherche par identifiant et ignore s il manque : une page peut n avoir que la
