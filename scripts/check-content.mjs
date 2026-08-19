@@ -26,6 +26,35 @@ for (const e of equipes) {
   slugs.add(e.slug);
 }
 
+// Les seances d entrainement. Elles etaient une phrase libre — trois graphies
+// de Saint-Germain et trois formats d heure y avaient deja diverge sans que
+// rien ne s en apercoive. Devenues des champs, elles se controlent.
+const JOURS = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
+const salles = new Set((lire("gymnases.json").items || []).map((v) => v.slug));
+for (const e of equipes) {
+  for (const c of e.planning || []) {
+    const ou = `Équipe « ${e.nom} », séance ${c.jour || "sans jour"}`;
+    if (!JOURS.includes(c.jour)) {
+      erreurs.push(`${ou} : jour « ${c.jour} » inconnu`);
+    }
+    // Deux chiffres exiges des deux cotes : c est ce qui rend la comparaison
+    // de chaines ci-dessous fiable, « 9:00 » se classant sinon apres « 10:00 ».
+    for (const [nom, v] of [["de début", c.debut], ["de fin", c.fin]]) {
+      if (v && !/^([01]\d|2[0-3]):[0-5]\d$/.test(v)) {
+        erreurs.push(`${ou} : heure ${nom} « ${v} » attendue sous la forme HH:MM`);
+      }
+    }
+    if (c.debut && c.fin && c.fin <= c.debut) {
+      erreurs.push(`${ou} : la fin « ${c.fin} » ne suit pas le début « ${c.debut} »`);
+    }
+    if (c.gymnase && !salles.has(c.gymnase)) {
+      erreurs.push(`${ou} : salle inconnue « ${c.gymnase} »`);
+    }
+  }
+}
+
+const seances = equipes.reduce((n, e) => n + (e.planning || []).length, 0);
+
 const numeros = new Map();
 for (const m of matchs) {
   if (m.equipe && !slugs.has(m.equipe)) {
@@ -173,5 +202,5 @@ if (erreurs.length) {
 const tagues = matchs.filter((m) => m.equipe).length;
 const lignesClassement = classement.reduce((n, t) => n + (Array.isArray(t.lignes) ? t.lignes.length : 0), 0);
 console.log(
-  `OK — ${equipes.length} équipes, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes, ${ciblesPages} adresses vérifiées dans ${pages.length} pages.`,
+  `OK — ${equipes.length} équipes totalisant ${seances} séances, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes, ${ciblesPages} adresses vérifiées dans ${pages.length} pages.`,
 );

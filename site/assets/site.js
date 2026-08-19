@@ -50,6 +50,61 @@ function barreReseaux(){return `<div class="socialbar">${RESEAUX.map(([nom,url,g
 // Seul endroit du code qui construit l'URL d'une page equipe.
 // Passer a des URLs propres plus tard ne touchera que cette fonction.
 function teamUrl(slug){return "equipe.html?e="+encodeURIComponent(slug);}
+
+// Les creneaux d entrainement. Ils etaient une phrase libre par equipe, redite
+// sur quatre pages : trois graphies de Saint-Germain et trois formats d heure
+// cohabitaient. Ils sont desormais des champs, et ces fonctions sont le seul
+// endroit qui les met en francais.
+const JOURS_SEMAINE=["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"];
+const JOURS_COURTS={lundi:"Lun.",mardi:"Mar.",mercredi:"Mer.",jeudi:"Jeu.",
+  vendredi:"Ven.",samedi:"Sam.",dimanche:"Dim."};
+
+// 20:00 se dit « 20h » et 18:30 « 18h30 » : les zeros de minutes ne se lisent
+// pas. Une valeur qui n a pas la forme attendue ressort telle quelle — la
+// perdre en silence serait pire que l afficher de travers.
+function heureFr(v){
+  const t=String(v==null?"":v).trim();
+  const m=t.match(/^(\d{1,2}):(\d{2})$/);
+  return m?(m[2]==="00"?m[1]+"h":m[1]+"h"+m[2]):t;
+}
+// Une seance sans heure de fin garde son heure de debut : l Ecole de volley
+// commence a 10h sans que le club ait arrete l heure de sortie.
+function plageCreneau(c){
+  const d=heureFr(c&&c.debut),f=heureFr(c&&c.fin);
+  return d&&f?d+" – "+f:d||f||"";
+}
+// Les seances remises dans l ordre de la semaine : Decap les range dans
+// l ordre de saisie, qui n a aucune raison de suivre les jours.
+function creneauxDe(equipe){
+  return (((equipe||{}).planning)||[])
+    .filter(c=>c&&JOURS_SEMAINE.indexOf(c.jour)>=0)
+    .slice().sort((a,b)=>JOURS_SEMAINE.indexOf(a.jour)-JOURS_SEMAINE.indexOf(b.jour)
+      ||String(a.debut||"").localeCompare(String(b.debut||"")));
+}
+// Les salles indexees par slug, telles que le planning et les fiches les
+// cherchent.
+function parSalle(gymnases){
+  const o={};
+  ((((gymnases||{}).items))||[]).forEach(v=>{if(v&&v.slug)o[v.slug]=v;});
+  return o;
+}
+// Une ligne par seance, pour les pages qui n ont qu une phrase a donner.
+// `salles` est facultatif : sans lui la phrase se tait sur le lieu plutot que
+// d afficher un slug.
+function phraseCreneaux(equipe,salles){
+  return creneauxDe(equipe).map(c=>{
+    const v=salles&&salles[c.gymnase];
+    const dit=[plageCreneau(c),v?(v.court||v.nom):""].filter(Boolean);
+    // La precision se parenthese derriere ce qu elle precise. Seule, elle EST
+    // l information — les Jeunes n ont qu « apres-midi, horaire a confirmer » a
+    // annoncer — et des parentheses la donneraient pour un aparte.
+    if(c.precision){
+      if(dit.length)dit[dit.length-1]+=" ("+c.precision+")";
+      else dit.push(c.precision);
+    }
+    return (JOURS_COURTS[c.jour]+" "+dit.join(" · ")).trim();
+  });
+}
 // Jumelle de teamUrl, pour la meme raison : une seule ligne a changer le jour
 // ou les fiches de salle prendront une URL propre.
 function gymnaseUrl(slug){return "gymnase.html?g="+encodeURIComponent(slug);}

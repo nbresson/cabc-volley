@@ -37,23 +37,20 @@
 <script>
 window.__pageInit=async function(){
   const teams=await getJSON("content/teams.json");
-  const salles=await getJSON("content/gymnases.json");
+  const gymnases=await getJSON("content/gymnases.json");
   const items=teams?.items||[];
 
-  // Un creneau saisi porte souvent deux seances separees par « ; ». Chacune sur
-  // sa ligne se lit du coin de l oeil ; une phrase a rallonge oblige a la lire
-  // en entier pour trouver son jour.
-  const seances=c=>String(c||"").split(/\s*;\s*/).map(s=>s.trim()).filter(Boolean);
+  const salles=parSalle(gymnases);
 
   // Le nom mene a la fiche d equipe quand elle existe. Une equipe sans slug
   // reste dans le tableau sans lien mort, comme sur la page Equipes.
   // La categorie tient sous le nom plutot que dans sa propre colonne : a trois
-  // colonnes, le creneau — la seule chose qu on vient chercher ici — sortait de
+  // colonnes, l horaire — la seule chose qu on vient chercher ici — sortait de
   // l ecran d un telephone et se lisait a la barre de defilement.
   const rangee=t=>`<tr>
       <td><strong>${t.slug?`<a class="lien" href="${teamUrl(t.slug)}">${echapper(t.nom)}</a>`:echapper(t.nom)}</strong>
         ${t.categorie?`<br><span class="mono" style="font-size:10px;letter-spacing:.12em">${echapper(t.categorie)}</span>`:""}</td>
-      <td>${seances(t.creneau).map(s=>echapper(s)).join("<br>")||'<span class="muted">—</span>'}</td>
+      <td>${phraseCreneaux(t,salles).map(c=>echapper(c)).join("<br>")||'<span class="muted">—</span>'}</td>
     </tr>`;
 
   // Meme regroupement que la page Equipes : l ordre connu d abord, un groupe
@@ -100,35 +97,47 @@ window.__pageInit=async function(){
   // Planning hebdomadaire. La couleur est portee par la salle et non par la
   // case : deux cases du meme gymnase ne peuvent donc pas se contredire, et la
   // legende ne peut pas dementir le tableau.
-  const JOURS=["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"];
   // Les quatre teintes de la charte se ressemblent volontairement — trois
   // beiges et l encre. La couleur ne peut donc pas etre le seul repere : le nom
   // court de la salle est ecrit dans la case, comme pour l entree active du
   // menu, ou le trait seul ne suffisait pas.
   const TEINTES={creme:["var(--creme)","var(--encre)"],sable:["var(--sable)","var(--encre)"],
     lin:["var(--lin)","var(--encre)"],encre:["var(--encre)","var(--creme)"]};
-  const parSlug=Object.fromEntries(((salles?.items)||[]).map(v=>[v.slug,v]));
-  const equipes=(teams?.items||[]).filter(e=>(e.planning||[]).length);
+  const equipes=(teams?.items||[]).filter(e=>creneauxDe(e).length);
   if(equipes.length){
     const utilisees=new Set();
-    const cellule=(e,jour)=>{
-      const c=(e.planning||[]).find(x=>x.jour===jour);
-      if(!c)return '<td></td>';
-      const v=parSlug[c.gymnase];
+    // Une seance par bloc, et non par case : le vendredi, les Regional 1
+    // alternent entre deux salles. Deux blocs de deux couleurs disent
+    // l alternance ; une case d une seule couleur en cacherait la moitie.
+    const bloc=c=>{
+      const v=salles[c.gymnase];
       if(v)utilisees.add(v.slug);
-      const [fond,encre]=TEINTES[v?.couleur]||TEINTES.creme;
-      // Sans salle, la case reste sur le fond de la page : rien a signaler.
+      const [fond,encre]=TEINTES[(v||{}).couleur]||TEINTES.creme;
+      // Sans salle, le bloc reste sur le fond de la page : rien a signaler.
       const style=v?`background:${fond};color:${encre}`:"";
-      const nom=v?`<span class="mono" style="font-size:10px;letter-spacing:.14em;display:block;margin-top:6px;opacity:.8">${echapper(v.court||v.nom)}</span>`:"";
-      return `<td style="${style}">${echapper(c.texte||"")}${nom}</td>`;
+      const plage=plageCreneau(c);
+      return `<div style="padding:11px 13px;${style}">`
+        +(plage?`<strong style="font-weight:600">${echapper(plage)}</strong>`:"")
+        +(v?`<span class="mono" style="font-size:10px;letter-spacing:.14em;display:block;margin-top:5px;opacity:.8">${echapper(v.court||v.nom)}</span>`:"")
+        +(c.precision?`<span style="font-size:12px;line-height:1.35;display:block;margin-top:5px;opacity:.85">${echapper(c.precision)}</span>`:"")
+        +`</div>`;
+    };
+    const cellule=(e,jour)=>{
+      const cs=creneauxDe(e).filter(c=>c.jour===jour);
+      if(!cs.length)return '<td></td>';
+      // La couleur remplit le bloc et non la cellule, qui garde un liset de
+      // fond sur ses quatre cotes. Sans lui, deux salles identiques cote a cote
+      // — l UFOLEP le mercredi et le jeudi a Arsonval — se rejoignent en un seul
+      // pave, et se lisent comme une seance de deux jours.
+      return `<td style="padding:0 1px;vertical-align:top"><div style="display:grid;gap:2px">${cs.map(bloc).join("")}</div></td>`;
     };
     document.getElementById("planning").innerHTML=
-      `<thead><tr><th>Équipe</th>${JOURS.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
-      `<tbody>${equipes.map(e=>`<tr><td><a href="${teamUrl(e.slug)}" class="lien">${echapper(e.nom)}</a></td>${JOURS.map(j=>cellule(e,j)).join("")}</tr>`).join("")}</tbody>`;
+      `<thead><tr><th>Équipe</th>${JOURS_SEMAINE.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
+      `<tbody>${equipes.map(e=>`<tr><td><a href="${teamUrl(e.slug)}" class="lien">${echapper(e.nom)}</a></td>${JOURS_SEMAINE.map(j=>cellule(e,j)).join("")}</tr>`).join("")}</tbody>`;
     document.getElementById("semaine-note").textContent=equipes.length+" équipes · saison 2026–2027";
     // La legende ne montre que les salles reellement employees : une salle sans
     // creneau n a rien a y faire.
-    const leg=((salles?.items)||[]).filter(v=>utilisees.has(v.slug));
+    const leg=((gymnases?.items)||[]).filter(v=>utilisees.has(v.slug));
     document.getElementById("legende").innerHTML=leg.map(v=>{
       const [fond,encre]=TEINTES[v.couleur]||TEINTES.creme;
       return `<span style="display:inline-flex;align-items:baseline;gap:9px">

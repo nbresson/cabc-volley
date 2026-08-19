@@ -21,8 +21,9 @@
 <script>
 window.__pageInit=async function(){
   const slug=new URLSearchParams(location.search).get("e");
-  const [teams,matches,settings]=await Promise.all([
-    getJSON("content/teams.json"),getJSON("content/matches.json"),getJSON("content/settings.json")]);
+  const [teams,matches,settings,gymnases]=await Promise.all([
+    getJSON("content/teams.json"),getJSON("content/matches.json"),getJSON("content/settings.json"),
+    getJSON("content/gymnases.json")]);
   const el=document.getElementById("equipe");
   const t=(teams?.items||[]).find(x=>x.slug&&x.slug===slug);
   if(!t){el.innerHTML='<section class="pad section"><p class="muted">Équipe introuvable. <a href="equipes.html" class="lien">Retour aux équipes</a></p></section>';return;}
@@ -31,7 +32,7 @@ window.__pageInit=async function(){
   const entete=`<section class="pad section">
     <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="equipes.html">Équipes</a><span>/</span><span style="color:var(--encre)">${echapper(t.nom)}</span></div>
     <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(32px,7vw,72px)">${echapper(t.nom)}</h1><span class="mono" style="align-self:flex-end">${echapper(t.categorie)}</span></div>
-    ${t.creneau?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${echapper(t.creneau)}</p>`:""}
+    ${phraseCreneaux(t,parSalle(gymnases)).map(c=>`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${echapper(c)}</p>`).join("")}
     ${t.photo
       ?`<img src="${echapper(t.photo)}" alt="${echapper(t.nom)}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-top:24px">`
       :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-top:24px"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div>'}
