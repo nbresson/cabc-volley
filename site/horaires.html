@@ -21,6 +21,11 @@
   <nav class="ancres" id="ancres-groupes" aria-label="Groupes d'équipes" style="display:none"></nav>
 </section>
 <section class="section pad"><div id="horaires"></div></section>
+<section class="section pad" id="semaine" style="display:none">
+  <div class="section-head"><h2>La semaine</h2><span class="mono" id="semaine-note"></span></div>
+  <div class="table-wrap"><table class="ds" id="planning"></table></div>
+  <div id="legende" style="display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:20px"></div>
+</section>
 <section class="section pad">
   <div class="row">
     <a class="btn btn-secondary" href="acces.html">Où sont les gymnases ? →</a>
@@ -32,6 +37,7 @@
 <script>
 window.__pageInit=async function(){
   const teams=await getJSON("content/teams.json");
+  const salles=await getJSON("content/gymnases.json");
   const items=teams?.items||[];
 
   // Un creneau saisi porte souvent deux seances separees par « ; ». Chacune sur
@@ -89,6 +95,48 @@ window.__pageInit=async function(){
   if(visibles.length>1){
     ancres.innerHTML=visibles.map(([nom])=>`<a href="#${slugAncre(nom)}">${echapper(nom)} ↓</a>`).join("");
     ancres.style.display="";
+  }
+
+  // Planning hebdomadaire. La couleur est portee par la salle et non par la
+  // case : deux cases du meme gymnase ne peuvent donc pas se contredire, et la
+  // legende ne peut pas dementir le tableau.
+  const JOURS=["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"];
+  // Les quatre teintes de la charte se ressemblent volontairement — trois
+  // beiges et l encre. La couleur ne peut donc pas etre le seul repere : le nom
+  // court de la salle est ecrit dans la case, comme pour l entree active du
+  // menu, ou le trait seul ne suffisait pas.
+  const TEINTES={creme:["var(--creme)","var(--encre)"],sable:["var(--sable)","var(--encre)"],
+    lin:["var(--lin)","var(--encre)"],encre:["var(--encre)","var(--creme)"]};
+  const parSlug=Object.fromEntries(((salles?.items)||[]).map(v=>[v.slug,v]));
+  const equipes=(teams?.items||[]).filter(e=>(e.planning||[]).length);
+  if(equipes.length){
+    const utilisees=new Set();
+    const cellule=(e,jour)=>{
+      const c=(e.planning||[]).find(x=>x.jour===jour);
+      if(!c)return '<td></td>';
+      const v=parSlug[c.gymnase];
+      if(v)utilisees.add(v.slug);
+      const [fond,encre]=TEINTES[v?.couleur]||TEINTES.creme;
+      // Sans salle, la case reste sur le fond de la page : rien a signaler.
+      const style=v?`background:${fond};color:${encre}`:"";
+      const nom=v?`<span class="mono" style="font-size:10px;letter-spacing:.14em;display:block;margin-top:6px;opacity:.8">${echapper(v.court||v.nom)}</span>`:"";
+      return `<td style="${style}">${echapper(c.texte||"")}${nom}</td>`;
+    };
+    document.getElementById("planning").innerHTML=
+      `<thead><tr><th>Équipe</th>${JOURS.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
+      `<tbody>${equipes.map(e=>`<tr><td><a href="${teamUrl(e.slug)}" class="lien">${echapper(e.nom)}</a></td>${JOURS.map(j=>cellule(e,j)).join("")}</tr>`).join("")}</tbody>`;
+    document.getElementById("semaine-note").textContent=equipes.length+" équipes · saison 2026–2027";
+    // La legende ne montre que les salles reellement employees : une salle sans
+    // creneau n a rien a y faire.
+    const leg=((salles?.items)||[]).filter(v=>utilisees.has(v.slug));
+    document.getElementById("legende").innerHTML=leg.map(v=>{
+      const [fond,encre]=TEINTES[v.couleur]||TEINTES.creme;
+      return `<span style="display:inline-flex;align-items:baseline;gap:9px">
+        <span aria-hidden="true" style="width:15px;height:15px;background:${fond};border:1px solid var(--encre);flex:none;align-self:center"></span>
+        <span><strong style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em">${echapper(v.nom)}</strong>
+        <span class="mono" style="font-size:11px;color:var(--taupe);display:block">${echapper(v.adresse||"")}</span></span></span>`;
+    }).join("");
+    document.getElementById("semaine").style.display="";
   }
 };
 </script></body></html>
