@@ -46,7 +46,8 @@
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const [d,gym]=await Promise.all([getJSON("content/club.json"),getJSON("content/gymnases.json")]);
+  const [d,gym,teams]=await Promise.all([getJSON("content/club.json"),
+    getJSON("content/gymnases.json"),getJSON("content/teams.json")]);
   // Rendu avant le retour anticipe : les infrastructures ne dependent pas de
   // club.json, un souci sur ce fichier ne doit pas les faire disparaitre.
   renderGymnases("infrastructures","infra-sub",gym);
@@ -63,11 +64,23 @@ window.__pageInit=async function(){
   document.getElementById("hero-titre").innerHTML=nl(echapper(p.titre));
   document.getElementById("hero-chapo").textContent=p.chapo||"";
 
-  // Chiffres clés
-  const chiffres=p.chiffres||[];
+  // Chiffres clés. Deux d entre eux se comptent au lieu de se saisir : le
+  // nombre d equipes et le nombre de sites disaient 8 et 4 quand les fichiers
+  // en portaient 7 et 4, et la refonte des equipes les a laisses en arriere
+  // sans que rien ne le signale. Un chiffre qu on peut deduire ne se recopie
+  // pas. Les autres — licencies, benevoles — n existent nulle part ailleurs
+  // que dans la tete du bureau : ils restent saisis.
+  // Un decompte nul ne s affiche pas : il ne veut pas dire « zero equipe »
+  // mais « fichier non charge », et le bandeau ferait paraitre le club vide
+  // sur un simple incident reseau. Le chiffre disparait alors du bandeau,
+  // qui se resserre sur ceux qui restent.
+  const COMPTES={equipes:(teams?.items||[]).length||null,sites:(gym?.items||[]).length||null};
+  const chiffres=(p.chiffres||[])
+    .map(c=>({...c,affiche:c.source?COMPTES[c.source]:c.valeur}))
+    .filter(c=>c.affiche!=null&&String(c.affiche).trim()!=="");
   const bande=document.getElementById("chiffres");
   bande.style.setProperty("--n",chiffres.length||1);
-  bande.innerHTML=chiffres.map(c=>`<div><strong>${echapper(c.valeur)}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)">${echapper(c.libelle)}</span></div>`).join("");
+  bande.innerHTML=chiffres.map(c=>`<div><strong>${echapper(c.affiche)}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)">${echapper(c.libelle)}</span></div>`).join("");
   animerChiffres();
 
   // Histoire

@@ -6,19 +6,23 @@
     "chiffres": [
       {
         "valeur": "220",
-        "libelle": "Licencié·es"
+        "libelle": "Licencié·es",
+        "source": ""
       },
       {
-        "valeur": "8",
-        "libelle": "Équipes"
+        "valeur": "",
+        "libelle": "Équipes",
+        "source": "equipes"
       },
       {
         "valeur": "32",
-        "libelle": "Bénévoles"
+        "libelle": "Bénévoles",
+        "source": ""
       },
       {
-        "valeur": "4",
-        "libelle": "Sites"
+        "valeur": "",
+        "libelle": "Sites",
+        "source": "sites"
       }
     ]
   },
