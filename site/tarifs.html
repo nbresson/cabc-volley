@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tarifs &amp; licences — C.A. Brive Corrèze Volley</title>
+<meta name="description" content="Le montant de la licence au CAB, catégorie par catégorie, pour la saison en cours.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="C.A. Brive Corrèze Volley">
+<meta property="og:title" content="Tarifs &amp; licences — C.A. Brive Corrèze Volley">
+<meta property="og:description" content="Le montant de la licence au CAB, catégorie par catégorie, pour la saison en cours.">
+<meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<main id="main">
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Tarifs &amp; licences</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(38px,9vw,88px)">Tarifs<br>&amp; licences</h1><span class="mono" id="saison" style="align-self:flex-end"></span></div>
+</section>
+<section class="section pad"><div id="tarifs"></div></section>
+<section class="section pad">
+  <div class="row">
+    <a class="btn btn-primary" href="adhesion.html">Demander ma licence →</a>
+    <a class="btn btn-secondary" href="faq.html">Questions fréquentes →</a>
+  </div>
+</section>
+</main>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const a=await getJSON("content/adhesion.json");
+  const b=a?.bandeau||{};
+
+  // La saison vient de l eyebrow du bandeau d adhesion : c est le seul endroit
+  // ou elle est saisie, et un tarif sans saison ne veut pas dire grand-chose.
+  const saison=document.getElementById("saison");
+  if(b.eyebrow)saison.textContent=b.eyebrow; else saison.remove();
+
+  // Une entree a moitie remplie dans Decap ne doit pas produire une carte vide.
+  const tarifs=(b.tarifs||[]).filter(t=>t.montant||t.libelle);
+  const zone=document.getElementById("tarifs");
+  // La grille ne parait qu avec des tarifs a y mettre : sans elle, le message
+  // d attente occupe la largeur au lieu d une colonne sur trois.
+  zone.className=tarifs.length?"cols-3":"";
+  zone.innerHTML=tarifs.length?tarifs.map(t=>`
+    <div class="card shadow"><div class="body" style="padding:32px 24px;text-align:center;gap:14px">
+      <strong class="display-2xl" style="font-weight:900;line-height:1">${echapper(t.montant)}</strong>
+      <span class="mono" style="font-size:11px;letter-spacing:.14em">${echapper(t.libelle)}</span>
+    </div></div>`).join(""):'<p class="vide muted">Les tarifs de la saison seront publiés prochainement.</p>';
+};
+</script></body></html>
