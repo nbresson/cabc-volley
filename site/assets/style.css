@@ -287,7 +287,7 @@ main:has(>.dark:last-child)+.socialbar{border-top:2px solid var(--creme)}
    de la barre continue de porter sur le texte seul.
    Un pseudo-element aurait fait le meme pont, mais il se serait ancre sur
    l en-tete sticky et non sur l entree — le meme piege que pour le panneau. */
-.nav-infos{display:flex;align-items:center;padding-bottom:16px;margin-bottom:-16px}
+.nav-infos{align-self:stretch;display:flex;align-items:center;padding-bottom:20px;margin-bottom:-20px}
 .nav-infos-toggle{display:inline-flex;align-items:center;gap:7px}
 .chev{font-family:'DM Mono',monospace;font-size:9px}
 .mega{position:absolute;top:100%;left:0;right:0;display:none;grid-template-columns:1.1fr 1fr 1fr 1fr;background:var(--encre);color:var(--creme);border-bottom:2px solid var(--encre)}
