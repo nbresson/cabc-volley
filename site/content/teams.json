@@ -127,6 +127,26 @@
       ]
     },
     {
+      "groupe": "Séniors",
+      "nom": "Régional 2 masculin",
+      "slug": "regional-2-m",
+      "categorie": "Régional 2 M",
+      "planning": [
+        {
+          "jour": "lundi",
+          "debut": "18:30",
+          "fin": "20:00",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "mardi",
+          "debut": "20:00",
+          "fin": "22:00",
+          "gymnase": "saint-germain"
+        }
+      ]
+    },
+    {
       "nom": "Jeunes",
       "slug": "jeunes",
       "groupe": "Jeunes",
@@ -214,6 +234,26 @@
           "fin": "22:00",
           "gymnase": "arsonval",
           "precision": ""
+        }
+      ]
+    },
+    {
+      "groupe": "Séniors",
+      "nom": "Régional 2 F1",
+      "slug": "regional-2-f1",
+      "categorie": "Régional 2 F",
+      "planning": [
+        {
+          "jour": "lundi",
+          "debut": "18:30",
+          "fin": "20:00",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "mercredi",
+          "debut": "18:00",
+          "fin": "20:00",
+          "gymnase": "saint-germain"
         }
       ]
     }
