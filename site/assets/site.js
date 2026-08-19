@@ -121,8 +121,12 @@ function gymnaseUrl(slug){return "gymnase.html?g="+encodeURIComponent(slug);}
 // La largeur minimale d une colonne suit la hauteur des logos : un logo plus
 // grand a besoin de plus de place autour de lui.
 function disposerMur(mur,nombre){
-  // 48 = les deux paddings lateraux declares dans .murlogos
-  const dispo=Math.max(1,mur.clientWidth-48);
+  // Le retrait lateral se lit sur l element plutot que de se redire ici : il
+  // vaut 48 px en large et 22 px sous 880 px. Une valeur ecrite en dur a deja
+  // fait mentir ce calcul, qui se croyait plus au large qu il ne l etait.
+  const bords=getComputedStyle(mur);
+  const cotes=parseFloat(bords.paddingLeft)+parseFloat(bords.paddingRight);
+  const dispo=Math.max(1,mur.clientWidth-cotes);
   // Plafond de hauteur : moins ils sont nombreux, plus on peut les montrer grands.
   const plafond=nombre<=6?76:nombre<=12?62:54;
   // Le nombre de colonnes se decide sur une hauteur PLANCHER, pas sur le
