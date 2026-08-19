@@ -1,7 +1,6 @@
 {
   "items": [
     {
-      "creneau": "Mer. 18h30-20h30 · Rollinat ; Ven. 18h30-20h30 · Rollinat",
       "groupe": "Séniors",
       "classement": "https://www.ffvbbeach.org/ffvbapp/resu/seniors/2026-2027/index_3md.htm",
       "slug": "n3-masculin",
@@ -40,18 +39,21 @@
       "planning": [
         {
           "jour": "mercredi",
-          "texte": "18h30 – 20h30",
-          "gymnase": "rollinat"
+          "debut": "18:30",
+          "fin": "20:30",
+          "gymnase": "rollinat",
+          "precision": ""
         },
         {
           "jour": "vendredi",
-          "texte": "18h30 – 20h30",
-          "gymnase": "rollinat"
+          "debut": "18:30",
+          "fin": "20:30",
+          "gymnase": "rollinat",
+          "precision": ""
         }
       ]
     },
     {
-      "creneau": "Mar. 20h00-22h00 · Rollinat ; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
       "groupe": "Séniors",
       "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RFB",
       "slug": "r1-feminin",
@@ -70,18 +72,28 @@
       "planning": [
         {
           "jour": "mardi",
-          "texte": "20h00 – 22h00",
-          "gymnase": "rollinat"
+          "debut": "20:00",
+          "fin": "22:00",
+          "gymnase": "rollinat",
+          "precision": ""
         },
         {
           "jour": "vendredi",
-          "texte": "20h30 – 22h30, en alternance avec Saint-Germain",
-          "gymnase": "rollinat"
+          "debut": "20:30",
+          "fin": "22:30",
+          "gymnase": "rollinat",
+          "precision": "une semaine sur deux"
+        },
+        {
+          "jour": "vendredi",
+          "debut": "20:30",
+          "fin": "22:30",
+          "gymnase": "saint-germain",
+          "precision": "une semaine sur deux"
         }
       ]
     },
     {
-      "creneau": "Mar. 20h30-22h30 · Saint-Germain; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
       "groupe": "Séniors",
       "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RMB",
       "slug": "r1-masculin",
@@ -93,13 +105,24 @@
       "planning": [
         {
           "jour": "mardi",
-          "texte": "20h30 – 22h30",
-          "gymnase": "saint-germain"
+          "debut": "20:30",
+          "fin": "22:30",
+          "gymnase": "saint-germain",
+          "precision": ""
         },
         {
           "jour": "vendredi",
-          "texte": "20h30 – 22h30, en alternance avec Rollinat",
-          "gymnase": "saint-germain"
+          "debut": "20:30",
+          "fin": "22:30",
+          "gymnase": "saint-germain",
+          "precision": "une semaine sur deux"
+        },
+        {
+          "jour": "vendredi",
+          "debut": "20:30",
+          "fin": "22:30",
+          "gymnase": "rollinat",
+          "precision": "une semaine sur deux"
         }
       ]
     },
@@ -108,7 +131,6 @@
       "slug": "jeunes",
       "groupe": "Jeunes",
       "categorie": "M18 · M15 · M13",
-      "creneau": "Mer. & sam. après-midi",
       "infos": {
         "titre": "Jouer en compétition jeunes",
         "texte": "Le club engage des équipes en M18, M15 et M13. Les entraînements ont lieu le mercredi et le samedi après-midi. Pour connaître le créneau exact de votre catégorie, écrivez-nous.",
@@ -120,13 +142,17 @@
       "planning": [
         {
           "jour": "mercredi",
-          "texte": "Après-midi, horaire à confirmer",
-          "gymnase": ""
+          "debut": "",
+          "fin": "",
+          "gymnase": "",
+          "precision": "Après-midi, horaire à confirmer"
         },
         {
           "jour": "samedi",
-          "texte": "Après-midi, horaire à confirmer",
-          "gymnase": ""
+          "debut": "",
+          "fin": "",
+          "gymnase": "",
+          "precision": "Après-midi, horaire à confirmer"
         }
       ]
     },
@@ -135,7 +161,6 @@
       "slug": "ecole-de-volley",
       "groupe": "Jeunes",
       "categorie": "M11 & baby",
-      "creneau": "Sam. 10h · Rollinat",
       "infos": {
         "titre": "Découvrir le volley",
         "texte": "L'école de volley accueille les plus jeunes, en catégories M11 et baby-volley, le samedi matin à 10h au gymnase Rollinat. Pour inscrire votre enfant ou poser une question, écrivez-nous.",
@@ -147,8 +172,10 @@
       "planning": [
         {
           "jour": "samedi",
-          "texte": "10h00",
-          "gymnase": "rollinat"
+          "debut": "10:00",
+          "fin": "",
+          "gymnase": "rollinat",
+          "precision": ""
         }
       ]
     },
@@ -158,12 +185,13 @@
       "slug": "volley-sante",
       "categorie": "Volley Santé",
       "photo": "assets/uploads/fit_volley.jpg",
-      "creneau": "Jeu. 20h à 21h40 · Saint Germain",
       "planning": [
         {
           "jour": "jeudi",
-          "texte": "20h00 – 21h40",
-          "gymnase": "saint-germain"
+          "debut": "20:00",
+          "fin": "21:40",
+          "gymnase": "saint-germain",
+          "precision": ""
         }
       ]
     },
@@ -172,17 +200,20 @@
       "nom": "UFOLEP",
       "slug": "ufolep",
       "categorie": "UFOLEP",
-      "creneau": "Mer. 20h-22h et Jeu. 20h-22h · Gymnase d'Arsonval",
       "planning": [
         {
           "jour": "mercredi",
-          "texte": "20h00 – 22h00",
-          "gymnase": "arsonval"
+          "debut": "20:00",
+          "fin": "22:00",
+          "gymnase": "arsonval",
+          "precision": ""
         },
         {
           "jour": "jeudi",
-          "texte": "20h00 – 22h00",
-          "gymnase": "arsonval"
+          "debut": "20:00",
+          "fin": "22:00",
+          "gymnase": "arsonval",
+          "precision": ""
         }
       ]
     }

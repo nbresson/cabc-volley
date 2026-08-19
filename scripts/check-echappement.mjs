@@ -160,7 +160,7 @@ function interpolations(src) {
 
 // Code propre a une interpolation : les gabarits imbriques sont retires, leurs
 // propres ${...} etant deja controles pour eux-memes. Sans cela, la condition
-// d un `${t.creneau?`…${echapper(t.creneau)}…`:""}` passerait pour un rendu.
+// d un `${t.photo?`…${echapper(t.photo)}…`:""}` passerait pour un rendu.
 function codePropre(expr) {
   let sortie = "";
   let i = 0;
