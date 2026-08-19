@@ -428,29 +428,39 @@ function revelerSections(){
 function vignette(src,alt,cadrage){if(!src)return"";
   const entier=cadrage==="entier";
   return `<img src="${echapper(src)}" alt="${echapper(alt)}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:${entier?"contain":"cover"}${entier?";padding:14px":""}">`;}
-// Adresses admises dans le Markdown d un article : http, https, et les chemins
-// relatifs. Tout autre schema est refuse - un [texte](javascript:alert(1)) saisi
-// dans un article s executait au clic. Le refus rend le texte du lien seul :
-// une phrase sans lien se lit encore, un lien mort trompe le visiteur.
+// Adresses admises dans un lien saisi : les chemins relatifs, http, https,
+// mailto et tel. Les deux derniers n executent rien et sont des liens
+// legitimes - le site en porte deja en dur, et  [nous ecrire](mailto:...)
+// dans un article est un usage ordinaire. Tout autre schema est refuse : un
+// [texte](javascript:alert(1)) saisi dans un article s executait au clic.
+// Le refus rend le texte du lien seul, ou fait disparaitre le bouton : une
+// phrase sans lien se lit encore, un lien mort trompe le visiteur.
 function lienSur(u){
   const s=String(u==null?"":u).trim();
-  // Un caractere de controle glisse au travers du test de schema, alors que le
-  // navigateur, lui, suit  java<TAB>script:  comme du javascript.
+  // Le vrai garde-fou. Un caractere de controle glisse au travers du test de
+  // schema, alors que le navigateur, lui, suit  java<TAB>script:  comme du
+  // javascript.
   if(/[\u0000-\u001f\u007f]/.test(s))return "";
   const schema=s.match(/^([a-z][a-z0-9+.-]*):/i);
-  return !schema||/^https?$/i.test(schema[1])?s:"";
+  return !schema||/^(https?|mailto|tel)$/i.test(schema[1])?s:"";
 }
 // Markdown minimal (Decap) : paragraphes, ## titres, > citations, - listes, **gras**, [lien](url)
+// Les marqueurs de bloc se lisent sur le texte brut, l echappement ne vient
+// qu ensuite. L ordre inverse obligeait a chercher la citation sous la forme
+// que echapper() lui donne,  &gt; , et liait ainsi les deux fonctions a
+// distance : assouplir un jour echapper() sur le chevron - il n est dangereux
+// que dans de rares contextes - aurait fait disparaitre toutes les citations
+// des articles sans que rien ne bronche.
 function mdToHtml(md){if(!md)return"";
-  const inl=s=>s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
+  // inl() est le passage oblige des quatre sortes de blocs : ce qui vient de
+  // l article y est echappe avant qu une seule balise soit ecrite, et les
+  // balises ecrites ensuite le sont par le code. L adresse d un lien arrive
+  // donc a lienSur() deja echappee, ce qui prive au passage un
+  // &#106;avascript: de son detour par les entites.
+  const inl=s=>echapper(s).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>")
     .replace(/\[(.+?)\]\((.+?)\)/g,(t,texte,url)=>{const u=lienSur(url);return u?`<a href="${u}" class="lien">${texte}</a>`:texte;});
-  // L echappement passe avant les regles Markdown, jamais apres : le balisage
-  // produit ensuite est ecrit par le code, celui qui vient de l article ne l est
-  // pas. Dans l autre ordre, echapper effacerait le gras et les liens.
-  return echapper(md).split(/\n\n+/).map(b=>{b=b.trim();if(!b)return"";
-    // Le marqueur de citation est cherche sous sa forme echappee :  >  vient de
-    // devenir  &gt;  a la ligne precedente.
-    if(/^&gt; /.test(b))return '<blockquote class="ds"><p>'+inl(b.replace(/^&gt; /,"").replace(/\n/g," "))+'</p></blockquote>';
+  return md.split(/\n\n+/).map(b=>{b=b.trim();if(!b)return"";
+    if(b.startsWith("> "))return '<blockquote class="ds"><p>'+inl(b.slice(2).replace(/\n/g," "))+'</p></blockquote>';
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';
     if(/^[-*] /.test(b))return '<ul class="ds-list">'+b.split("\n").map(l=>'<li>'+inl(l.replace(/^[-*] +/,""))+'</li>').join("")+'</ul>';
     return '<p class="muted" style="line-height:1.8;margin-bottom:18px">'+inl(b)+'</p>';}).join("");}
@@ -475,8 +485,15 @@ function salleCard(v){
   // non cliquable — imbriquer un lien dans un lien n est pas du HTML valide,
   // et la fiche porte de toute facon son propre bouton d itineraire.
   if(v.slug)return `<a class="card link shadow" href="${gymnaseUrl(v.slug)}">${dedans}</a>`;
+  // Echapper l adresse empechait la sortie d attribut, pas le schema : un
+  // itineraire saisi  javascript:...  restait cliquable. lienSur() juge
+  // l adresse mais ne l echappe pas - ici elle arrive brute, quand mdToHtml()
+  // la lui passe deja echappee - d ou le echapper() conserve juste apres.
+  // Une adresse refusee fait disparaitre le bouton plutot que de le laisser
+  // pointer dans le vide : un bouton mort est pire que pas de bouton.
+  const iti=lienSur(v.itineraire);
   return `<div class="card shadow">${dedans}
-      ${v.itineraire?`<div class="body" style="padding:0 20px 20px"><a href="${echapper(v.itineraire)}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;font-size:11px;color:var(--encre)">Itinéraire ↗</a></div>`:''}
+      ${iti?`<div class="body" style="padding:0 20px 20px"><a href="${echapper(iti)}" target="_blank" rel="noopener" class="mono lien" style="align-self:flex-start;font-size:11px;color:var(--encre)">Itinéraire ↗</a></div>`:''}
     </div>`;}
 // Remplit la grille et le sous-titre d une section gymnases. Chaque element est
 // cherche par identifiant et ignore s il manque : une page peut n avoir que la
