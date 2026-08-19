@@ -419,6 +419,14 @@ ul.ds-list li::before{content:"—";position:absolute;left:0;color:var(--taupe)}
    lire, pas une donnee a explorer. Sous 880 px le numero et la colonne des
    annees sortent, et les annees reparaissent sous le libelle — le span qui les
    porte n existe que pour ce repli, d ou son masquage par defaut. */
+/* Mention accolee au tableau des tarifs : meme fond sable et meme trait encre
+   que la ligne mise en avant, dont elle prolonge la lecture. Le dernier
+   paragraphe perd sa marge basse, que mdToHtml() pose sur chacun. */
+.nota{background:var(--sable);box-shadow:inset 6px 0 0 var(--encre);padding:20px 24px;margin-top:26px}
+/* !important assume : mdToHtml() ecrit margin-bottom en style en ligne sur
+   chaque paragraphe, et une declaration en ligne bat tout selecteur. C est le
+   cas pour lequel !important existe. */
+.nota p:last-child{margin-bottom:0!important}
 table.tarifs td>span{display:none}
 /* La typographie du prix vit ici et non dans un style en ligne : posee en
    ligne, aucune media query ne pouvait la reduire sur telephone. */
