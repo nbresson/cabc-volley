@@ -1,40 +1,58 @@
 {
   "items": [
     {
+      "libelle": "Seniors - Master compétition",
+      "annees": "",
       "montant": "190 €",
-      "libelle": "Seniors - Master compétition"
+      "mise_en_avant": false
     },
     {
+      "libelle": "M18 - M21",
+      "annees": "",
       "montant": "190 €",
-      "libelle": "M18 - M21"
+      "mise_en_avant": false
     },
     {
+      "libelle": "M9 - M11 - M13 - M15",
+      "annees": "",
       "montant": "160 €",
-      "libelle": "M9 - M11 - M13 - M15"
+      "mise_en_avant": false
     },
     {
+      "libelle": "Baby-Kids Volley (3 à 6 ans)",
+      "annees": "",
       "montant": "90 €",
-      "libelle": "Baby-Kids Volley (3 à 6 ans)"
+      "mise_en_avant": false
     },
     {
+      "libelle": "Compet'Lib UFOLEP",
+      "annees": "",
       "montant": "80 €",
-      "libelle": "Compet'Lib UFOLEP"
+      "mise_en_avant": false
     },
     {
+      "libelle": "VPT (Volley pour Tous) Volley Santé",
+      "annees": "",
       "montant": "80 €",
-      "libelle": "VPT (Volley pour Tous) Volley Santé"
+      "mise_en_avant": false
     },
     {
+      "libelle": "Dirigeant - Educateur - Arbitre",
+      "annees": "",
       "montant": "50 €",
-      "libelle": "Dirigeant - Educateur - Arbitre"
+      "mise_en_avant": false
     },
     {
+      "libelle": "Licence Volley après événementielle",
+      "annees": "",
       "montant": "100 €",
-      "libelle": "Licence Volley après événementielle"
+      "mise_en_avant": false
     },
     {
       "libelle": "NB : cas de plusieurs licences dans la même famille, réduction de -20% dès la deuxième licence.",
-      "montant": "-20%"
+      "annees": "",
+      "montant": "-20%",
+      "mise_en_avant": false
     }
   ],
   "comprend": "",

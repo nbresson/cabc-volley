@@ -414,6 +414,26 @@ ul.ds-list li::before{content:"—";position:absolute;left:0;color:var(--taupe)}
 
 /* Tableau large : défile dans son cadre plutôt que de pousser la page */
 .table-wrap{overflow-x:auto}
+/* Grille tarifaire. Quatre colonnes ne tiennent pas sur un telephone, et ce
+   tableau ne doit jamais ouvrir de defilement horizontal : c est une page a
+   lire, pas une donnee a explorer. Sous 880 px le numero et la colonne des
+   annees sortent, et les annees reparaissent sous le libelle — le span qui les
+   porte n existe que pour ce repli, d ou son masquage par defaut. */
+table.tarifs td>span{display:none}
+/* La typographie du prix vit ici et non dans un style en ligne : posee en
+   ligne, aucune media query ne pouvait la reduire sur telephone. */
+table.tarifs td:last-child{text-align:right;font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;font-size:38px;line-height:1}
+@media(max-width:880px){
+  table.tarifs th:first-child,table.tarifs td:first-child,
+  table.tarifs th:nth-child(3),table.tarifs td:nth-child(3){display:none}
+  table.tarifs td>span{display:block;font-family:'Archivo',sans-serif;font-weight:400;
+    font-size:13px;letter-spacing:0;text-transform:none;color:var(--taupe);margin-top:5px}
+  table.tarifs td:last-child{font-size:28px}
+  /* Le trait encre de la ligne mise en avant vit sur la cellule du numero,
+     qui vient de disparaitre : il passe sur la premiere cellule visible. */
+  table.tarifs tr.hl td:nth-child(2){box-shadow:inset 6px 0 0 var(--encre)}
+}
 .table-wrap>table.ds{min-width:520px}
 
 /* Ligne de match : date · rencontre · lieu. Sur petit écran la date passe
