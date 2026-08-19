@@ -1,11 +1,11 @@
 {
   "items": [
     {
-      "nom": "National 3 masculin",
-      "slug": "n3-masculin",
-      "groupe": "Séniors",
-      "categorie": "National 3",
       "creneau": "Mer. 18h30-20h30 · Rollinat ; Ven. 18h30-20h30 · Rollinat",
+      "groupe": "Séniors",
+      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/seniors/2026-2027/index_3md.htm",
+      "slug": "n3-masculin",
+      "nom": "National 3 masculin",
       "effectif": [
         {
           "num": "E",
@@ -35,16 +35,15 @@
         }
       ],
       "photo": "assets/uploads/equipe_n3m.webp",
-      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/seniors/2026-2027/index_3md.htm"
+      "categorie": "National 3",
+      "ffvb_nom": "C.A. BRIVE/CORREZE VOLLEY"
     },
     {
-      "nom": "Régional 1 féminin",
-      "slug": "r1-feminin",
-      "groupe": "Séniors",
-      "categorie": "Régional 1",
       "creneau": "Mar. 20h00-22h00 · Rollinat ; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
-      "photo": "assets/uploads/equipe_r1f_seniors.webp",
+      "groupe": "Séniors",
       "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RFB",
+      "slug": "r1-feminin",
+      "nom": "Régional 1 féminin",
       "effectif": [
         {
           "num": "E",
@@ -52,17 +51,21 @@
           "poste": "Entraîneur",
           "photo": "assets/uploads/dupre.jpg"
         }
-      ]
+      ],
+      "photo": "assets/uploads/equipe_r1f_seniors.webp",
+      "categorie": "Régional 1",
+      "ffvb_nom": "C.A. BRIVE/CORREZE VOLLEY"
     },
     {
-      "nom": "Régional 1 masculin",
-      "slug": "r1-masculin",
-      "groupe": "Séniors",
-      "categorie": "Régional 1",
       "creneau": "Mar. 20h30-22h30 · Saint-Germain; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
+      "groupe": "Séniors",
+      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RMB",
+      "slug": "r1-masculin",
+      "nom": "Régional 1 masculin",
       "effectif": [],
       "photo": "assets/uploads/equipe_r1m.webp",
-      "classement": "https://www.ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=LIAQ&saison=2026/2027&poule=RMB"
+      "categorie": "Régional 1",
+      "ffvb_nom": "C.A.BRIVE/CORREZE VOLLEY"
     },
     {
       "nom": "Jeunes",
