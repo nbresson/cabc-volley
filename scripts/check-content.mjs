@@ -193,6 +193,25 @@ for (const page of pages) {
   }
 }
 
+// Le bandeau de la page Club peut compter au lieu de recopier. Une source
+// inconnue ferait disparaitre le chiffre du bandeau sans un mot — le rendu
+// ecarte ce qu il ne sait pas resoudre, pour ne jamais afficher « 0 equipes »
+// sur un fichier absent. Le controle rattrape donc la faute de frappe que ce
+// repli, sinon, avalerait.
+const SOURCES = new Set(["equipes", "sites"]);
+const chiffres = (lire("club.json").presentation || {}).chiffres || [];
+for (const c of chiffres) {
+  if (c.source && !SOURCES.has(c.source)) {
+    erreurs.push(
+      `Chiffre « ${c.libelle} » : origine « ${c.source} » inconnue — attendu ` +
+        `${[...SOURCES].join(" ou ")}, ou vide pour un nombre saisi à la main.`,
+    );
+  }
+  if (!c.source && !String(c.valeur || "").trim()) {
+    erreurs.push(`Chiffre « ${c.libelle} » : saisi à la main mais sans nombre`);
+  }
+}
+
 // Les anciennes URL du site officiel sont renvoyees vers une fiche d equipe.
 // Rien ne verifiait que le slug vise existait encore : la refonte des equipes
 // du 19 aout a laisse deux 301 permanents aboutir sur « Equipe introuvable »,

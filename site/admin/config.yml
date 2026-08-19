@@ -163,7 +163,7 @@ collections:
                   - {name: debut, label: Début, widget: datetime, required: false, format: "HH:mm", date_format: false, time_format: "HH:mm", picker_utc: false, hint: "Laissez vide si l'horaire n'est pas encore arrêté."}
                   - {name: fin, label: Fin, widget: datetime, required: false, format: "HH:mm", date_format: false, time_format: "HH:mm", picker_utc: false}
                   - name: gymnase
-                    label: Salle
+                    label: Site
                     widget: relation
                     collection: gymnases
                     file: gymnases
@@ -171,7 +171,7 @@ collections:
                     value_field: "items.*.slug"
                     search_fields: ["items.*.nom"]
                     display_fields: ["items.*.nom"]
-                    hint: "Donne sa couleur à la case du planning et la relie à la légende. Laissez vide si le lieu n'est pas encore arrêté."
+                    hint: "Donne sa couleur à la case des plannings et la relie à la légende. Laissez vide si le lieu n'est pas encore arrêté. Un site peut être une salle ou un terrain de plein air — le Beach Park de Tujac en est un."
                   - {name: precision, label: Précision, widget: string, required: false, hint: "Ce que les champs ne disent pas : « une semaine sur deux », « horaire à confirmer », un entraîneur. Attention : cette page est publique — préférez un contact du club à un numéro personnel, et demandez son accord à la personne."}
               - {name: photo, label: Photo d'équipe, widget: image, required: false, hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko."}
               - {name: classement, label: Lien classement FFVB de l'équipe, widget: string, required: false, hint: "Chaque équipe a sa poule, donc son propre classement. Ouvrez le classement de cette équipe sur le site de la FFVB et collez ici l'adresse de la page. Laissé vide, le lien général des « Réglages du club » est utilisé — et seulement si l'équipe a des matchs."}
@@ -249,11 +249,11 @@ collections:
               - {name: nom, label: Nom, widget: string}
               - {name: slug, label: Identifiant URL, widget: string, required: false, hint: "Sans espaces ni accents, en minuscules, ex. rollinat. Rempli, la salle gagne sa propre page et sa carte devient cliquable. Laissé vide, la salle reste affichée mais sans page. Ne le modifiez plus une fois la page en ligne : les liens déjà partagés cesseraient de fonctionner."}
               - {name: etiquette, label: Étiquette, widget: string, required: false, hint: "Pastille affichée sur la photo, ex. Salle principale ou Beach. Laisser vide pour ne rien afficher."}
-              - {name: court, label: Nom court, widget: string, required: false, hint: "Employé dans les cases du planning hebdomadaire, où la place manque. Ex. St-Germain."}
+              - {name: court, label: Nom court, widget: string, required: false, hint: "Employé dans les cases des plannings, où la place manque. Ex. St-Germain."}
               # La couleur teinte les cases du planning et la légende sous le
               # tableau. Elle est choisie sur la salle et non sur la case :
               # deux cases du meme gymnase ne peuvent donc pas se contredire.
-              - {name: couleur, label: Couleur au planning, widget: select, required: false, default: creme, options: ["creme","sable","lin","encre"], hint: "Quatre teintes de la charte du site. Elles se ressemblent volontairement : le nom court écrit dans la case reste le repère principal."}
+              - {name: couleur, label: Couleur aux plannings, widget: select, required: false, default: creme, options: ["creme","sable","lin","encre"], hint: "Quatre teintes de la charte du site. Elles se ressemblent volontairement : le nom court écrit dans la case reste le repère principal."}
               - {name: adresse, label: Adresse, widget: string, required: false}
               - {name: usage, label: Ce qui s'y passe, widget: string, required: false, hint: "Ex. Matchs seniors · école de volley"}
               - {name: acces, label: Accès, widget: string, required: false, hint: "Ex. Parking gratuit · Bus ligne 4"}
@@ -306,7 +306,10 @@ collections:
                 summary: "{{fields.valeur}} {{fields.libelle}}"
                 hint: "Bandeau noir sous le titre. De 2 à 4 chiffres pour rester lisible."
                 fields:
-                  - {name: valeur, label: Nombre, widget: string}
+                  # Un chiffre qui se deduit du contenu ne se recopie pas : il
+                  # se perime en silence des que le contenu change.
+                  - {name: source, label: Origine du nombre, widget: select, required: false, default: "", options: [{label: "Saisi à la main", value: ""}, {label: "Compté — équipes du site", value: "equipes"}, {label: "Compté — sites du club", value: "sites"}], hint: "Un nombre compté se met à jour tout seul quand vous ajoutez une équipe ou un site."}
+                  - {name: valeur, label: Nombre, widget: string, required: false, hint: "Ignoré si l'origine ci-dessus est un décompte."}
                   - {name: libelle, label: Libellé, widget: string}
           - name: histoire
             label: Notre histoire

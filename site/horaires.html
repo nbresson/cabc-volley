@@ -27,7 +27,7 @@
   <div id="legende" style="display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:20px"></div>
 </section>
 <section class="section pad" id="planning-salles" style="display:none">
-  <div class="section-head"><h2>Planning par gymnase</h2><span class="mono" id="salles-note"></span></div>
+  <div class="section-head"><h2>Planning par site</h2><span class="mono" id="salles-note"></span></div>
   <div class="table-wrap"><table class="ds" id="planning-gymnases"></table></div>
 </section>
 <section class="section pad">
@@ -166,7 +166,7 @@ window.__pageInit=async function(){
     // Une seance sans salle n a aucune ligne ou aller. Plutot que la perdre —
     // le tableau paraitrait complet en taisant deux creneaux — elle obtient sa
     // propre ligne, qui dit au bureau ce qui reste a arreter.
-    if(Object.keys(parCase).some(k=>k.charAt(0)==="|"))lignes.push({slug:"",nom:"Salle non précisée"});
+    if(Object.keys(parCase).some(k=>k.charAt(0)==="|"))lignes.push({slug:"",nom:"Site non précisé"});
     const caseSalle=(v,jour)=>{
       const l=(parCase[v.slug+"|"+jour]||[]).slice()
         .sort((a,b)=>String(a.c.debut||"").localeCompare(String(b.c.debut||"")));
@@ -191,12 +191,12 @@ window.__pageInit=async function(){
         :JOURS_SEMAINE.map(j=>caseSalle(v,j)).join("")}</tr>`;
     };
     document.getElementById("planning-gymnases").innerHTML=
-      `<thead><tr><th>Gymnase</th>${JOURS_SEMAINE.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
+      `<thead><tr><th>Site</th>${JOURS_SEMAINE.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
       `<tbody>${lignes.map(rangeeSalle).join("")}</tbody>`;
     const nbSalles=((gymnases?.items)||[]).length;
     const nbSeances=Object.keys(parCase).reduce((n,k)=>n+parCase[k].length,0);
     document.getElementById("salles-note").textContent=
-      nbSalles+" gymnase"+(nbSalles>1?"s":"")+" · "+nbSeances+" séance"+(nbSeances>1?"s":"");
+      nbSalles+" site"+(nbSalles>1?"s":"")+" · "+nbSeances+" séance"+(nbSeances>1?"s":"");
     document.getElementById("planning-salles").style.display="";
   }
 };
