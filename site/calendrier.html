@@ -120,19 +120,38 @@ window.__pageInit=async function(){
   // premiers matchs affiches doivent bien etre les prochains joues.
   const avenir=(matches?.items||[]).filter(aVenir).sort((a,b)=>new Date(a.date)-new Date(b.date));
   const VISIBLES=5;
-  const reste=avenir.slice(VISIBLES);
-  // On n ouvre jamais un tiroir pour un seul match : en dessous de deux matchs
-  // restants, la liste s affiche entiere plutot que d imposer un clic pour rien.
-  const replie=reste.length>=2;
   const up=document.getElementById("upcoming");
-  if(!avenir.length){up.innerHTML='<p class="vide muted pad">Aucun match programmé pour le moment.</p>';}
-  else{
-    up.innerHTML=(replie?avenir.slice(0,VISIBLES):avenir).map(matchRow).join("")
-      +(replie?`<details class="acc"><summary>Voir les ${reste.length} autres matchs de la saison</summary><div class="acc-body" style="padding:0">${reste.map(matchRow).join("")}</div></details>`:"");
-  }
-  // Toute la saison dans l agenda. Le bouton ne parait qu avec des matchs.
   const bIcs=document.getElementById("ics-saison");
-  if(avenir.length){bIcs.style.display="";bIcs.addEventListener("click",()=>telechargerICS(avenir,"cab-saison-2026-2027.ics"));}
+  // Le decoupage « cinq visibles puis le reste » se calculait une fois pour
+  // toutes sur la liste entiere, quand le filtre par equipe ne faisait que
+  // masquer des lignes en CSS : l accordeon annoncait quarante-huit matchs
+  // quand il en contenait dix-neuf, et deux lignes paraissaient au lieu de
+  // cinq. Tout ce qui se compte doit donc se recompter a chaque puce — le
+  // nombre juste vient de la reconstruction, pas d une arithmetique tenue a
+  // cote qui derive au premier changement.
+  const poserAvenir=slug=>{
+    const liste=slug==="tout"?avenir:avenir.filter(m=>m.equipe===slug);
+    if(!liste.length){
+      up.innerHTML='<p class="vide muted pad">Aucun match programmé pour le moment.</p>';
+      bIcs.style.display="none";
+      return;
+    }
+    const reste=liste.slice(VISIBLES);
+    // On n ouvre jamais un tiroir pour un seul match : en dessous de deux matchs
+    // restants, la liste s affiche entiere plutot que d imposer un clic pour rien.
+    // La regle s applique a ce que le visiteur regarde, donc a la liste filtree :
+    // en fin de saison, une equipe a qui il ne reste que deux matchs verrait
+    // sinon un tiroir s ouvrir sur du vide.
+    const replie=reste.length>=2;
+    up.innerHTML=(replie?liste.slice(0,VISIBLES):liste).map(matchRow).join("")
+      +(replie?`<details class="acc"><summary>Voir les ${reste.length} autres matchs${slug==="tout"?" de la saison":""}</summary><div class="acc-body" style="padding:0">${reste.map(matchRow).join("")}</div></details>`:"");
+    // onclick et non addEventListener : le bloc est reconstruit a chaque puce,
+    // et des ecouteurs empiles telechargeraient autant de fichiers que de clics.
+    bIcs.style.display="";
+    bIcs.textContent=slug==="tout"?"↓ Toute la saison dans mon agenda":`↓ Les ${liste.length} matchs dans mon agenda`;
+    bIcs.onclick=()=>telechargerICS(liste,slug==="tout"?"cab-saison-2026-2027.ics":`cab-${slug}-2026-2027.ics`);
+  };
+  poserAvenir("tout");
 
   // Derniers resultats. Le tout premier est deja dans le bandeau sombre : la
   // liste montre les trois suivants, et disparait s il n y en a pas.
@@ -151,7 +170,15 @@ window.__pageInit=async function(){
   if(chips&&slugs.length>1){
     chips.innerHTML=`<button class="chip actif" data-valeur="tout">Toutes</button>`+
       slugs.map(s=>`<button class="chip" data-valeur="${echapper(s)}">${echapper(nomEquipe(s))}</button>`).join("");
-    initChips("chips-equipes","upcoming");
+    // Filtre propre a cette page : le filtre partage masque des lignes en CSS,
+    // ce qui ne peut pas recompter un accordeon. La page Actualites, elle,
+    // continue de l employer — sans pagination, il n y a rien a recompter.
+    chips.addEventListener("click",e=>{
+      const b=e.target.closest(".chip");if(!b)return;
+      chips.querySelectorAll(".chip").forEach(c=>c.classList.remove("actif"));
+      b.classList.add("actif");
+      poserAvenir(b.dataset.valeur);
+    });
   }
 };
 </script></body></html>
