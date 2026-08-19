@@ -40,63 +40,13 @@ window.__pageInit=async function(){
   const chapo=document.getElementById("chapo");
   if(data?.chapo)chapo.textContent=data.chapo; else chapo.remove();
 
-  // Une adresse saisie sans protocole serait resolue relativement au site et
-  // menerait a la page 404. Ce champ est neuf, la faute est probable. On laisse
-  // passer tel quel un schema explicite (https:, mailto:, tel:...) ou un chemin
-  // racine (/adhesion.html) : seul un nom d hote nu doit recevoir le prefixe.
-  const externe=u=>/^([a-z][a-z0-9+.-]*:|\/)/i.test(u)?u:"https://"+u;
-
-  // L extension du fichier televerse determine le suffixe affiche : on ne
-  // suppose jamais "(PDF)", le widget accepte n importe quel type de fichier.
-  const extension=nom=>{
-    const m=/\.([a-z0-9]+)$/i.exec(nom||"");
-    return m?m[1].toUpperCase():"";
-  };
-
-  // Domaine d une adresse, pour la ligne de source (« extranet.ffvb.org »).
-  const domaine=u=>{try{return new URL(externe(u),location.href).hostname.replace(/^www\./,"");}catch(e){return"";}};
-
-  // Rangee de document. Un intertitre n est pas numerote et ne compte pas ; un
-  // fichier televerse porte une fleche descendante, un lien externe une fleche
-  // oblique. Un document dont le champ utile est vide est ignore, le reste du
-  // bloc s affichant quand meme.
-  const rangee=(d,num)=>{
-    if(d.type==="intertitre")return `<div class="doc-inter"><span></span><span>${echapper(d.libelle)}</span></div>`;
-    const fichier=d.type==="fichier"&&d.fichier;
-    // lienSur() en dernier : une adresse refusee rend "", et la rangee entiere
-    // disparait par le test qui suit, plutot que de porter un lien mort.
-    const url=lienSur(fichier?d.fichier:(d.url?externe(d.url):""));
-    if(!url)return"";
-    const ext=extension(fichier?d.fichier:d.url)||"LIEN";
-    const type=[ext,d.langue].filter(Boolean).join(" · ");
-    return `<a class="doc-row" href="${echapper(url)}"${fichier?' download':' target="_blank" rel="noopener"'}>
-      <span class="num">${String(num).padStart(2,"0")}</span>
-      <span><span class="titre">${echapper(d.libelle||"Document")}</span><span class="source">${echapper(fichier?"document du club":domaine(d.url))}</span></span>
-      <span class="type"${d.langue==="EN"?' style="background:var(--sable);color:var(--encre)"':""}>${echapper(type)}</span>
-      <span class="fleche">${fichier?"↓":"↗"}</span></a>`;
-  };
-
-  const slugAncre=s=>"b-"+String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-");
   const blocs=data?.blocs||[];
-  let total=0;
-  document.getElementById("blocs").innerHTML=blocs.length?blocs.map(b=>{
-    const docs=b.documents||[];
-    const reels=docs.filter(d=>d.type!=="intertitre");
-    total+=reels.length;
-    let n=0;
-    const lignes=docs.map(d=>rangee(d,d.type==="intertitre"?0:++n)).join("");
-    return `<section class="pad section" id="${slugAncre(b.titre)}">
-      <div class="section-head"><h2>${echapper(b.titre)}</h2><span class="mono">${reels.length} document${reels.length>1?"s":""}</span></div>
-      ${b.texte?mdToHtml(b.texte):""}
-      ${lignes?`<div class="doc-liste">${lignes}</div>`:""}
-    </section>`;
-  }).join(""):'<section class="pad section"><p class="vide muted">Aucune information pour le moment.</p></section>';
-
+  const total=rendreBlocsDocuments(blocs,document.getElementById("blocs"));
   document.getElementById("compteur").textContent=total?total+" documents · saison 2026–2027":"";
   // Un sommaire d un seul lien ne sert a rien.
   const ancres=document.getElementById("ancres-blocs");
   if(blocs.length>1){
-    ancres.innerHTML=blocs.map(b=>`<a href="#${slugAncre(b.titre)}">${echapper(b.titre)} ↓</a>`).join("");
+    ancres.innerHTML=blocs.map(b=>`<a href="#${ancreBloc(b.titre)}">${echapper(b.titre)} ↓</a>`).join("");
     ancres.style.display="";
   }
 

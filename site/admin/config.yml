@@ -520,6 +520,81 @@ collections:
                     fields:
                       - {name: libelle, label: Libellé, widget: string}
                       - {name: url, label: Adresse, widget: string, hint: "Adresse complète, avec https://."}
+  - name: regles
+    label: Règles officielles
+    files:
+      - name: regles
+        label: Contenu de la page
+        file: site/content/regles.json
+        fields:
+          - {name: titre, label: Titre de la page, widget: string}
+          - {name: chapo, label: Texte d'introduction, widget: text, required: false}
+          - name: blocs
+            label: Blocs
+            label_singular: Bloc
+            widget: list
+            collapsed: true
+            required: false
+            summary: "{{fields.titre}}"
+            hint: "Les regles publiees par la federation. Un bloc suffit ; en ajouter un separerait par exemple le volley en salle du beach."
+            fields:
+              - {name: titre, label: Titre du bloc, widget: string}
+              - {name: texte, label: Texte, widget: markdown, required: false}
+              - name: documents
+                label: Documents et liens
+                label_singular: Document ou lien
+                widget: list
+                collapsed: true
+                required: false
+                types:
+                  - name: fichier
+                    label: Document téléversé
+                    widget: object
+                    summary: "{{fields.libelle}}"
+                    fields:
+                      - {name: libelle, label: Libellé du bouton, widget: string, hint: "Ce que lit le visiteur, ex. Fiche d'inscription"}
+                      - {name: fichier, label: Fichier, widget: file, media_folder: "/site/assets/documents", public_folder: "/assets/documents", hint: "PDF de préférence, moins de 2 Mo. Pour une mise à jour, remplacez le fichier existant plutôt que d'en téléverser un nouveau : chaque version reste définitivement dans l'historique du dépôt."}
+                      - {name: langue, label: Langue, widget: select, options: ["FR","EN"], required: false, hint: "Affichée en pastille à côté du format. Inutile pour un document en français sans ambiguïté."}
+                  - name: lien
+                    label: Lien externe
+                    widget: object
+                    summary: "{{fields.libelle}}"
+                    fields:
+                      - {name: libelle, label: Libellé du bouton, widget: string, hint: "Ce que lit le visiteur, ex. Formulaire de licence FFVB"}
+                      - {name: url, label: Adresse du lien, widget: string, hint: "Collez l'adresse complète, avec https://. Le lien s'ouvrira dans un nouvel onglet."}
+                      - {name: langue, label: Langue, widget: select, options: ["FR","EN"], required: false, hint: "Affichée en pastille à côté du format. Inutile pour un document en français sans ambiguïté."}
+                  - name: intertitre
+                    label: Intertitre
+                    widget: object
+                    summary: "— {{fields.libelle}}"
+                    fields:
+                      - {name: libelle, label: Libellé, widget: string, hint: "Trace une ligne de section au fil de la liste, ex. Certificats médicaux. Ne compte pas comme un document."}
+
+          - name: essentiel
+            label: L'essentiel (bloc sombre en haut de page)
+            widget: object
+            collapsed: true
+            required: false
+            hint: "Aiguille le visiteur vers les seuls documents qui le concernent. Sans aucun cas, le bloc ne s affiche pas."
+            fields:
+              - {name: titre, label: Titre, widget: string, required: false, default: "Quel document te faut-il ?"}
+              - name: cas
+                label: Cas
+                label_singular: Cas
+                widget: list
+                required: false
+                collapsed: true
+                summary: "{{fields.titre}}"
+                fields:
+                  - {name: titre, label: Intitulé, widget: string, hint: "ex. Nouveau · majeur"}
+                  - {name: note, label: Note, widget: string, required: false, hint: "Une phrase affichée sous les liens du cas."}
+                  - name: documents
+                    label: Documents
+                    label_singular: Document
+                    widget: list
+                    fields:
+                      - {name: libelle, label: Libellé, widget: string}
+                      - {name: url, label: Adresse, widget: string, hint: "Adresse complète, avec https://."}
   - name: partenaires
     label: Partenaires
     files:
