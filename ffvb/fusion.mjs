@@ -12,6 +12,25 @@ import { normaliserNom, saisonDe } from "./noms.mjs";
 // Aucune des deux ne modifie l objet recu : le worker doit pouvoir servir les
 // octets d origine si quoi que ce soit echoue.
 
+// Une trace par cle (equipe, nombre de correspondances) et par isolat. La
+// fusion tourne a chaque requete : sans dedoublonnage, dix visiteurs
+// produisent dix lignes ERROR pour un seul et meme diagnostic, et le journal
+// est le seul canal d alerte du projet. Ce Set n est pas une fuite — il est
+// borne par le nombre d equipes, et il meurt avec l isolat que Cloudflare
+// recycle : la fenetre se rouvre donc d elle-meme, sans purge a ecrire.
+const tracesEmises = new Set();
+
+// La date est formatee a la main plutot que par toLocaleDateString : le
+// support des locales n est pas garanti dans un worker, et une date rendue en
+// anglais au milieu d une phrase francaise couterait plus que trois getters.
+function noteMoisson(faitLe) {
+  const d = faitLe ? new Date(faitLe) : null;
+  if (!d || Number.isNaN(d.getTime())) return "Classement relevé sur le site de la FFVB.";
+  const jour = String(d.getDate()).padStart(2, "0");
+  const mois = String(d.getMonth() + 1).padStart(2, "0");
+  return `Classement relevé sur le site de la FFVB le ${jour}/${mois}/${d.getFullYear()}.`;
+}
+
 export function fusionnerMatchs(fichier, moisson) {
   const items = (fichier && fichier.items) || [];
   return {
@@ -40,7 +59,8 @@ export function fusionnerClassement(fichier, moisson, nomsFfvb, poules) {
       // Le classement d une poule vaut pour la saison en cours : c est le cron
       // qui l a ecrit, avec la date du jour.
       const saison = (moisson || {})[saisonDe(new Date())];
-      const lignes = saison && saison[poule] && saison[poule].classement;
+      const cache = saison && saison[poule];
+      const lignes = cache && cache.classement;
       // Un tableau vide ne remplace rien : avant la premiere journee, la
       // federation en publie un sans lignes.
       if (!Array.isArray(lignes) || !lignes.length) return tableau;
@@ -55,7 +75,9 @@ export function fusionnerClassement(fichier, moisson, nomsFfvb, poules) {
       // Zero ou plusieurs correspondances : rien a marquer, mais silence total
       // serait pire qu une fausse alerte. Sans cette trace, une faute de frappe
       // dans le champ FFVB casserait le surlignage sans que personne ne le sache.
-      if (marquees !== 1) {
+      const cleTrace = `${tableau.equipe}:${marquees}`;
+      if (marquees !== 1 && !tracesEmises.has(cleTrace)) {
+        tracesEmises.add(cleTrace);
         const nomAttendu = (nomsFfvb || {})[tableau.equipe];
         console.error(
           `fusionnerClassement : ${marquees} correspondance(s) pour l equipe "${tableau.equipe}"` +
@@ -66,6 +88,10 @@ export function fusionnerClassement(fichier, moisson, nomsFfvb, poules) {
       }
       return {
         ...tableau,
+        // Les lignes viennent de la moisson : garder celle du fichier ferait
+        // annoncer « saisi a la main » sous des donnees relevees chez la
+        // federation — une contre-verite publique sur sa propre provenance.
+        note: noteMoisson(cache.fait_le),
         lignes: lignes.map((l) => ({
           club: l.club,
           joues: l.joues,

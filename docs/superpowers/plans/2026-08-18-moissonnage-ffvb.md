@@ -910,8 +910,12 @@ Expected: du JSON valide. Sans KV rempli, il doit être **identique** au fichier
 
 - [ ] **Step 4: Déclencher le cron à la main**
 
+Le point d'entrée du cron sous `wrangler dev` est `/cdn-cgi/handler/scheduled`,
+sans drapeau. `/__scheduled` rend un 404 trompeur — la page 404 du site — avec
+le wrangler de ce dépôt.
+
 ```bash
-curl -s "http://127.0.0.1:8787/__scheduled?cron=0+*+*+*+6"
+curl -s "http://127.0.0.1:8787/cdn-cgi/handler/scheduled?cron=0+*+*+*+6"
 ```
 
 Expected: dans la sortie de `wrangler dev`, `FFVB : 3/3 poules moissonnees pour 2026/2027`.

@@ -102,6 +102,11 @@ verifier("RMB 2025/2026 — Brive, points", brive25.points, 34);
 verifier("RMB 2025/2026 — Brive, joues", brive25.joues, 16);
 verifier("RMB 2025/2026 — Brive, victoires", brive25.victoires, 11);
 verifier("RMB 2025/2026 — Brive, defaites", brive25.defaites, 5);
+// La colonne F. de Brive est vide sur la page publiee, et c est la garde n(i)
+// qui la ramene a 0. Sans cette assertion, remplacer n(i) par un parseInt nu
+// ne fait echouer aucune verification alors que le champ vaudrait NaN — et
+// defaites, lu par la meme garde, est affiche sur le site.
+verifier("RMB 2025/2026 — Brive, forfaits", brive25.forfaits, 0);
 
 // Cosmic Volley porte une penalisation : la ligue lui retire un point. Le
 // classement publie dit 5 la ou le bareme 3/2/1/0 donnerait 6. C est la preuve
@@ -167,6 +172,14 @@ verifier("fusion classement — lignes remplacees", fc.items[0].lignes.length, 2
 verifier("fusion classement — notre ligne designee", fc.items[0].lignes[0].notre_club, true);
 verifier("fusion classement — ligne adverse non marquee", fc.items[0].lignes[1].notre_club, false);
 verifier("fusion classement — poule absente intacte", fc.items[1].lignes[0].club, "intacte");
+// La note de provenance suit les lignes : moissonnees, elles ne peuvent pas
+// rester annoncees « saisi a la main ». Date formatee a la main, donc figee
+// ici au format francais quel que soit le support des locales.
+verifier(
+  "fusion classement — note de provenance datee",
+  fc.items[0].note,
+  "Classement relevé sur le site de la FFVB le 03/10/2026.",
+);
 
 // Deux equipes du club dans la meme poule : le meme tableau nourrit les deux
 // entrees, chacune surlignant sa propre ligne. C est le cas qui a fait naitre le
@@ -218,6 +231,13 @@ const tracesAmbigu = capture(() => {
 });
 verifier("fusion classement — plusieurs correspondances, aucune marquee", fa.items[0].lignes.some((l) => l.notre_club), false);
 verifier("fusion classement — plusieurs correspondances, trace emise", tracesAmbigu.length, 1);
+// fait_le illisible : la note tombe sur sa forme sans date plutot que sur
+// « Invalid Date », qui serait publie tel quel sur la fiche d equipe.
+verifier(
+  "fusion classement — note sans date si fait_le illisible",
+  fa.items[0].note,
+  "Classement relevé sur le site de la FFVB.",
+);
 
 // La liste des poules se deduit de matches.json, elle n est pas ecrite en dur.
 // Une poule peut nourrir plusieurs classements : deux equipes du club dans la
@@ -302,6 +322,57 @@ verifier(
   "moisson — match joue produit un resultat, match non joue aucun",
   Object.keys(moissonPartiel.RMB.resultats),
   ["RMB101"],
+);
+
+// « Le moissonneur ne produit jamais un score invente » est sa garantie la
+// plus importante, et aucun echantillon reel ne l exerce : les trois pages
+// figees n ont que des sets numeriques, vides, P ou F. Le cas est donc
+// construit ici — une ligne COMPLETE a douze cellules dont une colonne de sets
+// porte une valeur non numerique inconnue, ni vide, ni P, ni F. La ligne
+// courte, elle, releve du match non joue et suit un autre chemin. Sans ce
+// controle, remplacer le `return null` de lireSets par un score par defaut ne
+// fait echouer aucune verification : le match serait publie 0-0 au lieu d etre
+// ecarte.
+const calendrierIllisible = `
+  <table>
+    <tr>
+      <td>RMB201</td><td>15/03/26</td><td>20:00</td>
+      <td>C.A. BRIVE/CORREZE VOLLEY</td><td></td>
+      <td>AUTRE CLUB</td><td>3</td><td>0</td>
+      <td>25:20, 25:20, 25:20</td><td>075-060</td>
+      <td>ARBITRE UN/ARBITRE DEUX</td><td></td>
+    </tr>
+    <tr>
+      <td>RMB202</td><td>22/03/26</td><td>20:00</td>
+      <td>C.A. BRIVE/CORREZE VOLLEY</td><td></td>
+      <td>AUTRE CLUB 2</td><td>A</td><td>3</td>
+      <td>25:20, 20:25</td><td>045-045</td>
+      <td>ARBITRE UN/ARBITRE DEUX</td><td></td>
+    </tr>
+    <tr>
+      <td>RMB203</td><td>29/03/26</td><td>20:00</td>
+      <td>AUTRE CLUB 3</td><td></td>
+      <td>C.A. BRIVE/CORREZE VOLLEY</td><td>1</td><td>3</td>
+      <td>25:20, 20:25, 20:25, 20:25</td><td>085-095</td>
+      <td>ARBITRE UN/ARBITRE DEUX</td><td></td>
+    </tr>
+  </table>
+`;
+const calIllisible = analyserCalendrier(calendrierIllisible, "RMB");
+verifier(
+  "sets illisibles — le match est ecarte",
+  calIllisible.ecartes.map((e) => e.code),
+  ["RMB202"],
+);
+verifier(
+  "sets illisibles — aucun score invente",
+  calIllisible.matchs.some((m) => m.code === "RMB202"),
+  false,
+);
+verifier(
+  "sets illisibles — les autres lignes de la page passent",
+  calIllisible.matchs.map((m) => m.code),
+  ["RMB201", "RMB203"],
 );
 
 // Meme regle sur une vraie page en cours de saison : tant qu un match n est

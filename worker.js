@@ -158,8 +158,17 @@ export default {
     // Les deux fichiers que la moisson peut enrichir. Toute erreur fait servir
     // les octets d origine : le worker ne casse jamais le site, on retombe sur
     // « En attente de resultat », qui reste honnete.
+    //
+    // Seul un GET emprunte ce chemin. Un HEAD n a pas de corps a fusionner :
+    // il tomberait dans le repli et ecrirait une ligne ERROR par appel, ce
+    // qu une sonde de disponibilite produirait en continu — le journal est le
+    // seul canal d alerte du projet, le noyer reviendrait a le perdre. Le
+    // chemin normal, plus bas, sert la reponse et pose le meme noindex sur l
+    // hote de brouillon.
     const enrichissable =
-      url.pathname === "/content/matches.json" || url.pathname === "/content/classement.json";
+      request.method === "GET" &&
+      (url.pathname === "/content/matches.json" ||
+        url.pathname === "/content/classement.json");
     if (enrichissable) {
       // Sans les en-tetes conditionnels : ASSETS calcule son ETag sur le
       // fichier du depot, pas sur le corps fusionne qu on renvoie plus bas.
@@ -196,8 +205,8 @@ export default {
       } catch (e) {
         console.error(`FFVB : fusion impossible sur ${url.pathname} — ${e && e.message}`);
         // Le repli doit rester aussi noindex que le reste du brouillon : un
-        // HEAD (corps vide, .json() leve) ou un KV corrompu ne doivent pas
-        // faire fuiter une reponse indexable.
+        // cache corrompu ou un fichier illisible ne doivent pas faire fuiter
+        // une reponse indexable.
         if (!brouillon) return brut;
         const entetes = new Headers(brut.headers);
         entetes.set("X-Robots-Tag", "noindex, nofollow");
@@ -235,7 +244,22 @@ export default {
     const frais = await moissonner(poules, saison, async (url) =>
       texteLatin1(await fetch(url, { headers: { "user-agent": "cabc-volley-moissonneur" } }))
     );
-    const ancien = (await env.FFVB.get(CLE_MOISSON, "json")) || {};
+    // Lu en texte puis parse ici plutot qu en « json » : sur un cache corrompu,
+    // get(..., "json") leve avant le put, et le cron echouerait alors a l
+    // identique toutes les heures sans jamais pouvoir reparer — panne
+    // invisible, le site continuant de servir les octets d origine. Repartir
+    // d un objet vide fait reecrire la cle au passage suivant.
+    let ancien = {};
+    const cache = await env.FFVB.get(CLE_MOISSON, "text");
+    if (cache) {
+      try {
+        const lu = JSON.parse(cache);
+        if (!lu || typeof lu !== "object") throw new Error("le cache n est pas un objet");
+        ancien = lu;
+      } catch (e) {
+        console.error(`FFVB : cache illisible, il sera reecrit — ${e && e.message}`);
+      }
+    }
     const fusionne = { ...ancien, [saison]: { ...(ancien[saison] || {}), ...frais } };
     await env.FFVB.put(CLE_MOISSON, JSON.stringify(fusionne));
     console.log(`FFVB : ${Object.keys(frais).length}/${poules.length} poules moissonnees pour ${saison}`);
