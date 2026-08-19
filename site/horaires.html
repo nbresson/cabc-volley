@@ -21,10 +21,14 @@
   <nav class="ancres" id="ancres-groupes" aria-label="Groupes d'équipes" style="display:none"></nav>
 </section>
 <section class="section pad"><div id="horaires"></div></section>
-<section class="section pad" id="semaine" style="display:none">
-  <div class="section-head"><h2>La semaine</h2><span class="mono" id="semaine-note"></span></div>
+<section class="section pad" id="planning-equipes" style="display:none">
+  <div class="section-head"><h2>Planning par équipe</h2><span class="mono" id="equipes-note"></span></div>
   <div class="table-wrap"><table class="ds" id="planning"></table></div>
   <div id="legende" style="display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:20px"></div>
+</section>
+<section class="section pad" id="planning-salles" style="display:none">
+  <div class="section-head"><h2>Planning par gymnase</h2><span class="mono" id="salles-note"></span></div>
+  <div class="table-wrap"><table class="ds" id="planning-gymnases"></table></div>
 </section>
 <section class="section pad">
   <div class="row">
@@ -134,7 +138,7 @@ window.__pageInit=async function(){
     document.getElementById("planning").innerHTML=
       `<thead><tr><th>Équipe</th>${JOURS_SEMAINE.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
       `<tbody>${equipes.map(e=>`<tr><td><a href="${teamUrl(e.slug)}" class="lien">${echapper(e.nom)}</a></td>${JOURS_SEMAINE.map(j=>cellule(e,j)).join("")}</tr>`).join("")}</tbody>`;
-    document.getElementById("semaine-note").textContent=equipes.length+" équipes · saison 2026–2027";
+    document.getElementById("equipes-note").textContent=equipes.length+" équipes · saison 2026–2027";
     // La legende ne montre que les salles reellement employees : une salle sans
     // creneau n a rien a y faire.
     const leg=((gymnases?.items)||[]).filter(v=>utilisees.has(v.slug));
@@ -145,7 +149,55 @@ window.__pageInit=async function(){
         <span><strong style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em">${echapper(v.nom)}</strong>
         <span class="mono" style="font-size:11px;color:var(--taupe);display:block">${echapper(v.adresse||"")}</span></span></span>`;
     }).join("");
-    document.getElementById("semaine").style.display="";
+    document.getElementById("planning-equipes").style.display="";
+  }
+
+  // Le meme planning, pivote. Un membre du bureau ne cherche pas l horaire
+  // d une equipe mais l occupation d une salle. La couleur reste a l en-tete
+  // de ligne : la repeter dans chaque case n apprendrait rien, la ligne disant
+  // deja quelle salle on lit.
+  const parCase={};
+  (teams?.items||[]).forEach(e=>creneauxDe(e).forEach(c=>{
+    const k=(c.gymnase||"")+"|"+c.jour;
+    (parCase[k]=parCase[k]||[]).push({c:c,e:e});
+  }));
+  if(Object.keys(parCase).length){
+    const lignes=((gymnases?.items)||[]).slice();
+    // Une seance sans salle n a aucune ligne ou aller. Plutot que la perdre —
+    // le tableau paraitrait complet en taisant deux creneaux — elle obtient sa
+    // propre ligne, qui dit au bureau ce qui reste a arreter.
+    if(Object.keys(parCase).some(k=>k.charAt(0)==="|"))lignes.push({slug:"",nom:"Salle non précisée"});
+    const caseSalle=(v,jour)=>{
+      const l=(parCase[v.slug+"|"+jour]||[]).slice()
+        .sort((a,b)=>String(a.c.debut||"").localeCompare(String(b.c.debut||"")));
+      if(!l.length)return "<td></td>";
+      return `<td style="vertical-align:top"><div style="display:grid;gap:13px">${l.map(o=>{
+        const plage=plageCreneau(o.c);
+        return `<div>`
+          +(plage?`<strong style="font-weight:600;display:block">${echapper(plage)}</strong>`:"")
+          +`<span style="display:block;margin-top:3px">${echapper(o.e.nom)}</span>`
+          +(o.c.precision?`<span style="font-size:12px;display:block;margin-top:2px;color:var(--taupe)">${echapper(o.c.precision)}</span>`:"")
+          +`</div>`;
+      }).join("")}</div></td>`;
+    };
+    // Une salle sans creneau garde sa ligne : pour qui regarde l occupation,
+    // une salle inemployee est un renseignement, pas un vide a masquer.
+    const rangeeSalle=v=>{
+      const [fond,encre]=TEINTES[v.couleur]||["transparent","inherit"];
+      const tete=`<td style="background:${fond};color:${encre};font-weight:600">${echapper(v.nom)}</td>`;
+      const vide=JOURS_SEMAINE.every(j=>!(parCase[v.slug+"|"+j]||[]).length);
+      return `<tr>${tete}${vide
+        ?'<td colspan="7" class="muted">Aucun créneau cette saison</td>'
+        :JOURS_SEMAINE.map(j=>caseSalle(v,j)).join("")}</tr>`;
+    };
+    document.getElementById("planning-gymnases").innerHTML=
+      `<thead><tr><th>Gymnase</th>${JOURS_SEMAINE.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
+      `<tbody>${lignes.map(rangeeSalle).join("")}</tbody>`;
+    const nbSalles=((gymnases?.items)||[]).length;
+    const nbSeances=Object.keys(parCase).reduce((n,k)=>n+parCase[k].length,0);
+    document.getElementById("salles-note").textContent=
+      nbSalles+" gymnase"+(nbSalles>1?"s":"")+" · "+nbSeances+" séance"+(nbSeances>1?"s":"");
+    document.getElementById("planning-salles").style.display="";
   }
 };
 </script></body></html>
