@@ -134,6 +134,36 @@ for (const { chemin, ko } of lourdes) {
   console.warn(`Attention — ${chemin} pèse ${ko} Ko, au-dessus des 400 Ko conseillés par le README.`);
 }
 
+// Les adresses ecrites en dur dans les pages echappaient a tout controle : on
+// ne lisait que site/content/*.json. C est par la qu une entree de la galerie a
+// pointe des semaines sur un logo inexistant sans que la compilation bronche.
+const pages = readdirSync(racineSite).filter((n) => n.endsWith(".html"));
+// Une valeur interpolee est calculee au chargement, on ne peut rien en dire.
+// Les ancres, les protocoles et les adresses absolues ne designent pas un
+// fichier du depot.
+const horsDepot = (v) =>
+  !v.trim() ||
+  v.includes("${") ||
+  v.startsWith("#") ||
+  /^(?:https?:)?\/\//.test(v) ||
+  /^(?:mailto|tel|javascript|data):/i.test(v);
+
+let ciblesPages = 0;
+for (const page of pages) {
+  const html = readFileSync(new URL(page, racineSite), "utf8");
+  for (const [, , valeur] of html.matchAll(/\b(src|href)\s*=\s*"([^"]*)"/g)) {
+    if (horsDepot(valeur)) continue;
+    // La requete et l ancre ne font pas partie du chemin : equipe.html?e=... et
+    // calendrier.html#classement designent bien un fichier du depot.
+    const chemin = valeur.split("#")[0].split("?")[0];
+    if (!chemin) continue;
+    ciblesPages += 1;
+    if (!existsSync(new URL(chemin, racineSite))) {
+      erreurs.push(`${page} : cible introuvable « ${chemin} »`);
+    }
+  }
+}
+
 if (erreurs.length) {
   console.error("Contenu invalide :");
   for (const e of erreurs) console.error("  -", e);
@@ -143,5 +173,5 @@ if (erreurs.length) {
 const tagues = matchs.filter((m) => m.equipe).length;
 const lignesClassement = classement.reduce((n, t) => n + (Array.isArray(t.lignes) ? t.lignes.length : 0), 0);
 console.log(
-  `OK — ${equipes.length} équipes, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes.`,
+  `OK — ${equipes.length} équipes, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes, ${ciblesPages} adresses vérifiées dans ${pages.length} pages.`,
 );
