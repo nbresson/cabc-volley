@@ -91,9 +91,9 @@ const REDIRECTIONS = new Map([
   ["/senior-masculin-n3/", "/equipe?e=n3-masculin"],
   ["/regional-1-masculin/", "/equipe?e=r1-masculin"],
   ["/regional-1-feminine/", "/equipe?e=r1-feminin"],
-  ["/ecole-de-volley/", "/equipe?e=ecole-de-volley"],
+  ["/ecole-de-volley/", "/equipe?e=baby-kid-volley"],
   // Baby et Kids ont ete fondus dans la fiche Ecole de volley.
-  ["/baby-kids-volley/", "/equipe?e=ecole-de-volley"],
+  ["/baby-kids-volley/", "/equipe?e=baby-kid-volley"],
   ["/volley-sante/", "/equipe?e=volley-sante"],
   ["/ufolep/", "/equipe?e=ufolep"],
   // Ces trois pages n etaient plus liees par l ancien site lui-meme et n ont

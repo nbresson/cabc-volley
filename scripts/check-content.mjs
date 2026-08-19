@@ -193,6 +193,21 @@ for (const page of pages) {
   }
 }
 
+// Les anciennes URL du site officiel sont renvoyees vers une fiche d equipe.
+// Rien ne verifiait que le slug vise existait encore : la refonte des equipes
+// du 19 aout a laisse deux 301 permanents aboutir sur « Equipe introuvable »,
+// et un 301 se met en cache chez le visiteur comme chez le moteur.
+let renvois = 0;
+const worker = readFileSync(new URL("../worker.js", import.meta.url), "utf8");
+for (const [, source, cible] of worker.matchAll(
+  /\["([^"]+)",\s*"\/equipe\?e=([^"]+)"\]/g,
+)) {
+  renvois += 1;
+  if (!slugs.has(cible)) {
+    erreurs.push(`worker.js : « ${source} » renvoie vers l'équipe inconnue « ${cible} »`);
+  }
+}
+
 if (erreurs.length) {
   console.error("Contenu invalide :");
   for (const e of erreurs) console.error("  -", e);
@@ -202,5 +217,5 @@ if (erreurs.length) {
 const tagues = matchs.filter((m) => m.equipe).length;
 const lignesClassement = classement.reduce((n, t) => n + (Array.isArray(t.lignes) ? t.lignes.length : 0), 0);
 console.log(
-  `OK — ${equipes.length} équipes totalisant ${seances} séances, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes, ${ciblesPages} adresses vérifiées dans ${pages.length} pages.`,
+  `OK — ${equipes.length} équipes totalisant ${seances} séances, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes, ${ciblesPages} adresses vérifiées dans ${pages.length} pages, ${renvois} renvois d'anciennes URL.`,
 );
