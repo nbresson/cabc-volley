@@ -147,10 +147,50 @@
       ]
     },
     {
-      "nom": "Jeunes",
-      "slug": "jeunes",
+      "groupe": "Séniors",
+      "nom": "Régional 2 F1",
+      "slug": "regional-2-f1",
+      "categorie": "Régional 2 F",
+      "planning": [
+        {
+          "jour": "lundi",
+          "debut": "18:30",
+          "fin": "20:00",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "mercredi",
+          "debut": "18:00",
+          "fin": "20:00",
+          "gymnase": "saint-germain"
+        }
+      ]
+    },
+    {
+      "groupe": "Séniors",
+      "nom": "Régional 2 F2",
+      "slug": "regional-2-f2",
+      "categorie": "Régional 2 F",
+      "planning": [
+        {
+          "jour": "lundi",
+          "debut": "18:30",
+          "fin": "20:00",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "samedi",
+          "debut": "11:00",
+          "fin": "12:30",
+          "gymnase": "rollinat"
+        }
+      ]
+    },
+    {
+      "nom": "M18 masculin",
+      "slug": "m18-m",
       "groupe": "Jeunes",
-      "categorie": "M18 · M15 · M13",
+      "categorie": "M18 M",
       "infos": {
         "titre": "Jouer en compétition jeunes",
         "texte": "Le club engage des équipes en M18, M15 et M13. Les entraînements ont lieu le mercredi et le samedi après-midi. Pour connaître le créneau exact de votre catégorie, écrivez-nous.",
@@ -161,26 +201,86 @@
       "photo": "assets/uploads/jeunes_3.jpeg",
       "planning": [
         {
-          "jour": "mercredi",
-          "debut": "",
-          "fin": "",
-          "gymnase": "",
-          "precision": "Après-midi, horaire à confirmer"
+          "jour": "mardi",
+          "debut": "18:00",
+          "fin": "20:00",
+          "gymnase": "saint-germain",
+          "precision": ""
         },
         {
           "jour": "samedi",
-          "debut": "",
-          "fin": "",
-          "gymnase": "",
-          "precision": "Après-midi, horaire à confirmer"
+          "debut": "12:30",
+          "fin": "14:00",
+          "gymnase": "rollinat",
+          "precision": ""
         }
       ]
     },
     {
-      "nom": "École de volley",
-      "slug": "ecole-de-volley",
       "groupe": "Jeunes",
-      "categorie": "M11 & baby",
+      "nom": "M15 masculin",
+      "slug": "m15-m",
+      "categorie": "M15 M",
+      "planning": [
+        {
+          "jour": "mardi",
+          "debut": "18:00",
+          "fin": "20:00",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "samedi",
+          "debut": "12:30",
+          "fin": "14:00",
+          "gymnase": "rollinat"
+        }
+      ]
+    },
+    {
+      "groupe": "Jeunes",
+      "nom": "M15-M18 féminin",
+      "slug": "m15-m18-f",
+      "categorie": "M18 F",
+      "planning": [
+        {
+          "jour": "mardi",
+          "debut": "18:00",
+          "fin": "20:00",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "samedi",
+          "debut": "11:00",
+          "fin": "12:30",
+          "gymnase": "rollinat"
+        }
+      ]
+    },
+    {
+      "groupe": "Jeunes",
+      "nom": "M13-M11-M9",
+      "slug": "m13-m11-m9",
+      "categorie": "M13",
+      "planning": [
+        {
+          "jour": "mercredi",
+          "debut": "16:30",
+          "fin": "18:00",
+          "gymnase": "saint-germain"
+        },
+        {
+          "jour": "samedi",
+          "debut": "10:00",
+          "fin": "11:00",
+          "gymnase": "rollinat"
+        }
+      ]
+    },
+    {
+      "nom": "Baby - Kid Volley",
+      "slug": "baby-kid-volley",
+      "groupe": "Jeunes",
+      "categorie": "baby-volley",
       "infos": {
         "titre": "Découvrir le volley",
         "texte": "L'école de volley accueille les plus jeunes, en catégories M11 et baby-volley, le samedi matin à 10h au gymnase Rollinat. Pour inscrire votre enfant ou poser une question, écrivez-nous.",
@@ -191,11 +291,17 @@
       "photo": "assets/uploads/ecole.jpg",
       "planning": [
         {
+          "jour": "mercredi",
+          "debut": "17:15",
+          "fin": "18:00",
+          "gymnase": "saint-germain",
+          "precision": ""
+        },
+        {
           "jour": "samedi",
           "debut": "10:00",
-          "fin": "",
-          "gymnase": "rollinat",
-          "precision": ""
+          "fin": "11:00",
+          "gymnase": "rollinat"
         }
       ]
     },
@@ -234,26 +340,6 @@
           "fin": "22:00",
           "gymnase": "arsonval",
           "precision": ""
-        }
-      ]
-    },
-    {
-      "groupe": "Séniors",
-      "nom": "Régional 2 F1",
-      "slug": "regional-2-f1",
-      "categorie": "Régional 2 F",
-      "planning": [
-        {
-          "jour": "lundi",
-          "debut": "18:30",
-          "fin": "20:00",
-          "gymnase": "rollinat"
-        },
-        {
-          "jour": "mercredi",
-          "debut": "18:00",
-          "fin": "20:00",
-          "gymnase": "saint-germain"
         }
       ]
     }
