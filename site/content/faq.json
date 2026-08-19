@@ -1,0 +1,21 @@
+{
+  "titre": "Avant de te lancer",
+  "items": [
+    {
+      "question": "Combien coûte la licence ?",
+      "reponse": "De 90 € (école de volley) à 160 € (seniors compétition), maillot d'entraînement compris. Pass'Sport accepté, paiement en trois fois possible."
+    },
+    {
+      "question": "Quels documents fournir ?",
+      "reponse": "Le formulaire de licence FFVB signé, un certificat médical (ou attestation santé pour un renouvellement) et une photo d'identité."
+    },
+    {
+      "question": "Peut-on essayer avant de s'inscrire ?",
+      "reponse": "Oui — la première séance est gratuite, sans engagement. Viens simplement en tenue de sport à l'horaire de ta catégorie."
+    },
+    {
+      "question": "Quels sont les horaires d'entraînement ?",
+      "reponse": "Consulte la page [Calendrier](calendrier.html) ou passe à la permanence du mercredi — les créneaux varient selon la catégorie et le gymnase."
+    }
+  ]
+}

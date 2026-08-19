@@ -350,16 +350,6 @@ collections:
               - {name: eyebrow, label: Surtitre, widget: string, required: false, hint: "Ex. — Saison 2026–2027"}
               - {name: titre, label: Titre, widget: text, hint: "Un retour à la ligne coupe le titre en deux — c'est ce qui lui donne son allure."}
               - {name: chapo, label: Chapô, widget: text, required: false}
-              - name: tarifs
-                label: Tarifs
-                label_singular: Tarif
-                widget: list
-                required: false
-                summary: "{{fields.montant}} — {{fields.libelle}}"
-                hint: "Affichés deux par ligne. En nombre impair, le dernier occupe toute la largeur."
-                fields:
-                  - {name: montant, label: Montant, widget: string, hint: "Ex. 120 €"}
-                  - {name: libelle, label: "Ce qu'il couvre", widget: string, hint: "Ex. Jeunes / Loisir"}
           - name: etapes
             label: Les trois étapes
             label_singular: Étape
@@ -379,21 +369,46 @@ collections:
             fields:
               - {name: titre, label: Titre, widget: string, required: false}
               - {name: chapo, label: "Texte d'introduction", widget: text, required: false}
-          - name: faq
-            label: "« Avant de te lancer » — les questions fréquentes"
-            widget: object
-            hint: "Le bloc dépliant en bas de la page Adhésion. Sans aucune question, il disparaît entièrement."
+
+  - name: tarifs
+    label: Tarifs & licences
+    files:
+      - name: tarifs
+        label: Contenu de la page
+        file: site/content/tarifs.json
+        fields:
+          - name: items
+            label: Tarifs
+            label_singular: Tarif
+            widget: list
+            required: false
+            summary: "{{fields.montant}} — {{fields.libelle}}"
+            hint: "La saison affichée à côté du titre vient du surtitre du bandeau de la page Adhésion : elle ne se saisit qu'une fois, là-bas."
             fields:
-              - {name: titre, label: Titre de la section, widget: string, required: false, hint: "Par défaut : Avant de te lancer"}
-              - name: items
-                label: Questions
-                label_singular: Question
-                widget: list
-                required: false
-                summary: "{{fields.question}}"
-                fields:
-                  - {name: question, label: Question, widget: string, hint: "Elle s'affiche en majuscules, gardez-la courte."}
-                  - {name: reponse, label: Réponse, widget: text, required: false, hint: "Un lien s'écrit [texte](page.html), du gras **entre deux étoiles**. Une ligne vide sépare deux paragraphes."}
+              - {name: montant, label: Montant, widget: string, hint: "Ex. 120 €"}
+              - {name: libelle, label: "Ce qu'il couvre", widget: string, hint: "Ex. Jeunes / Loisir"}
+          - {name: comprend, label: "Ce que la licence comprend", widget: markdown, required: false, hint: "Laissé vide, ce bloc n'apparaît pas sur la page. Ex. l'assurance fédérale, le maillot, l'accès aux créneaux."}
+          - {name: pass_sport, label: "Pass'Sport", widget: markdown, required: false, hint: "Laissé vide, ce bloc n'apparaît pas. Le montant déduit, qui y a droit, ce qu'il faut apporter."}
+          - {name: paiement, label: "Paiement en plusieurs fois", widget: markdown, required: false, hint: "Laissé vide, ce bloc n'apparaît pas. Le nombre d'échéances et les moyens de paiement acceptés."}
+
+  - name: faq
+    label: FAQ
+    files:
+      - name: faq
+        label: Contenu de la page
+        file: site/content/faq.json
+        fields:
+          - {name: titre, label: Titre de la section, widget: string, required: false, hint: "Par défaut : Questions fréquentes"}
+          - name: items
+            label: Questions
+            label_singular: Question
+            widget: list
+            required: false
+            summary: "{{fields.question}}"
+            fields:
+              - {name: question, label: Question, widget: string, hint: "Elle s'affiche en majuscules, gardez-la courte."}
+              - {name: reponse, label: Réponse, widget: text, required: false, hint: "Un lien s'écrit [texte](page.html), du gras **entre deux étoiles**. Une ligne vide sépare deux paragraphes."}
+
   - name: legal
     label: Mentions légales
     files:
