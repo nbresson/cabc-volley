@@ -60,7 +60,7 @@ window.__pageInit=async function(){
   // heros ses deux lignes, une seule les tasserait.
   const b=a?.bandeau||{};
   pose("ad-eyebrow",b.eyebrow);
-  pose("ad-titre",String(b.titre||"").replace(/\n/g,"<br>"),true);
+  pose("ad-titre",echapper(b.titre).replace(/\n/g,"<br>"),true);
   pose("ad-chapo",b.chapo);
 
   // Tarifs. Un nombre impair laisse le dernier occuper les deux colonnes :
@@ -68,7 +68,7 @@ window.__pageInit=async function(){
   // codant l etalement en dur sur le troisieme.
   const tarifs=(b.tarifs||[]).filter(t=>t.montant||t.libelle);
   pose("ad-tarifs",tarifs.map((t,i)=>`
-    <div style="border:2px solid var(--creme);padding:22px;text-align:center${i===tarifs.length-1&&tarifs.length%2?";grid-column:span 2":""}"><strong class="display-2xl" style="font-weight:900;display:block">${t.montant||""}</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:var(--mention-sombre)">${t.libelle||""}</span></div>`).join(""),true);
+    <div style="border:2px solid var(--creme);padding:22px;text-align:center${i===tarifs.length-1&&tarifs.length%2?";grid-column:span 2":""}"><strong class="display-2xl" style="font-weight:900;display:block">${echapper(t.montant)}</strong><span class="mono" style="font-size:10px;letter-spacing:.16em;color:var(--mention-sombre)">${echapper(t.libelle)}</span></div>`).join(""),true);
 
   // Etapes. Le numero vient du rang, le bureau n a donc pas a le saisir ni a
   // le renumeroter quand il en insere une. --n nourrit la grille de .band.
@@ -76,8 +76,10 @@ window.__pageInit=async function(){
   const bande=document.getElementById("ad-etapes");
   if(bande){
     bande.style.setProperty("--n",etapes.length||1);
-    bande.innerHTML=etapes.map((e,i)=>`
-    <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">${String(i+1).padStart(2,"0")}</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">${e.titre||""}</strong><span class="muted" style="font-size:14px">${e.texte||""}</span>${e.lien&&e.lien_libelle?`<a href="${e.lien}" class="mono lien" style="font-size:11px;color:var(--encre);align-self:flex-start">${e.lien_libelle}</a>`:""}</div>`).join("");
+    // Une adresse refusee par lienSur() efface le lien de l etape : le texte de
+    // l etape se lit encore, un lien mort ne s explique pas.
+    bande.innerHTML=etapes.map((e,i)=>{const lien=lienSur(e.lien);return `
+    <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">${String(i+1).padStart(2,"0")}</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">${echapper(e.titre)}</strong><span class="muted" style="font-size:14px">${echapper(e.texte)}</span>${lien&&e.lien_libelle?`<a href="${echapper(lien)}" class="mono lien" style="font-size:11px;color:var(--encre);align-self:flex-start">${echapper(e.lien_libelle)}</a>`:""}</div>`;}).join("");
   }
 
   // En-tete du formulaire. Le formulaire lui-meme reste en dur : ses champs
@@ -93,7 +95,7 @@ window.__pageInit=async function(){
   document.getElementById("faq-titre").textContent=faq.titre||"Avant de te lancer";
   document.getElementById("faq-liste").innerHTML=questions.map((q,i)=>`
     <details class="acc"${i===0?" open":""}>
-      <summary>${q.question}</summary>
+      <summary>${echapper(q.question)}</summary>
       <div class="acc-body muted">${mdToHtml(q.reponse)}</div>
     </details>`).join("");
   document.getElementById("faq").style.display="";

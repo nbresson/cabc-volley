@@ -58,18 +58,22 @@ window.__pageInit=async function(){
   }
 
   const carte=p=>{
+    // Une adresse refusee par lienSur() rend la carte non cliquable, exactement
+    // comme une adresse absente : la mention « Voir le site » disparait avec le
+    // lien, plutot que d annoncer un lien qui n existe pas.
+    const site=lienSur(p.lien);
     const dedans=`<div class="logo-cadre">${p.logo
-      ?`<img src="${p.logo}" alt="${p.nom||""}" loading="lazy">`
+      ?`<img src="${echapper(p.logo)}" alt="${echapper(p.nom)}" loading="lazy">`
       :`<span class="mono" style="color:var(--mention)">[ logo à venir ]</span>`}</div>
       <div class="body" style="padding:16px 18px">
-        <strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1.05">${p.nom||""}</strong>
-        ${p.mot?`<span class="muted" style="font-size:13px;font-style:italic;border-left:3px solid var(--encre);padding-left:10px;line-height:1.5">« ${p.mot} »</span>`:""}
-        ${p.lien?`<span class="mono lien" style="font-size:11px;letter-spacing:.12em">Voir le site ↗</span>`:""}
+        <strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1.05">${echapper(p.nom)}</strong>
+        ${p.mot?`<span class="muted" style="font-size:13px;font-style:italic;border-left:3px solid var(--encre);padding-left:10px;line-height:1.5">« ${echapper(p.mot)} »</span>`:""}
+        ${site?`<span class="mono lien" style="font-size:11px;letter-spacing:.12em">Voir le site ↗</span>`:""}
       </div>`;
     // Un partenaire sans adresse reste affiche, simplement pas cliquable :
     // une saisie incomplete degrade la carte, elle ne cree pas de lien mort.
-    return p.lien
-      ?`<a class="card link shadow" href="${p.lien}" target="_blank" rel="noopener">${dedans}</a>`
+    return site
+      ?`<a class="card link shadow" href="${echapper(site)}" target="_blank" rel="noopener">${dedans}</a>`
       :`<div class="card shadow">${dedans}</div>`;
   };
 
@@ -77,17 +81,21 @@ window.__pageInit=async function(){
   // Elle reutilise le contenu du bloc « devenir » et ne parait que s il est
   // rempli ; le grand bloc sombre du bas de page reste tel quel.
   const d=data?.devenir;
+  // Deux replis differents : rien de saisi garde le lien historique vers la page
+  // Contact, une adresse refusee par lienSur() efface le bouton.
+  const lienDevenir=lienSur(d?.lien);
+  const lienCarte=d?.lien?lienDevenir:"contact.html";
   const carteAppel=d?.titre?`
     <div class="dark" style="border:2px solid var(--encre);display:flex;flex-direction:column;justify-content:center;gap:12px;padding:28px">
-      <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${d.titre}</strong>
-      ${d.accroche?`<span style="font-size:13px;color:var(--texte-sombre);line-height:1.6">${d.accroche}</span>`:""}
-      ${d.bouton?`<a href="${d.lien||"contact.html"}" class="btn btn-inverse" style="align-self:flex-start;padding:9px 20px;font-size:16px">${d.bouton}</a>`:""}
+      <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${echapper(d.titre)}</strong>
+      ${d.accroche?`<span style="font-size:13px;color:var(--texte-sombre);line-height:1.6">${echapper(d.accroche)}</span>`:""}
+      ${d.bouton&&lienCarte?`<a href="${echapper(lienCarte)}" class="btn btn-inverse" style="align-self:flex-start;padding:9px 20px;font-size:16px">${echapper(d.bouton)}</a>`:""}
     </div>`:"";
 
   const visibles=[...groupes].filter(([,l])=>l.length);
   document.getElementById("p-listes").innerHTML=visibles.map(([nom,liste],i)=>`
     <div style="margin-bottom:56px">
-      <div class="section-head" style="margin-bottom:20px"><h2>${nom}</h2><span class="mono">${liste.length}</span></div>
+      <div class="section-head" style="margin-bottom:20px"><h2>${echapper(nom)}</h2><span class="mono">${liste.length}</span></div>
       <div class="cols-4">${liste.map(carte).join("")}${i===visibles.length-1?carteAppel:""}</div>
     </div>`).join("")||'<p class="vide muted">Les partenaires seront présentés prochainement.</p>';
 
@@ -97,9 +105,9 @@ window.__pageInit=async function(){
     document.getElementById("p-devenir").style.display="";
     document.getElementById("p-dev-titre").textContent=d.titre;
     document.getElementById("p-dev-texte").innerHTML=mdToHtml(d.texte);
-    if(d.bouton&&d.lien){
+    if(d.bouton&&lienDevenir){
       const b=document.getElementById("p-dev-bouton");
-      b.textContent=d.bouton;b.href=d.lien;b.style.display="";
+      b.textContent=d.bouton;b.href=lienDevenir;b.style.display="";
     }
   }
 };

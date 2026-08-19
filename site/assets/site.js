@@ -173,7 +173,11 @@ async function ajusterLiensReglables(){
   if(!cibles.length)return;
   const reglages=await getJSON("content/settings.json");
   if(!reglages)return;
-  cibles.forEach(a=>{const url=reglages[a.dataset.reglage];if(url)a.href=url;});
+  // lienSur() ici aussi : settings.json s edite dans Decap comme le reste, et ces
+  // liens vivent dans le bandeau reseaux, donc sur les seize pages. Une adresse
+  // refusee rend "" et laisse en place l adresse de secours ecrite dans RESEAUX —
+  // une saisie hostile ne doit pas obtenir mieux qu un fichier qui ne repond pas.
+  cibles.forEach(a=>{const url=lienSur(reglages[a.dataset.reglage]);if(url)a.href=url;});
 }
 // Nomme la page une fois pour toutes : le titre de l onglet et og:title ne
 // peuvent plus diverger. Les robots des reseaux sociaux lisent le HTML brut et

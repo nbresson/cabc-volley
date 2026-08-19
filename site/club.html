@@ -51,29 +51,32 @@ window.__pageInit=async function(){
   // club.json, un souci sur ce fichier ne doit pas les faire disparaitre.
   renderGymnases("infrastructures","infra-sub",gym);
   if(!d)return;
+  // nl() et gras() ecrivent des balises : comme inl() dans mdToHtml(), elles
+  // recoivent du texte deja echappe, sans quoi elles effaceraient le <br> et le
+  // <strong> qu elles viennent de poser.
   const nl=s=>String(s||"").replace(/\n/g,"<br>");
   const gras=s=>String(s||"").replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
 
   // Bandeau d'accueil
   const p=d.presentation||{};
   document.getElementById("hero-eyebrow").textContent=p.eyebrow||"";
-  document.getElementById("hero-titre").innerHTML=nl(p.titre);
+  document.getElementById("hero-titre").innerHTML=nl(echapper(p.titre));
   document.getElementById("hero-chapo").textContent=p.chapo||"";
 
   // Chiffres clés
   const chiffres=p.chiffres||[];
   const bande=document.getElementById("chiffres");
   bande.style.setProperty("--n",chiffres.length||1);
-  bande.innerHTML=chiffres.map(c=>`<div><strong>${c.valeur}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)">${c.libelle}</span></div>`).join("");
+  bande.innerHTML=chiffres.map(c=>`<div><strong>${echapper(c.valeur)}</strong><span class="mono" style="font-size:11px;letter-spacing:.2em;color:var(--mention-sombre)">${echapper(c.libelle)}</span></div>`).join("");
   animerChiffres();
 
   // Histoire
   const h=d.histoire||{};
   document.getElementById("histoire-eyebrow").textContent=h.eyebrow||"";
-  document.getElementById("histoire-titre").innerHTML=nl(h.titre);
+  document.getElementById("histoire-titre").innerHTML=nl(echapper(h.titre));
   document.getElementById("histoire-photo").innerHTML=`
     <div class="ph" style="aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${h.photo?vignette(h.photo,h.legende):'<span class="mono" style="letter-spacing:.1em;color:var(--mention)">[ photo d\'archive ]</span>'}</div>
-    ${h.legende?`<div class="mono" style="padding:12px 18px;border-top:2px solid var(--encre)">${h.legende}</div>`:""}`;
+    ${h.legende?`<div class="mono" style="padding:12px 18px;border-top:2px solid var(--encre)">${echapper(h.legende)}</div>`:""}`;
   // La periode se lit souvent en tete du texte — « Annees 1960-1983 — … » — et
   // repete alors l annee de la colonne. On la remonte, abregee, et on l ote du
   // texte. Le bureau continue d ecrire comme aujourd hui dans Decap.
@@ -86,8 +89,8 @@ window.__pageInit=async function(){
   const dates=h.dates||[];
   document.getElementById("histoire-dates").innerHTML=dates.map((t,i)=>`
     <div class="pad timeline" style="padding-top:30px;padding-bottom:30px;${t.une?"background:var(--sable);":""}${i<dates.length-1?"border-bottom:1px solid var(--lin)":""}">
-      <strong class="display-2xl" style="font-weight:900;line-height:1${periode(t.texte)?";font-size:30px":""}">${periode(t.texte)?.libelle||t.annee}</strong>
-      <p class="muted" style="align-self:center;font-size:14px">${gras(periode(t.texte)?.reste||t.texte)}</p>
+      <strong class="display-2xl" style="font-weight:900;line-height:1${periode(t.texte)?";font-size:30px":""}">${echapper(periode(t.texte)?.libelle||t.annee)}</strong>
+      <p class="muted" style="align-self:center;font-size:14px">${gras(echapper(periode(t.texte)?.reste||t.texte))}</p>
     </div>`).join("");
 
   // Le bureau
@@ -97,13 +100,17 @@ window.__pageInit=async function(){
   const membres=(b.membres||[]).map(m=>`
     <div class="card shadow">
       <div class="ph" style="aspect-ratio:3/4;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${m.photo?vignette(m.photo,m.nom):'<span class="mono" style="color:var(--mention)">[ portrait ]</span>'}</div>
-      <div class="body"><strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${m.nom}</strong><span class="mono" style="font-size:11px;letter-spacing:.16em">${m.role||""}</span></div>
+      <div class="body"><strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${echapper(m.nom)}</strong><span class="mono" style="font-size:11px;letter-spacing:.16em">${echapper(m.role)}</span></div>
     </div>`);
+  // Adresse vide : le bouton mene a la page Contact, comme depuis toujours.
+  // Adresse refusee par lienSur() : le bouton disparait, un bouton mort trompant
+  // plus qu il ne rend service.
+  const lienAppel=a.lien?lienSur(a.lien):"contact.html";
   if(a.titre)membres.push(`
     <div class="dark" style="border:2px solid var(--encre);display:flex;flex-direction:column;justify-content:center;gap:12px;padding:28px">
-      <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${a.titre}</strong>
-      <span style="font-size:13px;color:var(--texte-sombre)">${a.texte||""}</span>
-      ${a.bouton?`<a href="${a.lien||"contact.html"}" class="btn btn-outline-light" style="align-self:flex-start;padding:9px 20px;font-size:16px">${a.bouton}</a>`:""}
+      <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1">${echapper(a.titre)}</strong>
+      <span style="font-size:13px;color:var(--texte-sombre)">${echapper(a.texte)}</span>
+      ${a.bouton&&lienAppel?`<a href="${echapper(lienAppel)}" class="btn btn-outline-light" style="align-self:flex-start;padding:9px 20px;font-size:16px">${echapper(a.bouton)}</a>`:""}
     </div>`);
   document.getElementById("bureau").innerHTML=membres.join("");
 

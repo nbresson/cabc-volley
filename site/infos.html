@@ -61,16 +61,18 @@ window.__pageInit=async function(){
   // oblique. Un document dont le champ utile est vide est ignore, le reste du
   // bloc s affichant quand meme.
   const rangee=(d,num)=>{
-    if(d.type==="intertitre")return `<div class="doc-inter"><span></span><span>${d.libelle||""}</span></div>`;
+    if(d.type==="intertitre")return `<div class="doc-inter"><span></span><span>${echapper(d.libelle)}</span></div>`;
     const fichier=d.type==="fichier"&&d.fichier;
-    const url=fichier?d.fichier:(d.url?externe(d.url):"");
+    // lienSur() en dernier : une adresse refusee rend "", et la rangee entiere
+    // disparait par le test qui suit, plutot que de porter un lien mort.
+    const url=lienSur(fichier?d.fichier:(d.url?externe(d.url):""));
     if(!url)return"";
     const ext=extension(fichier?d.fichier:d.url)||"LIEN";
     const type=[ext,d.langue].filter(Boolean).join(" · ");
-    return `<a class="doc-row" href="${url}"${fichier?' download':' target="_blank" rel="noopener"'}>
+    return `<a class="doc-row" href="${echapper(url)}"${fichier?' download':' target="_blank" rel="noopener"'}>
       <span class="num">${String(num).padStart(2,"0")}</span>
-      <span><span class="titre">${d.libelle||"Document"}</span><span class="source">${fichier?"document du club":domaine(d.url)}</span></span>
-      <span class="type"${d.langue==="EN"?' style="background:var(--sable);color:var(--encre)"':""}>${type}</span>
+      <span><span class="titre">${echapper(d.libelle||"Document")}</span><span class="source">${echapper(fichier?"document du club":domaine(d.url))}</span></span>
+      <span class="type"${d.langue==="EN"?' style="background:var(--sable);color:var(--encre)"':""}>${echapper(type)}</span>
       <span class="fleche">${fichier?"↓":"↗"}</span></a>`;
   };
 
@@ -84,7 +86,7 @@ window.__pageInit=async function(){
     let n=0;
     const lignes=docs.map(d=>rangee(d,d.type==="intertitre"?0:++n)).join("");
     return `<section class="pad section" id="${slugAncre(b.titre)}">
-      <div class="section-head"><h2>${b.titre||""}</h2><span class="mono">${reels.length} document${reels.length>1?"s":""}</span></div>
+      <div class="section-head"><h2>${echapper(b.titre)}</h2><span class="mono">${reels.length} document${reels.length>1?"s":""}</span></div>
       ${b.texte?mdToHtml(b.texte):""}
       ${lignes?`<div class="doc-liste">${lignes}</div>`:""}
     </section>`;
@@ -94,7 +96,7 @@ window.__pageInit=async function(){
   // Un sommaire d un seul lien ne sert a rien.
   const ancres=document.getElementById("ancres-blocs");
   if(blocs.length>1){
-    ancres.innerHTML=blocs.map(b=>`<a href="#${slugAncre(b.titre)}">${b.titre} ↓</a>`).join("");
+    ancres.innerHTML=blocs.map(b=>`<a href="#${slugAncre(b.titre)}">${echapper(b.titre)} ↓</a>`).join("");
     ancres.style.display="";
   }
 
@@ -104,10 +106,13 @@ window.__pageInit=async function(){
     document.getElementById("essentiel-titre").textContent=e.titre||"Quel document te faut-il ?";
     const grille=document.getElementById("essentiel-cas");
     grille.style.setProperty("--n",Math.min(e.cas.length,3));
+    // Un document dont l adresse ne passe pas lienSur() quitte la liste : le cas
+    // reste affiche avec ses autres documents, sans lien arme.
+    const lienCas=d=>d.url?lienSur(externe(d.url)):"";
     grille.innerHTML=e.cas.map(c=>`<div>
-      <div class="cas">${c.titre||""}</div>
-      <div style="margin-top:12px">${(c.documents||[]).filter(d=>d.url).map(d=>`<a href="${externe(d.url)}" target="_blank" rel="noopener">↓ ${d.libelle||"Document"}</a>`).join("")}</div>
-      ${c.note?`<p class="mono" style="margin-top:14px;font-size:11px;letter-spacing:.08em;color:var(--mention-sombre);text-transform:none">${c.note}</p>`:""}
+      <div class="cas">${echapper(c.titre)}</div>
+      <div style="margin-top:12px">${(c.documents||[]).filter(lienCas).map(d=>`<a href="${echapper(lienCas(d))}" target="_blank" rel="noopener">↓ ${echapper(d.libelle||"Document")}</a>`).join("")}</div>
+      ${c.note?`<p class="mono" style="margin-top:14px;font-size:11px;letter-spacing:.08em;color:var(--mention-sombre);text-transform:none">${echapper(c.note)}</p>`:""}
     </div>`).join("");
     document.getElementById("essentiel").style.display="";
   }
