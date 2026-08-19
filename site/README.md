@@ -116,7 +116,7 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 - **Actualités** — articles (titre, date, catégorie, chapô, contenu Markdown, image, « à la une »)
 - **Matchs & résultats** — matchs à venir et scores ; « match à la une » = celui du compte à rebours d'accueil. Le **numéro de match** est facultatif et n'apparaît pas sur le site : c'est le code de la rencontre chez la fédération, qui servira à rapprocher les résultats officiels. Deux matchs ne peuvent pas porter le même, la vérification est bloquante
 - **Classement** — un tableau par poule, chacun rattaché à une équipe du club : titre, « à la une » (le tableau repris sur l'accueil, un seul), phrase sous le tableau, puis les lignes (club, J, V, D, points) ; le rang n'est pas saisi, c'est l'ordre des lignes
-- **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo) ; chaque équipe a aussi son identifiant URL, son groupe, sa photo d'équipe, son lien de classement FFVB et son bloc infos pratiques (pour les équipes sans calendrier de matchs)
+- **Équipes & effectifs** — équipes et joueurs/joueuses (numéro, poste, photo) ; chaque équipe a aussi son identifiant URL, son groupe, sa photo d'équipe, son lien de classement FFVB, son nom chez la FFVB si deux équipes du club jouent la même poule et son bloc infos pratiques (pour les équipes sans calendrier de matchs)
 - **Boutique** — produits (nom, prix, statut dispo/nouveau/épuisé, photo)
 - **Réglages** — email, téléphone, permanence, **lien classement FFVB**, adresses Instagram et Facebook (laissées vides, celles inscrites dans le code sont conservées)
 - **Gymnases** — secteur affiché et salles (nom, étiquette, adresse, ce qui s'y passe, accès, lien itinéraire, photo)

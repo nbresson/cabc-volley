@@ -26,5 +26,12 @@
       "persist": true,
       "head_sampling_rate": 1
     }
-  }
+  },
+  "kv_namespaces": [
+    { "binding": "FFVB", "id": "c1573a51b06a4fb49a10df3ef3141d81" }
+  ],
+  // Toutes les heures, samedi et dimanche seulement : 48 declenchements par
+  // semaine au lieu de 168. Les crons sont en UTC, ce qui couvre le samedi matin
+  // jusqu au lundi 1 h ou 2 h du matin en heure francaise.
+  "triggers": { "crons": ["0 * * * 6,0"] }
 }

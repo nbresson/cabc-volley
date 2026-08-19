@@ -1,0 +1,5 @@
+# Echantillon FFVB : capture brute d un serveur tiers, servie en latin-1.
+# -text la retire de toute normalisation de fin de ligne, y compris au
+# checkout avec core.autocrlf actif -- sinon l octet-a-octet promis par
+# task-2-brief.md ne survit pas au premier `git checkout` du fichier.
+ffvb/echantillons/*.html -text
