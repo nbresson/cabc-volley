@@ -36,7 +36,19 @@
       ],
       "photo": "assets/uploads/equipe_n3m.webp",
       "categorie": "National 3",
-      "ffvb_nom": "C.A. BRIVE/CORREZE VOLLEY"
+      "ffvb_nom": "C.A. BRIVE/CORREZE VOLLEY",
+      "planning": [
+        {
+          "jour": "mercredi",
+          "texte": "18h30 – 20h30",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "vendredi",
+          "texte": "18h30 – 20h30",
+          "gymnase": "rollinat"
+        }
+      ]
     },
     {
       "creneau": "Mar. 20h00-22h00 · Rollinat ; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
@@ -54,7 +66,19 @@
       ],
       "photo": "assets/uploads/equipe_r1f_seniors.webp",
       "categorie": "Régional 1",
-      "ffvb_nom": "C.A. BRIVE/CORREZE VOLLEY"
+      "ffvb_nom": "C.A. BRIVE/CORREZE VOLLEY",
+      "planning": [
+        {
+          "jour": "mardi",
+          "texte": "20h00 – 22h00",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "vendredi",
+          "texte": "20h30 – 22h30, en alternance avec Saint-Germain",
+          "gymnase": "rollinat"
+        }
+      ]
     },
     {
       "creneau": "Mar. 20h30-22h30 · Saint-Germain; Alternance Ven. 20h30-22h30 · Rollinat ou Saint-Germain",
@@ -65,7 +89,19 @@
       "effectif": [],
       "photo": "assets/uploads/equipe_r1m.webp",
       "categorie": "Régional 1",
-      "ffvb_nom": "C.A.BRIVE/CORREZE VOLLEY"
+      "ffvb_nom": "C.A.BRIVE/CORREZE VOLLEY",
+      "planning": [
+        {
+          "jour": "mardi",
+          "texte": "20h30 – 22h30",
+          "gymnase": "saint-germain"
+        },
+        {
+          "jour": "vendredi",
+          "texte": "20h30 – 22h30, en alternance avec Rollinat",
+          "gymnase": "saint-germain"
+        }
+      ]
     },
     {
       "nom": "Jeunes",
@@ -80,7 +116,19 @@
         "lien": "contact.html"
       },
       "effectif": [],
-      "photo": "assets/uploads/jeunes_3.jpeg"
+      "photo": "assets/uploads/jeunes_3.jpeg",
+      "planning": [
+        {
+          "jour": "mercredi",
+          "texte": "Après-midi, horaire à confirmer",
+          "gymnase": ""
+        },
+        {
+          "jour": "samedi",
+          "texte": "Après-midi, horaire à confirmer",
+          "gymnase": ""
+        }
+      ]
     },
     {
       "nom": "École de volley",
@@ -95,7 +143,14 @@
         "lien": "contact.html"
       },
       "effectif": [],
-      "photo": "assets/uploads/ecole.jpg"
+      "photo": "assets/uploads/ecole.jpg",
+      "planning": [
+        {
+          "jour": "samedi",
+          "texte": "10h00",
+          "gymnase": "rollinat"
+        }
+      ]
     },
     {
       "groupe": "Loisir",
@@ -103,14 +158,33 @@
       "slug": "volley-sante",
       "categorie": "Volley Santé",
       "photo": "assets/uploads/fit_volley.jpg",
-      "creneau": "Jeu. 20h à 21h40 · Saint Germain"
+      "creneau": "Jeu. 20h à 21h40 · Saint Germain",
+      "planning": [
+        {
+          "jour": "jeudi",
+          "texte": "20h00 – 21h40",
+          "gymnase": "saint-germain"
+        }
+      ]
     },
     {
       "groupe": "Loisir",
       "nom": "UFOLEP",
       "slug": "ufolep",
       "categorie": "UFOLEP",
-      "creneau": "Mer. 20h-22h et Jeu. 20h-22h · Gymnase d'Arsonval"
+      "creneau": "Mer. 20h-22h et Jeu. 20h-22h · Gymnase d'Arsonval",
+      "planning": [
+        {
+          "jour": "mercredi",
+          "texte": "20h00 – 22h00",
+          "gymnase": "arsonval"
+        },
+        {
+          "jour": "jeudi",
+          "texte": "20h00 – 22h00",
+          "gymnase": "arsonval"
+        }
+      ]
     }
   ]
 }

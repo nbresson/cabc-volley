@@ -148,6 +148,27 @@ collections:
               - {name: groupe, label: Groupe, widget: select, options: ["Séniors","Jeunes","Formation","Loisir"], default: "Séniors", required: false, hint: "Regroupe les équipes sur la page Équipes, dans cet ordre. « Loisir » pour les pratiques sans compétition, comme le Volley Santé. Laissé vide, le groupe devient « Autres », affiché en dernier."}
               - {name: categorie, label: Catégorie / niveau, widget: string}
               - {name: creneau, label: Créneau, widget: string}
+              - name: planning
+                label: Planning hebdomadaire
+                label_singular: Créneau
+                widget: list
+                collapsed: true
+                required: false
+                summary: "{{fields.jour}} — {{fields.texte}}"
+                hint: "Une ligne par jour où l'équipe s'entraîne. Ce que vous écrivez ici paraît tel quel dans la case du planning : horaire, lieu, entraîneur. Laissez vide si l'équipe n'a pas de créneau ce jour-là."
+                fields:
+                  - {name: jour, label: Jour, widget: select, options: ["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"]}
+                  - {name: texte, label: Contenu de la case, widget: text, hint: "Horaire, précisions, et le cas échéant l'entraîneur. Attention : cette page est publique — préférez un contact du club à un numéro personnel, et demandez son accord à la personne."}
+                  - name: gymnase
+                    label: Salle
+                    widget: relation
+                    collection: gymnases
+                    file: gymnases
+                    required: false
+                    value_field: "items.*.slug"
+                    search_fields: ["items.*.nom"]
+                    display_fields: ["items.*.nom"]
+                    hint: "Donne sa couleur a la case et la relie a la legende. Laissez vide si le lieu n est pas encore arrete."
               - {name: photo, label: Photo d'équipe, widget: image, required: false, hint: "Paysage : 1600 × 900 px (format 16/9), moins de 400 Ko."}
               - {name: classement, label: Lien classement FFVB de l'équipe, widget: string, required: false, hint: "Chaque équipe a sa poule, donc son propre classement. Ouvrez le classement de cette équipe sur le site de la FFVB et collez ici l'adresse de la page. Laissé vide, le lien général des « Réglages du club » est utilisé — et seulement si l'équipe a des matchs."}
               - {name: ffvb_nom, label: Nom de l'équipe chez la FFVB, widget: string, required: false, hint: "À remplir seulement si le club aligne deux équipes dans la même poule — la fédération écrit alors « C.A. BRIVE 1 » et « C.A. BRIVE 2 ». Recopiez le nom tel qu'il figure au classement. Laissé vide, l'équipe est reconnue automatiquement."}
@@ -224,6 +245,11 @@ collections:
               - {name: nom, label: Nom, widget: string}
               - {name: slug, label: Identifiant URL, widget: string, required: false, hint: "Sans espaces ni accents, en minuscules, ex. rollinat. Rempli, la salle gagne sa propre page et sa carte devient cliquable. Laissé vide, la salle reste affichée mais sans page. Ne le modifiez plus une fois la page en ligne : les liens déjà partagés cesseraient de fonctionner."}
               - {name: etiquette, label: Étiquette, widget: string, required: false, hint: "Pastille affichée sur la photo, ex. Salle principale ou Beach. Laisser vide pour ne rien afficher."}
+              - {name: court, label: Nom court, widget: string, required: false, hint: "Employé dans les cases du planning hebdomadaire, où la place manque. Ex. St-Germain."}
+              # La couleur teinte les cases du planning et la légende sous le
+              # tableau. Elle est choisie sur la salle et non sur la case :
+              # deux cases du meme gymnase ne peuvent donc pas se contredire.
+              - {name: couleur, label: Couleur au planning, widget: select, required: false, default: creme, options: ["creme","sable","lin","encre"], hint: "Quatre teintes de la charte du site. Elles se ressemblent volontairement : le nom court écrit dans la case reste le repère principal."}
               - {name: adresse, label: Adresse, widget: string, required: false}
               - {name: usage, label: Ce qui s'y passe, widget: string, required: false, hint: "Ex. Matchs seniors · école de volley"}
               - {name: acces, label: Accès, widget: string, required: false, hint: "Ex. Parking gratuit · Bus ligne 4"}
