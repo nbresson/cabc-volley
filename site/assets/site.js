@@ -22,7 +22,10 @@ const INFOS=[
   ["acces.html","Accès au gymnase","Nos quatre salles et comment y aller"],
   ["faq.html","FAQ","Les réponses aux questions courantes"]
 ];
-const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","partenaires.html":"club.html","gymnase.html":"contact.html",
+const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","partenaires.html":"club.html",
+  // La fiche d une salle s atteint depuis Acces, sous Infos : Contact ne mene
+  // plus aux gymnases depuis que la carte et les fiches ont quitte la page.
+  "gymnase.html":"infos.html",
   // Les sous-pages Infos allument l entree Infos, comme une fiche d equipe
   // allume Equipes. Le mecanisme existait, il n y avait rien a inventer.
   "horaires.html":"infos.html","tarifs.html":"infos.html","acces.html":"infos.html","faq.html":"infos.html"};
@@ -511,9 +514,11 @@ function mdToHtml(md){if(!md)return"";
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';
     if(/^[-*] /.test(b))return '<ul class="ds-list">'+b.split("\n").map(l=>'<li>'+inl(l.replace(/^[-*] +/,""))+'</li>').join("")+'</ul>';
     return '<p class="muted" style="line-height:1.8;margin-bottom:18px">'+inl(b)+'</p>';}).join("");}
-// Carte d une salle. Partagee par Contact (« Nos gymnases ») et Club
-// (« Nos infrastructures ») : une seule definition, les deux pages ne peuvent
-// donc plus diverger. Le titre de section reste propre a chaque page.
+// Carte d une salle, avec sa photo. Ne sert plus que le bloc « Nos
+// infrastructures » de la page Club, depuis que les fiches ont quitte Contact.
+// La page Acces ecrit les siennes : elle repond a « comment j y vais » et doit
+// porter un lien d itineraire, impossible ici ou la carte entiere devient un
+// lien des qu il y a un slug.
 function salleCard(v){
   const dedans=`
       <div class="ph" style="aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">

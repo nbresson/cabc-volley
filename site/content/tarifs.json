@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "montant": "90 €",
+      "libelle": "École de volley"
+    },
+    {
+      "montant": "120 €",
+      "libelle": "Jeunes / Loisir"
+    },
+    {
+      "montant": "160 €",
+      "libelle": "Seniors compétition · maillot inclus"
+    }
+  ],
+  "comprend": "",
+  "pass_sport": "",
+  "paiement": ""
+}

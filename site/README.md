@@ -7,11 +7,13 @@ Aucune étape de build : ce sont des fichiers HTML/CSS/JS, le contenu vit dans `
 ```
 site/
   index.html club.html equipes.html equipe.html calendrier.html
-  actualites.html article.html adhesion.html boutique.html contact.html infos.html 404.html
+  actualites.html article.html adhesion.html boutique.html contact.html 404.html
+  horaires.html tarifs.html infos.html acces.html faq.html  ← les cinq pages du menu Infos
   design-system.html  ← galerie du design system, non liée depuis aucun menu,
                          s'atteint en saisissant son adresse
   assets/      style.css · site.js · logo.png · uploads/ (images du CMS) · documents/ (fichiers du CMS)
-  content/     settings/news/matches/classement/teams/products/gymnases/club/legal/infos .json  ← contenu éditable
+  content/     settings/news/matches/classement/teams/products/gymnases/club/legal/infos
+               /tarifs/faq/partenaires .json                ← contenu éditable
   admin/       index.html · config.yml                     ← interface Decap CMS
 ```
 `equipe.html` est le gabarit de la page d'une équipe (accessible via l'identifiant
@@ -122,9 +124,11 @@ Chacune se connecte sur `/admin/` avec son compte GitHub. Toute modification = u
 - **Gymnases** — secteur affiché et salles (nom, étiquette, adresse, ce qui s'y passe, accès, lien itinéraire, photo)
 - **Page Club** — bandeau d'accueil et chiffres clés, notre histoire (dates clés), le bureau (membres, encart appel aux bénévoles), la vie du club (photos)
 - **Mentions légales** — date de mise à jour, éditeur du site, hébergeur, articles
-- **Infos & documents** — blocs de texte libre, chacun avec ses documents téléversés (PDF de préférence) ou ses liens externes
+- **Documents** — blocs de texte libre, chacun avec ses documents téléversés (PDF de préférence) ou ses liens externes. Le fichier reste `infos.json` et la page reste `/infos` : trois redirections de l'ancien site y mènent
 - **Partenaires** — chapô de la page, partenaires (nom, logo, groupe, mot, adresse) et bloc « Devenir partenaire ». Le chapô sert deux fois : en haut de la page, et sous le titre du bandeau de logos posé sur toutes les pages
-- **Page Adhésion** — bandeau d'accueil et tarifs, les trois étapes, l'en-tête du formulaire et les questions fréquentes. Les tarifs s'affichent deux par ligne, le dernier occupant toute la largeur s'ils sont en nombre impair ; le numéro des étapes vient de leur rang
+- **Page Adhésion** — bandeau d'accueil, les trois étapes et l'en-tête du formulaire. Le numéro des étapes vient de leur rang. Le surtitre du bandeau (« — Saison 2026–2027 ») est le **seul endroit où la saison se saisit** : la page Tarifs le relit
+- **Tarifs & licences** — les montants (montant + ce qu'il couvre), puis trois blocs facultatifs : ce que la licence comprend, le Pass'Sport, le paiement en plusieurs fois. Laissés vides, ils n'apparaissent pas sur la page
+- **FAQ** — titre de la section et questions/réponses de la page Questions fréquentes
 
 Le classement affiché sur la page Calendrier est saisi à la main, dans l'espace « Classement » ;
 les calendriers et classements détaillés restent sur la FFVB (bouton présent sur la page Calendrier).
@@ -152,7 +156,7 @@ le fond hachuré. Réservez « Photo » aux vraies photographies en paysage.
 
 ### Deux images ne viennent pas de Decap
 `assets/partage.png` (la vignette qui s'affiche quand on partage un lien du site) et
-`assets/carte-gymnases.webp` (la carte de la page Contact) sont **fabriquées**, pas
+`assets/carte-gymnases.webp` (la carte de la page Accès) sont **fabriquées**, pas
 photographiées. Leurs sources sont dans [`scripts/images/`](../scripts/images/) :
 lancez un serveur local **à la racine du dépôt** — elles chargent les polices du site
 par un chemin relatif — ouvrez la page, et capturez la fenêtre à la taille exacte,

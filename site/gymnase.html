@@ -24,7 +24,7 @@ window.__pageInit=async function(){
   const data=await getJSON("content/gymnases.json");
   const el=document.getElementById("gymnase");
   const v=(data?.items||[]).find(x=>x.slug&&x.slug===slug);
-  if(!v){el.innerHTML='<section class="pad section"><p class="muted">Site introuvable. <a href="contact.html" class="lien">Retour à nos gymnases</a></p></section>';return;}
+  if(!v){el.innerHTML='<section class="pad section"><p class="muted">Site introuvable. <a href="acces.html" class="lien">Retour à nos gymnases</a></p></section>';return;}
   titrePage(v.nom);
 
   // Le bouton d itineraire ne parait que si l adresse saisie passe lienSur() :
@@ -32,7 +32,7 @@ window.__pageInit=async function(){
   // contredit plus.
   const iti=lienSur(v.itineraire);
   const entete=`<section class="pad section">
-    <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="contact.html">Nos gymnases</a><span>/</span><span style="color:var(--encre)">${echapper(v.nom)}</span></div>
+    <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="acces.html">Nos gymnases</a><span>/</span><span style="color:var(--encre)">${echapper(v.nom)}</span></div>
     <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(32px,7vw,72px)">${echapper(v.nom)}</h1>${v.etiquette?`<span class="badge" style="align-self:flex-end">${echapper(v.etiquette)}</span>`:""}</div>
     ${v.adresse?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${echapper(v.adresse)}</p>`:""}
     ${v.photo

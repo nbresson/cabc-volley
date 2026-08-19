@@ -33,8 +33,7 @@
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const a=await getJSON("content/adhesion.json");
-  const faq=a?.faq||{};
+  const faq=await getJSON("content/faq.json")||{};
   // Une entree sans question n a rien a ouvrir : elle quitte la liste plutot que
   // de poser un accordeon au titre vide.
   const items=(faq.items||[]).filter(q=>q.question);
