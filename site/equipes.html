@@ -31,7 +31,7 @@ window.__pageInit=async function(){
 
   // Prochain match de chaque equipe, pour donner envie de cliquer.
   const prochain={};
-  (matches?.items||[]).filter(m=>m.equipe&&m.statut==="a_venir")
+  (matches?.items||[]).filter(m=>m.equipe&&aVenir(m))
     .sort((a,b)=>new Date(a.date)-new Date(b.date))
     .forEach(m=>{if(!prochain[m.equipe])prochain[m.equipe]=m;});
 

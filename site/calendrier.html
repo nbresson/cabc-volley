@@ -94,7 +94,7 @@ window.__pageInit=async function(){
     }
     montrer(defaut);
   }
-  const last=(matches?.items||[]).filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
+  const last=(matches?.items||[]).filter(joue).sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
   const lr=document.getElementById("last-result");
   if(last&&lr){const d=new Date(last.date);const home=last.domicile;const a=home?"C.A. Brive":last.adversaire,b=home?last.adversaire:"C.A. Brive";
     // Le bandeau est passe sur fond sombre : les gris et la bordure du score
@@ -112,7 +112,7 @@ window.__pageInit=async function(){
       </div></div>`;}
   // Tri chronologique : l ordre de saisie dans Decap ne garantit rien, et les
   // premiers matchs affiches doivent bien etre les prochains joues.
-  const avenir=(matches?.items||[]).filter(m=>m.statut==="a_venir").sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const avenir=(matches?.items||[]).filter(aVenir).sort((a,b)=>new Date(a.date)-new Date(b.date));
   const VISIBLES=5;
   const reste=avenir.slice(VISIBLES);
   // On n ouvre jamais un tiroir pour un seul match : en dessous de deux matchs
@@ -130,7 +130,7 @@ window.__pageInit=async function(){
 
   // Derniers resultats. Le tout premier est deja dans le bandeau sombre : la
   // liste montre les trois suivants, et disparait s il n y en a pas.
-  const finis=(matches?.items||[]).filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const finis=(matches?.items||[]).filter(joue).sort((a,b)=>new Date(b.date)-new Date(a.date));
   const suivants=finis.slice(1,4);
   if(suivants.length){
     document.getElementById("resultats-liste").innerHTML=suivants.map(ligneResultat).join("");

@@ -40,10 +40,10 @@ window.__pageInit=async function(){
   const mine=(matches?.items||[]).filter(m=>m.equipe===t.slug);
   // Le premier match a venir passe dans le bandeau, les suivants dans la liste :
   // ici les deux se touchent, alors que l accueil les separe de trois sections.
-  const tousAvenir=mine.filter(m=>m.statut==="a_venir").sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const tousAvenir=mine.filter(aVenir).sort((a,b)=>new Date(a.date)-new Date(b.date));
   const prochain=tousAvenir[0];
   const avenir=tousAvenir.slice(1,4);
-  const finis=mine.filter(m=>m.statut==="termine").sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,3);
+  const finis=mine.filter(joue).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,3);
 
   const blocAvenir=avenir.length?`<section class="section">
     <div class="pad"><h2 class="eyebrow" style="font-weight:400;line-height:1.65">— Prochains matchs</h2></div>
