@@ -45,7 +45,11 @@
 <script>
 window.__pageInit=async function(){
   const [matches,settings,classement,teams]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json"),getJSON("content/classement.json"),getJSON("content/teams.json")]);
-  if(settings?.ffvb_classement){document.getElementById("ffvb1").href=settings.ffvb_classement;document.getElementById("ffvb2").href=settings.ffvb_classement;}
+  // Les deux boutons FFVB de la page portent l adresse des reglages. lienSur()
+  // ecarte une adresse hostile : le bouton reste alors sans href, exactement comme
+  // lorsque le reglage n est pas rempli.
+  const ffvbGeneral=lienSur(settings?.ffvb_classement);
+  if(ffvbGeneral){document.getElementById("ffvb1").href=ffvbGeneral;document.getElementById("ffvb2").href=ffvbGeneral;}
   // Un tableau par poule. Le rang n est pas stocke : c est la position dans la
   // liste. Reordonner les lignes dans Decap suffit, aucun numero n est a saisir.
   const tableaux=(classement?.items||[]).filter(c=>c&&c.equipe);
@@ -56,7 +60,7 @@ window.__pageInit=async function(){
   // et le bandeau « notre position » ne parle que du tableau sous les yeux.
   const bloc=c=>{
     const lignes=Array.isArray(c.lignes)?c.lignes:[];
-    if(!lignes.length)return `<div data-filtre="${c.equipe}"><p class="vide muted">Classement à venir.</p></div>`;
+    if(!lignes.length)return `<div data-filtre="${echapper(c.equipe)}"><p class="vide muted">Classement à venir.</p></div>`;
     // Le bandeau ne parait que si une ligne porte « notre club » : sans lui,
     // aucune position a annoncer.
     const iNous=lignes.findIndex(l=>l.notre_club);
@@ -64,11 +68,11 @@ window.__pageInit=async function(){
       <div><strong>${iNous+1}<span style="font-size:.5em">e</span></strong><span>NOTRE POSITION</span></div>
       <div><strong>${n(lignes[iNous].points)}</strong><span>POINTS</span></div>
       <div><strong>${n(lignes[iNous].victoires)} – ${n(lignes[iNous].defaites)}</strong><span>VICTOIRES – DÉFAITES</span></div></div>`;
-    return `<div data-filtre="${c.equipe}">${band}
+    return `<div data-filtre="${echapper(c.equipe)}">${band}
       <div class="table-wrap"><table class="ds"><thead><tr><th>#</th><th>Club</th><th style="text-align:center">J</th><th style="text-align:center">V</th><th style="text-align:center">D</th><th style="text-align:right">Pts</th></tr></thead><tbody>
-      ${lignes.map((l,i)=>`<tr${l.notre_club?' class="hl"':''}><td>${i+1}</td><td>${l.club||""}</td><td style="text-align:center">${n(l.joues)}</td><td style="text-align:center">${n(l.victoires)}</td><td style="text-align:center">${n(l.defaites)}</td><td style="text-align:right"><strong class="display-s">${n(l.points)}</strong></td></tr>`).join("")}
+      ${lignes.map((l,i)=>`<tr${l.notre_club?' class="hl"':''}><td>${i+1}</td><td>${echapper(l.club)}</td><td style="text-align:center">${n(l.joues)}</td><td style="text-align:center">${n(l.victoires)}</td><td style="text-align:center">${n(l.defaites)}</td><td style="text-align:right"><strong class="display-s">${n(l.points)}</strong></td></tr>`).join("")}
       </tbody></table></div>
-      ${c.note?`<p class="mono" style="margin-top:14px;font-size:11px">${c.note}</p>`:""}</div>`;
+      ${c.note?`<p class="mono" style="margin-top:14px;font-size:11px">${echapper(c.note)}</p>`:""}</div>`;
   };
   document.getElementById("cl-blocs").innerHTML=tableaux.map(bloc).join("");
   // Le titre et le lien FFVB vivent dans l en-tete de section et suivent la puce :
@@ -76,7 +80,9 @@ window.__pageInit=async function(){
   const montrer=slug=>{
     const c=tableaux.find(t=>t.equipe===slug)||{};
     document.getElementById("cl-titre").textContent=c.titre||"Classement";
-    const a=document.getElementById("ffvb2"),lien=equipe(slug).classement||settings?.ffvb_classement;
+    // Meme regle que la fiche d equipe : une adresse refusee efface le lien plutot
+    // que de le laisser pointer dans le vide.
+    const a=document.getElementById("ffvb2"),lien=lienSur(equipe(slug).classement||settings?.ffvb_classement);
     if(lien){a.href=lien;a.style.display="";}else a.style.display="none";
     document.querySelectorAll("#cl-blocs [data-filtre]").forEach(el=>{el.style.display=el.dataset.filtre===slug?"":"none";});
   };
@@ -85,7 +91,7 @@ window.__pageInit=async function(){
     // Une seule poule : la puce n aurait rien a offrir, le tableau parle seul.
     if(tableaux.length>1){
       const puces=document.getElementById("chips-classements");
-      puces.innerHTML=tableaux.map(c=>`<button type="button" class="chip${c.equipe===defaut?" actif":""}" data-valeur="${c.equipe}">${equipe(c.equipe).nom||c.equipe}</button>`).join("");
+      puces.innerHTML=tableaux.map(c=>`<button type="button" class="chip${c.equipe===defaut?" actif":""}" data-valeur="${echapper(c.equipe)}">${echapper(equipe(c.equipe).nom||c.equipe)}</button>`).join("");
       puces.addEventListener("click",e=>{
         const b=e.target.closest(".chip");if(!b)return;
         puces.querySelectorAll(".chip").forEach(c=>c.classList.remove("actif"));
@@ -101,14 +107,14 @@ window.__pageInit=async function(){
     // suivent, sinon ils disparaissent dans l encre. Le badge dit « en attente »
     // tant que le score n est pas saisi — voir resultatConnu() dans site.js.
     const cabGagne=last.gagne;
-    lr.innerHTML=`<div class="pad"><div class="eyebrow" style="color:var(--mention-sombre);margin-bottom:14px">Dernier match · ${last.competition} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
+    lr.innerHTML=`<div class="pad"><div class="eyebrow" style="color:var(--mention-sombre);margin-bottom:14px">Dernier match · ${echapper(last.competition)} · ${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"})}</div>
       <div class="match-band" style="padding:0">
-        <strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--mention-sombre)'}">${a}</strong>
+        <strong style="font-family:'Barlow Condensed';font-weight:${home?900:700};font-size:clamp(24px,4vw,36px);${home?'':'color:var(--mention-sombre)'}">${echapper(a)}</strong>
         <span class="row" style="align-items:center;justify-content:center;gap:18px">
-          <span class="score" style="border-color:var(--creme)">${last.score||"–"}</span>
+          <span class="score" style="border-color:var(--creme)">${echapper(last.score)||"–"}</span>
           ${resultatConnu(last)?`<span class="badge" style="background:var(--creme);color:var(--encre)">${cabGagne?"Victoire":"Défaite"}</span>`:`<span class="badge" style="background:transparent;border:1px solid var(--mention-sombre);color:var(--mention-sombre);padding:4px 12px">En attente de résultat</span>`}
         </span>
-        <strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--mention-sombre)':''}">${b}</strong>
+        <strong style="font-family:'Barlow Condensed';font-weight:${home?700:900};font-size:clamp(24px,4vw,36px);${home?'color:var(--mention-sombre)':''}">${echapper(b)}</strong>
       </div></div>`;}
   // Tri chronologique : l ordre de saisie dans Decap ne garantit rien, et les
   // premiers matchs affiches doivent bien etre les prochains joues.
@@ -144,7 +150,7 @@ window.__pageInit=async function(){
   const chips=document.getElementById("chips-equipes");
   if(chips&&slugs.length>1){
     chips.innerHTML=`<button class="chip actif" data-valeur="tout">Toutes</button>`+
-      slugs.map(s=>`<button class="chip" data-valeur="${s}">${nomEquipe(s)}</button>`).join("");
+      slugs.map(s=>`<button class="chip" data-valeur="${echapper(s)}">${echapper(nomEquipe(s))}</button>`).join("");
     initChips("chips-equipes","upcoming");
   }
 };

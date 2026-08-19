@@ -30,7 +30,7 @@
 
 <section class="section pad">
   <div class="section-head"><h2>Les prochaines journées</h2><a href="calendrier.html" class="mono lien" style="color:var(--encre)">Tout le calendrier →</a></div>
-  <div id="upcoming"></div>
+  <div id="upcoming" class="match-list"></div>
 </section>
 
 <section class="section pad" id="mini-classement" style="display:none">
@@ -83,12 +83,13 @@ window.__pageInit=async function(){
   // Matchs à venir
   const up=document.getElementById("upcoming");
   const list=(matches?.items||[]).filter(aVenir).slice(0,4);
-  up.innerHTML=list.map(m=>{const d=new Date(m.date);return `
-    <div class="match-row${m.domicile?' hl':''}" style="padding:22px 24px;border-bottom:1px solid var(--lin)">
-      <span class="mono" style="letter-spacing:.06em;color:var(--encre)">${d.toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase()}<br><span style="color:var(--taupe)">${d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}</span></span>
-      <div><strong class="display-m">CAB — ${m.adversaire}</strong><div class="muted" style="font-size:13px">${m.competition} · ${m.lieu}</div></div>
-      <span class="badge${m.domicile?'':' badge-outline'}">${m.domicile?"Domicile":"Extérieur"}</span>
-    </div>`;}).join("")||'<p class="vide muted">Aucun match programmé pour le moment.</p>';
+  // matchRow() de site.js, plutot qu une copie de son balisage. La copie
+  // vivait ici depuis l origine et avait deja diverge — ni data-filtre, ni le
+  // padding que .match-list donne aux memes lignes ailleurs. Un gabarit ecrit
+  // deux fois se corrige deux fois, et le second exemplaire se corrige un jour
+  // plus tard : c est ici que les charges d essai de la passe precedente sont
+  // passees, quand site.js les arretait deja.
+  up.innerHTML=list.map(matchRow).join("")||'<p class="vide muted">Aucun match programmé pour le moment.</p>';
   // Mini-classement. Masque tant que la saison n a pas commence : avant la
   // premiere journee toutes les equipes sont a zero et une 1re place ne veut
   // rien dire. Masque aussi si aucune ligne ne porte notre_club.
@@ -111,7 +112,7 @@ window.__pageInit=async function(){
     const de=Math.max(0,Math.min(iNous-1,lignes.length-3));
     document.getElementById("mc-voisins").innerHTML=
       lignes.slice(de,de+3).map((l,k)=>`<div class="ligne${l.notre_club?" nous":""}">
-        <span class="mono" style="font-size:12px">${de+k+1}</span><span class="nom">${l.club}</span>
+        <span class="mono" style="font-size:12px">${de+k+1}</span><span class="nom">${echapper(l.club)}</span>
         <span class="mono" style="font-size:12px">${l.points} pts</span>
         <span class="mono" style="font-size:11px;color:var(--taupe)">${l.victoires}V ${l.defaites}D</span></div>`).join("")+
       `<a class="tout" href="calendrier.html#classement">Classement complet →</a>`;
@@ -126,9 +127,9 @@ window.__pageInit=async function(){
     <a class="card link shadow" href="${n.slug?`article.html?slug=${encodeURIComponent(n.slug)}`:"actualites.html"}">
       ${une?`<div class="ph" style="aspect-ratio:16/8;position:relative;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span>[ photo à venir ]</span>'}</div>`:""}
       <div class="body"${une?' style="padding:22px 24px"':''}>
-        <span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}${une?" · À la une":""}</span>
-        <strong class="${une?'display-xl':'display-m'}" style="font-weight:900;line-height:.95;text-transform:uppercase">${n.titre}</strong>
-        <span class="muted" style="font-size:13px">${n.extrait}</span>
+        <span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${echapper(n.categorie)}${une?" · À la une":""}</span>
+        <strong class="${une?'display-xl':'display-m'}" style="font-weight:900;line-height:.95;text-transform:uppercase">${echapper(n.titre)}</strong>
+        <span class="muted" style="font-size:13px">${echapper(n.extrait)}</span>
       </div>
     </a>`;
   document.getElementById("news").innerHTML=news.length?
@@ -136,9 +137,9 @@ window.__pageInit=async function(){
   // Équipes
   document.getElementById("teams").innerHTML=(teamsData?.items||[]).map(t=>`
     <a class="card link" ${t.slug?`href="${teamUrl(t.slug)}"`:'href="equipes.html"'} style="padding:26px 24px;gap:8px">
-      <span class="mono" style="font-size:10px;letter-spacing:.18em;opacity:.6">${t.categorie}</span>
-      <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${t.nom}</strong>
-      <span class="muted" style="font-size:13px">${t.creneau}</span>
+      <span class="mono" style="font-size:10px;letter-spacing:.18em;opacity:.6">${echapper(t.categorie)}</span>
+      <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${echapper(t.nom)}</strong>
+      <span class="muted" style="font-size:13px">${echapper(t.creneau)}</span>
       <span class="display-s" style="font-weight:700;margin-top:6px">→</span>
     </a>`).join("");
 };

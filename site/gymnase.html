@@ -27,16 +27,20 @@ window.__pageInit=async function(){
   if(!v){el.innerHTML='<section class="pad section"><p class="muted">Site introuvable. <a href="contact.html" class="lien">Retour à nos gymnases</a></p></section>';return;}
   titrePage(v.nom);
 
+  // Le bouton d itineraire ne parait que si l adresse saisie passe lienSur() :
+  // salleCard() applique deja la meme regle a ce meme champ, cette page ne la
+  // contredit plus.
+  const iti=lienSur(v.itineraire);
   const entete=`<section class="pad section">
-    <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="contact.html">Nos gymnases</a><span>/</span><span style="color:var(--encre)">${v.nom}</span></div>
-    <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(32px,7vw,72px)">${v.nom}</h1>${v.etiquette?`<span class="badge" style="align-self:flex-end">${v.etiquette}</span>`:""}</div>
-    ${v.adresse?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${v.adresse}</p>`:""}
+    <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="contact.html">Nos gymnases</a><span>/</span><span style="color:var(--encre)">${echapper(v.nom)}</span></div>
+    <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(32px,7vw,72px)">${echapper(v.nom)}</h1>${v.etiquette?`<span class="badge" style="align-self:flex-end">${echapper(v.etiquette)}</span>`:""}</div>
+    ${v.adresse?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${echapper(v.adresse)}</p>`:""}
     ${v.photo
-      ?`<img src="${v.photo}" alt="${v.nom}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-top:24px">`
+      ?`<img src="${echapper(v.photo)}" alt="${echapper(v.nom)}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-top:24px">`
       :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-top:24px"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div>'}
     <div class="row" style="margin-top:22px;align-items:center;gap:24px">
-      ${[v.usage,v.acces].filter(Boolean).length?`<span class="mono" style="font-size:11px;letter-spacing:.14em">${[v.usage,v.acces].filter(Boolean).join(" &middot; ")}</span>`:""}
-      ${v.itineraire?`<a href="${v.itineraire}" target="_blank" rel="noopener" class="btn btn-secondary" style="padding:9px 20px">Itinéraire ↗</a>`:""}
+      ${[v.usage,v.acces].filter(Boolean).length?`<span class="mono" style="font-size:11px;letter-spacing:.14em">${echapper([v.usage,v.acces].filter(Boolean).join(" · "))}</span>`:""}
+      ${iti?`<a href="${echapper(iti)}" target="_blank" rel="noopener" class="btn btn-secondary" style="padding:9px 20px">Itinéraire ↗</a>`:""}
     </div>
   </section>`;
 
@@ -49,9 +53,9 @@ window.__pageInit=async function(){
   // bloc sans titre ni texte est ignore : Decap laisse facilement une entree
   // a moitie remplie.
   const blocs=(v.blocs||[]).filter(b=>b.titre||b.texte||b.photo).map((b,i)=>{
-    const texte=`<div class="pad"><h2>${b.titre||""}</h2>${b.texte?`<div class="muted" style="margin-top:14px">${mdToHtml(b.texte)}</div>`:""}</div>`;
+    const texte=`<div class="pad"><h2>${echapper(b.titre)}</h2>${b.texte?`<div class="muted" style="margin-top:14px">${mdToHtml(b.texte)}</div>`:""}</div>`;
     if(!b.photo)return `<section class="section">${texte}</section>`;
-    const image=`<div><img src="${b.photo}" alt="${b.titre||v.nom}" loading="lazy" style="display:block;width:100%;height:100%;min-height:260px;object-fit:cover"></div>`;
+    const image=`<div><img src="${echapper(b.photo)}" alt="${echapper(b.titre||v.nom)}" loading="lazy" style="display:block;width:100%;height:100%;min-height:260px;object-fit:cover"></div>`;
     return `<section class="section split">${i%2===0?image+texte:texte+image}</section>`;
   }).join("");
 
@@ -65,7 +69,7 @@ window.__pageInit=async function(){
     <div class="cols-3">${avecImage.map(p=>`
       <figure style="margin:0">
         <div class="ph" style="aspect-ratio:16/9;position:relative;overflow:hidden;border:2px solid var(--encre)">${vignette(p.image,p.legende||v.nom)}</div>
-        ${p.legende?`<figcaption class="mono" style="font-size:11px;letter-spacing:.12em;margin-top:10px;text-transform:none">${p.legende}</figcaption>`:""}
+        ${p.legende?`<figcaption class="mono" style="font-size:11px;letter-spacing:.12em;margin-top:10px;text-transform:none">${echapper(p.legende)}</figcaption>`:""}
       </figure>`).join("")}</div>
   </section>`:"";
 

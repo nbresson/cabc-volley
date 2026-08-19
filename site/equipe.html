@@ -29,11 +29,11 @@ window.__pageInit=async function(){
   titrePage(t.nom);
 
   const entete=`<section class="pad section">
-    <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="equipes.html">Équipes</a><span>/</span><span style="color:var(--encre)">${t.nom}</span></div>
-    <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(32px,7vw,72px)">${t.nom}</h1><span class="mono" style="align-self:flex-end">${t.categorie||""}</span></div>
-    ${t.creneau?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${t.creneau}</p>`:""}
+    <div class="crumb"><a href="index.html">Accueil</a><span>/</span><a href="equipes.html">Équipes</a><span>/</span><span style="color:var(--encre)">${echapper(t.nom)}</span></div>
+    <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(32px,7vw,72px)">${echapper(t.nom)}</h1><span class="mono" style="align-self:flex-end">${echapper(t.categorie)}</span></div>
+    ${t.creneau?`<p class="mono" style="margin-top:12px;font-size:12px;letter-spacing:.14em;color:var(--taupe)">${echapper(t.creneau)}</p>`:""}
     ${t.photo
-      ?`<img src="${t.photo}" alt="${t.nom}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-top:24px">`
+      ?`<img src="${echapper(t.photo)}" alt="${echapper(t.nom)}" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid var(--encre);margin-top:24px">`
       :'<div class="ph" style="aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:2px solid var(--encre);margin-top:24px"><span class="mono" style="color:var(--mention)">[ photo à venir ]</span></div>'}
   </section>`;
 
@@ -56,17 +56,23 @@ window.__pageInit=async function(){
   // Le lien propre a l equipe prime. Le lien general des reglages ne sert de
   // repli que pour une equipe qui joue reellement des matchs : sans cela,
   // l ecole de volley afficherait un classement qui ne la concerne pas.
-  const lienClassement=t.classement||(mine.length?settings?.ffvb_classement:null);
+  // lienSur() ecarte une adresse saisie qui n est ni http(s), ni mailto, ni tel,
+  // ni un chemin relatif : elle rend "", et le bloc entier disparait alors,
+  // plutot que d offrir un bouton qui ne mene nulle part.
+  const lienClassement=lienSur(t.classement||(mine.length?settings?.ffvb_classement:null));
   const blocClassement=lienClassement?`<section class="pad section">
-    <a class="btn btn-secondary" href="${lienClassement}" target="_blank" rel="noopener">Classement FFVB ↗</a></section>`:"";
+    <a class="btn btn-secondary" href="${echapper(lienClassement)}" target="_blank" rel="noopener">Classement FFVB ↗</a></section>`:"";
 
   // Bloc des equipes sans calendrier : masque tant que le bureau n a pas
   // rempli au moins un titre dans Decap.
   const i=t.infos||{};
+  // Meme regle que le classement : une adresse refusee par lienSur() efface le
+  // bouton, elle ne le laisse pas pointer dans le vide.
+  const lienInfos=lienSur(i.lien);
   const blocInfos=i.titre?`<section class="pad section">
-    <div class="section-head" style="margin-bottom:14px"><h2>${i.titre}</h2></div>
-    ${i.texte?`<p class="muted" style="max-width:60ch;line-height:1.8">${i.texte}</p>`:""}
-    ${i.bouton&&i.lien?`<a class="btn btn-primary" style="margin-top:20px" href="${i.lien}">${i.bouton}</a>`:""}
+    <div class="section-head" style="margin-bottom:14px"><h2>${echapper(i.titre)}</h2></div>
+    ${i.texte?`<p class="muted" style="max-width:60ch;line-height:1.8">${echapper(i.texte)}</p>`:""}
+    ${i.bouton&&lienInfos?`<a class="btn btn-primary" style="margin-top:20px" href="${echapper(lienInfos)}">${echapper(i.bouton)}</a>`:""}
   </section>`:"";
 
   // Un numero non numerique designe l encadrement : « E » pour l entraineur.
@@ -77,7 +83,7 @@ window.__pageInit=async function(){
   const blocEffectif=eff.length?`<section class="pad section">
     <div class="section-head"><h2>L'effectif</h2><span class="mono">${eff.length} membre${eff.length>1?"s":""}</span></div>
     <div class="cols-4">${eff.map(p=>`
-      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden">${p.photo?`<img src="${p.photo}" alt="${p.nom}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ portrait ]</span>'}${estStaff(p)?"":`<strong class="display-xl" style="position:absolute;top:8px;right:14px;font-weight:900;text-shadow:0 0 6px var(--creme)">${p.num||""}</strong>`}</div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1">${p.nom}</strong>${estStaff(p)?'<span class="badge badge-outline" style="align-self:flex-start">Staff</span>':""}<span class="mono" style="font-size:11px;letter-spacing:.14em">${p.poste||""}</span></div></div>`).join("")}</div>
+      <div class="card shadow"><div class="ph" style="aspect-ratio:3/4;position:relative;overflow:hidden">${p.photo?`<img src="${echapper(p.photo)}" alt="${echapper(p.nom)}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:'<span class="mono" style="color:var(--mention)">[ portrait ]</span>'}${estStaff(p)?"":`<strong class="display-xl" style="position:absolute;top:8px;right:14px;font-weight:900;text-shadow:0 0 6px var(--creme)">${echapper(p.num)}</strong>`}</div><div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1">${echapper(p.nom)}</strong>${estStaff(p)?'<span class="badge badge-outline" style="align-self:flex-start">Staff</span>':""}<span class="mono" style="font-size:11px;letter-spacing:.14em">${echapper(p.poste)}</span></div></div>`).join("")}</div>
   </section>`:"";
 
   // Navigation entre fiches, dans l ordre editorial de teams.json. Les equipes
@@ -89,9 +95,9 @@ window.__pageInit=async function(){
   const suiv=ici>=0&&ici<fiches.length-1?fiches[ici+1]:null;
   const pied=`<section class="pad section" style="border-bottom:none">
     <div class="row" style="justify-content:space-between;padding-top:24px;border-top:2px solid var(--encre)">
-      ${prec?`<a href="${teamUrl(prec.slug)}" class="btn btn-secondary">← ${prec.nom}</a>`:""}
+      ${prec?`<a href="${teamUrl(prec.slug)}" class="btn btn-secondary">← ${echapper(prec.nom)}</a>`:""}
       <a href="equipes.html" class="btn btn-secondary">Toutes les équipes</a>
-      ${suiv?`<a href="${teamUrl(suiv.slug)}" class="btn btn-secondary">${suiv.nom} →</a>`:""}
+      ${suiv?`<a href="${teamUrl(suiv.slug)}" class="btn btn-secondary">${echapper(suiv.nom)} →</a>`:""}
       <a href="calendrier.html" class="btn btn-primary">Calendrier complet</a></div>
   </section>`;
 

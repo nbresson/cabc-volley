@@ -44,19 +44,23 @@ window.__pageInit=async function(){
   const todo='<span class="mono" style="font-size:11px;color:var(--erreur)">à compléter</span>';
   const row=(k,v)=>`<tr><td class="mono" style="width:180px;font-size:11px;letter-spacing:.16em">${k}</td><td>${v||todo}</td></tr>`;
   const e=d.editeur||{},h=d.hebergeur||{};
+  // Le site de l hebergeur est saisi comme le reste : lienSur() ecarte un
+  // javascript:, et la ligne retombe alors sur « a completer » plutot que de
+  // proposer un lien arme.
+  const siteHebergeur=lienSur(h.site);
   document.getElementById("editeur").innerHTML=
-    row("Dénomination",e.denomination)+row("Statut",e.statut)+row("Siège social",e.adresse)
-    +row("N° RNA",e.rna)+row("N° SIRET",e.siret)+row("Directeur de publication",e.directeur_publication)
-    +row("Email",s?.email?`<a href="mailto:${s.email}" class="lien">${s.email}</a>`:"")
-    +row("Téléphone",s?.telephone);
+    row("Dénomination",echapper(e.denomination))+row("Statut",echapper(e.statut))+row("Siège social",echapper(e.adresse))
+    +row("N° RNA",echapper(e.rna))+row("N° SIRET",echapper(e.siret))+row("Directeur de publication",echapper(e.directeur_publication))
+    +row("Email",s?.email?`<a href="mailto:${echapper(s.email)}" class="lien">${echapper(s.email)}</a>`:"")
+    +row("Téléphone",echapper(s?.telephone));
   document.getElementById("hebergeur").innerHTML=
-    row("Nom",h.nom)+row("Adresse",h.adresse)
-    +row("Site",h.site?`<a href="${h.site}" class="lien">${h.site.replace(/^https?:\/\//,"")}</a>`:"");
+    row("Nom",echapper(h.nom))+row("Adresse",echapper(h.adresse))
+    +row("Site",siteHebergeur?`<a href="${echapper(siteHebergeur)}" class="lien">${echapper(siteHebergeur.replace(/^https?:\/\//,""))}</a>`:"");
   const arts=d.articles||[];
   document.getElementById("articles").innerHTML=arts.map((a,i)=>`
     <section class="pad timeline" style="padding-top:38px;padding-bottom:38px;border-bottom:${i===arts.length-1?"2px solid var(--encre)":"1px solid var(--lin)"}">
       <strong class="mono display-2xl" style="font-weight:900;line-height:1;letter-spacing:0;color:var(--lin)">${String(i+1).padStart(2,"0")}</strong>
-      <div><h2 style="font-size:clamp(24px,3.4vw,32px);margin-bottom:14px">${a.titre}</h2>${mdToHtml(a.corps)}</div>
+      <div><h2 style="font-size:clamp(24px,3.4vw,32px);margin-bottom:14px">${echapper(a.titre)}</h2>${mdToHtml(a.corps)}</div>
     </section>`).join("");
 };
 </script></body></html>

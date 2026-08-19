@@ -35,12 +35,12 @@ window.__pageInit=async function(){
   const data=await getJSON("content/news.json");
   const items=data?.items||[];
   const carte=(n,une)=>`
-    <a class="card link shadow" href="article.html?slug=${encodeURIComponent(n.slug||"")}" data-filtre="${n.categorie||""}">
+    <a class="card link shadow" href="article.html?slug=${encodeURIComponent(n.slug||"")}" data-filtre="${echapper(n.categorie)}">
       ${une||!n.breve?`<div class="ph" style="aspect-ratio:${une?"16/8":"16/9"};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}</div>`:""}
       <div class="body"${une?' style="padding:22px 24px"':''}>
-        <span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${n.categorie}${une?" · À la une":""}</span>
-        <strong class="${une?'display-xl':'display-m'}" style="font-weight:900;line-height:.95;text-transform:uppercase">${n.titre}</strong>
-        <span class="muted" style="font-size:13px">${n.extrait||""}</span>
+        <span class="mono" style="font-size:11px;letter-spacing:.18em">${fmtDate(n.date)} · ${echapper(n.categorie)}${une?" · À la une":""}</span>
+        <strong class="${une?'display-xl':'display-m'}" style="font-weight:900;line-height:.95;text-transform:uppercase">${echapper(n.titre)}</strong>
+        <span class="muted" style="font-size:13px">${echapper(n.extrait)}</span>
       </div>
     </a>`;
   if(!items.length){document.getElementById("news-list").innerHTML='<p class="vide muted">Aucune actualité pour le moment.</p>';return;}
@@ -56,7 +56,7 @@ window.__pageInit=async function(){
   const chips=document.getElementById("chips-cat");
   if(chips&&cats.length>1){
     chips.innerHTML=`<button class="chip actif" data-valeur="tout">Tout</button>`+
-      cats.map(c=>`<button class="chip" data-valeur="${c}">${c}</button>`).join("");
+      cats.map(c=>`<button class="chip" data-valeur="${echapper(c)}">${echapper(c)}</button>`).join("");
     initChips("chips-cat","news-zone");
     // Une « une » masquee laisserait sa colonne vide dans la grille : on replie
     // la zone entiere des qu elle n a plus rien a montrer.
