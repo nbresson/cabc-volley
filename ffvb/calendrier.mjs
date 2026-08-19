@@ -42,6 +42,25 @@ export function analyserCalendrier(html, prefixe) {
     const exterieur = (c[5] || "").trim();
     // « xxxxx » n est pas un club : c est une journee d exemption.
     if (/xxxxx/i.test(domicile) || /xxxxx/i.test(exterieur)) continue;
+    // Tant qu un match n est pas joue, la federation ne rend que onze
+    // cellules : les colonnes 6 et 7 (sets) sont remplacees par le gymnase,
+    // qui deborde alors sur la position 7. Une ligne courte n est donc pas
+    // une anomalie a signaler, juste une rencontre qui n a pas encore eu
+    // lieu — le meme etat qu une cellule de sets vide sur une ligne complete.
+    if (c.length < 12) {
+      matchs.push({
+        code,
+        date: (c[1] || "").trim(),
+        domicile,
+        exterieur,
+        setsDomicile: null,
+        setsExterieur: null,
+        marqueDomicile: "",
+        marqueExterieur: "",
+        detail: "",
+      });
+      continue;
+    }
     const sd = lireSets(c[6]);
     const se = lireSets(c[7]);
     if (!sd || !se) {

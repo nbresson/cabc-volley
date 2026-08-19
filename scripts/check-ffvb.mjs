@@ -304,6 +304,19 @@ verifier(
   ["RMB101"],
 );
 
+// Meme regle sur une vraie page en cours de saison : tant qu un match n est
+// pas joue, la federation ne rend que onze cellules (les colonnes de sets
+// sont remplacees par le nom du gymnase). Le cas synthetique ci-dessus ne
+// couvre que la ligne complete a cellules vides ; celui-ci couvre la ligne
+// courte, capture le 19 aout 2026 avant que la saison 2026/2027 ne debute
+// (premier match le 26 septembre), donc aucune rencontre n y est encore
+// jouee.
+const rmb2627 = echantillon("rmb-2026-2027.html");
+const cal2627 = analyserCalendrier(rmb2627, "RMB");
+verifier("RMB 2026/2027 — aucun match ecarte", cal2627.ecartes.length, 0);
+const moisson2627 = await moissonner(["RMB"], "2026/2027", async () => rmb2627);
+verifier("RMB 2026/2027 — aucun resultat avant le coup d envoi", Object.keys(moisson2627.RMB.resultats), []);
+
 if (erreurs.length) {
   console.error("Parseurs FFVB — contrôle échoué :");
   for (const e of erreurs) console.error("  -", e);

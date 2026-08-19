@@ -161,7 +161,15 @@ export default {
     const enrichissable =
       url.pathname === "/content/matches.json" || url.pathname === "/content/classement.json";
     if (enrichissable) {
-      const brut = await env.ASSETS.fetch(request);
+      // Sans les en-tetes conditionnels : ASSETS calcule son ETag sur le
+      // fichier du depot, pas sur le corps fusionne qu on renvoie plus bas.
+      // Les laisser passer ferait rendre un 304 sur la base d un validateur
+      // qui ne correspond plus au corps promis, et le client garderait une
+      // copie non fusionnee.
+      const entetesRequete = new Headers(request.headers);
+      entetesRequete.delete("if-none-match");
+      entetesRequete.delete("if-modified-since");
+      const brut = await env.ASSETS.fetch(new Request(request, { headers: entetesRequete }));
       try {
         const moisson = (await env.FFVB.get(CLE_MOISSON, "json")) || {};
         const fichier = await brut.clone().json();
@@ -179,11 +187,25 @@ export default {
           sortie = fusionnerClassement(fichier, moisson, noms, poulesDeMatchs(matches));
         }
         const entetes = new Headers(brut.headers);
+        // Le corps fusionne n a pas la taille de l objet d origine : un ETag
+        // recopie de brut validerait un If-None-Match futur contre un corps
+        // que le client n a jamais recu.
+        entetes.delete("etag");
         if (brouillon) entetes.set("X-Robots-Tag", "noindex, nofollow");
         return new Response(JSON.stringify(sortie), { headers: entetes });
       } catch (e) {
         console.error(`FFVB : fusion impossible sur ${url.pathname} — ${e && e.message}`);
-        return brut;
+        // Le repli doit rester aussi noindex que le reste du brouillon : un
+        // HEAD (corps vide, .json() leve) ou un KV corrompu ne doivent pas
+        // faire fuiter une reponse indexable.
+        if (!brouillon) return brut;
+        const entetes = new Headers(brut.headers);
+        entetes.set("X-Robots-Tag", "noindex, nofollow");
+        return new Response(brut.body, {
+          status: brut.status,
+          statusText: brut.statusText,
+          headers: entetes
+        });
       }
     }
 
