@@ -193,6 +193,37 @@ orthographes pour trois salles qui existent pourtant comme entrées de `gymnases
 Un créneau structuré — jour, heures, salle choisie dans la liste — lierait la page
 Horaires aux fiches de gymnase. Il touche aussi les fiches d'équipe : une passe à part.
 
+### Revoir la présentation des partenaires
+**Demandé le 19 août.** La page Partenaires et le mur de logos posé en pied de chaque
+page méritent une passe de mise en forme. Cinq points relevés à la capture, du plus
+visible au plus discret.
+
+**Les cartes ne s'alignent pas entre elles.** Les cadres ont bien la même hauteur, mais
+le lien « Voir le site » flotte à des hauteurs différentes selon que le nom tient sur
+une, deux ou trois lignes — « Netto » contre « Comité départemental de volley de la
+Corrèze ». Une rangée se lit en dents de scie.
+
+**Une carte reste orpheline.** Cinq institutions dans une grille de quatre colonnes
+laissent trois cellules vides sur la seconde rangée. Le mur de logos a reçu son
+correctif le 17 août — sa dernière ligne se centre —, la grille de cartes non.
+
+**Les fonds de logos sont hétérogènes.** Certains portent leur propre rectangle blanc
+ou gris, hérité du fichier fourni ; d'autres sont détourés et posent directement sur le
+crème. La grille paraît rapiécée. Un fond uniforme derrière chaque logo, ou un
+détourage à la source, réglerait la question.
+
+**Les échelles ne sont pas harmonisées.** CGR Cinémas remplit son cadre quand le
+Département de la Corrèze y flotte, et le logo de TDSC est un pavé de texte illisible à
+cette taille. Un cadrage optique — plutôt qu'un simple `object-fit` — demanderait de
+retoucher les fichiers, ce qui est du travail d'image et non de code.
+
+**Sur téléphone, la page est interminable.** Une carte par ligne avec un cadre en 4/3 :
+dix-sept partenaires font défiler très longtemps pour peu d'information. Deux colonnes,
+ou un cadre moins haut, suffiraient.
+
+Rien de tout cela n'est urgent ni bloquant : c'est de la finition, à faire d'un bloc
+plutôt que par retouches successives.
+
 ### Quatre livrets d'accueil
 **Demandé le 15 août.** Un livret par public — licencié majeur, licencié mineur (et ses
 parents), bénévole, entraîneur — sur une architecture **tronc commun + module**, pour
