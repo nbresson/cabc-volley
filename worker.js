@@ -1,3 +1,20 @@
+import { poulesDeMatchs, moissonner } from "./ffvb/moisson.mjs";
+import { fusionnerMatchs, fusionnerClassement } from "./ffvb/fusion.mjs";
+import { saisonDe } from "./ffvb/noms.mjs";
+
+const CLE_MOISSON = "moisson";
+
+// La page de la federation est servie en latin-1 : la decoder autrement casse
+// les noms de clubs.
+async function texteLatin1(reponse) {
+  return new TextDecoder("iso-8859-1").decode(await reponse.arrayBuffer());
+}
+
+async function json(env, origine, chemin) {
+  const r = await env.ASSETS.fetch(new URL(chemin, origine));
+  return r.ok ? await r.json() : null;
+}
+
 // Tant que ce site n est qu un projet, il ne doit exister pour aucun moteur.
 // Le barrage se juge sur l hote plutot que dans un fichier _headers : il tombe
 // ainsi de lui-meme le jour ou un vrai domaine pointe sur ce worker, au lieu
@@ -138,6 +155,38 @@ export default {
       return new Response(page.body, { status: 410, statusText: "Gone", headers: entetes });
     }
 
+    // Les deux fichiers que la moisson peut enrichir. Toute erreur fait servir
+    // les octets d origine : le worker ne casse jamais le site, on retombe sur
+    // « En attente de resultat », qui reste honnete.
+    const enrichissable =
+      url.pathname === "/content/matches.json" || url.pathname === "/content/classement.json";
+    if (enrichissable) {
+      const brut = await env.ASSETS.fetch(request);
+      try {
+        const moisson = (await env.FFVB.get(CLE_MOISSON, "json")) || {};
+        const fichier = await brut.clone().json();
+        let sortie;
+        if (url.pathname === "/content/matches.json") {
+          sortie = fusionnerMatchs(fichier, moisson);
+        } else {
+          const [matches, teams] = await Promise.all([
+            json(env, url.origin, "/content/matches.json"),
+            json(env, url.origin, "/content/teams.json")
+          ]);
+          const noms = Object.fromEntries(
+            ((teams && teams.items) || []).map((t) => [t.slug, t.ffvb_nom || ""])
+          );
+          sortie = fusionnerClassement(fichier, moisson, noms, poulesDeMatchs(matches));
+        }
+        const entetes = new Headers(brut.headers);
+        if (brouillon) entetes.set("X-Robots-Tag", "noindex, nofollow");
+        return new Response(JSON.stringify(sortie), { headers: entetes });
+      } catch (e) {
+        console.error(`FFVB : fusion impossible sur ${url.pathname} — ${e && e.message}`);
+        return brut;
+      }
+    }
+
     const reponse = await env.ASSETS.fetch(request);
     if (!brouillon) return reponse;
 
@@ -148,5 +197,25 @@ export default {
       statusText: reponse.statusText,
       headers: entetes
     });
+  },
+
+  // Cron du week-end. Le moissonnage ecrit poule par poule par-dessus l objet
+  // en cache : une poule injoignable garde sa derniere valeur connue au lieu de
+  // disparaitre.
+  async scheduled(evenement, env, ctx) {
+    const saison = saisonDe(new Date());
+    const matches = await json(env, "https://cabc-volley/", "/content/matches.json");
+    const poules = [...new Set(Object.values(poulesDeMatchs(matches)))];
+    if (!poules.length) {
+      console.error("FFVB : aucune poule deduite de matches.json, rien a moissonner");
+      return;
+    }
+    const frais = await moissonner(poules, saison, async (url) =>
+      texteLatin1(await fetch(url, { headers: { "user-agent": "cabc-volley-moissonneur" } }))
+    );
+    const ancien = (await env.FFVB.get(CLE_MOISSON, "json")) || {};
+    const fusionne = { ...ancien, [saison]: { ...(ancien[saison] || {}), ...frais } };
+    await env.FFVB.put(CLE_MOISSON, JSON.stringify(fusionne));
+    console.log(`FFVB : ${Object.keys(frais).length}/${poules.length} poules moissonnees pour ${saison}`);
   }
 };
