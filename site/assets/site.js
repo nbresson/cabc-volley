@@ -13,7 +13,19 @@ function echapper(v){return v==null?"":String(v)
   .replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
 const NAV=[["index.html","Accueil"],["club.html","Le Club"],["equipes.html","Équipes"],["calendrier.html","Calendrier"],["actualites.html","Actualités"],["boutique.html","Boutique"],["infos.html","Infos"],["contact.html","Contact"]];
 // Pages enfants : elles allument l'entree de nav de leur page parente.
-const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","partenaires.html":"club.html","gymnase.html":"contact.html"};
+// Sous-pages du menu Infos : libelle et description du mega-panneau. Elles
+// ne sont pas dans NAV — le panneau est leur seule entree de navigation.
+const INFOS=[
+  ["horaires.html","Horaires","Les créneaux de chaque équipe"],
+  ["tarifs.html","Tarifs & licences","Les montants de la saison"],
+  ["infos.html","Documents","Certificats, formulaires, règlement"],
+  ["acces.html","Accès au gymnase","Nos quatre salles et comment y aller"],
+  ["faq.html","FAQ","Les réponses aux questions courantes"]
+];
+const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","partenaires.html":"club.html","gymnase.html":"contact.html",
+  // Les sous-pages Infos allument l entree Infos, comme une fiche d equipe
+  // allume Equipes. Le mecanisme existait, il n y avait rien a inventer.
+  "horaires.html":"infos.html","tarifs.html":"infos.html","acces.html":"infos.html","faq.html":"infos.html"};
 // Reseaux du club. Seule source des deux adresses, pour le bandeau ci-dessous
 // comme pour tout <div id="reseaux"> pose dans une page.
 const RESEAUX=[
@@ -122,7 +134,26 @@ function renderChrome(){
   // n a pas l ecran, et les neuf liens s annoncaient jusqu ici a l identique.
   // Le libelle est enveloppe : sur mobile, le soulignement de l entree active
   // ne doit porter que sur lui, pas sur le numero qui le precede.
-  const links=NAV.map(([h,t],i)=>`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}><span class="num">${String(i+1).padStart(2,"0")}</span><span>${t}</span></a>`).join("");
+  // L entree Infos porte un panneau au lieu d un simple lien. Le reste de la
+  // barre ne change pas : une entree qui se deploie ne doit pas obliger a
+  // reecrire les huit autres.
+  const infosActif=cur==="infos.html";
+  const megaLien=([h,t,d])=>`<a class="mega-lien" href="${h}"><strong>${t}</strong><span>${d}</span></a>`;
+  const mega=`<div class="nav-infos">
+      <a href="infos.html" class="nav-infos-toggle${infosActif?" active":""}"${infosActif?' aria-current="page"':''} aria-haspopup="true"><span class="num">07</span><span>Infos</span><span class="chev" aria-hidden="true">▼</span></a>
+      <div class="mega">
+        <div class="mega-col mega-intro">
+          <span class="eyebrow">Infos pratiques</span>
+          <strong>Tout pour<br>bien jouer</strong>
+          <p>Horaires, tarifs, documents : l'essentiel de la vie du club, à jour.</p>
+        </div>
+        <div class="mega-col">${INFOS.slice(0,2).map(megaLien).join("")}</div>
+        <div class="mega-col">${INFOS.slice(2,4).map(megaLien).join("")}</div>
+        <div class="mega-col">${megaLien(INFOS[4])}
+          <a class="btn btn-outline-light" href="contact.html" style="margin-top:18px;align-self:flex-start;padding:9px 20px">Nous contacter →</a></div>
+      </div>
+    </div>`;
+  const links=NAV.map(([h,t],i)=>h==="infos.html"?mega:`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}><span class="num">${String(i+1).padStart(2,"0")}</span><span>${t}</span></a>`).join("");
   // Adherer est un appel a l action, pas une entree de NAV : son etat courant
   // se calcule a part, sans quoi la page Adhesion eteint toute la navigation.
   const surAdhesion=here()==="adhesion.html";
@@ -138,6 +169,18 @@ function renderChrome(){
   // Le onclick en ligne a laisse la place a un ecouteur : il fallait un endroit
   // ou tenir aria-expanded a jour. Sans lui, le bouton annonce « Menu » sans
   // jamais dire s il est ouvert ou ferme.
+  // Sur telephone le panneau ne peut pas s ouvrir au survol : l entree Infos
+  // devient un accordeon dans le menu deplie. aria-expanded le dit a qui
+  // n a pas l ecran.
+  const bascule=header&&header.querySelector(".nav-infos-toggle");
+  if(bascule)bascule.addEventListener("click",e=>{
+    if(!matchMedia("(max-width:880px)").matches)return;
+    // Sur telephone le lien ne conduit plus nulle part : il deplie.
+    e.preventDefault();
+    const bloc=bascule.parentElement;
+    const ouvert=bloc.classList.toggle("open");
+    bascule.setAttribute("aria-expanded",String(ouvert));
+  });
   const burger=header&&header.querySelector(".burger");
   if(burger)burger.addEventListener("click",()=>{
     const nav=document.getElementById("mainnav");
