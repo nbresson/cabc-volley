@@ -446,7 +446,7 @@ collections:
               - {name: corps, label: Texte, widget: markdown}
 
   - name: infos
-    label: Infos & documents
+    label: Documents
     files:
       - name: infos
         label: Contenu de la page
