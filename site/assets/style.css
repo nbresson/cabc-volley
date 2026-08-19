@@ -229,7 +229,10 @@ p{margin:0}
    base et la hauteur sont poses par disposerMur(), qui les calcule d apres le
    nombre de partenaires et la largeur disponible. Les valeurs de repli servent
    le temps que le fichier soit lu. */
-.murlogos{background:var(--sable);border-top:2px solid var(--encre);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 26px;padding:22px 24px}
+/* Le retrait lateral est celui de .pad : le mur n est pas une .section mais il
+   se lit comme telle, et son titre s alignait 24 px trop a gauche. La hauteur
+   reste plus courte — c est une bande de logos, pas une section de contenu. */
+.murlogos{background:var(--sable);border-top:2px solid var(--encre);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 26px;padding:22px 48px}
 .murlogos img{height:var(--h-logo,46px);width:auto;max-width:100%;object-fit:contain}
 .murlogos>a{display:block;flex:0 0 var(--base-logo,90px);max-width:100%;text-align:center}
 /* Cadre a logo : contrairement a .ph qui recadre une photo en la rognant, il
@@ -438,7 +441,7 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
 
 /* Responsive */
 @media(max-width:880px){
-  .wrap,.pad,.site-header,.site-footer,.hero{padding-left:22px;padding-right:22px}
+  .wrap,.pad,.site-header,.site-footer,.hero,.murlogos{padding-left:22px;padding-right:22px}
   /* Texte un cran plus grand, et 16px sur les champs : en dessous, Safari iOS
      zoome automatiquement à chaque prise de focus. */
   body{font-size:16px}
