@@ -43,32 +43,45 @@ window.__pageInit=async function(){
   // Une entree a moitie remplie dans Decap ne doit pas produire une carte vide.
   const tarifs=(data?.items||[]).filter(t=>t.montant||t.libelle);
   const zone=document.getElementById("tarifs");
-  // La grille ne parait qu avec des tarifs a y mettre : sans elle, le message
-  // d attente occupe la largeur au lieu d une colonne sur trois.
-  zone.className=tarifs.length?"cols-3":"";
-  zone.innerHTML=tarifs.length?tarifs.map(t=>`
-    <div class="card shadow"><div class="body" style="padding:32px 24px;text-align:center;gap:14px">
-      <strong class="display-2xl" style="font-weight:900;line-height:1">${echapper(t.montant)}</strong>
-      <span class="mono" style="font-size:11px;letter-spacing:.14em">${echapper(t.libelle)}</span>
-    </div></div>`).join(""):'<p class="vide muted">Les tarifs de la saison seront publiés prochainement.</p>';
+  // Le numero se deduit du rang : le donner a saisir ferait renumeroter toute
+  // la grille des qu une ligne s intercale.
+  const num=i=>String(i+1).padStart(2,"0");
+  // Les annees paraissent deux fois : en colonne, et dans un span sous le
+  // libelle que le CSS ne montre que sous 880 px, ou la colonne disparait.
+  const ligne=(t,i)=>`
+    <tr${t.mise_en_avant?' class="hl"':""}>
+      <td class="mono" style="letter-spacing:.16em">${num(i)}</td>
+      <td style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;font-size:24px;letter-spacing:.03em;line-height:1.15">${echapper(t.libelle)}${t.annees?`<span>${echapper(t.annees)}</span>`:""}</td>
+      <td class="muted" style="font-size:14px">${echapper(t.annees||"")}</td>
+      <td>${echapper(t.montant)}</td>
+    </tr>`;
+  // Sans tarif, pas de tableau du tout : un thead seul annoncerait des colonnes
+  // vides la ou une phrase dit ce qui se passe.
+  zone.innerHTML=tarifs.length?`<table class="ds tarifs"><thead><tr>
+      <th>Nº</th><th>Catégorie</th><th>Années de naissance</th><th style="text-align:right">Licence</th>
+    </tr></thead><tbody>${tarifs.map(ligne).join("")}</tbody></table>`
+    :'<p class="vide muted">Les tarifs de la saison seront publiés prochainement.</p>';
 
   // Trois precisions facultatives, vides a la creation de la collection : le
   // club les ecrit depuis Decap. Tant qu elles le sont, la section entiere
   // disparait plutot que de poser trois cartouches vides sous les montants.
   // L intitule vient du code et non de Decap : il nomme le champ, le bureau n a
   // pas a le ressaisir pour chaque saison.
+  // Le surtitre court double l intitule : il numerote et resume. Il suit les
+  // precisions PRESENTES — seule Pass'Sport remplie, elle porte 01 et non 02.
   const precisions=[
-    ["Ce que la licence comprend",data?.comprend],
-    ["Pass'Sport",data?.pass_sport],
-    ["Paiement en plusieurs fois",data?.paiement]
+    ["Ce que la licence comprend",data?.comprend,"Compris"],
+    ["Pass'Sport",data?.pass_sport,"Aides"],
+    ["Paiement en plusieurs fois",data?.paiement,"Paiement"]
   ].filter(p=>p[1]&&p[1].trim());
   if(precisions.length){
     const liste=document.getElementById("precisions-liste");
     // Une precision seule prend la largeur : dans une grille de trois elle
     // serait une carte etroite echouee a gauche.
     liste.className=precisions.length>2?"cols-3":precisions.length>1?"cols-2":"";
-    liste.innerHTML=precisions.map(([intitule,texte])=>`
+    liste.innerHTML=precisions.map(([intitule,texte,court],i)=>`
       <div class="card shadow"><div class="body" style="padding:26px 26px 8px;gap:10px">
+        <span class="eyebrow">${num(i)} — ${court}</span>
         <strong class="display-m" style="font-weight:900;text-transform:uppercase;line-height:1.05">${intitule}</strong>
         ${mdToHtml(texte)}
       </div></div>`).join("");

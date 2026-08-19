@@ -415,11 +415,15 @@ collections:
             label_singular: Tarif
             widget: list
             required: false
-            summary: "{{fields.montant}} — {{fields.libelle}}"
+            summary: "{{fields.libelle}} — {{fields.montant}}"
             hint: "La saison affichée à côté du titre vient du surtitre du bandeau de la page Adhésion : elle ne se saisit qu'une fois, là-bas."
             fields:
-              - {name: montant, label: Montant, widget: string, hint: "Ex. 120 €"}
-              - {name: libelle, label: "Ce qu'il couvre", widget: string, hint: "Ex. Jeunes / Loisir"}
+              - {name: libelle, label: Catégorie, widget: string, hint: "Ex. M13 / M15, Seniors, Dirigeant."}
+              # La colonne qui repond a « quelle categorie pour mon enfant ? ».
+              # Elle depend de la saison : elle ne se deduit pas du libelle.
+              - {name: annees, label: Années de naissance, widget: string, required: false, hint: "Ex. Nés de 2012 à 2015. Ou le public visé, quand l'âge ne suffit pas. Laissé vide, la colonne reste vide pour cette ligne."}
+              - {name: montant, label: Montant de la licence, widget: string, hint: "Ex. 120 €. Écrit tel quel : le site ne le reformate pas."}
+              - {name: mise_en_avant, label: Mettre cette ligne en avant, widget: boolean, default: false, required: false, hint: "Fond sable et trait épais à gauche. Une seule ligne à la fois, sans quoi la mise en avant ne distingue plus rien."}
           - {name: comprend, label: "Ce que la licence comprend", widget: markdown, required: false, hint: "Laissé vide, ce bloc n'apparaît pas sur la page. Ex. l'assurance fédérale, le maillot, l'accès aux créneaux."}
           - {name: pass_sport, label: "Pass'Sport", widget: markdown, required: false, hint: "Laissé vide, ce bloc n'apparaît pas. Le montant déduit, qui y a droit, ce qu'il faut apporter."}
           - {name: paiement, label: "Paiement en plusieurs fois", widget: markdown, required: false, hint: "Laissé vide, ce bloc n'apparaît pas. Le nombre d'échéances et les moyens de paiement acceptés."}
