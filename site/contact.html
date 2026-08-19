@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Contact & accès — C.A. Brive Corrèze Volley</title>
+<title>Contact — C.A. Brive Corrèze Volley</title>
 <meta name="description" content="Écris-nous ou passe au gymnase — réponse sous 48 h.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="C.A. Brive Corrèze Volley">
-<meta property="og:title" content="Contact &amp; accès — C.A. Brive Corrèze Volley">
+<meta property="og:title" content="Contact — C.A. Brive Corrèze Volley">
 <meta property="og:description" content="Écris-nous ou passe au gymnase — réponse sous 48 h.">
 <meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -16,7 +16,7 @@
 <div id="header"></div>
 <main id="main">
 <section class="pad section">
-  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Contact &amp; accès</span></div>
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Contact</span></div>
   <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(36px,8vw,88px)">On se voit<br>au gymnase ?</h1><span class="mono" style="align-self:flex-end">Réponse sous 48h</span></div>
 </section>
 <section class="section split" style="--a:1.3fr">
@@ -45,21 +45,19 @@
   </div>
 </section>
 <section class="section pad">
-  <div class="section-head"><h2>Nos gymnases</h2><span class="mono" id="gym-sub"></span></div>
-  <img src="assets/carte-gymnases.webp" width="1200" height="515" loading="lazy"
-       alt="Carte de Brive-la-Gaillarde situant les quatre sites du club : 1 Gymnase Rollinat, 2 Beach Park de Tujac, 3 Saint-Germain, 4 Arsonval."
-       style="display:block;width:100%;height:auto;border:2px solid var(--encre);margin-bottom:26px">
-  <div id="gymnases" class="cols-3"></div>
+  <div class="row">
+    <a class="btn btn-secondary" href="acces.html">Nos gymnases et comment y aller →</a>
+    <a class="btn btn-secondary" href="faq.html">Questions fréquentes →</a>
+  </div>
 </section>
 </main>
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const [s,g]=await Promise.all([getJSON("content/settings.json"),getJSON("content/gymnases.json")]);
+  const s=await getJSON("content/settings.json");
   if(s){
     if(s.email){const m=document.getElementById("mail");m.textContent=s.email;m.href="mailto:"+s.email;}
     if(s.telephone)document.getElementById("tel").textContent=s.telephone;
   }
-  renderGymnases("gymnases","gym-sub",g);
 };
 </script></body></html>
