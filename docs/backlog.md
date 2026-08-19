@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **19 août 2026**. Quatre chantiers livrés ce jour-là : le moissonnage FFVB, le vieillissement des matchs, l'échappement du contenu éditorial et le contrôle des adresses écrites dans les pages. `npm run check` est passé d'un garde-fou à quatre. Ce qui reste du moissonnage n'est plus du développement mais de l'observation, consigné sous « Surveiller le moissonnage ». Reste distinct, et à ne pas confondre avec lui : le **score en direct** depuis l'application de feuille de match. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Les livrets d'accueil sont entrés le 15 août.
+Dernière revue : **19 août 2026**, en deux passes. Le matin : le moissonnage FFVB, le vieillissement des matchs, l'échappement du contenu éditorial et le contrôle des adresses écrites dans les pages. L'après-midi : les deux plannings de la page Horaires et la normalisation des créneaux, qui a fait sortir d'ici une entrée ouverte depuis le 19 au matin. `npm run check` est passé d'un garde-fou à quatre scripts et sept familles de contrôles. Ce qui reste du moissonnage n'est plus du développement mais de l'observation, consigné sous « Surveiller le moissonnage ». Reste distinct, et à ne pas confondre avec lui : le **score en direct** depuis l'application de feuille de match. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Les livrets d'accueil sont entrés le 15 août.
 
 ---
 
@@ -18,9 +18,10 @@ le même nom.
 Le bureau n'a jamais ouvert le CMS, et ne le peut pas : Decap commite sur GitHub, ce
 qui exige un accès en écriture au dépôt.
 
-Ça change la lecture de la section 4. Les portraits manquants, les six équipes sans
+Ça change la lecture de la section 4. Les portraits manquants, les douze équipes sans
 effectif, les galeries vides ne sont peut-être pas un problème de photos : personne
-n'a la clé.
+n'a la clé. La refonte à treize équipes du 19 août l'a rendu plus visible encore : huit
+équipes sont nées ce jour-là, aucune n'a d'inscrit ni d'entraîneur nommé.
 
 C'est aussi le seul point qui remet en cause la promesse du projet — un site que le
 club entretient lui-même. Aujourd'hui c'est un site entretenu **pour** le club.
@@ -175,11 +176,11 @@ d'API ou à la fermeture d'un compte — ce qu'un mur alimenté par API ne fait 
 **Préalable à vérifier avant tout chiffrage de C :** le compte `cabcvolley` est-il un
 compte Professionnel ? Sinon rien n'est possible sans le convertir d'abord.
 
-### Trois champs de tarifs attendent le club
+### Un champ de tarifs attend encore le club
 **Ouverts le 19 août**, avec le déplacement du contenu vers les pages du menu Infos.
-La collection **Tarifs & licences** porte trois blocs facultatifs et vides — ce que la
-licence comprend, le Pass'Sport, le paiement en plusieurs fois. Ils n'ont pas été
-préremplis à dessein : les mêmes informations existent déjà, mais enfermées dans des
+La collection **Tarifs & licences** portait trois blocs facultatifs et vides. Le
+Pass'Sport et le paiement en plusieurs fois ont été renseignés le jour même ; **ce que
+la licence comprend** reste vide. Ils n'avaient pas été préremplis à dessein : les mêmes informations existent déjà, mais enfermées dans des
 phrases — le texte de la troisième étape d'Adhésion, le chapô de son formulaire, la
 première réponse de la FAQ. Les recopier aurait fait une quatrième version à corriger
 à la main.
@@ -187,11 +188,15 @@ première réponse de la FAQ. Les recopier aurait fait une quatrième version à
 Le jour où le club les remplit, **ces trois phrases deviennent redondantes** et méritent
 d'être allégées : c'est un geste éditorial, pas un développement.
 
-Reste, du même chantier et volontairement laissé de côté : **les créneaux de
-`teams.json` sont du texte libre** (« Mer. 18h30-20h30 · Rollinat »), avec trois
-orthographes pour trois salles qui existent pourtant comme entrées de `gymnases.json`.
-Un créneau structuré — jour, heures, salle choisie dans la liste — lierait la page
-Horaires aux fiches de gymnase. Il touche aussi les fiches d'équipe : une passe à part.
+### Trois libellés d'équipe à revoir
+**Relevé le 19 août**, après la refonte à treize équipes. `baby-kid-volley` porte la
+catégorie `baby-volley` — seule étiquette en minuscules et à tiret parmi treize, quand
+ses sœurs portent « Régional 2 F », « M13 », « UFOLEP ». Elle s'affiche telle quelle
+sous le titre de la fiche et sur les cartes de l'accueil.
+
+Deux autres disent moins que leur nom : `m15-m18-f` est étiquetée « M18 F » et
+`m13-m11-m9` simplement « M13 ». Rien n'est cassé — c'est de la saisie Decap, à faire
+en repassant.
 
 ### Revoir la présentation des partenaires
 **Demandé le 19 août.** La page Partenaires et le mur de logos posé en pied de chaque
@@ -259,12 +264,13 @@ formation. Le code n'est pas le chemin critique.
 
 Le design attend déjà ces images ; il n'y a rien à développer.
 
-| Ce qui manque | État au 15 août |
+| Ce qui manque | État au 19 août |
 | --- | --- |
 | Portraits du bureau | **3 sur 3** affichent `[ portrait ]` |
 | Photo d'archive de l'histoire | champ vide, le placeholder est en ligne |
 | Effectif National 3 masculin | 5 inscrits, **4 sans photo** |
-| Effectifs des six autres équipes | **aucun inscrit** — R1 féminin, R1 masculin, Jeunes, École de volley, Volley Santé, UFOLEP |
+| Effectifs des douze autres équipes | **un seul inscrit au total** — R1 féminin en compte un, les onze autres aucun |
+| Entraîneur d'une équipe | **13 sur 13** ont le champ vide |
 | Galeries des quatre gymnases | vides |
 | Description du gymnase d'Arsonval | absente |
 | « Mot » des partenaires | aucun des 17 n'en a |
@@ -279,6 +285,18 @@ Aucune mesure d'audience. Après la bascule, personne ne saura si le site reçoi
 ou mille visites, ni quelles pages servent. Cloudflare Web Analytics est gratuit,
 sans cookie et sans bannière de consentement — le seul tiers qui resterait cohérent
 avec le choix d'avoir tout auto-hébergé. Décision à prendre, pas une évidence.
+
+### Un échec de compilation ne prévient personne
+**Relevé le 19 août.** `npm run check` bloque le déploiement quand le contenu devient
+incohérent — c'est voulu, et depuis ce jour les messages disent quoi corriger. Mais
+rien ne signale l'échec : il faut ouvrir l'onglet Builds du worker pour le voir.
+
+Tant que le seul éditeur est aussi celui qui code, ça passe. Le jour où le bureau
+publie depuis Decap, un échec figera le site sans que l'éditeur comprenne pourquoi —
+c'est exactement le « j'ai saisi et rien ne change » que le manuel décrit déjà.
+Cloudflare sait envoyer une notification sur échec de build : un réglage du tableau de
+bord, pas une ligne de code. **À régler avant d'ajouter les collaborateurs de la
+section 1**, sans quoi on leur donne la clé d'une porte qui peut se fermer en silence.
 
 ### Tout tient sur un seul compte
 Le worker, le dépôt et le connecteur OAuth vivent sur des comptes Cloudflare et
@@ -301,6 +319,24 @@ carte des gymnases et vignette de partage · page Adhésion entièrement sous De
 mini-classement · favicon et sitemap.
 
 **19 août** — le moissonnage FFVB des classements et des résultats, du sondage sur données réelles jusqu'à la mise en ligne. Trois autres chantiers le même jour, tous nés de la relecture du 17 août : une rencontre vieillit désormais avec sa date et non avec sa saisie — sans quoi l'accueil aurait annoncé un prochain match déjà joué dès le lendemain du 26 septembre ; le contenu éditorial est échappé avant insertion, avec un garde-fou qui refuse toute interpolation non protégée ; et le contrôle vérifie enfin les adresses écrites en dur dans les seize pages, trou par lequel un logo cassé était passé.
+
+**19 août, seconde passe** — les deux plannings de la page Horaires, et ce qu'ils ont
+obligé à ranger derrière eux. Les créneaux d'entraînement étaient une phrase saisie à
+la main, redite sur quatre pages ; trois graphies de Saint-Germain et trois formats
+d'heure y avaient divergé sans que rien ne s'en aperçoive. Ils sont devenus des champs
+— jour, début, fin, salle, précision — et le champ `creneau` a disparu : cinq
+affichages composent désormais leur phrase d'une seule saisie. L'alternance du vendredi
+est devenue deux séances, le code n'en gardant qu'une jusque-là. Un second tableau a
+suivi, par gymnase, pour que le bureau voie l'occupation des salles ; aucune alerte de
+collision ne l'accompagne, les deux seuls chevauchements des données étant précisément
+l'alternance.
+
+Deux ruptures trouvées en vérifiant, le même jour. La refonte à treize équipes publiée
+depuis Decap avait laissé deux redirections **301 permanentes** aboutir sur « Équipe
+introuvable » ; elles visent désormais Baby - Kid Volley, et `check-content` refuse tout
+renvoi vers une équipe qui n'existe pas. Et la galerie du design system affirmait quatre
+couleurs hors jetons quand `style.css` en portait six ; le contrôle vérifie maintenant
+que cette liste reste complète.
 
 **15 août** — les trois finitions de la relecture d'août, avec leurs entrées de galerie
 dans le même commit : navigation entre fiches d'équipe, période remontée dans la colonne

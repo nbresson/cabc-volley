@@ -82,7 +82,8 @@ function classesDeclareesSansRendu(html) {
 }
 
 const erreurs = [];
-const duCss = classesDuCss(lire("site/assets/style.css"));
+const cssBrut = lire("site/assets/style.css");
+const duCss = classesDuCss(cssBrut);
 const htmlGalerie = lire("site/design-system.html");
 const deLaGalerie = classesDeLaGalerie(htmlGalerie);
 
@@ -110,6 +111,23 @@ for (const { nom, nomEntree } of classesDeclareesSansRendu(htmlGalerie)) {
   erreurs.push(`Classe déclarée sans rendu : « ${nom} » figure dans le data-classes de l'entrée « ${nomEntree} » mais n'apparaît dans aucun class="" de son <template>.`);
 }
 
+// Les couleurs ecrites en dur. La galerie en tient la liste — c est la seule
+// facon de savoir ce qui echappe encore aux jetons. Rien ne verifiait qu elle
+// restait complete : deux transparences s y etaient ajoutees sans y figurer,
+// et la page affirmait « quatre » alors qu il y en avait six.
+const LITTERALES = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g;
+const cssHorsJetons = cssBrut.slice(cssBrut.indexOf("}", cssBrut.indexOf(":root")));
+const litterales = new Set(cssHorsJetons.match(LITTERALES) || []);
+for (const couleur of litterales) {
+  if (!htmlGalerie.includes(couleur)) {
+    erreurs.push(
+      `Couleur littérale non documentée : « ${couleur} » est écrite dans style.css ` +
+        `mais n'apparaît pas dans la galerie. L'ajouter à la liste des valeurs ` +
+        `hors jetons, ou la remplacer par un jeton de la charte.`,
+    );
+  }
+}
+
 if (erreurs.length) {
   console.error("Galerie du design system désynchronisée :");
   for (const e of erreurs) console.error("  -", e);
@@ -117,4 +135,7 @@ if (erreurs.length) {
 }
 
 const documentees = [...duCss].filter((n) => deLaGalerie.has(n)).length;
-console.log(`OK — ${duCss.size} classes dans style.css : ${documentees} documentées, ${EXCLUES.size} exclues.`);
+console.log(
+  `OK — ${duCss.size} classes dans style.css : ${documentees} documentées, ${EXCLUES.size} exclues, ` +
+    `${litterales.size} couleurs hors jetons toutes documentées.`,
+);

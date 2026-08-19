@@ -48,7 +48,7 @@
       <div class="gal-item">
         <div class="gal-meta">
           <div class="gal-name">Couleurs</div>
-          <p class="gal-note">Neuf jetons déclarés dans <code>:root</code>, plus un motif hachuré : c'est la palette officielle. Quatre valeurs supplémentaires subsistent dans <code>style.css</code>, héritées de l'ancien design. Aucune de ces couleurs héritées n'est un modèle à suivre : la charte est verrouillée, et aucune couleur nouvelle ne doit s'y ajouter.</p>
+          <p class="gal-note">Neuf jetons déclarés dans <code>:root</code>, plus un motif hachuré : c'est la palette officielle. Six valeurs échappent encore aux jetons : quatre héritées de l'ancien design, deux dérivées en transparence de <code>--creme</code> et <code>--encre</code>. Aucune n'est un modèle à suivre : la charte est verrouillée, et aucune couleur nouvelle ne doit s'y ajouter. Un contrôle automatisé vérifie que cette liste reste complète.</p>
           <div class="cols-3" style="gap:16px;margin-top:16px">
             <div><div class="gal-swatch" style="background:var(--encre)"></div><div class="gal-name" style="margin-top:7px">--encre</div><div class="gal-note">#17150F — texte, bordures, fonds inversés</div></div>
             <div><div class="gal-swatch" style="background:var(--creme)"></div><div class="gal-name" style="margin-top:7px">--creme</div><div class="gal-note">#EFE9DB — fond de page, texte sur fond sombre</div></div>
@@ -61,12 +61,14 @@
             <div><div class="gal-swatch" style="background:var(--texte-sombre)"></div><div class="gal-name" style="margin-top:7px">--texte-sombre</div><div class="gal-note">#c9c1ab — texte courant sur fond encre</div></div>
             <div><div class="gal-swatch" style="background:var(--hachures)"></div><div class="gal-name" style="margin-top:7px">--hachures</div><div class="gal-note">Fond des cadres d'image manquante</div></div>
           </div>
-          <p class="gal-note" style="margin-top:18px;border-top:1px solid var(--lin);padding-top:18px;font-weight:600">Valeurs héritées (non tokenisées)</p>
+                    <p class="gal-note" style="margin-top:18px;border-top:1px solid var(--lin);padding-top:18px;font-weight:600">Valeurs hors jetons</p>
           <div class="cols-3" style="gap:16px;margin-top:14px">
-            <div><div class="gal-swatch" style="background:#4a4438"></div><div class="gal-name" style="margin-top:7px">#4a4438</div><div class="gal-note">texte atténué</div></div>
-            <div><div class="gal-swatch" style="background:#3a352b"></div><div class="gal-name" style="margin-top:7px">#3a352b</div><div class="gal-note">encre éclaircie, filet sur fond sombre</div></div>
-            <div><div class="gal-swatch" style="background:#fff"></div><div class="gal-name" style="margin-top:7px">#fff</div><div class="gal-note">fond de champ au focus</div></div>
-            <div><div class="gal-swatch" style="background:rgba(23,21,15,.05)"></div><div class="gal-name" style="margin-top:7px">rgba(23,21,15,.05)</div><div class="gal-note">filet du dégradé décoratif du héros</div></div>
+            <div><div class="gal-swatch" style="background:#4a4438"></div><div class="gal-name" style="margin-top:7px">#4a4438</div><div class="gal-note">hérité — texte atténué</div></div>
+            <div><div class="gal-swatch" style="background:#3a352b"></div><div class="gal-name" style="margin-top:7px">#3a352b</div><div class="gal-note">hérité — encre éclaircie, filet sur fond sombre</div></div>
+            <div><div class="gal-swatch" style="background:#fff"></div><div class="gal-name" style="margin-top:7px">#fff</div><div class="gal-note">hérité — fond de champ au focus</div></div>
+            <div><div class="gal-swatch" style="background:rgba(23,21,15,.05)"></div><div class="gal-name" style="margin-top:7px">rgba(23,21,15,.05)</div><div class="gal-note">hérité — filet du dégradé décoratif du héros</div></div>
+            <div><div class="gal-swatch" style="background:rgba(239,233,219,.08)"></div><div class="gal-name" style="margin-top:7px">rgba(239,233,219,.08)</div><div class="gal-note">crème à 8 % — fond des secondes du compte à rebours</div></div>
+            <div><div class="gal-swatch" style="background:rgba(23,21,15,.82)"></div><div class="gal-name" style="margin-top:7px">rgba(23,21,15,.82)</div><div class="gal-note">encre à 82 % — voile de la visionneuse d'images</div></div>
           </div>
         </div>
         <div>
