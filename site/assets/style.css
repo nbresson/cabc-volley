@@ -275,6 +275,30 @@ main:has(>.dark:last-child)+.socialbar{border-top:2px solid var(--creme)}
    bloc media qui les rallume : posee apres, elle l emporterait a specificite
    egale et ils resteraient invisibles. */
 .site-header nav .num{display:none}
+/* Mega-panneau du menu Infos. Il est ancre sur .site-header et non sur
+   .nav-infos : c est ce qui lui donne la pleine largeur. L en-tete etant
+   sticky, il fait deja bloc de reference pour un enfant absolu — inutile,
+   et nuisible, de poser position:relative sur l entree elle-meme. */
+.nav-infos{align-self:stretch;display:flex;align-items:center}
+/* Le pointeur doit pouvoir descendre du libelle au panneau sans traverser
+   de vide : l entree mord sur le rembourrage bas de l en-tete, sinon le
+   panneau se referme entre les deux. */
+.nav-infos-toggle{display:flex;align-items:center;gap:7px;align-self:stretch;padding-bottom:16px;margin-bottom:-16px}
+.chev{font-family:'DM Mono',monospace;font-size:9px}
+.mega{position:absolute;top:100%;left:0;right:0;display:none;grid-template-columns:1.1fr 1fr 1fr 1fr;background:var(--encre);color:var(--creme);border-bottom:2px solid var(--encre)}
+/* Au survol et au focus : sans focus-within, le panneau serait inatteignable
+   au clavier, donc invisible pour qui ne se sert pas d une souris. */
+.nav-infos:hover .mega,.nav-infos:focus-within .mega{display:grid}
+.nav-infos:hover .nav-infos-toggle{background:var(--encre);color:var(--creme)}
+.mega-col{padding:28px 30px;border-right:1px solid #3a352b;display:flex;flex-direction:column}
+.mega-col:last-child{border-right:none}
+.mega-intro .eyebrow{color:var(--mention-sombre)}
+.mega-intro strong{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;font-size:30px;line-height:.95;letter-spacing:.02em;display:block;margin:12px 0 10px}
+.mega-intro p{font-size:13px;line-height:1.6;color:var(--texte-sombre);text-transform:none;letter-spacing:0;font-family:'Archivo',sans-serif;font-weight:400}
+.mega-lien{display:block;padding:11px 12px;margin:0 -12px}
+.mega-lien:hover{background:#3a352b;opacity:1}
+.mega-lien strong{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:21px;letter-spacing:.03em;text-transform:uppercase;color:var(--creme)}
+.mega-lien span{display:block;font-size:12px;line-height:1.5;color:var(--mention-sombre);margin-top:3px;text-transform:none;letter-spacing:0}
 .site-header .logo img{height:54px}
 .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:6px 2px;cursor:pointer}
 .burger span{width:26px;height:2.5px;background:var(--encre)}
@@ -456,7 +480,7 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
   /* align-items:stretch annule le center herite du menu de bureau : sans lui,
      les entrees se retrecissent a leur contenu, les numeros ne s alignent plus
      a gauche et le bouton Adherer n est pas pleine largeur. */
-  .site-header nav{display:none;position:fixed;inset:0;flex-direction:column;justify-content:center;align-items:stretch;background:var(--creme);padding:96px 22px 22px;gap:2px;overflow:auto;z-index:40}
+  .site-header nav{display:none;position:fixed;inset:0;flex-direction:column;justify-content:safe center;align-items:stretch;background:var(--creme);padding:96px 22px 22px;gap:2px;overflow:auto;z-index:40}
   .site-header nav.open{display:flex}
   .burger{display:flex;position:relative;z-index:60}
   .site-header nav a{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-bottom:1px solid var(--lin);font-size:30px;line-height:1}
@@ -470,6 +494,28 @@ blockquote.ds cite{font-family:'DM Mono',monospace;font-size:11px;letter-spacing
   .site-header nav a.active:not(.btn){border-bottom:1px solid var(--lin);padding-bottom:7px}
   .site-header nav a.active:not(.btn)>*:last-child{border-bottom:5px solid var(--encre);padding-bottom:2px}
   .site-header nav .num{display:inline;font-family:'DM Mono',monospace;font-size:10px;color:var(--taupe)}
+  /* Le panneau ne s ouvre pas au survol sur un ecran tactile : l entree Infos
+     devient un accordeon, deplie par un clic. Les sous-pages sont indentees
+     et sans description — la place manque, et le libelle suffit. */
+  .nav-infos{display:block;align-self:auto;border-bottom:1px solid var(--lin)}
+  .nav-infos-toggle{padding:7px 0;margin:0;font-size:30px;line-height:1}
+  .nav-infos:hover .nav-infos-toggle{background:none;color:var(--encre)}
+  .chev{margin-left:auto;font-size:12px}
+  .mega{position:static;display:none;grid-template-columns:1fr;background:none;color:var(--encre);border:none}
+  .nav-infos:hover .mega,.nav-infos:focus-within .mega{display:none}
+  .nav-infos.open .mega{display:block}
+  .mega-intro{display:none}
+  /* Sans rembourrage bas : les colonnes du panneau bureau groupaient les
+     sous-entrees deux par deux, ce qui n a aucun sens dans une liste verticale. */
+  .mega-col{padding:0 0 0 22px;border:none}
+  .mega-col .btn{display:none}
+  /* Pas de filet sous les sous-entrees : elles heritaient de celui des entrees
+     principales, ce qui donnait des traits irreguliers d une colonne a l autre.
+     L indentation suffit a les rattacher a Infos. */
+  .site-header nav .mega-lien{padding:6px 0;margin:0;border-bottom:none}
+  .mega-lien:hover{background:none}
+  .mega-lien strong{font-size:19px;color:var(--encre)}
+  .mega-lien span{display:none}
   /* Adherer descend en pied de menu, pleine largeur. */
   /* justify-content et non text-align seul : la regle des entrees fait aussi du
      bouton un conteneur flex, ou le centrage de texte n a pas prise. */
