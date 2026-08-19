@@ -19,6 +19,7 @@ const INFOS=[
   ["horaires.html","Horaires","Les créneaux de chaque équipe"],
   ["tarifs.html","Tarifs & licences","Les montants de la saison"],
   ["infos.html","Documents","Certificats, formulaires, règlement"],
+  ["regles.html","Règles officielles","Les règles du jeu et l'arbitrage"],
   ["acces.html","Accès au gymnase","Nos quatre salles et comment y aller"],
   ["faq.html","FAQ","Les réponses aux questions courantes"]
 ];
@@ -28,7 +29,7 @@ const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","par
   "gymnase.html":"infos.html",
   // Les sous-pages Infos allument l entree Infos, comme une fiche d equipe
   // allume Equipes. Le mecanisme existait, il n y avait rien a inventer.
-  "horaires.html":"infos.html","tarifs.html":"infos.html","acces.html":"infos.html","faq.html":"infos.html"};
+  "horaires.html":"infos.html","tarifs.html":"infos.html","acces.html":"infos.html","faq.html":"infos.html","regles.html":"infos.html"};
 // Reseaux du club. Seule source des deux adresses, pour le bandeau ci-dessous
 // comme pour tout <div id="reseaux"> pose dans une page.
 const RESEAUX=[
@@ -149,11 +150,11 @@ function renderChrome(){
           <span class="eyebrow">Infos pratiques</span>
           <strong>Tout pour<br>bien jouer</strong>
           <p>Horaires, tarifs, documents : l'essentiel de la vie du club, à jour.</p>
+          <a class="btn btn-outline-light" href="contact.html" style="margin-top:18px;align-self:flex-start;padding:9px 20px">Nous contacter →</a>
         </div>
         <div class="mega-col">${INFOS.slice(0,2).map(megaLien).join("")}</div>
         <div class="mega-col">${INFOS.slice(2,4).map(megaLien).join("")}</div>
-        <div class="mega-col">${megaLien(INFOS[4])}
-          <a class="btn btn-outline-light" href="contact.html" style="margin-top:18px;align-self:flex-start;padding:9px 20px">Nous contacter →</a></div>
+        <div class="mega-col">${INFOS.slice(4,6).map(megaLien).join("")}</div>
       </div>
     </div>`;
   const links=NAV.map(([h,t],i)=>h==="infos.html"?mega:`<a href="${h}"${h===cur?' class="active" aria-current="page"':''}><span class="num">${String(i+1).padStart(2,"0")}</span><span>${t}</span></a>`).join("");
@@ -514,6 +515,69 @@ function mdToHtml(md){if(!md)return"";
     if(b.startsWith("## "))return '<h2 style="margin:28px 0 12px">'+inl(b.slice(3))+'</h2>';
     if(/^[-*] /.test(b))return '<ul class="ds-list">'+b.split("\n").map(l=>'<li>'+inl(l.replace(/^[-*] +/,""))+'</li>').join("")+'</ul>';
     return '<p class="muted" style="line-height:1.8;margin-bottom:18px">'+inl(b)+'</p>';}).join("");}
+// Bibliotheque de documents. La page Documents et la page Regles officielles
+// rendent exactement les memes rangees : une seule definition, sinon les deux
+// divergent — c est ce qui etait arrive au bandeau de match recopie dans
+// l accueil, ou les charges d essai passaient par la copie oubliee.
+
+// Une adresse saisie sans protocole serait resolue relativement au site et
+// menerait a la page 404. On laisse passer tel quel un schema explicite
+// (https:, mailto:, tel:...) ou un chemin racine : seul un nom d hote nu doit
+// recevoir le prefixe.
+const docExterne=u=>/^([a-z][a-z0-9+.-]*:|\/)/i.test(u)?u:"https://"+u;
+// L extension du fichier televerse determine le suffixe affiche : on ne
+// suppose jamais « PDF », le widget accepte n importe quel type de fichier.
+const docExtension=nom=>{const m=/\.([a-z0-9]+)$/i.exec(nom||"");return m?m[1].toUpperCase():"";};
+// Domaine d une adresse, pour la ligne de source (« extranet.ffvb.org »).
+const docDomaine=u=>{try{return new URL(docExterne(u),location.href).hostname.replace(/^www\./,"");}catch(e){return"";}};
+
+// Rangee de document. Un intertitre n est pas numerote et ne compte pas ; un
+// fichier televerse porte une fleche descendante, un lien externe une fleche
+// oblique. Un document dont le champ utile est vide est ignore, le reste du
+// bloc s affichant quand meme.
+function docRangee(d,num){
+  if(d.type==="intertitre")return `<div class="doc-inter"><span></span><span>${echapper(d.libelle)}</span></div>`;
+  const fichier=d.type==="fichier"&&d.fichier;
+  // lienSur() en dernier : une adresse refusee rend "", et la rangee entiere
+  // disparait par le test qui suit, plutot que de porter un lien mort.
+  const url=lienSur(fichier?d.fichier:(d.url?docExterne(d.url):""));
+  if(!url)return"";
+  const ext=docExtension(fichier?d.fichier:d.url)||"LIEN";
+  const type=[ext,d.langue].filter(Boolean).join(" · ");
+  return `<a class="doc-row" href="${echapper(url)}"${fichier?' download':' target="_blank" rel="noopener"'}>
+    <span class="num">${String(num).padStart(2,"0")}</span>
+    <span><span class="titre">${echapper(d.libelle||"Document")}</span><span class="source">${echapper(fichier?"document du club":docDomaine(d.url))}</span></span>
+    <span class="type"${d.langue==="EN"?' style="background:var(--sable);color:var(--encre)"':""}>${echapper(type)}</span>
+    <span class="fleche">${fichier?"↓":"↗"}</span></a>`;
+}
+
+// Rend les blocs dans le conteneur donne et retourne le nombre de documents
+// reels — les intertitres n en sont pas. Les deux pages affichent ce total.
+// Ancre d un bloc de documents. Partagee par le rendu et par le sommaire :
+// deux definitions donneraient un jour deux ancres differentes pour le meme
+// titre, et le sommaire pointerait dans le vide.
+const ancreBloc=s=>"b-"+String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-");
+// titrePage permet de taire l en-tete d un bloc unique qui porte le nom de sa
+// page : sur Regles officielles, le titre et le decompte paraissaient deux fois
+// a la suite. Deux blocs ou un titre different gardent leur en-tete, qui sert
+// alors a distinguer les sections.
+function rendreBlocsDocuments(blocs,cible,titrePage){
+  let total=0;
+  cible.innerHTML=(blocs||[]).length?blocs.map(b=>{
+    const docs=b.documents||[];
+    const reels=docs.filter(d=>d.type!=="intertitre");
+    total+=reels.length;
+    let n=0;
+    const lignes=docs.map(d=>docRangee(d,d.type==="intertitre"?0:++n)).join("");
+    const seul=(blocs||[]).length===1&&String(b.titre||"").trim()===String(titrePage||"").trim();
+    return `<section class="pad section" id="${ancreBloc(b.titre)}">
+      ${seul?"":`<div class="section-head"><h2>${echapper(b.titre)}</h2><span class="mono">${reels.length} document${reels.length>1?"s":""}</span></div>`}
+      ${b.texte?mdToHtml(b.texte):""}
+      ${lignes?`<div class="doc-liste">${lignes}</div>`:""}
+    </section>`;
+  }).join(""):'<section class="pad section"><p class="vide muted">Aucune information pour le moment.</p></section>';
+  return total;
+}
 // Carte d une salle, avec sa photo. Ne sert plus que le bloc « Nos
 // infrastructures » de la page Club, depuis que les fiches ont quitte Contact.
 // La page Acces ecrit les siennes : elle repond a « comment j y vais » et doit

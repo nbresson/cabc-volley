@@ -55,8 +55,12 @@ const EXCEPTIONS = new Map([
     "gabarit pose par textContent et non par innerHTML : le navigateur n y lit aucune balise",
   ],
   [
-    "site/infos.html | slugAncre(b.titre)",
-    "slugAncre() ne rend que des minuscules, des chiffres et des tirets ; l ancre est fabriquee, pas recopiee",
+    "site/assets/site.js | ancreBloc(b.titre)",
+    "slug() ne rend que des minuscules, des chiffres et des tirets ; l ancre est fabriquee, pas recopiee. L exception a suivi le rendu des documents d infos.html vers site.js, ou les deux pages le partagent.",
+  ],
+  [
+    "site/infos.html | ancreBloc(b.titre)",
+    "ancreBloc() ne rend que des minuscules, des chiffres et des tirets ; l ancre du sommaire est fabriquee, pas recopiee",
   ],
 ]);
 
