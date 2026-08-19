@@ -31,9 +31,13 @@
     {
       "montant": "100 €",
       "libelle": "Licence Volley après événementielle"
+    },
+    {
+      "libelle": "NB : cas de plusieurs licences dans la même famille, réduction de -20% dès la deuxième licence.",
+      "montant": "-20%"
     }
   ],
-  "comprend": "NB : cas de plusieurs licences dans la même famille, réduction de -20% dès la deuxième licence.\\\nPossibilité de payer en plusieurs fois.",
-  "pass_sport": "",
-  "paiement": ""
+  "comprend": "",
+  "pass_sport": "Pass'Sport accepté.",
+  "paiement": "Possibilité de payer en plusieurs fois."
 }
