@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Horaires — C.A. Brive Corrèze Volley</title>
+<meta name="description" content="Les créneaux d'entraînement de toutes les équipes du club, des seniors à l'école de volley.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="C.A. Brive Corrèze Volley">
+<meta property="og:title" content="Horaires d'entraînement — C.A. Brive Corrèze Volley">
+<meta property="og:description" content="Les créneaux d'entraînement de toutes les équipes du club, des seniors à l'école de volley.">
+<meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/style.css">
+</head><body>
+<div id="header"></div>
+<main id="main">
+<section class="pad section">
+  <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Horaires</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(38px,9vw,88px)">Horaires</h1><span class="mono" id="compteur" style="align-self:flex-end"></span></div>
+  <nav class="ancres" id="ancres-groupes" aria-label="Groupes d'équipes" style="display:none"></nav>
+</section>
+<section class="section pad"><div id="horaires"></div></section>
+<section class="section pad">
+  <div class="row">
+    <a class="btn btn-secondary" href="acces.html">Où sont les gymnases ? →</a>
+    <a class="btn btn-secondary" href="equipes.html">Toutes nos équipes →</a>
+  </div>
+</section>
+</main>
+<div id="footer"></div><script src="assets/site.js"></script>
+<script>
+window.__pageInit=async function(){
+  const teams=await getJSON("content/teams.json");
+  const items=teams?.items||[];
+
+  // Un creneau saisi porte souvent deux seances separees par « ; ». Chacune sur
+  // sa ligne se lit du coin de l oeil ; une phrase a rallonge oblige a la lire
+  // en entier pour trouver son jour.
+  const seances=c=>String(c||"").split(/\s*;\s*/).map(s=>s.trim()).filter(Boolean);
+
+  // Le nom mene a la fiche d equipe quand elle existe. Une equipe sans slug
+  // reste dans le tableau sans lien mort, comme sur la page Equipes.
+  // La categorie tient sous le nom plutot que dans sa propre colonne : a trois
+  // colonnes, le creneau — la seule chose qu on vient chercher ici — sortait de
+  // l ecran d un telephone et se lisait a la barre de defilement.
+  const rangee=t=>`<tr>
+      <td><strong>${t.slug?`<a class="lien" href="${teamUrl(t.slug)}">${echapper(t.nom)}</a>`:echapper(t.nom)}</strong>
+        ${t.categorie?`<br><span class="mono" style="font-size:10px;letter-spacing:.12em">${echapper(t.categorie)}</span>`:""}</td>
+      <td>${seances(t.creneau).map(s=>echapper(s)).join("<br>")||'<span class="muted">—</span>'}</td>
+    </tr>`;
+
+  // Meme regroupement que la page Equipes : l ordre connu d abord, un groupe
+  // inconnu obtient quand meme sa section, et « Autres » ferme la marche.
+  // Aucune equipe n est perdue, quelle que soit la valeur de groupe.
+  const ORDRE=["Séniors","Jeunes","Formation","Loisir"];
+  const groupes=new Map(ORDRE.map(g=>[g,[]]));
+  const autres=[];
+  items.forEach(t=>{
+    const nom=typeof t.groupe==="string"?t.groupe.trim():"";
+    if(!nom){autres.push(t);return;}
+    if(!groupes.has(nom))groupes.set(nom,[]);
+    groupes.get(nom).push(t);
+  });
+  if(groupes.has("Autres")||autres.length){
+    const liste=[...(groupes.get("Autres")||[]),...autres];
+    groupes.delete("Autres");
+    groupes.set("Autres",liste);
+  }
+
+  // Le prefixe « g- » est aussi la cible de la regle scroll-margin-top, l en-tete
+  // etant colle en haut de page.
+  const slugAncre=s=>"g-"+s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-");
+  const visibles=[...groupes].filter(([,l])=>l.length);
+  // min-width:0 defait le plancher de 520 px que .table-wrap impose aux
+  // tableaux : il protege les six colonnes d un classement, mais sur deux
+  // colonnes il ne faisait que couper la fin des creneaux sur un telephone.
+  const wrap=document.getElementById("horaires");
+  wrap.innerHTML=visibles.length?visibles.map(([nom,liste])=>`
+    <div style="margin-bottom:56px" id="${slugAncre(nom)}">
+      <div class="section-head" style="margin-bottom:20px"><h2>${echapper(nom)}</h2><span class="mono">${liste.length} équipe${liste.length>1?"s":""}</span></div>
+      <div class="table-wrap"><table class="ds" style="min-width:0"><thead><tr><th style="width:40%">Équipe</th><th>Créneaux</th></tr></thead>
+      <tbody>${liste.map(rangee).join("")}</tbody></table></div>
+    </div>`).join(""):'<p class="vide muted">Aucun créneau publié pour le moment.</p>';
+
+  document.getElementById("compteur").textContent=items.length?items.length+" équipe"+(items.length>1?"s":""):"";
+  // Un sommaire d un seul lien ne sert a rien.
+  const ancres=document.getElementById("ancres-groupes");
+  if(visibles.length>1){
+    ancres.innerHTML=visibles.map(([nom])=>`<a href="#${slugAncre(nom)}">${echapper(nom)} ↓</a>`).join("");
+    ancres.style.display="";
+  }
+};
+</script></body></html>
