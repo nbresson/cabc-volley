@@ -175,6 +175,24 @@ d'API ou à la fermeture d'un compte — ce qu'un mur alimenté par API ne fait 
 **Préalable à vérifier avant tout chiffrage de C :** le compte `cabcvolley` est-il un
 compte Professionnel ? Sinon rien n'est possible sans le convertir d'abord.
 
+### Trois champs de tarifs attendent le club
+**Ouverts le 19 août**, avec le déplacement du contenu vers les pages du menu Infos.
+La collection **Tarifs & licences** porte trois blocs facultatifs et vides — ce que la
+licence comprend, le Pass'Sport, le paiement en plusieurs fois. Ils n'ont pas été
+préremplis à dessein : les mêmes informations existent déjà, mais enfermées dans des
+phrases — le texte de la troisième étape d'Adhésion, le chapô de son formulaire, la
+première réponse de la FAQ. Les recopier aurait fait une quatrième version à corriger
+à la main.
+
+Le jour où le club les remplit, **ces trois phrases deviennent redondantes** et méritent
+d'être allégées : c'est un geste éditorial, pas un développement.
+
+Reste, du même chantier et volontairement laissé de côté : **les créneaux de
+`teams.json` sont du texte libre** (« Mer. 18h30-20h30 · Rollinat »), avec trois
+orthographes pour trois salles qui existent pourtant comme entrées de `gymnases.json`.
+Un créneau structuré — jour, heures, salle choisie dans la liste — lierait la page
+Horaires aux fiches de gymnase. Il touche aussi les fiches d'équipe : une passe à part.
+
 ### Quatre livrets d'accueil
 **Demandé le 15 août.** Un livret par public — licencié majeur, licencié mineur (et ses
 parents), bénévole, entraîneur — sur une architecture **tronc commun + module**, pour
