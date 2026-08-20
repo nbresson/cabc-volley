@@ -75,6 +75,11 @@ function estBrouillon(hote) {
 // Les cibles s ecrivent SANS extension : Cloudflare sert /contact et repond 307
 // sur /contact.html. Viser la forme .html produirait une chaine 301 puis 307,
 // un saut de plus a chaque visite et un signal dilue pour les moteurs.
+// Deux de ces renvois ont vise une fiche d equipe et se sont casses deux fois
+// en deux jours : l ecole de volley est devenue baby-kid-volley, puis baby-volley
+// et kid-volley. Un slug d equipe se renomme depuis Decap ; la liste, non. Les
+// URL d un site disparu pointent donc vers elle plutot que vers une fiche qui
+// peut changer de nom sans prevenir.
 const REDIRECTIONS = new Map([
   ["/lhistoire-du-club/", "/club"],
   ["/constitution-du-bureau/", "/club"],
@@ -91,9 +96,9 @@ const REDIRECTIONS = new Map([
   ["/senior-masculin-n3/", "/equipe?e=n3-masculin"],
   ["/regional-1-masculin/", "/equipe?e=r1-masculin"],
   ["/regional-1-feminine/", "/equipe?e=r1-feminin"],
-  ["/ecole-de-volley/", "/equipe?e=baby-kid-volley"],
+  ["/ecole-de-volley/", "/equipes"],
   // Baby et Kids ont ete fondus dans la fiche Ecole de volley.
-  ["/baby-kids-volley/", "/equipe?e=baby-kid-volley"],
+  ["/baby-kids-volley/", "/equipes"],
   ["/volley-sante/", "/equipe?e=volley-sante"],
   ["/ufolep/", "/equipe?e=ufolep"],
   // Ces trois pages n etaient plus liees par l ancien site lui-meme et n ont
