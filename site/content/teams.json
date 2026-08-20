@@ -244,9 +244,29 @@
     },
     {
       "groupe": "Jeunes",
-      "nom": "M13-M11-M9",
-      "slug": "m13-m11-m9",
+      "nom": "M13",
+      "slug": "m13",
       "categorie": "M13",
+      "planning": [
+        {
+          "jour": "mercredi",
+          "debut": "16:30",
+          "fin": "18:00",
+          "gymnase": "saint-germain"
+        },
+        {
+          "jour": "samedi",
+          "gymnase": "rollinat",
+          "debut": "10:00",
+          "fin": "11:00"
+        }
+      ]
+    },
+    {
+      "groupe": "Jeunes",
+      "nom": "M11-M9",
+      "slug": "m11-m9",
+      "categorie": "M11",
       "planning": [
         {
           "jour": "mercredi",
@@ -263,10 +283,10 @@
       ]
     },
     {
-      "nom": "Baby - Kid Volley",
-      "slug": "baby-kid-volley",
+      "nom": "Baby Volley (3 à 4 ans)",
+      "slug": "baby-volley",
       "groupe": "Jeunes",
-      "categorie": "baby-volley",
+      "categorie": "Baby Volley",
       "infos": {
         "titre": "Découvrir le volley",
         "texte": "L'école de volley accueille les plus jeunes, en catégories M11 et baby-volley, le samedi matin à 10h au gymnase Rollinat. Pour inscrire votre enfant ou poser une question, écrivez-nous.",
@@ -276,13 +296,6 @@
       "effectif": [],
       "photo": "assets/uploads/ecole.jpg",
       "planning": [
-        {
-          "jour": "mercredi",
-          "debut": "17:15",
-          "fin": "18:00",
-          "gymnase": "saint-germain",
-          "precision": ""
-        },
         {
           "jour": "samedi",
           "debut": "10:00",
@@ -364,6 +377,20 @@
           "fin": "22:00",
           "gymnase": "arsonval",
           "precision": ""
+        }
+      ]
+    },
+    {
+      "groupe": "Jeunes",
+      "nom": "Kid Volley (5 à 6 ans)",
+      "slug": "kid-volley",
+      "categorie": "Kid Volley",
+      "planning": [
+        {
+          "jour": "samedi",
+          "debut": "11:00",
+          "fin": "12:00",
+          "gymnase": "rollinat"
         }
       ]
     }
