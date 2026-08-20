@@ -216,17 +216,17 @@
         },
         {
           "jour": "samedi",
-          "debut": "12:30",
-          "fin": "14:00",
+          "debut": "11:00",
+          "fin": "12:30",
           "gymnase": "rollinat"
         }
       ]
     },
     {
       "groupe": "Jeunes",
-      "nom": "M15-M18 féminin",
-      "slug": "m15-m18-f",
-      "categorie": "M18 F",
+      "nom": "M15 féminin",
+      "slug": "m15-f",
+      "categorie": "M15 F",
       "planning": [
         {
           "jour": "mardi",
@@ -236,8 +236,8 @@
         },
         {
           "jour": "samedi",
-          "debut": "11:00",
-          "fin": "12:30",
+          "debut": "12:30",
+          "fin": "14:00",
           "gymnase": "rollinat"
         }
       ]
