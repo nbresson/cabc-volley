@@ -323,6 +323,20 @@
       ]
     },
     {
+      "groupe": "Jeunes",
+      "nom": "Kid Volley (5 à 6 ans)",
+      "slug": "kid-volley",
+      "categorie": "Kid Volley",
+      "planning": [
+        {
+          "jour": "samedi",
+          "debut": "11:00",
+          "fin": "12:00",
+          "gymnase": "rollinat"
+        }
+      ]
+    },
+    {
       "nom": "Baby Volley (3 à 4 ans)",
       "slug": "baby-volley",
       "groupe": "Jeunes",
@@ -400,6 +414,20 @@
     },
     {
       "groupe": "Loisir",
+      "nom": "Volley assis",
+      "slug": "volley-assis",
+      "categorie": "Volley Assis",
+      "planning": [
+        {
+          "jour": "dimanche",
+          "debut": "10:00",
+          "fin": "12:00",
+          "gymnase": "rollinat"
+        }
+      ]
+    },
+    {
+      "groupe": "Loisir",
       "nom": "UFOLEP",
       "slug": "ufolep",
       "categorie": "UFOLEP",
@@ -417,20 +445,6 @@
           "fin": "22:00",
           "gymnase": "arsonval",
           "precision": ""
-        }
-      ]
-    },
-    {
-      "groupe": "Jeunes",
-      "nom": "Kid Volley (5 à 6 ans)",
-      "slug": "kid-volley",
-      "categorie": "Kid Volley",
-      "planning": [
-        {
-          "jour": "samedi",
-          "debut": "11:00",
-          "fin": "12:00",
-          "gymnase": "rollinat"
         }
       ]
     }
