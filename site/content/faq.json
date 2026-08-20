@@ -7,15 +7,15 @@
     },
     {
       "question": "Quels documents fournir ?",
-      "reponse": "Le formulaire de licence FFVB signé, un certificat médical (ou attestation santé pour un renouvellement) et une photo d'identité."
+      "reponse": "Le formulaire de licence FFVB signé, un certificat médical (ou attestation santé pour un renouvellement) et une photo d'identité.\n\nDans certains cas (simple surclassement, double surclassement, triple surclassement) une démarche médicale spécifique est nécessaire. Pour ces cas, nous vous invitons à prendre contact auprès du personnel d'encadrement."
     },
     {
       "question": "Peut-on essayer avant de s'inscrire ?",
-      "reponse": "Oui — les trois première séances d'essai sont gratuites, sans engagement. Viens simplement en tenue de sport à l'horaire de ta catégorie."
+      "reponse": "Oui — les trois premières séances d'essai sont **gratuites, sans engagement**. Viens simplement en tenue de sport à l'horaire de ta catégorie.\n\nPour les mineurs, nous invitons les parents à se présenter accompagné de leur enfant souhaitant faire une séance d'essai auprès du personnel d'encadrement. Ils pourront recueillir des informations sur l'organisation des entraînement et compétitions et sur les formalités d'adhésion."
     },
     {
       "question": "Quels sont les horaires d'entraînement ?",
-      "reponse": "Consulte la page [Calendrier](calendrier.html) ou passe à la permanence du mercredi — les créneaux varient selon la catégorie et le gymnase."
+      "reponse": "Consulte la page [Horaires](horaires.html) ou passe à la permanence du mercredi — les créneaux varient selon la catégorie et le site d'entraînement."
     }
   ]
 }
