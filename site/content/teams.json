@@ -38,9 +38,15 @@
       "ffvb_nom": "C.A. BRIVE/CORREZE VOLLEY",
       "planning": [
         {
-          "jour": "mercredi",
+          "jour": "mardi",
           "debut": "18:30",
           "fin": "20:30",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "mercredi",
+          "debut": "20:30",
+          "fin": "22:30",
           "gymnase": "rollinat",
           "precision": ""
         },
@@ -86,8 +92,8 @@
         },
         {
           "jour": "vendredi",
-          "debut": "20:30",
-          "fin": "22:30",
+          "debut": "20:00",
+          "fin": "22:00",
           "gymnase": "saint-germain",
           "precision": "une semaine sur deux"
         }
@@ -112,8 +118,8 @@
         },
         {
           "jour": "vendredi",
-          "debut": "20:30",
-          "fin": "22:30",
+          "debut": "20:00",
+          "fin": "22:00",
           "gymnase": "saint-germain",
           "precision": "une semaine sur deux"
         },
