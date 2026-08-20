@@ -4,7 +4,7 @@ Ce qui reste à faire sur le site, par ordre de valeur — pas par ordre d'arriv
 Y figurer n'engage à rien : une ligne peut rester en bas indéfiniment, ou être
 supprimée. On y retire plus qu'on y ajoute.
 
-Dernière revue : **19 août 2026**, en deux passes. Le matin : le moissonnage FFVB, le vieillissement des matchs, l'échappement du contenu éditorial et le contrôle des adresses écrites dans les pages. L'après-midi : les deux plannings de la page Horaires et la normalisation des créneaux, qui a fait sortir d'ici une entrée ouverte depuis le 19 au matin. `npm run check` est passé d'un garde-fou à quatre scripts et sept familles de contrôles. Ce qui reste du moissonnage n'est plus du développement mais de l'observation, consigné sous « Surveiller le moissonnage ». Reste distinct, et à ne pas confondre avec lui : le **score en direct** depuis l'application de feuille de match. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Les livrets d'accueil sont entrés le 15 août.
+Dernière revue : **21 août 2026**. La veille, en deux passes. Le matin : le moissonnage FFVB, le vieillissement des matchs, l'échappement du contenu éditorial et le contrôle des adresses écrites dans les pages. L'après-midi : les deux plannings de la page Horaires et la normalisation des créneaux, qui a fait sortir d'ici une entrée ouverte depuis le 19 au matin. `npm run check` est passé d'un garde-fou à quatre scripts et sept familles de contrôles. Ce qui reste du moissonnage n'est plus du développement mais de l'observation, consigné sous « Surveiller le moissonnage ». Reste distinct, et à ne pas confondre avec lui : le **score en direct** depuis l'application de feuille de match. Les deux sujets Meta — direct et publications — partagent une même question, posée une fois sous « Afficher les publications ». Les livrets d'accueil sont entrés le 15 août.
 
 ---
 
@@ -186,15 +186,20 @@ première réponse de la FAQ. Les recopier aurait fait une quatrième version à
 Le jour où le club les remplit, **ces trois phrases deviennent redondantes** et méritent
 d'être allégées : c'est un geste éditorial, pas un développement.
 
-### Trois libellés d'équipe à revoir
-**Relevé le 19 août**, après la refonte à treize équipes. `baby-kid-volley` porte la
-catégorie `baby-volley` — seule étiquette en minuscules et à tiret parmi treize, quand
-ses sœurs portent « Régional 2 F », « M13 », « UFOLEP ». Elle s'affiche telle quelle
-sous le titre de la fiche et sur les cartes de l'accueil.
+### Deux mégaoctets et demi d'images au mauvais format
+**Relevé le 21 août.** Seize fichiers en JPG ou PNG là où le README impose le
+WebP — **2,5 Mo, soit 59 % du poids total des images.** Les plus lourds :
+`ecole.jpg` (323 Ko), `annonce_n3m_2026-2027.jpg` (304 Ko),
+`echarpe_exemple.jpg` (266 Ko).
 
-Deux autres disent moins que leur nom : `m15-m18-f` est étiquetée « M18 F » et
-`m13-m11-m9` simplement « M13 ». Rien n'est cassé — c'est de la saisie Decap, à faire
-en repassant.
+**Aucun ne déclenche l'avertissement existant**, qui ne regarde que le poids et
+place son seuil à 400 Ko. Ce sont des envois faits depuis Decap, qui ne convertit
+pas.
+
+Deux gestes : convertir — 700 à 900 Ko gagnés —, et ajouter au contrôle un
+avertissement sur le format, jumeau de celui qui existe sur le poids. Un
+avertissement et non une erreur : bloquer la photo d'un bénévole serait
+disproportionné.
 
 ### Revoir la présentation des partenaires
 **Demandé le 19 août.** La page Partenaires et le mur de logos posé en pied de chaque
@@ -262,15 +267,15 @@ formation. Le code n'est pas le chemin critique.
 
 Le design attend déjà ces images ; il n'y a rien à développer.
 
-| Ce qui manque | État au 19 août |
+| Ce qui manque | État au 21 août |
 | --- | --- |
 | Portraits du bureau | **3 sur 3** affichent `[ portrait ]` |
 | Photo d'archive de l'histoire | champ vide, le placeholder est en ligne |
-| Effectif National 3 masculin | 5 inscrits, **4 sans photo** |
-| Effectifs des douze autres équipes | **un seul inscrit au total** — R1 féminin en compte un, les onze autres aucun |
-| Entraîneur d'une équipe | **13 sur 13** ont le champ vide |
+| Effectifs des équipes | **16 sur 18** n'ont aucun inscrit ; les deux autres en comptent 5 et 1 |
+| Photo d'équipe | **12 sur 18** n'en ont pas |
+| Entraîneur d'une équipe | **18 sur 18** ont le champ vide |
 | Galeries des quatre gymnases | vides |
-| Description du gymnase d'Arsonval | absente |
+| Description du gymnase d'Arsonval | absente — les trois autres l'ont |
 | « Mot » des partenaires | aucun des 17 n'en a |
 | Accroche de la carte « Devenir partenaire » | absente |
 
@@ -284,17 +289,24 @@ ou mille visites, ni quelles pages servent. Cloudflare Web Analytics est gratuit
 sans cookie et sans bannière de consentement — le seul tiers qui resterait cohérent
 avec le choix d'avoir tout auto-hébergé. Décision à prendre, pas une évidence.
 
-### Un échec de compilation ne prévient personne
-**Relevé le 19 août.** `npm run check` bloque le déploiement quand le contenu devient
-incohérent — c'est voulu, et depuis ce jour les messages disent quoi corriger. Mais
-rien ne signale l'échec : il faut ouvrir l'onglet Builds du worker pour le voir.
+### L'alerte de compilation attend sa clé
+**Posée le 21 août**, après que la panne s'est produite pour de bon : une refonte
+des équipes publiée depuis Decap a cassé deux renvois du worker, le contrôle a
+arrêté le déploiement, et personne n'en a rien su pendant une heure.
 
-Tant que le seul éditeur est aussi celui qui code, ça passe. Le jour où le bureau
-publie depuis Decap, un échec figera le site sans que l'éditeur comprenne pourquoi —
-c'est exactement le « j'ai saisi et rien ne change » que le manuel décrit déjà.
-Cloudflare sait envoyer une notification sur échec de build : un réglage du tableau de
-bord, pas une ligne de code. **À régler avant d'ajouter les collaborateurs de la
-section 1**, sans quoi on leur donne la clé d'une porte qui peut se fermer en silence.
+Une action GitHub lance désormais `npm run check` à chaque poussée sur `main` —
+donc à chaque publication Decap, et **avant** que Cloudflare ne compile. Elle
+échoue bruyamment, et GitHub prévient l'auteur du commit.
+
+**Reste à faire, deux minutes.** Pour que l'alerte atteigne quelqu'un d'autre que
+l'auteur : créer une clé sur `web3forms.com` au nom de l'adresse destinataire
+— le champ de copie de Web3Forms est payant, une clé gratuite ne délivre qu'à
+l'adresse qui l'a créée — puis la ranger dans le secret `WEB3FORMS_ALERTE`
+(`gh secret set WEB3FORMS_ALERTE`). Le dépôt étant public, ni l'adresse ni la clé
+ne doivent figurer dans un fichier.
+
+C'est le préalable posé par la section 1 : sans lui, on donne au bureau la clé
+d'une porte qui peut se fermer en silence.
 
 ### Tout tient sur un seul compte
 Le worker, le dépôt et le connecteur OAuth vivent sur des comptes Cloudflare et
@@ -317,6 +329,21 @@ carte des gymnases et vignette de partage · page Adhésion entièrement sous De
 mini-classement · favicon et sitemap.
 
 **19 août** — le moissonnage FFVB des classements et des résultats, du sondage sur données réelles jusqu'à la mise en ligne. Trois autres chantiers le même jour, tous nés de la relecture du 17 août : une rencontre vieillit désormais avec sa date et non avec sa saisie — sans quoi l'accueil aurait annoncé un prochain match déjà joué dès le lendemain du 26 septembre ; le contenu éditorial est échappé avant insertion, avec un garde-fou qui refuse toute interpolation non protégée ; et le contrôle vérifie enfin les adresses écrites en dur dans les seize pages, trou par lequel un logo cassé était passé.
+
+**21 août** — le socle SEO, et la corvée de bascule avec lui. Aucune des vingt
+pages ne portait de `canonical` ni de JSON-LD. Le worker les écrit désormais
+depuis l'hôte qui répond — il est le seul à le connaître, c'est ainsi qu'il juge
+du barrage d'indexation — et il y ajoute `og:url`, qu'aucune page n'avait, en
+ramenant `og:image` sur le même hôte. Les « deux gestes du jour J » n'existent
+plus. Trois paramètres seulement font une page distincte, sans quoi une adresse
+ornée de n'importe quel paramètre publicitaire se déclarerait canonique ; et une
+page servie en 404 n'en reçoit pas.
+
+Le même jour, l'alerte de compilation, et le contraste : soixante-trois textes en
+taupe sous le seuil AA. La cause principale n'était pas la palette mais une
+couleur imposée — le nom de salle des cases du planning portait `class="mono"`,
+qui écrasait la couleur d'encre de sa case ; sur la case sombre il tombait à 3,07
+et remonte à 9,94. Le jeton lui-même manquait de trois centièmes sur fond sable.
 
 **19 août, seconde passe** — les deux plannings de la page Horaires, et ce qu'ils ont
 obligé à ranger derrière eux. Les créneaux d'entraînement étaient une phrase saisie à
