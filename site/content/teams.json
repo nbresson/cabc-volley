@@ -154,8 +154,8 @@
     },
     {
       "groupe": "Séniors",
-      "nom": "Régional 2 F1",
-      "slug": "regional-2-f1",
+      "nom": "Régional 2 féminin",
+      "slug": "regional-2-f",
       "categorie": "Régional 2 F",
       "planning": [
         {
@@ -199,6 +199,46 @@
           "fin": "14:00",
           "gymnase": "rollinat",
           "precision": ""
+        }
+      ]
+    },
+    {
+      "groupe": "Jeunes",
+      "nom": "M18 F1",
+      "slug": "m18-f1",
+      "categorie": "M18 F",
+      "planning": [
+        {
+          "jour": "mercredi",
+          "debut": "19:00",
+          "fin": "20:30",
+          "gymnase": "rollinat"
+        },
+        {
+          "jour": "samedi",
+          "gymnase": "saint-germain",
+          "debut": "10:00",
+          "fin": "12:00"
+        }
+      ]
+    },
+    {
+      "groupe": "Jeunes",
+      "nom": "M18 F2",
+      "slug": "m18-f2",
+      "categorie": "M18 F",
+      "planning": [
+        {
+          "jour": "mercredi",
+          "debut": "19:00",
+          "fin": "20:30",
+          "gymnase": "rollinat"
+        },
+        {
+          "gymnase": "rollinat",
+          "jour": "samedi",
+          "debut": "12:30",
+          "fin": "14:00"
         }
       ]
     },
