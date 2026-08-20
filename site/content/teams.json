@@ -145,9 +145,9 @@
           "gymnase": "rollinat"
         },
         {
-          "jour": "mardi",
-          "debut": "20:00",
-          "fin": "22:00",
+          "jour": "mercredi",
+          "debut": "18:00",
+          "fin": "20:00",
           "gymnase": "saint-germain"
         }
       ]
@@ -166,28 +166,8 @@
         },
         {
           "jour": "mercredi",
-          "debut": "18:00",
-          "fin": "20:00",
-          "gymnase": "saint-germain"
-        }
-      ]
-    },
-    {
-      "groupe": "Séniors",
-      "nom": "Régional 2 F2",
-      "slug": "regional-2-f2",
-      "categorie": "Régional 2 F",
-      "planning": [
-        {
-          "jour": "lundi",
-          "debut": "18:30",
-          "fin": "20:00",
-          "gymnase": "rollinat"
-        },
-        {
-          "jour": "samedi",
-          "debut": "11:00",
-          "fin": "12:30",
+          "debut": "19:00",
+          "fin": "20:30",
           "gymnase": "rollinat"
         }
       ]
