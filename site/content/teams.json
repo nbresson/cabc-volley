@@ -308,6 +308,44 @@
       ]
     },
     {
+      "groupe": "Séniors",
+      "nom": "Beach Volley",
+      "slug": "beach",
+      "categorie": "Régional",
+      "planning": [
+        {
+          "jour": "lundi",
+          "debut": "18:00",
+          "fin": "20:30",
+          "gymnase": "beach-park-tujac"
+        },
+        {
+          "jour": "mercredi",
+          "debut": "18:00",
+          "fin": "22:00",
+          "gymnase": "beach-park-tujac"
+        },
+        {
+          "jour": "jeudi",
+          "debut": "18:00",
+          "fin": "22:00",
+          "gymnase": "beach-park-tujac"
+        },
+        {
+          "jour": "vendredi",
+          "debut": "18:00",
+          "fin": "22:00",
+          "gymnase": "beach-park-tujac"
+        },
+        {
+          "jour": "samedi",
+          "debut": "09:00",
+          "fin": "12:00",
+          "gymnase": "beach-park-tujac"
+        }
+      ]
+    },
+    {
       "groupe": "Loisir",
       "nom": "UFOLEP",
       "slug": "ufolep",
