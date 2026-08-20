@@ -704,7 +704,16 @@ dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
 /* Niveaux de gris teinte encre : le mur reste calme quels que soient les
    logos fournis. La couleur revient au survol — remplace l ancien opacity:.6,
    qui faisait palir le logo au moment ou l on s y interessait. */
-.murlogos img,.logo-cadre img{filter:grayscale(1) sepia(.3) saturate(.6) brightness(.92);opacity:.8;transition:filter .15s ease,opacity .15s ease}
+.logo-cadre img{filter:grayscale(1) sepia(.3) saturate(.6) brightness(.92);opacity:.8;transition:filter .15s ease,opacity .15s ease}
+/* Mur de logos : fusion d encre. Douze fichiers sur dix-sept portent leur
+   rectangle blanc ou gris d origine ; multiply fond tout ce qui est blanc dans
+   le sable du mur, sans retoucher un fichier — et un futur envoi Decap sur
+   fond blanc fondra tout seul. La legere poussee brightness/contrast amene les
+   fonds gris clair vers le blanc pour qu ils fondent aussi ; dose choisie par
+   comparaison, au-dela les encres claires (Dubois, Credit Mutuel)
+   s eteignaient. Les cadres de la page Partenaires gardent l ancien filtre :
+   leurs logos posent sur des cartes, pas sur le sable. */
+.murlogos img{mix-blend-mode:multiply;filter:grayscale(1) sepia(.3) saturate(.6) brightness(1.04) contrast(1.1);opacity:.85;transition:filter .15s ease,opacity .15s ease}
 .murlogos a:hover img,.murlogos a:focus-visible img,
 .card:hover .logo-cadre img,.card.link:hover .logo-cadre img{filter:none;opacity:1}
 /* L en-tete tient une ligne entiere du wrap. Il passe avant les logos, donc
