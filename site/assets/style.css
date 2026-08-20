@@ -156,7 +156,7 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 :root{
-  --encre:#17150F; --creme:#EFE9DB; --sable:#E6DFCD; --taupe:#6B6353; --lin:#CFC7B2;
+  --encre:#17150F; --creme:#EFE9DB; --sable:#E6DFCD; --taupe:#6A6252; --lin:#CFC7B2;
   --erreur:#8C2F1E; --mention:#8f8672; --mention-sombre:#a89e87; --texte-sombre:#c9c1ab; --hachures:repeating-linear-gradient(45deg,#E2DBC8 0 12px,#EAE4D4 12px 24px);
 }
 *{box-sizing:border-box}
