@@ -5,7 +5,7 @@
 <meta name="description" content="80 ans de volley au cœur de la Gaillarde. Équipes, calendrier, adhésion — rejoins la maison.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="C.A. Brive Corrèze Volley">
-<meta property="og:title" content="C.A. Brive Corrèze Volley — La fierté gaillarde">
+<meta property="og:title" content="C.A. Brive Corrèze Volley — 80 ans de volley gaillard">
 <meta property="og:description" content="80 ans de volley au cœur de la Gaillarde. Équipes, calendrier, adhésion — rejoins la maison.">
 <meta property="og:image" content="https://cabc-volley.nkobrs21.workers.dev/assets/partage.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -71,6 +71,10 @@ window.__pageInit=async function(){
   const [matches,newsData,teamsData,settings,classement,gymnases]=await Promise.all([
     getJSON("content/matches.json"),getJSON("content/news.json"),getJSON("content/teams.json"),
     getJSON("content/settings.json"),getJSON("content/classement.json"),getJSON("content/gymnases.json")]);
+
+  // Le club, en donnees structurees. L accueil seul le porte : le repeter sur
+  // vingt pages n apprendrait rien de plus a un moteur.
+  poserJsonLd(organisationJsonLd(settings,gymnases));
   // Prochain match à la une
   const nm=(matches?.items||[]).find(m=>m.une&&aVenir(m))||(matches?.items||[]).find(aVenir);
   const el=document.getElementById("next-match");

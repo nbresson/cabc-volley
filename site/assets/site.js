@@ -51,6 +51,78 @@ function barreReseaux(){return `<div class="socialbar">${RESEAUX.map(([nom,url,g
 // Passer a des URLs propres plus tard ne touchera que cette fonction.
 function teamUrl(slug){return "equipe.html?e="+encodeURIComponent(slug);}
 
+// Donnees structurees. Elles ne sont pas ecrites en dur : le nom du club, ses
+// reseaux et son telephone vivent dans Reglages, les adresses dans
+// gymnases.json. Les recopier ici en ferait une seconde version, fausse le
+// jour ou le bureau change de numero sans savoir qu il existe un second
+// endroit. Le bloc est injecte apres chargement, comme tout le reste du site.
+function poserJsonLd(objet){
+  if(!objet)return;
+  const b=document.createElement("script");
+  b.type="application/ld+json";
+  // textContent et non innerHTML : rien de ce qui vient des fichiers ne doit
+  // pouvoir fermer la balise et ouvrir autre chose.
+  b.textContent=JSON.stringify(objet);
+  document.head.appendChild(b);
+}
+// Les adresses restent relatives : resolues contre l adresse de la page, elles
+// suivent la bascule de domaine sans qu on y touche, comme le canonical que
+// pose le worker.
+// L adresse est saisie d une piece — « 6 Bd Marx Dormoy, 19100 Brive ». La
+// redire en entier dans streetAddress tout en repetant le code postal et la
+// ville a cote donnerait l adresse deux fois. On la decoupe ; ce qui ne suit
+// pas la forme attendue reste entier, sans commune ni code postal inventes.
+function adresseJsonLd(texte){
+  const t=String(texte||"").trim();
+  if(!t)return null;
+  const m=t.match(/^(.*?),\s*(\d{5})\s+(.+)$/);
+  return m?{"@type":"PostalAddress",streetAddress:m[1].trim(),postalCode:m[2],
+    addressLocality:m[3].trim(),addressCountry:"FR"}
+    :{"@type":"PostalAddress",streetAddress:t,addressCountry:"FR"};
+}
+function organisationJsonLd(settings,salles){
+  const principale=((salles&&salles.items)||[])[0];
+  const reseaux=[settings?.instagram,settings?.facebook].filter(Boolean);
+  return {
+    "@context":"https://schema.org","@type":"SportsOrganization",
+    name:"C.A. Brive Corrèze Volley",
+    alternateName:"CABC Volley",
+    sport:"Volleyball",
+    foundingDate:"1946",
+    url:"/",logo:"/assets/logo.png",image:"/assets/partage.png",
+    ...(settings?.email?{email:settings.email}:{}),
+    ...(settings?.telephone?{telephone:String(settings.telephone).split("/")[0].trim()}:{}),
+    ...(reseaux.length?{sameAs:reseaux}:{}),
+    ...(principale?{
+      ...(adresseJsonLd(principale.adresse)?{address:adresseJsonLd(principale.adresse)}:{}),
+      location:{"@type":"Place",name:principale.nom,
+        ...(adresseJsonLd(principale.adresse)?{address:adresseJsonLd(principale.adresse)}:{})}
+    }:{})
+  };
+}
+// Un match a venir seulement : une rencontre jouee n interesse aucun moteur,
+// et aVenir() est deja l arbitre de ce qui est a venir ailleurs sur le site.
+function matchJsonLd(m,equipes,salles){
+  const nous="C.A. Brive Corrèze Volley";
+  const eq=(equipes||[]).find(e=>e.slug===m.equipe);
+  const nom=eq?nous+" "+eq.nom:nous;
+  const salle=((salles&&salles.items)||[]).find(v=>v.nom===m.lieu);
+  return {
+    "@context":"https://schema.org","@type":"SportsEvent",
+    name:m.domicile?nom+" – "+m.adversaire:m.adversaire+" – "+nom,
+    startDate:m.date,
+    eventStatus:"https://schema.org/EventScheduled",
+    eventAttendanceMode:"https://schema.org/OfflineEventAttendanceMode",
+    ...(m.competition?{superEvent:{"@type":"SportsEvent",name:m.competition}}:{}),
+    homeTeam:{"@type":"SportsTeam",name:m.domicile?nom:m.adversaire},
+    awayTeam:{"@type":"SportsTeam",name:m.domicile?m.adversaire:nom},
+    organizer:{"@type":"SportsOrganization",name:nous},
+    ...(m.lieu?{location:{"@type":"Place",name:m.lieu,
+      ...(salle&&adresseJsonLd(salle.adresse)?{address:adresseJsonLd(salle.adresse)}:{})
+    }}:{})
+  };
+}
+
 // Les creneaux d entrainement. Ils etaient une phrase libre par equipe, redite
 // sur quatre pages : trois graphies de Saint-Germain et trois formats d heure
 // cohabitaient. Ils sont desormais des champs, et ces fonctions sont le seul

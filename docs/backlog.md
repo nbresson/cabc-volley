@@ -32,17 +32,15 @@ vérifier que le parcours tient de bout en bout.
 
 ## 2 · Ce qui bloque la bascule vers `www.cabc-volley.fr`
 
-### Socle SEO — canonical et JSON-LD
-Dernier lot technique. Les descriptions, l'Open Graph, la vignette de partage, le
-sitemap et le robots.txt sont faits. Restent :
+### Le jour J, plus aucun geste
+**Réglé le 20 août.** Le socle SEO est posé, et il a emporté avec lui la corvée
+de bascule. Le worker écrit `canonical`, `og:url` et `og:image` depuis l'hôte
+qui répond : ils sont justes sur `workers.dev` aujourd'hui et le seront sur le
+domaine sans qu'on rouvre un fichier. Le sitemap et le robots.txt n'attendaient
+déjà rien.
 
-- une balise `<link rel="canonical">` par page,
-- un bloc JSON-LD `SportsOrganization` sur l'accueil, `SportsEvent` sur les matchs.
-
-### Le jour J, deux gestes
-Les `og:image` des seize pages pointent sur `.workers.dev` (`grep -rl workers.dev
-site/`). Le sitemap et le robots.txt, eux, n'attendent rien — voir
-[`site/README.md`](../site/README.md).
+Reste, mais côté Cloudflare et non côté code : brancher le domaine, et vérifier
+que le barrage d'indexation se lève bien de lui-même — il se juge sur l'hôte.
 
 ---
 

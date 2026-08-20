@@ -131,6 +131,66 @@ function cibleRedirection(chemin) {
   return REDIRECTIONS.get(chemin) || REDIRECTIONS.get(chemin + "/");
 }
 
+// Adresse canonique et og:url. Elles se posent ici et non dans les vingt
+// pages : le worker est le seul a savoir sur quel hote il repond, et il le
+// sait deja — c est ainsi qu il decide du barrage d indexation. Ecrites en dur
+// dans les pages, elles designeraient aujourd hui un domaine qui n existe pas,
+// et seraient a reprendre a chaque changement d adresse. Ecrites ici, elles
+// suivent la bascule sans qu on y touche.
+//
+// Seuls ces trois parametres font une page distincte. Sans cette liste, une
+// adresse ornee de n importe quel parametre se declarerait canonique, et le
+// site offrirait une infinite de pages se donnant chacune pour l originale.
+const PARAMS_CANONIQUES = ["e", "g", "slug"];
+
+function attribut(v) {
+  return String(v).replace(/&/g, "&amp;").replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function adresseCanonique(url) {
+  const params = new URLSearchParams();
+  for (const cle of PARAMS_CANONIQUES) {
+    const v = url.searchParams.get(cle);
+    if (v) params.set(cle, v);
+  }
+  const requete = params.toString();
+  return url.origin + url.pathname + (requete ? "?" + requete : "");
+}
+
+// La vignette de partage est ecrite en absolu dans chaque page, vers l hote de
+// brouillon. On la ramene sur l hote qui repond : c est le second des « deux
+// gestes du jour J » que le backlog annonçait, et il n a plus lieu d etre.
+function surCetHote(valeur, origine) {
+  try {
+    return origine + new URL(valeur, origine).pathname;
+  } catch (e) {
+    return valeur;
+  }
+}
+
+function poserSeo(reponse, url) {
+  const type = reponse.headers.get("content-type") || "";
+  // Seule une page qui existe se declare canonique. Servie en 404, la page
+  // d erreur affirmerait etre l original d une adresse qui n a jamais existe.
+  if (reponse.status !== 200 || !type.includes("text/html")) return reponse;
+  const canon = attribut(adresseCanonique(url));
+  return new HTMLRewriter()
+    .on("head", {
+      element(e) {
+        e.append(`<link rel="canonical" href="${canon}">`, { html: true });
+        e.append(`<meta property="og:url" content="${canon}">`, { html: true });
+      }
+    })
+    .on('meta[property="og:image"]', {
+      element(e) {
+        const v = e.getAttribute("content");
+        if (v) e.setAttribute("content", surCetHote(v, url.origin));
+      }
+    })
+    .transform(reponse);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -223,7 +283,7 @@ export default {
       }
     }
 
-    const reponse = await env.ASSETS.fetch(request);
+    const reponse = poserSeo(await env.ASSETS.fetch(request), url);
     if (!brouillon) return reponse;
 
     const entetes = new Headers(reponse.headers);

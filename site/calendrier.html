@@ -44,7 +44,16 @@
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const [matches,settings,classement,teams]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json"),getJSON("content/classement.json"),getJSON("content/teams.json")]);
+  const [matches,settings,classement,teams,gymnases]=await Promise.all([getJSON("content/matches.json"),getJSON("content/settings.json"),getJSON("content/classement.json"),getJSON("content/teams.json"),getJSON("content/gymnases.json")]);
+
+  // Les rencontres a venir, en donnees structurees. Celles qui sont jouees en
+  // sont exclues : aVenir() est deja l arbitre de cette distinction partout
+  // ailleurs sur le site, et une rencontre passee n interesse aucun moteur.
+  // Un seul bloc portant un tableau, et non un bloc par match : JSON-LD
+  // l accepte, et une saison entiere ferait sinon cinquante balises.
+  const rencontres=(matches?.items||[]).filter(aVenir)
+    .map(m=>matchJsonLd(m,teams?.items||[],gymnases));
+  if(rencontres.length)poserJsonLd(rencontres);
   // Les deux boutons FFVB de la page portent l adresse des reglages. lienSur()
   // ecarte une adresse hostile : le bouton reste alors sans href, exactement comme
   // lorsque le reglage n est pas rempli.
