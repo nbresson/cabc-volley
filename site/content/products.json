@@ -1,4 +1,28 @@
 {
+  "titre": "Porte les\ncouleurs",
+  "mention": "Retrait au gymnase · pas de livraison",
+  "bandeau": {
+    "badge": "Édition limitée",
+    "texte": "Collection 80 ans — série numérotée, jusqu'en juin"
+  },
+  "commander": {
+    "titre": "Pour\ncommander",
+    "texte": "Pas de paiement en ligne : réserve ton article par téléphone ou à la permanence. {permanence} Retrait et essayage au gymnase."
+  },
+  "etapes": [
+    {
+      "titre": "Réserve ton article",
+      "texte": "Par téléphone ou à la permanence : dis-nous la taille, on te le met de côté."
+    },
+    {
+      "titre": "Retrait au gymnase",
+      "texte": "Récupère ta commande à la permanence du mercredi ou un soir de match, à la buvette."
+    },
+    {
+      "titre": "Paiement sur place",
+      "texte": "Espèces, chèque ou carte. Chaque achat finance les déplacements des jeunes."
+    }
+  ],
   "items": [
     {
       "nom": "Polo Evo Homme",

@@ -206,6 +206,39 @@ collections:
         label: Produits
         file: site/content/products.json
         fields:
+          - {name: titre, label: Grand titre, widget: text, hint: "Passez à la ligne pour couper le titre en deux."}
+          - {name: mention, label: Mention à côté du titre, widget: string, required: false, hint: "Petite ligne en bas à droite du titre. Ex. Retrait au gymnase · pas de livraison."}
+          - name: bandeau
+            label: Bandeau noir
+            widget: object
+            collapsed: true
+            # Ce bandeau a porte « serie numerotee, jusqu en juin » plusieurs
+            # mois apres juin : une mention datee que personne ne pouvait
+            # retirer sans passer par le code.
+            hint: "Annonce en haut de page. Videz le texte pour faire disparaître le bandeau — c'est ainsi qu'on retire une opération terminée."
+            fields:
+              - {name: badge, label: Pastille, widget: string, required: false, hint: "Deux ou trois mots. Ex. Édition limitée."}
+              - {name: texte, label: Texte, widget: string, required: false, hint: "Vide, le bandeau entier disparaît."}
+          - name: commander
+            label: Bloc « Pour commander »
+            widget: object
+            collapsed: true
+            fields:
+              - {name: titre, label: Titre, widget: text, hint: "Passez à la ligne pour couper le titre en deux."}
+              # L horaire de permanence n est saisi qu une fois, dans Reglages.
+              # Le recopier ici en ferait une seconde version a corriger.
+              - {name: texte, label: Texte, widget: text, hint: "Écrivez {permanence} là où l'horaire de permanence doit paraître : il vient de Réglages et se met à jour tout seul. Le numéro de téléphone, lui, est déjà le bouton juste à côté."}
+          - name: etapes
+            label: Comment commander
+            label_singular: Étape
+            widget: list
+            required: false
+            collapsed: true
+            summary: "{{fields.titre}}"
+            hint: "Bande numérotée en bas de page. Le numéro suit le rang : il ne se saisit pas. Vide, la bande disparaît."
+            fields:
+              - {name: titre, label: Titre, widget: string}
+              - {name: texte, label: Texte, widget: text}
           - name: items
             label: Produits
             label_singular: Produit
