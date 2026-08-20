@@ -51,10 +51,6 @@ const EXCEPTIONS = new Map([
     "statut n indexe qu une table de badges ecrite dans le code : la valeur saisie ne sort jamais telle quelle",
   ],
   [
-    'site/boutique.html | settings.permanence.replace(/\\.$/,"").toLowerCase()',
-    "gabarit pose par textContent et non par innerHTML : le navigateur n y lit aucune balise",
-  ],
-  [
     "site/assets/site.js | ancreBloc(b.titre)",
     "slug() ne rend que des minuscules, des chiffres et des tirets ; l ancre est fabriquee, pas recopiee. L exception a suivi le rendu des documents d infos.html vers site.js, ou les deux pages le partagent.",
   ],

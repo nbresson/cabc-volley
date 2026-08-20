@@ -17,15 +17,15 @@
 <main id="main">
 <section class="pad section">
   <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Boutique</span></div>
-  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(56px,9vw,88px)">Porte les<br>couleurs</h1><span class="mono" style="align-self:flex-end">Retrait au gymnase · pas de livraison</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(56px,9vw,88px)" id="b-titre"></h1><span class="mono" id="b-mention" style="align-self:flex-end"></span></div>
 </section>
-<section class="section dark pad" style="padding-top:22px;padding-bottom:22px">
-  <div class="row" style="align-items:center;gap:20px"><span class="badge badge-outline" style="border-color:var(--creme);color:var(--creme)">Édition limitée</span><strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(20px,3vw,30px)">Collection 80 ans — série numérotée, jusqu'en juin</strong></div>
+<section class="section dark pad" id="b-bandeau" style="padding-top:22px;padding-bottom:22px;display:none">
+  <div class="row" id="b-bandeau-corps" style="align-items:center;gap:20px"></div>
 </section>
 <section class="pad" style="padding-bottom:0">
   <div class="commander">
-    <strong class="display-l" style="font-weight:900;text-transform:uppercase;line-height:1">Pour<br>commander</strong>
-    <span class="muted" style="font-size:13px;line-height:1.6" id="cmd-texte">Pas de paiement en ligne : réserve ton article à la permanence ou par téléphone. Retrait et essayage au gymnase.</span>
+    <strong class="display-l" style="font-weight:900;text-transform:uppercase;line-height:1" id="cmd-titre"></strong>
+    <span class="muted" style="font-size:13px;line-height:1.6" id="cmd-texte"></span>
     <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
       <a id="cmd-tel" class="btn btn-primary" style="padding:10px 20px;font-size:16px"></a>
       <a href="contact.html" class="mono lien" style="font-size:11px;color:var(--encre)">Nous écrire →</a>
@@ -33,9 +33,7 @@
   </div>
 </section>
 <section class="section pad"><div id="products" class="cols-4"></div></section>
-<section class="section band" style="--n:3">
-  <div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">01</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Réserve ton article</strong><span class="muted" style="font-size:14px">Par téléphone ou à la permanence : dis-nous la taille, on te le met de côté.</span></div><div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">02</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Retrait au gymnase</strong><span class="muted" style="font-size:14px">Récupère ta commande à la permanence du mercredi ou un soir de match, à la buvette.</span></div><div class="pad" style="display:flex;flex-direction:column;gap:10px"><strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">03</strong><strong class="display-m" style="font-weight:900;text-transform:uppercase">Paiement sur place</strong><span class="muted" style="font-size:14px">Espèces, chèque ou carte. Chaque achat finance les déplacements des jeunes.</span></div>
-</section>
+<section class="section band" id="b-etapes" style="display:none"></section>
 </main>
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
@@ -46,8 +44,31 @@ window.__pageInit=async function(){
   const tel=(settings?.telephone||"").split("/")[0].trim();
   const bt=document.getElementById("cmd-tel");
   if(tel){bt.textContent=tel;bt.href="tel:+33"+tel.replace(/\s/g,"").slice(1);}else bt.remove();
-  if(settings?.permanence)document.getElementById("cmd-texte").textContent=
-    `Pas de paiement en ligne : réserve ton article à la permanence (${settings.permanence.replace(/\.$/,"").toLowerCase()}) ou par téléphone. Retrait et essayage au gymnase.`;
+  // Le titre se coupe la ou le bureau passe a la ligne.
+  const nl=v=>echapper(v).replace(/\n/g,"<br>");
+  document.getElementById("b-titre").innerHTML=nl(data?.titre||"Boutique");
+  const mention=document.getElementById("b-mention");
+  if(data?.mention)mention.textContent=data.mention; else mention.remove();
+
+  // Le bandeau disparait avec son texte : c est ainsi qu on retire une
+  // operation terminee sans toucher au code. Il a porte « jusqu en juin »
+  // plusieurs mois apres juin, faute de pouvoir etre efface depuis Decap.
+  const ban=data?.bandeau||{};
+  if(ban.texte&&ban.texte.trim()){
+    document.getElementById("b-bandeau-corps").innerHTML=
+      (ban.badge?`<span class="badge badge-outline" style="border-color:var(--creme);color:var(--creme)">${echapper(ban.badge)}</span>`:"")
+      +`<strong style="font-family:'Barlow Condensed';font-weight:900;font-size:clamp(20px,3vw,30px)">${echapper(ban.texte)}</strong>`;
+    document.getElementById("b-bandeau").style.display="";
+  }
+
+  const cmd=data?.commander||{};
+  document.getElementById("cmd-titre").innerHTML=nl(cmd.titre||"");
+  // L horaire de permanence n est saisi que dans Reglages. Le bureau place
+  // {permanence} dans sa phrase ; le recopier en ferait une seconde version a
+  // corriger le jour ou la permanence change.
+  const heures=(settings?.permanence||"").trim();
+  document.getElementById("cmd-texte").textContent=
+    (cmd.texte||"").replace(/\{permanence\}/g,heures).replace(/\s{2,}/g," ").trim();
   const badge={nouveau:'<span class="badge" style="position:absolute;top:12px;left:12px">Nouveau</span>',epuise:'',dispo:''};
   // Les epuises passent en fin de grille. Le tri est stable, donc l ordre voulu
   // par le bureau dans Decap survit a l interieur de chaque groupe.
@@ -59,5 +80,18 @@ window.__pageInit=async function(){
       <div class="body"><strong class="display-s" style="font-weight:900;text-transform:uppercase;line-height:1;${off?'color:var(--taupe)':''}">${echapper(p.nom)}</strong>
       <div class="row" style="justify-content:space-between;align-items:baseline"><span class="mono" style="font-size:15px;${off?'color:var(--taupe)':'color:var(--encre)'}">${echapper(p.prix)}</span>${off?'<span class="badge badge-muted">Épuisé</span>':'<span class="mono" style="font-size:10px;letter-spacing:.14em">'+echapper(p.detail)+'</span>'}</div></div></div>`;
   }).join("");
+
+  // Le numero suit le rang : le donner a saisir ferait renumeroter la bande
+  // des qu une etape s intercale.
+  const etapes=(data?.etapes||[]).filter(e=>e&&(e.titre||e.texte));
+  if(etapes.length){
+    const bande=document.getElementById("b-etapes");
+    bande.style.setProperty("--n",etapes.length);
+    bande.innerHTML=etapes.map((e,i)=>`<div class="pad" style="display:flex;flex-direction:column;gap:10px">
+      <strong class="display-2xl" style="font-weight:900;color:var(--lin);line-height:1">${String(i+1).padStart(2,"0")}</strong>
+      <strong class="display-m" style="font-weight:900;text-transform:uppercase">${echapper(e.titre||"")}</strong>
+      <span class="muted" style="font-size:14px">${echapper(e.texte||"")}</span></div>`).join("");
+    bande.style.display="";
+  }
 };
 </script></body></html>
