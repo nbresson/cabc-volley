@@ -1,0 +1,82 @@
+# Le controle du contenu, lance a chaque poussee sur main.
+#
+# Une publication Decap EST une poussee sur main : ce controle la voit donc
+# passer, et il la voit avant que Cloudflare ne lance sa compilation. Le
+# 20 aout, une refonte des equipes a casse deux renvois du worker et bloque le
+# deploiement sans que personne en soit averti — le site se figeait en silence,
+# et le motif n etait lisible que dans l onglet Builds du tableau de bord.
+#
+# Angle mort assume : ce controle ne voit pas un build qui echouerait pour une
+# autre raison que `npm run check` — une erreur de wrangler, un incident de
+# deploiement. Le couvrir demanderait la voie Cloudflare, avec une file
+# d attente et un second worker a ecrire et a maintenir.
+name: Controle du contenu
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  controle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Les quatre scripts n emploient que la bibliotheque standard de Node :
+      # rien a installer. wrangler n est utile qu au deploiement.
+      - name: npm run check
+        run: |
+          set -o pipefail
+          npm run check 2>&1 | tee sortie.txt
+
+      # Le courriel ne part que depuis main : l echec d une branche se lit deja
+      # dans sa pull request, et prevenir a ce moment-la ferait du bruit pour
+      # une rupture que personne n a encore fusionnee.
+      #
+      # WEB3FORMS_ALERTE est une cle Web3Forms creee au nom de l adresse qui
+      # doit recevoir l alerte. Elle vit dans les secrets du depot et non dans
+      # ce fichier : le depot est public, et le champ de copie de Web3Forms est
+      # une fonction payante — une cle par destinataire est la voie gratuite.
+      - name: Alerte par courriel
+        if: failure() && github.event_name == 'push'
+        env:
+          CLE: ${{ secrets.WEB3FORMS_ALERTE }}
+          SUJET: ${{ github.event.head_commit.message }}
+        run: |
+          if [ -z "$CLE" ]; then
+            echo "::warning::Secret WEB3FORMS_ALERTE absent : aucun courriel envoye."
+            exit 0
+          fi
+          # Les lignes d erreur des scripts commencent par « - » ; a defaut on
+          # remonte la fin de la sortie plutot que de n envoyer qu un titre.
+          DETAIL=$(grep -E '^  - ' sortie.txt || tail -n 15 sortie.txt)
+          # Le message se compose dans jq, ou chaque morceau arrive en argument.
+          # Assemble dans le shell, un message de commit contenant $(...) s y
+          # ferait executer : ces messages viennent de Decap, donc du dehors.
+          jq -n \
+            --arg k "$CLE" \
+            --arg sha "${GITHUB_SHA:0:7}" \
+            --arg qui "$GITHUB_ACTOR" \
+            --arg sujet "$SUJET" \
+            --arg detail "$DETAIL" \
+            --arg lien "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '{access_key: $k,
+              subject: "CABC Volley — le deploiement du site est bloque",
+              from_name: "Controle du site",
+              message: (
+                "Le controle du contenu a echoue.\n\n" +
+                "Le site ne se deploiera plus tant que ce n est pas corrige : une saisie publiee depuis Decap ne paraitra pas en ligne.\n\n" +
+                "Commit " + $sha + " pousse par " + $qui + "\n" +
+                $sujet + "\n\n" +
+                $detail + "\n\n" +
+                "Detail complet :\n" + $lien
+              )}' \
+          | curl -sS --fail-with-body -X POST https://api.web3forms.com/submit \
+              -H 'Content-Type: application/json' \
+              -H 'Accept: application/json' \
+              --data @-
