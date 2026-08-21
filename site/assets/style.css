@@ -713,6 +713,15 @@ dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
    comparaison, au-dela les encres claires (Dubois, Credit Mutuel)
    s eteignaient. Les cadres de la page Partenaires gardent l ancien filtre :
    leurs logos posent sur des cartes, pas sur le sable. */
+/* Carte de gymnase. Les tuiles d OpenStreetMap arrivent en vert et bleu, a
+   contre-emploi de la charte. Le meme geste que pour les logos les ramene
+   dans la palette — dose choisie a la mesure : le ton dominant des tuiles
+   tombe alors sur (241,233,215), soit le creme a quatre unites pres. Le
+   filtre teinte aussi le marqueur, qu un cadre embarque ne permet pas de
+   styler autrement ; c est le prix de n avoir aucune dependance. */
+.carte{border:2px solid var(--encre);display:block}
+.carte iframe{display:block;width:100%;height:360px;border:0;
+  filter:grayscale(1) sepia(.45) saturate(.75) brightness(.98) contrast(.95)}
 .murlogos img{mix-blend-mode:multiply;filter:grayscale(1) sepia(.3) saturate(.6) brightness(1.04) contrast(1.1);opacity:.85;transition:filter .15s ease,opacity .15s ease}
 .murlogos a:hover img,.murlogos a:focus-visible img,
 .card:hover .logo-cadre img,.card.link:hover .logo-cadre img{filter:none;opacity:1}

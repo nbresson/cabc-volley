@@ -63,10 +63,9 @@ window.__pageInit=async function(){
     (lon+0.0045).toFixed(6),(lat+0.002).toFixed(6)].join(","):"";
   const carte=situe?`<section class="pad section">
     <div class="section-head" style="margin-bottom:18px"><h2>Où c'est</h2></div>
-    <div style="border:2px solid var(--encre)">
+    <div class="carte">
       <iframe title="Carte de ${echapper(v.nom)}" loading="lazy"
-        src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&amp;layer=mapnik&amp;marker=${lat},${lon}"
-        style="width:100%;height:360px;border:0;display:block"></iframe>
+        src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&amp;layer=mapnik&amp;marker=${lat},${lon}"></iframe>
     </div>
     ${iti?`<a href="${echapper(iti)}" target="_blank" rel="noopener" class="mono lien" style="display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.14em;color:var(--encre)">Ouvrir l'itinéraire ↗</a>`:""}
   </section>`:"";
