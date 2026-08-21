@@ -201,6 +201,31 @@ avertissement sur le format, jumeau de celui qui existe sur le poids. Un
 avertissement et non une erreur : bloquer la photo d'un bénévole serait
 disproportionné.
 
+### Les liens vers la Communauté WhatsApp
+**Demandé le 21 août.** Le club anime une communauté WhatsApp qui n'apparaît nulle
+part sur le site.
+
+**Ce sur quoi s'appuyer.** Le bandeau réseaux est déjà une table dans `site.js` :
+chaque entrée porte un nom, une URL de secours, un glyphe et le nom d'un champ de
+Réglages qui fait autorité sur l'adresse. Instagram, Facebook et le classement FFVB
+y sont. Ajouter WhatsApp, c'est une ligne dans cette table, un champ dans Réglages,
+et un glyphe à dessiner dans le même trait que les trois autres — deux pixels, sans
+remplissage, dans un cadre carré.
+
+**Le pluriel de la demande est la vraie question.** Un lien unique vers la communauté
+tient dans le bandeau, qui paraît sur les vingt-sept pages. Plusieurs — un groupe par
+équipe — n'y tiennent pas : leur place serait la fiche de chaque équipe, donc un champ
+dans la collection Équipes, et non dans Réglages. Les deux ne s'excluent pas, mais ce
+ne sont pas les mêmes travaux.
+
+**Et un point qui doit être tranché avant d'écrire la ligne.** Un lien d'invitation
+WhatsApp est ouvert : quiconque le trouve entre dans le groupe. Sur un site public,
+il ne s'agit plus d'inviter des adhérents mais de publier une porte. Dans un club où
+des mineurs sont inscrits, cela mérite une décision explicite du bureau — et, si le
+choix est fait, une administration qui surveille les arrivées. Une autre voie existe :
+ne pas publier le lien, et le faire envoyer par le formulaire de contact ou à
+l'inscription.
+
 ### L'encadrant d'un créneau
 **Demandé le 21 août.** Sur le planning et sur les fiches de gymnase, chaque séance
 dit son horaire, son lieu et son équipe. Elle ne dit pas qui l'encadre — ce qu'un
