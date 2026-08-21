@@ -12,6 +12,9 @@
 <link rel="icon" href="assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/style.css">
+<!-- Le planning porte huit colonnes : l affiche du gymnase se tire en
+     paysage. Seule cette page le demande, @page ne se scope pas en CSS. -->
+<style media="print">@page{size:A4 landscape}</style>
 </head><body>
 <div id="header"></div>
 <main id="main">

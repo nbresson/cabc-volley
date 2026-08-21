@@ -762,3 +762,38 @@ dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
 /* Reserve aux lecteurs d ecran : hors de l ecran sans etre retire de l arbre
    d accessibilite, ce que display:none ferait. */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ===== Impression =====
+   Le planning hebdomadaire et la grille tarifaire sont les documents qu un
+   benevole imprime et affiche au gymnase. Sans ces regles, la page Horaires
+   sortait en neuf pages, menu, filtres, mur de logos et pied compris.
+   Tout passe encre sur blanc : les fonds ne s impriment pas par defaut, et du
+   texte creme sur un fond encre absent serait invisible. La couleur des salles
+   disparait avec les fonds — le nom court ecrit dans chaque case reste, et
+   c est deja lui le repere principal a l ecran, les teintes etant voisines. */
+@media print{
+  *{background:transparent!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}
+  .topbar,.site-header,.socialbar,.murlogos,.site-footer,.match-sticky,
+  .crumb,.chips,.ancres,.btn,button,.evitement,#filtres{display:none!important}
+  /* Les sections en attente d apparition s impriment revelees : .reveal les
+     tient a opacity:0 jusqu au defilement, et une page imprimee ne defile pas
+     — tout ce qui n avait pas ete vu a l ecran sortirait invisible. */
+  .reveal{opacity:1!important;transform:none!important}
+  /* Une rangee coupee entre deux pages se lit deux fois mal. */
+  tr,.doc-row,.match-row,.card{break-inside:avoid}
+  /* Le papier ne defile pas : le conteneur qui savait defiler doit tout
+     montrer, et le plancher de largeur des tableaux ne vaut que pour lui. */
+  .table-wrap{overflow:visible}
+  .table-wrap>table.ds{min-width:0}
+  /* La page Horaires imprimee est l affiche des deux plannings. Les listes
+     par groupe redisent les memes seances sous une autre forme — mesure : les
+     garder faisait onze pages, et onze pages ne s affichent pas au panneau.
+     Chaque planning ouvre sa feuille, legerement reduit pour y tenir. */
+  section:has(>#horaires){display:none!important}
+  #planning-salles{break-before:page}
+  #planning,#planning-gymnases{zoom:.72}
+  /* Les cases perdent un peu d air : sur le papier, la densite sert. */
+  #planning td>div>div,#planning-gymnases td>div>div{padding:5px 8px}
+  #planning td,#planning-gymnases td,table.ds thead th{padding:8px 10px}
+}
+@page{margin:12mm}

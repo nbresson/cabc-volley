@@ -780,6 +780,20 @@ function renderGymnases(idGrille,idSousTitre,data){
   const grille=document.getElementById(idGrille);
   if(grille)grille.innerHTML=salles.map(salleCard).join("")||'<p class="muted">Les sites seront renseignés prochainement.</p>';
 }
+// A l impression, les tiroirs s ouvrent : le calendrier replie sa saison dans
+// un accordeon, et une page imprimee ne se deplie pas — les matchs caches
+// manqueraient a l affiche. L etat d avant est retabli apres, pour qui
+// revient a l ecran.
+let tiroirsOuverts=[];
+window.addEventListener("beforeprint",()=>{
+  tiroirsOuverts=[...document.querySelectorAll("details:not([open])")];
+  tiroirsOuverts.forEach(d=>d.open=true);
+});
+window.addEventListener("afterprint",()=>{
+  tiroirsOuverts.forEach(d=>d.open=false);
+  tiroirsOuverts=[];
+});
+
 // Formulaires (adhésion & contact) — envoi par Web3Forms, message de confirmation inline.
 function initForms(){
   document.querySelectorAll("form[data-web3forms]").forEach(form=>{
