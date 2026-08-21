@@ -41,14 +41,15 @@
           "jour": "mardi",
           "debut": "18:30",
           "fin": "20:30",
-          "gymnase": "rollinat"
+          "gymnase": "rollinat",
+          "precision": "Entraîneur : Jean-Pierre DELOST"
         },
         {
           "jour": "mercredi",
           "debut": "20:30",
           "fin": "22:30",
           "gymnase": "rollinat",
-          "precision": ""
+          "precision": "Entraîneur : Jean-Pierre DELOST"
         },
         {
           "jour": "vendredi",
