@@ -324,7 +324,24 @@ async function traiter(request, env) {
       }
     }
 
-    const reponse = poserSeo(await env.ASSETS.fetch(request), url);
+    // Les pages HTML se servent entieres, jamais en 304 : leur corps est
+    // transforme a chaque reponse — canonical, nonce de la CSP — et un 304
+    // ferait garder au navigateur le corps d hier sous l en-tete du jour.
+    // Le nonce des scripts ne correspondrait plus, tout serait bloque, plus
+    // un JSON ne se chargerait. C est arrive au premier visiteur revenu.
+    // Meme raisonnement que l ETag supprime du JSON enrichi, plus haut.
+    // Les fichiers a extension — scripts, styles, images — gardent leur
+    // revalidation : ils ne sont pas transformes.
+    const nomFichier = url.pathname.split("/").pop();
+    const pageHtml = !nomFichier || !nomFichier.includes(".") || nomFichier.endsWith(".html");
+    let requeteAssets = request;
+    if (pageHtml) {
+      const sansCondition = new Headers(request.headers);
+      sansCondition.delete("if-none-match");
+      sansCondition.delete("if-modified-since");
+      requeteAssets = new Request(request, { headers: sansCondition });
+    }
+    const reponse = poserSeo(await env.ASSETS.fetch(requeteAssets), url);
     if (!brouillon) return reponse;
 
     const entetes = new Headers(reponse.headers);
@@ -354,6 +371,11 @@ export default {
         reponse = new HTMLRewriter()
           .on("script", { element(e) { e.setAttribute("nonce", nonce); } })
           .transform(reponse);
+        // Un corps transforme ne porte pas de validateurs : ils dateraient du
+        // fichier d origine et feraient revalider un corps que le client n a
+        // jamais recu — le 304 qui a casse le site.
+        entetes.delete("etag");
+        entetes.delete("last-modified");
       }
       entetes.set("Content-Security-Policy", cspPour(nonce));
     }
