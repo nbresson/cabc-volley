@@ -6,20 +6,24 @@
       "titre": "Règles officielles",
       "documents": [
         {
-          "type": "lien",
-          "url": "https://www.fivb.com/wp-content/uploads/2025/06/FIVB-Volleyball_Rules2025_2028-FR-v04.pdf",
-          "libelle": "FIVB Règles officielles de Volley-ball 2025-2028 (français)"
+          "type": "fichier",
+          "libelle": "FIVB règles officielles de Volley-ball 2025-2028 (français)",
+          "fichier": "/assets/documents/fivb-volleyball_rules2025_2028-fr-v04.pdf"
         },
         {
-          "type": "lien",
-          "url": "https://szps.pl/wp-content/uploads/2025/08/casebook-2025.pdf",
-          "libelle": "Casebook FIVB 2025 (english)",
-          "langue": "EN"
+          "type": "fichier",
+          "libelle": "FIVB Règles officielles de Volley-ball 2025-2028 (english)",
+          "fichier": "/assets/documents/fivb-volleyball_rules2025_2028-en-v05.pdf"
         },
         {
-          "type": "lien",
-          "url": "https://extranet.ffvb.org/data/Files/documents/arbitrage/FFvolley_Consignes_CFA_2025-2026.pdf",
-          "libelle": "Consignes Fédérales d'Arbitrage de Volley-ball 2025-2026"
+          "type": "fichier",
+          "libelle": "Casebook FIVB Volley-ball 2025 (english)",
+          "fichier": "/assets/documents/casebook-2025-en.pdf"
+        },
+        {
+          "type": "fichier",
+          "libelle": "Consignes Fédérales d'Arbitrage de Volley-ball 2025-2026",
+          "fichier": "/assets/documents/ffvolley_consignes_cfa_2025-2026.pdf"
         },
         {
           "type": "lien",
