@@ -415,6 +415,24 @@ function jourPasse(iso){
 // rencontre de disparaitre du site entre sa date et la saisie de son score.
 function aVenir(m){return m&&m.statut==="a_venir"&&!jourPasse(m.date);}
 function joue(m){return !aVenir(m);}
+
+// Les actualites parues, la plus recente en tete. L ordre de saisie Decap ne
+// gouverne plus l affichage : chaque publication obligeait sinon a remonter
+// l article en tete de liste, et un ajout laisse en bas ne faisait jamais la
+// une. Un article date du futur attend son jour — post-dater, c est
+// programmer — mais son lien direct fonctionne des la saisie : c est la
+// relecture avant parution. Meme regle de vieillissement que les matchs.
+function actualitesParues(data){
+  const maintenant=Date.now();
+  return (data?.items||[])
+    .filter(n=>{
+      const t=new Date(n.date||0).getTime();
+      // Une date illisible n efface pas l article : mieux vaut le montrer
+      // que le perdre en silence.
+      return !Number.isFinite(t)||t<=maintenant;
+    })
+    .slice().sort((a,b)=>(new Date(b.date||0).getTime()||0)-(new Date(a.date||0).getTime()||0));
+}
 function fmtDate(iso){try{return new Date(iso).toLocaleDateString("fr-FR",{weekday:"short",day:"2-digit",month:"short"}).toUpperCase();}catch(e){return iso;}}
 // Ligne d un match a venir. Exactement 3 enfants directs : .match-row est
 // une grille a 3 colonnes qui deborde au-dela.

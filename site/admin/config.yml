@@ -31,7 +31,7 @@ collections:
             summary: "{{fields.titre}}"
             fields:
               - {name: titre, label: Titre, widget: string}
-              - {name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false}
+              - {name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, hint: "Un article daté d'un jour à venir ne paraît qu'à ce jour — post-dater, c'est programmer. Le plus récent paru fait la une : l'ordre de la liste ne compte plus."}
               - {name: categorie, label: Catégorie, widget: select, options: ["Résumé","Club","Jeunes"]}
               - {name: extrait, label: Chapô / extrait, widget: text}
               - {name: une, label: "À la une ?", widget: boolean, default: false, required: false}
