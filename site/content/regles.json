@@ -6,6 +6,10 @@
       "titre": "Règles officielles",
       "documents": [
         {
+          "type": "intertitre",
+          "libelle": "Volley-ball"
+        },
+        {
           "type": "fichier",
           "libelle": "FIVB règles officielles de Volley-ball 2025-2028 (français)",
           "fichier": "/assets/documents/fivb-volleyball_rules2025_2028-fr-v04.pdf"
@@ -24,6 +28,10 @@
           "type": "fichier",
           "libelle": "Consignes Fédérales d'Arbitrage de Volley-ball 2025-2026",
           "fichier": "/assets/documents/ffvolley_consignes_cfa_2025-2026.pdf"
+        },
+        {
+          "type": "intertitre",
+          "libelle": "Beach Volley"
         },
         {
           "type": "lien",
