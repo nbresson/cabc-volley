@@ -201,6 +201,30 @@ avertissement sur le format, jumeau de celui qui existe sur le poids. Un
 avertissement et non une erreur : bloquer la photo d'un bénévole serait
 disproportionné.
 
+### Un agenda auquel on s'abonne, plutôt qu'un fichier
+**Relevé le 21 août** — et restauré le 22 : la révision de l'entrée sur les
+encadrants avait avalé ce paragraphe par un remplacement trop large. Le `.ics`
+téléchargé est une photographie : au premier report d'horaire FFVB — et les
+horaires bougent, c'est tout l'objet du moissonnage — l'agenda du supporter est
+faux sans qu'il le sache. Le worker pourrait servir un `/calendrier.ics` régénéré
+depuis `matches.json`, moisson comprise : un abonnement dans Google ou Apple
+Agenda, à jour tout seul. Le téléchargement actuel resterait, pour qui préfère
+un fichier.
+
+### Une vraie CSP, un jour
+**Relevé le 21 août.** Les trois en-têtes de sécurité gratuits sont posés — le
+commentaire du worker renvoie ici. Une Content-Security-Policy réelle reste hors
+de portée : les styles en ligne du site l'interdisent en l'état, et l'assainir
+serait un chantier de fond, à ne pas confondre avec les trois lignes déjà faites.
+
+### La case « À la une ? » ne fait rien
+**Relevé le 21 août**, en passant les actualités au tri par date. La collection
+en porte une case à cocher qu'aucune page n'a jamais lue — la une a toujours été
+positionnelle, elle est désormais chronologique. Un champ qui accepte une saisie
+sans effet est un piège : c'est l'argument qui avait fait retirer le réglage
+« Nom du club ». À retirer du formulaire, ou à câbler comme épinglage si le
+bureau veut reprendre la main sur la une.
+
 ### Les liens vers la Communauté WhatsApp
 **Demandé le 21 août.** Le club anime une communauté WhatsApp qui n'apparaît nulle
 part sur le site.
@@ -357,19 +381,23 @@ mais ça se prépare mieux à froid qu'à chaud.
 
 ## 6 · Décisions en attente
 
-**Ordre des actualités** — la première entrée saisie devient « À la une », quelle
-que soit sa date, et un article post-daté paraît aussitôt : celui du 7 septembre est
-en ligne depuis fin août. C'est peut-être le choix voulu — le bureau compose sa une
-en réordonnant — mais post-dater ne retient pas, et ajouter en fin de liste ne met
-pas en avant. Trancher : trier par date et retenir les post-datés, ou documenter le
-comportement actuel dans l'aide du champ.
-
 **Description du gymnase Rollinat** — trois reformulations proposées le 13 août, aucune
 retenue. Le texte officiel actuel manque de charme.
 
 ---
 
 ## Fait, pour mémoire
+
+**21 août, seconde vague** — la passe d'idées et sa récolte. La saison n'est
+plus jamais recopiée : calculée partout, pivot de juillet, le doublon des
+licencié·es retiré avec elle. Les plannings s'impriment en affiches — neuf pages
+inutilisables devenues cinq utiles, sections invisibles corrigées. Trois
+en-têtes de sécurité sur chaque réponse du worker. La salle d'un créneau mène à
+sa fiche. Les actualités paraissent par date, post-dater programme. Le même
+jour : les cartes OpenStreetMap des quatre sites, teintées dans la charte, la
+section « Qui s'y entraîne » des fiches de gymnase, la fusion d'encre du mur de
+logos, et le formulaire des chiffres débarrassé de ses champs vides qui
+bloquaient l'enregistrement.
 
 Barrage d'indexation · redirections des anciennes URL · images en WebP · polices
 auto-hébergées · page Partenaires et fiches de gymnase · formulaires Web3Forms ·
