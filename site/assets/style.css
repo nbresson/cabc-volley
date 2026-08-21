@@ -244,6 +244,27 @@ p{margin:0}
    inegales. L image sort du flux, comme dans .ph, ou la meme technique marche.
    4/3 plutot que 16/10 : la plupart des logos fournis sont carres, et le ratio
    large les reduisait d un tiers. */
+/* Grille des partenaires. Flex et non grid : une rangee incomplete se centre —
+   cinq institutions laissaient trois cellules vides — meme remede que la
+   derniere ligne du mur de logos. Les cartes s etirent a hauteur egale et le
+   « Voir le site » s ancre en bas de carte : les noms font une a trois lignes,
+   et le lien flottait a trois hauteurs dans une meme rangee. */
+.grille-partenaires{display:flex;flex-wrap:wrap;justify-content:center;gap:28px}
+/* Un pixel de marge dans chaque base : a l egalite parfaite, l arrondi de
+   rendu fait deborder la ligne d une fraction et tout se replie en colonne.
+   Le centrage absorbe le jeu, l oeil ne le voit pas. */
+/* min-width:0 : sans lui, un flex refuse de descendre sous son plus long mot
+   — « Departemental » faisait 181 px, debordait la base de 160 et repliait
+   toute la grille du telephone en colonne. La cesure prend le relais si un
+   mot depasse vraiment la carte. */
+.grille-partenaires>*{flex:0 0 calc(25% - 22px);min-width:0;display:flex;flex-direction:column}
+.grille-partenaires .body strong{overflow-wrap:break-word;hyphens:auto}
+.grille-partenaires .body{flex:1;display:flex;flex-direction:column;gap:10px}
+.grille-partenaires .body .lien{margin-top:auto}
+@media(max-width:1100px){.grille-partenaires>*{flex-basis:calc(50% - 15px)}}
+/* Sous 880 px la page restait une carte par ligne : dix-sept partenaires en
+   4/3 faisaient defiler tres long pour peu d information. Deux colonnes. */
+@media(max-width:880px){.grille-partenaires{gap:18px}.grille-partenaires>*{flex-basis:calc(50% - 10px)}}
 .logo-cadre{aspect-ratio:4/3;position:relative;padding:20px;background:var(--creme);border-bottom:2px solid var(--encre)}
 .logo-cadre img{position:absolute;inset:20px;margin:auto;width:auto;height:auto;max-width:calc(100% - 40px);max-height:calc(100% - 40px);object-fit:contain}
 .card.link:hover .logo-cadre{background:var(--creme)}
@@ -704,7 +725,10 @@ dialog.lightbox::backdrop{background:rgba(23,21,15,.82)}
 /* Niveaux de gris teinte encre : le mur reste calme quels que soient les
    logos fournis. La couleur revient au survol — remplace l ancien opacity:.6,
    qui faisait palir le logo au moment ou l on s y interessait. */
-.logo-cadre img{filter:grayscale(1) sepia(.3) saturate(.6) brightness(.92);opacity:.8;transition:filter .15s ease,opacity .15s ease}
+/* Meme fusion d encre que le mur : les fichiers portent des rectangles blancs
+   ou gris herites, multiply les fond dans le creme du cadre. Dose identique
+   au mur, choisie la-bas par comparaison. */
+.logo-cadre img{mix-blend-mode:multiply;filter:grayscale(1) sepia(.3) saturate(.6) brightness(1.04) contrast(1.1);opacity:.85;transition:filter .15s ease,opacity .15s ease}
 /* Mur de logos : fusion d encre. Douze fichiers sur dix-sept portent leur
    rectangle blanc ou gris d origine ; multiply fond tout ce qui est blanc dans
    le sable du mur, sans retoucher un fichier — et un futur envoi Decap sur
