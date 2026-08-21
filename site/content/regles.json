@@ -30,7 +30,14 @@
     },
     {
       "titre": "Formations d'arbitrage",
-      "texte": "Le **CABC Volley**, en partenariat avec le **Comité Départemental d'Arbitrage de la Corrèze**, organise chaque saison des formations de **marqueur** et d'**arbitre** débouchant sur un **diplôme officiel** de la **Fédération Française de Volley-ball**.\n\nCes formations ont généralement lieu en début de saison pour les marqueurs et en fin de saison pour les arbitres.\n\nSi vous êtes intéressés, veuillez prendre contact, nous vous communiquerons le contenu détaillé de la formation et les modalités d'inscription."
+      "texte": "Le **CABC Volley**, en partenariat avec le **Comité Départemental d'Arbitrage de la Corrèze**, organise chaque saison des formations de **marqueur** et d'**arbitre** débouchant sur un **diplôme officiel** de la **Fédération Française de Volley-ball**.\n\nCes formations ont généralement lieu en début de saison pour les marqueurs et en fin de saison pour les arbitres.\n\nSi vous êtes intéressés, veuillez prendre contact, nous vous communiquerons le contenu détaillé de la formation et les modalités d'inscription.",
+      "documents": [
+        {
+          "type": "fichier",
+          "libelle": "Programme de formation Marqueur saison 2025/2026",
+          "fichier": "/assets/documents/programme_de_formation_marqueur_2025-2026.pdf"
+        }
+      ]
     }
   ]
 }
