@@ -717,7 +717,8 @@ function rendreBlocsDocuments(blocs,cible,titrePage){
     const lignes=docs.map(d=>docRangee(d,d.type==="intertitre"?0:++n)).join("");
     const seul=(blocs||[]).length===1&&String(b.titre||"").trim()===String(titrePage||"").trim();
     return `<section class="pad section" id="${ancreBloc(b.titre)}">
-      ${seul?"":`<div class="section-head"><h2>${echapper(b.titre)}</h2><span class="mono">${reels.length} document${reels.length>1?"s":""}</span></div>`}
+      ${seul?"":`<div class="section-head"><h2>${echapper(b.titre)}</h2>
+        ${reels.length?`<span class="mono">${reels.length} document${reels.length>1?"s":""}</span>`:""}</div>`}
       ${b.texte?mdToHtml(b.texte):""}
       ${lignes?`<div class="doc-liste">${lignes}</div>`:""}
     </section>`;
