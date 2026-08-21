@@ -44,6 +44,33 @@ window.__pageInit=async function(){
     </div>
   </section>`;
 
+  // La carte. OpenStreetMap et non Google : l embed de Google depose des
+  // cookies et transmet l IP du visiteur avant toute interaction, ce qui
+  // obligerait le site entier a porter une banniere de consentement. Il n en
+  // a aucune, et c est un choix assume.
+  //
+  // Number() et non la valeur brute : ce qui entre dans l adresse du cadre
+  // doit etre un nombre, jamais une chaine saisie. Sans coordonnees, la
+  // section n existe pas — le reste de la fiche est inchange.
+  const lat=Number(v.lat),lon=Number(v.lon);
+  const situe=Number.isFinite(lat)&&Number.isFinite(lon)&&(lat||lon)&&
+    Math.abs(lat)<=90&&Math.abs(lon)<=180;
+  // Un cadrage de quartier : a la latitude de Brive, un degre de longitude
+  // vaut environ 79 km et un degre de latitude 111 km — d ou ces deux deltas
+  // dissemblables pour une fenetre d a peu pres 700 m sur 440. Assez pour
+  // reconnaitre les rues autour sans avoir a chercher le point.
+  const bbox=situe?[(lon-0.0045).toFixed(6),(lat-0.002).toFixed(6),
+    (lon+0.0045).toFixed(6),(lat+0.002).toFixed(6)].join(","):"";
+  const carte=situe?`<section class="pad section">
+    <div class="section-head" style="margin-bottom:18px"><h2>Où c'est</h2></div>
+    <div style="border:2px solid var(--encre)">
+      <iframe title="Carte de ${echapper(v.nom)}" loading="lazy"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&amp;layer=mapnik&amp;marker=${lat},${lon}"
+        style="width:100%;height:360px;border:0;display:block"></iframe>
+    </div>
+    ${iti?`<a href="${echapper(iti)}" target="_blank" rel="noopener" class="mono lien" style="display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.14em;color:var(--encre)">Ouvrir l'itinéraire ↗</a>`:""}
+  </section>`:"";
+
   const description=v.description
     ?`<section class="pad section"><div style="max-width:70ch">${mdToHtml(v.description)}</div></section>`
     :"";
@@ -73,7 +100,7 @@ window.__pageInit=async function(){
       </figure>`).join("")}</div>
   </section>`:"";
 
-  el.innerHTML=entete+description+blocs+galerie;
+  el.innerHTML=entete+carte+description+blocs+galerie;
   initLightbox("galerie-gym",avecImage.map(p=>({src:p.image,legende:p.legende})));
 };
 </script></body></html>

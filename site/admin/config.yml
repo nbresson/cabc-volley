@@ -282,6 +282,12 @@ collections:
               - {name: nom, label: Nom, widget: string}
               - {name: slug, label: Identifiant URL, widget: string, required: false, hint: "Sans espaces ni accents, en minuscules, ex. rollinat. Rempli, la salle gagne sa propre page et sa carte devient cliquable. Laissé vide, la salle reste affichée mais sans page. Ne le modifiez plus une fois la page en ligne : les liens déjà partagés cesseraient de fonctionner."}
               - {name: etiquette, label: Étiquette, widget: string, required: false, hint: "Pastille affichée sur la photo, ex. Salle principale ou Beach. Laisser vide pour ne rien afficher."}
+              # Le point de la carte. Dans un lien Google Maps, ce sont les
+              # nombres qui suivent !3d et !4d — et non celui qui suit @, qui
+              # donne le centre de la carte, decale par le panneau lateral.
+              # Trois positions ont deja ete commitees fausses pour cette raison.
+              - {name: lat, label: Latitude, widget: number, required: false, value_type: float, hint: "Ex. 45.149390. Dans l'adresse Google Maps du lieu, le nombre qui suit !3d."}
+              - {name: lon, label: Longitude, widget: number, required: false, value_type: float, hint: "Ex. 1.554532. Celui qui suit !4d. Sans les deux, la carte n'apparaît pas — le reste de la fiche est inchangé."}
               - {name: court, label: Nom court, widget: string, required: false, hint: "Employé dans les cases des plannings, où la place manque. Ex. St-Germain."}
               # La couleur teinte les cases du planning et la légende sous le
               # tableau. Elle est choisie sur la salle et non sur la case :
