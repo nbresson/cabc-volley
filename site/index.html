@@ -145,7 +145,7 @@ window.__pageInit=async function(){
     <a class="card link" ${t.slug?`href="${teamUrl(t.slug)}"`:'href="equipes.html"'} style="padding:26px 24px;gap:8px">
       <span class="mono" style="font-size:10px;letter-spacing:.18em;opacity:.6">${echapper(t.categorie)}</span>
       <strong class="display-m" style="font-weight:900;line-height:1;text-transform:uppercase">${echapper(t.nom)}</strong>
-      <span class="muted" style="font-size:13px">${phraseCreneaux(t,parSalle(gymnases)).map(echapper).join(" ; ")}</span>
+      <span class="muted" style="font-size:13px">${phraseCreneaux(t,parSalle(gymnases)).join(" ; ")}</span>
       <span class="display-s" style="font-weight:700;margin-top:6px">→</span>
     </a>`).join("");
 };

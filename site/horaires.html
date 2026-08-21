@@ -57,7 +57,7 @@ window.__pageInit=async function(){
   const rangee=t=>`<tr>
       <td><strong>${t.slug?`<a class="lien" href="${teamUrl(t.slug)}">${echapper(t.nom)}</a>`:echapper(t.nom)}</strong>
         ${t.categorie?`<br><span class="mono" style="font-size:10px;letter-spacing:.12em">${echapper(t.categorie)}</span>`:""}</td>
-      <td>${phraseCreneaux(t,salles).map(c=>echapper(c)).join("<br>")||'<span class="muted">—</span>'}</td>
+      <td>${phraseCreneaux(t,salles,true).join("<br>")||'<span class="muted">—</span>'}</td>
     </tr>`;
 
   // Meme regroupement que la page Equipes : l ordre connu d abord, un groupe
