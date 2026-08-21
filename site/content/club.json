@@ -10,7 +10,7 @@
         "source": ""
       },
       {
-        "valeur": "",
+        "valeur": "0",
         "libelle": "Équipes",
         "source": "equipes"
       },
@@ -20,7 +20,7 @@
         "source": ""
       },
       {
-        "valeur": "",
+        "valeur": "0",
         "libelle": "Sites",
         "source": "sites"
       }
@@ -79,7 +79,7 @@
     "mention": "Élu en AG · septembre 2025",
     "membres": [
       {
-        "nom": "Jacques NOBRE",
+        "nom": "Matthieu DEVRIENDT",
         "role": "Président",
         "photo": ""
       },
@@ -89,7 +89,7 @@
         "photo": ""
       },
       {
-        "nom": "Nicolas BECKER",
+        "nom": "Julie PERRIER",
         "role": "Secrétaire",
         "photo": ""
       }
