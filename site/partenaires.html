@@ -96,7 +96,7 @@ window.__pageInit=async function(){
   document.getElementById("p-listes").innerHTML=visibles.map(([nom,liste],i)=>`
     <div style="margin-bottom:56px">
       <div class="section-head" style="margin-bottom:20px"><h2>${echapper(nom)}</h2><span class="mono">${liste.length}</span></div>
-      <div class="cols-4">${liste.map(carte).join("")}${i===visibles.length-1?carteAppel:""}</div>
+      <div class="grille-partenaires">${liste.map(carte).join("")}${i===visibles.length-1?carteAppel:""}</div>
     </div>`).join("")||'<p class="vide muted">Les partenaires seront présentés prochainement.</p>';
 
   // Le bloc reste masque tant qu il n a pas de titre : meme convention que le
