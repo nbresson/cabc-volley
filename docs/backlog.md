@@ -226,61 +226,22 @@ choix est fait, une administration qui surveille les arrivées. Une autre voie e
 ne pas publier le lien, et le faire envoyer par le formulaire de contact ou à
 l'inscription.
 
-### L'encadrant d'un créneau
-**Demandé le 21 août.** Sur le planning et sur les fiches de gymnase, chaque séance
-dit son horaire, son lieu et son équipe. Elle ne dit pas qui l'encadre — ce qu'un
-parent cherche, et ce qu'un bénévole du bureau vérifie.
+### L'encadrant d'un créneau — en consultation au bureau
+**Demandé le 21 août, situation arrêtée le même jour.** Les encadrants sont désormais
+**publiés en nom complet**, saisis dans le champ Précision des créneaux — « Encadrement :
+Jean-Pierre DELOST » — et visibles sur Horaires, les fiches d'équipe et les fiches de
+gymnase. C'est le niveau d'exposition le plus élevé des quatre possibles, retenu à
+titre provisoire.
 
-**Ce qui existe déjà**, et sur quoi s'appuyer plutôt que de le refaire. L'effectif
-d'une équipe porte son encadrement : un numéro non numérique le désigne — « E » pour
-entraîneur — et Jean-Pierre Delost y figure ainsi sur le National 3, photo comprise.
-Et le champ **Précision** d'une séance peut déjà accueillir un nom ; son aide Decap
-avertit que la page est publique.
+**Le bureau est consulté** sur ce qu'il veut en faire : garder les noms complets — ce
+qui suppose l'accord de chaque personne, accord qui se retire —, passer au prénom et
+à l'initiale, à une mention sans nom, ou réserver l'information au bureau. Chaque nom
+se retire en une ligne dans Decap.
 
-**La question de conception** : renvoyer vers un membre de l'effectif déjà saisi, ou
-laisser saisir un nom au créneau ? Le renvoi évite une seconde version du même nom —
-le travers que ce dépôt passe son temps à retirer — mais suppose que l'encadrant soit
-inscrit à l'effectif de l'équipe, ce qui n'est pas toujours vrai : un même éducateur
-couvre parfois trois créneaux de trois équipes.
-
-**La question de confidentialité**, qui est la vraie difficulté et qui ne se tranche
-pas en écrivant du code. Le nom d'un bénévole sur une page publique est une donnée
-personnelle : elle demande son accord, et cet accord se retire. Quatre niveaux
-possibles, du plus au moins exposé : nom complet — ce que le club fait déjà pour
-l'entraîneur du National 3 —, prénom et initiale, mention sans nom (« encadré par un
-éducateur diplômé »), ou rien de public et l'information réservée au bureau.
-
-**À trancher par le club avant tout développement.** Le choix décide de la forme du
-champ : une relation vers l'effectif, une chaîne libre, ou une case à cocher. Et il
-engage plus que le site — recueillir les accords fait partie du travail.
-
-### Une feuille d'impression pour les plannings
-**Relevé le 21 août.** Le planning hebdomadaire et la grille tarifaire sont les
-documents qu'un bénévole imprime et affiche au panneau du gymnase. Or rien n'est
-prévu : imprimer la page Horaires donne **neuf pages**, menu, filtres, mur de logos
-et pied compris — mesuré en PDF. Une courte `@media print` — masquer le chrome,
-garder les tableaux — donnerait une affiche propre en une ou deux pages.
-
-### Un agenda auquel on s'abonne, plutôt qu'un fichier
-**Relevé le 21 août.** Le `.ics` téléchargé est une photographie : au premier report
-d'horaire FFVB — et les horaires bougent, c'est tout l'objet du moissonnage —
-l'agenda du supporter est faux sans qu'il le sache. Le worker pourrait servir un
-`/calendrier.ics` régénéré depuis `matches.json`, moisson comprise : un abonnement
-dans Google ou Apple Agenda, à jour tout seul. Le téléchargement actuel resterait,
-pour qui préfère un fichier.
-
-### La salle d'un créneau mène à sa fiche
-**Relevé le 21 août.** Une fiche de gymnase liste ses équipes, cliquables. Dans
-l'autre sens — « Mar. 20h – 22h · Rollinat » sur une fiche d'équipe — la salle n'est
-pas un lien. La symétrie manque ; `gymnaseUrl()` existe, `phraseCreneaux()` est le
-seul endroit à toucher.
-
-### En-têtes de sécurité de base
-**Relevé le 21 août.** Ni `X-Content-Type-Options`, ni `Referrer-Policy`, ni
-`Permissions-Policy` : trois lignes dans le worker, gratuites et sans risque de
-casse. À ne pas confondre avec une vraie CSP, qui serait un chantier à part — les
-styles en ligne du site l'interdisent en l'état.
-
+Aucun développement n'est nécessaire tant que la réponse est l'un des trois premiers
+niveaux : le champ Précision les porte tous. Seule la réservation au bureau demanderait
+de retirer les noms du site. Un champ structuré — relation vers l'effectif — reste
+possible plus tard, mais la question d'exposition précède la forme du champ.
 ### Revoir la présentation des partenaires
 **Demandé le 19 août.** La page Partenaires et le mur de logos posé en pied de chaque
 page méritent une passe de mise en forme. Cinq points relevés à la capture, du plus
