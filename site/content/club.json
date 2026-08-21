@@ -7,20 +7,20 @@
       {
         "valeur": "220",
         "libelle": "Licencié·es",
-        "source": ""
+        "source": "saisi"
       },
       {
-        "valeur": "0",
+        "valeur": "auto",
         "libelle": "Équipes",
         "source": "equipes"
       },
       {
         "valeur": "32",
         "libelle": "Bénévoles",
-        "source": ""
+        "source": "saisi"
       },
       {
-        "valeur": "0",
+        "valeur": "auto",
         "libelle": "Sites",
         "source": "sites"
       }

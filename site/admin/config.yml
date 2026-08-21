@@ -347,8 +347,12 @@ collections:
                 fields:
                   # Un chiffre qui se deduit du contenu ne se recopie pas : il
                   # se perime en silence des que le contenu change.
-                  - {name: source, label: Origine du nombre, widget: select, required: false, default: "", options: [{label: "Saisi à la main", value: ""}, {label: "Compté — équipes du site", value: "equipes"}, {label: "Compté — sites du club", value: "sites"}], hint: "Un nombre compté se met à jour tout seul quand vous ajoutez une équipe ou un site."}
-                  - {name: valeur, label: Nombre, widget: string, required: false, hint: "Ignoré si l'origine ci-dessus est un décompte."}
+                  # La valeur « saisi » plutot qu une chaine vide : Decap gere
+                  # mal les valeurs falsy d un select (issue decap-cms 6515),
+                  # et un formulaire ou chaque champ porte une valeur ne peut
+                  # exiger aucune saisie surprise.
+                  - {name: source, label: Origine du nombre, widget: select, default: "saisi", options: [{label: "Saisi à la main", value: "saisi"}, {label: "Compté — équipes du site", value: "equipes"}, {label: "Compté — sites du club", value: "sites"}], hint: "Un nombre compté se met à jour tout seul quand vous ajoutez une équipe ou un site."}
+                  - {name: valeur, label: Nombre, widget: string, hint: "Pour un nombre compté, laissez « auto » : il est recalculé à l'affichage, cette case n'est jamais lue."}
                   - {name: libelle, label: Libellé, widget: string}
           - name: histoire
             label: Notre histoire

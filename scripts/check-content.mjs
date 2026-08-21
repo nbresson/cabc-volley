@@ -201,13 +201,17 @@ for (const page of pages) {
 const SOURCES = new Set(["equipes", "sites"]);
 const chiffres = (lire("club.json").presentation || {}).chiffres || [];
 for (const c of chiffres) {
-  if (c.source && !SOURCES.has(c.source)) {
+  // « saisi » et l absence de source disent la meme chose : un nombre tenu a
+  // la main. La valeur explicite existe parce que Decap gere mal les valeurs
+  // falsy d un select — voir le commentaire du champ dans config.yml.
+  const manuel = !c.source || c.source === "saisi";
+  if (!manuel && !SOURCES.has(c.source)) {
     erreurs.push(
       `Chiffre « ${c.libelle} » : origine « ${c.source} » inconnue — attendu ` +
         `${[...SOURCES].join(" ou ")}, ou vide pour un nombre saisi à la main.`,
     );
   }
-  if (!c.source && !String(c.valeur || "").trim()) {
+  if (manuel && !String(c.valeur || "").trim()) {
     erreurs.push(`Chiffre « ${c.libelle} » : saisi à la main mais sans nombre`);
   }
 }
