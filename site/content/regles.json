@@ -30,6 +30,11 @@
           "type": "fichier",
           "libelle": "FIVB Règles officielles de Beach Volley 2025-2028 (english)",
           "fichier": "/assets/documents/fivb-beachvolleyball_rules2025_2028-en-v01.pdf"
+        },
+        {
+          "type": "fichier",
+          "libelle": "Casebook FIVB Beach Volley 2023 (english)",
+          "fichier": "/assets/documents/fivb_beach_volleyball_casebook_2023-en.pdf"
         }
       ]
     },
