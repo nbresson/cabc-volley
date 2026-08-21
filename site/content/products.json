@@ -27,30 +27,87 @@
     {
       "nom": "Polo Evo Homme",
       "prix": "29 euros",
-      "detail": "S → XXL",
+      "detail": "S → 3XL",
       "statut": "dispo",
       "image": "assets/uploads/14091-18094-1.webp"
     },
     {
-      "nom": "Écharpe 80 ans",
-      "prix": "18 €",
-      "detail": "Édition limitée",
-      "statut": "nouveau",
-      "image": "assets/uploads/echarpe_exemple.jpg"
-    },
-    {
-      "nom": "T-shirt « Fierté gaillarde »",
-      "prix": "22 €",
-      "detail": "XS → XXL",
       "statut": "dispo",
-      "image": "assets/uploads/tshirt_exemple.webp"
+      "nom": "Polo Evo Femme",
+      "prix": "28 euros",
+      "detail": "S → 3XL"
     },
     {
-      "nom": "Bonnet gaillard",
-      "prix": "15 €",
-      "detail": "Épuisé",
-      "statut": "epuise",
-      "image": "assets/uploads/bonnet_exemple.jpg"
+      "statut": "dispo",
+      "nom": "Veste Kurt (unisexe)",
+      "prix": "38 euros",
+      "detail": "S → 3XL"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Sweat Warren (unisexe)",
+      "prix": "53 euros",
+      "detail": "S → 3XL"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Brassière Elaine",
+      "prix": "35 euros",
+      "detail": "XS → XL"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Short NewSkin Homme",
+      "prix": "25 euros",
+      "detail": "S → 3XL"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Short Amazone Pro",
+      "prix": "24 euros",
+      "detail": "S → 3XL"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Genouillères Atena (enfant)",
+      "prix": "17 euros",
+      "detail": "Taille unique"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Genouillères Tokio (adulte)",
+      "prix": "34 euros",
+      "detail": "Taille unique"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Jogging Milo (homme)",
+      "prix": "38 euros",
+      "detail": "S → 3XL"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Jogging Vanessa (femme)",
+      "prix": "38 euros",
+      "detail": "S → 3XL"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Chaussette Jump",
+      "prix": "13 euros",
+      "detail": "35/38, 38/42, 43/47"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Sac à dos Lynos (33L)",
+      "prix": "36 euros",
+      "detail": "Taille unique"
+    },
+    {
+      "statut": "dispo",
+      "nom": "Sac à dos Thor (25L)",
+      "prix": "35 euros",
+      "detail": "Taille unique"
     }
   ]
 }
