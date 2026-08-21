@@ -191,8 +191,18 @@ function poserSeo(reponse, url) {
     .transform(reponse);
 }
 
-export default {
-  async fetch(request, env) {
+// Les en-tetes de securite, poses sur chaque reponse — pages, JSON, renvois,
+// erreurs — par l habillage unique de fetch() plutot que sur chacun des dix-
+// huit points de sortie, ou l un finirait par etre oublie. Pas de CSP : les
+// styles en ligne du site l interdisent en l etat, c est un chantier a part
+// note au backlog — ces trois-ci sont gratuits et ne cassent rien.
+const ENTETES_SECURITE = [
+  ["X-Content-Type-Options", "nosniff"],
+  ["Referrer-Policy", "strict-origin-when-cross-origin"],
+  ["Permissions-Policy", "camera=(), microphone=(), geolocation=()"],
+];
+
+async function traiter(request, env) {
     const url = new URL(request.url);
     const brouillon = estBrouillon(url.hostname);
 
@@ -288,6 +298,18 @@ export default {
 
     const entetes = new Headers(reponse.headers);
     entetes.set("X-Robots-Tag", "noindex, nofollow");
+    return new Response(reponse.body, {
+      status: reponse.status,
+      statusText: reponse.statusText,
+      headers: entetes
+    });
+}
+
+export default {
+  async fetch(request, env) {
+    const reponse = await traiter(request, env);
+    const entetes = new Headers(reponse.headers);
+    for (const [nom, valeur] of ENTETES_SECURITE) entetes.set(nom, valeur);
     return new Response(reponse.body, {
       status: reponse.status,
       statusText: reponse.statusText,
