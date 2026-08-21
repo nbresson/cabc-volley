@@ -254,6 +254,33 @@ l'entraîneur du National 3 —, prénom et initiale, mention sans nom (« encad
 champ : une relation vers l'effectif, une chaîne libre, ou une case à cocher. Et il
 engage plus que le site — recueillir les accords fait partie du travail.
 
+### Une feuille d'impression pour les plannings
+**Relevé le 21 août.** Le planning hebdomadaire et la grille tarifaire sont les
+documents qu'un bénévole imprime et affiche au panneau du gymnase. Or rien n'est
+prévu : imprimer la page Horaires donne **neuf pages**, menu, filtres, mur de logos
+et pied compris — mesuré en PDF. Une courte `@media print` — masquer le chrome,
+garder les tableaux — donnerait une affiche propre en une ou deux pages.
+
+### Un agenda auquel on s'abonne, plutôt qu'un fichier
+**Relevé le 21 août.** Le `.ics` téléchargé est une photographie : au premier report
+d'horaire FFVB — et les horaires bougent, c'est tout l'objet du moissonnage —
+l'agenda du supporter est faux sans qu'il le sache. Le worker pourrait servir un
+`/calendrier.ics` régénéré depuis `matches.json`, moisson comprise : un abonnement
+dans Google ou Apple Agenda, à jour tout seul. Le téléchargement actuel resterait,
+pour qui préfère un fichier.
+
+### La salle d'un créneau mène à sa fiche
+**Relevé le 21 août.** Une fiche de gymnase liste ses équipes, cliquables. Dans
+l'autre sens — « Mar. 20h – 22h · Rollinat » sur une fiche d'équipe — la salle n'est
+pas un lien. La symétrie manque ; `gymnaseUrl()` existe, `phraseCreneaux()` est le
+seul endroit à toucher.
+
+### En-têtes de sécurité de base
+**Relevé le 21 août.** Ni `X-Content-Type-Options`, ni `Referrer-Policy`, ni
+`Permissions-Policy` : trois lignes dans le worker, gratuites et sans risque de
+casse. À ne pas confondre avec une vraie CSP, qui serait un chantier à part — les
+styles en ligne du site l'interdisent en l'état.
+
 ### Revoir la présentation des partenaires
 **Demandé le 19 août.** La page Partenaires et le mur de logos posé en pied de chaque
 page méritent une passe de mise en forme. Cinq points relevés à la capture, du plus
@@ -368,6 +395,13 @@ corriger, ni récupérer le site autrement qu'en clonant le dépôt public. Pas 
 mais ça se prépare mieux à froid qu'à chaud.
 
 ## 6 · Décisions en attente
+
+**Ordre des actualités** — la première entrée saisie devient « À la une », quelle
+que soit sa date, et un article post-daté paraît aussitôt : celui du 7 septembre est
+en ligne depuis fin août. C'est peut-être le choix voulu — le bureau compose sa une
+en réordonnant — mais post-dater ne retient pas, et ajouter en fin de liste ne met
+pas en avant. Trancher : trier par date et retenir les post-datés, ou documenter le
+comportement actuel dans l'aide du champ.
 
 **Description du gymnase Rollinat** — trois reformulations proposées le 13 août, aucune
 retenue. Le texte officiel actuel manque de charme.
