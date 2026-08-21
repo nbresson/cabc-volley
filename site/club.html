@@ -76,7 +76,7 @@ window.__pageInit=async function(){
   // qui se resserre sur ceux qui restent.
   const COMPTES={equipes:(teams?.items||[]).length||null,sites:(gym?.items||[]).length||null};
   const chiffres=(p.chiffres||[])
-    .map(c=>({...c,affiche:c.source?COMPTES[c.source]:c.valeur}))
+    .map(c=>({...c,affiche:c.source&&c.source!=="saisi"?COMPTES[c.source]:c.valeur}))
     .filter(c=>c.affiche!=null&&String(c.affiche).trim()!=="");
   const bande=document.getElementById("chiffres");
   bande.style.setProperty("--n",chiffres.length||1);
