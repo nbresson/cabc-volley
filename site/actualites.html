@@ -33,7 +33,7 @@
 <script>
 window.__pageInit=async function(){
   const data=await getJSON("content/news.json");
-  const items=data?.items||[];
+  const items=actualitesParues(data);
   const carte=(n,une)=>`
     <a class="card link shadow" href="article.html?slug=${encodeURIComponent(n.slug||"")}" data-filtre="${echapper(n.categorie)}">
       ${une||!n.breve?`<div class="ph" style="aspect-ratio:${une?"16/8":"16/9"};position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">${n.image?vignette(n.image,n.titre,n.cadrage):'<span class="mono" style="color:var(--mention)">[ photo à venir ]</span>'}</div>`:""}
