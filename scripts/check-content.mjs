@@ -212,6 +212,42 @@ for (const c of chiffres) {
   }
 }
 
+// Le point porte sur la carte de chaque fiche de gymnase. Il entre dans
+// l adresse d un cadre : le controle d echappement ne le voit pas — il repere
+// les interpolations de la forme `v.champ`, pas une variable locale qui en
+// derive — donc la garantie se prend ici, sur la donnee elle-meme.
+const sites = lire("gymnases.json").items || [];
+// Brive et ses environs. Un point hors de cette boite n est pas refuse : le
+// club peut jouer ailleurs. Mais il est signale, parce que la faute connue est
+// silencieuse — trois positions ont ete commitees fausses en prenant le nombre
+// qui suit @ dans une adresse Google Maps, soit le centre de la carte, decale
+// de deux cents metres par le panneau lateral.
+const BOITE = { lat: [44.9, 45.4], lon: [1.3, 1.8] };
+for (const v of sites) {
+  const a = v.lat === "" || v.lat == null ? null : Number(v.lat);
+  const o = v.lon === "" || v.lon == null ? null : Number(v.lon);
+  if (a === null && o === null) continue;
+  const ou = `Gymnase « ${v.nom} »`;
+  if (a === null || o === null) {
+    erreurs.push(`${ou} : latitude et longitude vont par deux — l'une est saisie, l'autre non`);
+    continue;
+  }
+  if (!Number.isFinite(a) || !Number.isFinite(o)) {
+    erreurs.push(`${ou} : coordonnées « ${v.lat} , ${v.lon} » non numériques`);
+    continue;
+  }
+  if (Math.abs(a) > 90 || Math.abs(o) > 180) {
+    erreurs.push(`${ou} : coordonnées hors du globe — latitude ${a}, longitude ${o}`);
+    continue;
+  }
+  if (a < BOITE.lat[0] || a > BOITE.lat[1] || o < BOITE.lon[0] || o > BOITE.lon[1]) {
+    console.warn(
+      `Attention — ${ou} est situé en ${a}, ${o}, loin de Brive. ` +
+        `Vérifier qu'il s'agit bien des nombres suivant !3d et !4d, et non de celui qui suit @.`,
+    );
+  }
+}
+
 // Les anciennes URL du site officiel sont renvoyees vers une fiche d equipe.
 // Rien ne verifiait que le slug vise existait encore : la refonte des equipes
 // du 19 aout a laisse deux 301 permanents aboutir sur « Equipe introuvable »,
@@ -240,5 +276,5 @@ if (erreurs.length) {
 const tagues = matchs.filter((m) => m.equipe).length;
 const lignesClassement = classement.reduce((n, t) => n + (Array.isArray(t.lignes) ? t.lignes.length : 0), 0);
 console.log(
-  `OK — ${equipes.length} équipes totalisant ${seances} séances, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes, ${ciblesPages} adresses vérifiées dans ${pages.length} pages, ${renvois} renvois d'anciennes URL.`,
+  `OK — ${equipes.length} équipes totalisant ${seances} séances, ${matchs.length} matchs dont ${tagues} rattachés à une équipe, ${classement.length} classements totalisant ${lignesClassement} lignes, ${cheminsCites.size} images toutes présentes, ${sites.filter((v) => v.lat !== "" && v.lat != null).length} sites situés, ${ciblesPages} adresses vérifiées dans ${pages.length} pages, ${renvois} renvois d'anciennes URL.`,
 );

@@ -28,7 +28,9 @@
       "itineraire": "https://maps.app.goo.gl/sp3o7qABfTf4Xta79",
       "description": "Mise en service en 1982, la salle Rollinat est la maison du club : c'est là que les seniors reçoivent, et là que l'école de volley accueille les plus jeunes le samedi matin.\n\nQuarante mètres sur vingt d'aire de jeu, quatre vestiaires. Le CAB n'y est pas seul — le basket-ball et le handball s'y pratiquent aussi, et la Compagnie des Archers de Brive y a ses cibles. Le green-volley, lui, se joue dehors, sur le terrain de football attenant.",
       "etiquette": "Salle principale",
-      "couleur": "sable"
+      "couleur": "sable",
+      "lat": 45.14939,
+      "lon": 1.554532
     },
     {
       "photos": [],
@@ -43,7 +45,9 @@
       "itineraire": "https://maps.app.goo.gl/wYr6HVh3Jm6skjfQ9",
       "description": "De mai à septembre, le club quitte le parquet pour le sable. Le Beach Park de Tujac accueille les entraînements et les tournois de beach-volley, en 2 contre 2 comme en 4 contre 4.",
       "etiquette": "Beach",
-      "couleur": "creme"
+      "couleur": "creme",
+      "lat": 45.162123,
+      "lon": 1.49539
     },
     {
       "photos": [],
@@ -58,7 +62,9 @@
       "itineraire": "https://maps.app.goo.gl/RSmFdNEa5tYgZyMU9",
       "description": "Salle secondaire du club, Saint-Germain accueille une partie des entraînements seniors, les matchs Ufolep, et la séance de Volley Santé du jeudi soir.",
       "etiquette": "Salle secondaire",
-      "couleur": "lin"
+      "couleur": "lin",
+      "lat": 45.167858,
+      "lon": 1.541049
     },
     {
       "photos": [],
@@ -73,7 +79,9 @@
       "itineraire": "https://maps.app.goo.gl/eSGV6R413UAyaQyw7",
       "description": "",
       "etiquette": "",
-      "couleur": "encre"
+      "couleur": "encre",
+      "lat": 45.160998,
+      "lon": 1.530197
     }
   ]
 }
