@@ -25,6 +25,11 @@
           "type": "lien",
           "url": "https://www.ffvbbeach.org/ffvbapp/webcca_v2010/FIVB-BeachVolleyball_Rules_2025-2028-FR-v1.pdf",
           "libelle": "FIVB Règles officielles de Beach Volley 2025-2028"
+        },
+        {
+          "type": "fichier",
+          "libelle": "FIVB Règles officielles de Beach Volley 2025-2028 (english)",
+          "fichier": "/assets/documents/fivb-beachvolleyball_rules2025_2028-en-v01.pdf"
         }
       ]
     },
