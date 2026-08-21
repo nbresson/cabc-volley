@@ -39,8 +39,10 @@ qui répond : ils sont justes sur `workers.dev` aujourd'hui et le seront sur le
 domaine sans qu'on rouvre un fichier. Le sitemap et le robots.txt n'attendaient
 déjà rien.
 
-Reste, mais côté Cloudflare et non côté code : brancher le domaine, et vérifier
-que le barrage d'indexation se lève bien de lui-même — il se juge sur l'hôte.
+Reste, mais côté Cloudflare et non côté code : brancher le domaine. La marche
+complète — prérequis, ordre du jour J, tournée de vérification, retour
+arrière — est écrite dans [`docs/plan-bascule-domaine.md`](plan-bascule-domaine.md),
+prête pour la validation du Bureau.
 
 ---
 
