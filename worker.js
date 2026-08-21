@@ -202,6 +202,37 @@ const ENTETES_SECURITE = [
   ["Permissions-Policy", "camera=(), microphone=(), geolocation=()"],
 ];
 
+// La politique de securite du contenu. Le vecteur qui compte — le script — est
+// verrouille par un nonce tire a chaque requete : un script en ligne injecte
+// ne peut pas le connaitre, ceux du site le recoivent au passage du rewriter.
+// Les styles restent en ligne (« unsafe-inline ») et c est un choix documente :
+// un nonce ne s applique qu aux elements <style>, jamais aux centaines
+// d attributs style="" qui sont l ecriture meme de ce site — et le contenu
+// editorial passe deja par echapper() sous controle de compilation. Les deux
+// seules destinations externes sont celles de l inventaire : les cartes
+// OpenStreetMap en cadre, Web3Forms en envoi de formulaire.
+function cspPour(nonce) {
+  return [
+    "default-src 'self'",
+    nonce ? `script-src 'self' 'nonce-${nonce}'` : "script-src 'self'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self'",
+    "font-src 'self'",
+    "connect-src 'self' https://api.web3forms.com",
+    "frame-src https://www.openstreetmap.org",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+  ].join("; ");
+}
+
+function tirerNonce() {
+  const octets = new Uint8Array(16);
+  crypto.getRandomValues(octets);
+  return btoa(String.fromCharCode(...octets));
+}
+
 async function traiter(request, env) {
     const url = new URL(request.url);
     const brouillon = estBrouillon(url.hostname);
@@ -307,9 +338,25 @@ async function traiter(request, env) {
 
 export default {
   async fetch(request, env) {
-    const reponse = await traiter(request, env);
+    const url = new URL(request.url);
+    let reponse = await traiter(request, env);
     const entetes = new Headers(reponse.headers);
     for (const [nom, valeur] of ENTETES_SECURITE) entetes.set(nom, valeur);
+    // Pas de CSP sur l admin : Decap vient d unpkg et cause avec GitHub — ce
+    // sont ses regles, pas celles du site, et la page est un outil authentifie.
+    if (!url.pathname.startsWith("/admin")) {
+      const type = reponse.headers.get("content-type") || "";
+      let nonce = "";
+      if (type.includes("text/html")) {
+        nonce = tirerNonce();
+        // Chaque <script> du site recoit le nonce au vol — y compris sur les
+        // pages d erreur, qui portent le meme chrome et le meme site.js.
+        reponse = new HTMLRewriter()
+          .on("script", { element(e) { e.setAttribute("nonce", nonce); } })
+          .transform(reponse);
+      }
+      entetes.set("Content-Security-Policy", cspPour(nonce));
+    }
     return new Response(reponse.body, {
       status: reponse.status,
       statusText: reponse.statusText,
