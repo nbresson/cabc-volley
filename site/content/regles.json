@@ -12,22 +12,26 @@
         {
           "type": "fichier",
           "libelle": "FIVB règles officielles de Volley-ball 2025-2028 (français)",
-          "fichier": "/assets/documents/fivb-volleyball_rules2025_2028-fr-v04.pdf"
+          "fichier": "/assets/documents/fivb-volleyball_rules2025_2028-fr-v04.pdf",
+          "langue": "FR"
         },
         {
           "type": "fichier",
           "libelle": "FIVB Règles officielles de Volley-ball 2025-2028 (english)",
-          "fichier": "/assets/documents/fivb-volleyball_rules2025_2028-en-v05.pdf"
+          "fichier": "/assets/documents/fivb-volleyball_rules2025_2028-en-v05.pdf",
+          "langue": "EN"
         },
         {
           "type": "fichier",
           "libelle": "Casebook FIVB Volley-ball 2025 (english)",
-          "fichier": "/assets/documents/casebook-2025-en.pdf"
+          "fichier": "/assets/documents/casebook-2025-en.pdf",
+          "langue": "EN"
         },
         {
           "type": "fichier",
           "libelle": "Consignes Fédérales d'Arbitrage de Volley-ball 2025-2026",
-          "fichier": "/assets/documents/ffvolley_consignes_cfa_2025-2026.pdf"
+          "fichier": "/assets/documents/ffvolley_consignes_cfa_2025-2026.pdf",
+          "langue": "FR"
         },
         {
           "type": "intertitre",
@@ -36,17 +40,20 @@
         {
           "type": "lien",
           "url": "https://www.ffvbbeach.org/ffvbapp/webcca_v2010/FIVB-BeachVolleyball_Rules_2025-2028-FR-v1.pdf",
-          "libelle": "FIVB Règles officielles de Beach Volley 2025-2028 (français)"
+          "libelle": "FIVB Règles officielles de Beach Volley 2025-2028 (français)",
+          "langue": "FR"
         },
         {
           "type": "fichier",
           "libelle": "FIVB Règles officielles de Beach Volley 2025-2028 (english)",
-          "fichier": "/assets/documents/fivb-beachvolleyball_rules2025_2028-en-v01.pdf"
+          "fichier": "/assets/documents/fivb-beachvolleyball_rules2025_2028-en-v01.pdf",
+          "langue": "EN"
         },
         {
           "type": "fichier",
           "libelle": "Casebook FIVB Beach Volley 2023 (english)",
-          "fichier": "/assets/documents/fivb_beach_volleyball_casebook_2023-en.pdf"
+          "fichier": "/assets/documents/fivb_beach_volleyball_casebook_2023-en.pdf",
+          "langue": "EN"
         }
       ]
     },
