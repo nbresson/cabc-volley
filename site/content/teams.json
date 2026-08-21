@@ -82,21 +82,21 @@
           "debut": "20:00",
           "fin": "22:00",
           "gymnase": "rollinat",
-          "precision": ""
+          "precision": "Encadrement : Jean-Christian DUPRE"
         },
         {
           "jour": "vendredi",
           "debut": "20:30",
           "fin": "22:30",
           "gymnase": "rollinat",
-          "precision": "une semaine sur deux"
+          "precision": "une semaine sur deux ; Encadrement : Jean-Christian DUPRE"
         },
         {
           "jour": "vendredi",
           "debut": "20:00",
           "fin": "22:00",
           "gymnase": "saint-germain",
-          "precision": "une semaine sur deux"
+          "precision": "une semaine sur deux ; Encadrement : Jean-Christian DUPRE"
         }
       ]
     },
@@ -115,21 +115,21 @@
           "debut": "20:30",
           "fin": "22:30",
           "gymnase": "saint-germain",
-          "precision": ""
+          "precision": "Encadrement : Corentin VEYSSIERE"
         },
         {
           "jour": "vendredi",
           "debut": "20:00",
           "fin": "22:00",
           "gymnase": "saint-germain",
-          "precision": "une semaine sur deux"
+          "precision": "une semaine sur deux ; Encadrement : Corentin VEYSSIERE"
         },
         {
           "jour": "vendredi",
           "debut": "20:30",
           "fin": "22:30",
           "gymnase": "rollinat",
-          "precision": "une semaine sur deux"
+          "precision": "une semaine sur deux ; Encadrement : Corentin VEYSSIERE"
         }
       ]
     },
