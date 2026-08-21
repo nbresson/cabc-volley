@@ -138,7 +138,7 @@ window.__pageInit=async function(){
     document.getElementById("planning").innerHTML=
       `<thead><tr><th>Équipe</th>${JOURS_SEMAINE.map(j=>`<th>${j}</th>`).join("")}</tr></thead>`+
       `<tbody>${equipes.map(e=>`<tr><td><a href="${teamUrl(e.slug)}" class="lien">${echapper(e.nom)}</a></td>${JOURS_SEMAINE.map(j=>cellule(e,j)).join("")}</tr>`).join("")}</tbody>`;
-    document.getElementById("equipes-note").textContent=equipes.length+" équipes · saison 2026–2027";
+    document.getElementById("equipes-note").textContent=equipes.length+" équipes · saison "+saisonSportive();
     // La legende ne montre que les salles reellement employees : une salle sans
     // creneau n a rien a y faire.
     const leg=((gymnases?.items)||[]).filter(v=>utilisees.has(v.slug));

@@ -42,7 +42,7 @@ window.__pageInit=async function(){
 
   const blocs=data?.blocs||[];
   const total=rendreBlocsDocuments(blocs,document.getElementById("blocs"));
-  document.getElementById("compteur").textContent=total?total+" documents · saison 2026–2027":"";
+  document.getElementById("compteur").textContent=total?total+" documents · saison "+saisonSportive():"";
   // Un sommaire d un seul lien ne sert a rien.
   const ancres=document.getElementById("ancres-blocs");
   if(blocs.length>1){
