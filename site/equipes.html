@@ -17,7 +17,7 @@
 <main id="main">
 <section class="pad section">
   <div class="crumb"><a href="index.html">Accueil</a><span>/</span><span style="color:var(--encre)">Équipes</span></div>
-  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(38px,9vw,88px)">Nos équipes</h1><span class="mono" style="align-self:flex-end">Saison 2026–2027 · 220 licencié·es</span></div>
+  <div class="section-head" style="margin-bottom:0"><h1 style="font-size:clamp(38px,9vw,88px)">Nos équipes</h1><span class="mono" id="equipes-sous-titre" style="align-self:flex-end"></span></div>
   <nav class="ancres" id="ancres-groupes" aria-label="Groupes d'équipes"></nav>
 </section>
 <section class="section pad"><div id="teams-detail"></div></section>
@@ -25,7 +25,15 @@
 <div id="footer"></div><script src="assets/site.js"></script>
 <script>
 window.__pageInit=async function(){
-  const [teams,matches,gymnases]=await Promise.all([getJSON("content/teams.json"),getJSON("content/matches.json"),getJSON("content/gymnases.json")]);
+  const [teams,matches,gymnases,club]=await Promise.all([getJSON("content/teams.json"),getJSON("content/matches.json"),getJSON("content/gymnases.json"),getJSON("content/club.json")]);
+
+  // Le nombre de licencies est celui du bandeau de la page Club, retrouve par
+  // son libelle : ecrit en dur ici, il faisait une seconde version du meme
+  // chiffre — la derive qui a deja montre 8 equipes quand il y en avait 13.
+  // Sans chiffre, le sous-titre se contente de la saison, il n invente rien.
+  const lic=((club?.presentation?.chiffres)||[]).find(c=>/licenci/i.test(c.libelle||""));
+  document.getElementById("equipes-sous-titre").textContent=
+    "Saison "+saisonSportive()+(lic&&lic.valeur?" · "+lic.valeur+" "+lic.libelle.toLowerCase():"");
   const salles=parSalle(gymnases);
   const items=teams?.items||[];
   const wrap=document.getElementById("teams-detail");

@@ -32,6 +32,18 @@ const PARENT={"equipe.html":"equipes.html","article.html":"actualites.html","par
   "horaires.html":"infos.html","tarifs.html":"infos.html","acces.html":"infos.html","faq.html":"infos.html","regles.html":"infos.html"};
 // Reseaux du club. Seule source des deux adresses, pour le bandeau ci-dessous
 // comme pour tout <div id="reseaux"> pose dans une page.
+// La saison sportive s ouvre en juillet, comme chez la federation : un match
+// d avril appartient a la saison ouverte l annee precedente. Meme regle que
+// saisonDe() dans ffvb/noms.mjs — dupliquee ici parce que ce fichier n est
+// pas un module ; si le pivot change un jour, les deux se relisent ensemble.
+// La saison etait ecrite en dur a six endroits, qui auraient tous vieilli en
+// silence a l ete 2027 — le meme mal que les compteurs de la page Club.
+function saisonSportive(sep){
+  const d=new Date();
+  const a=d.getMonth()>=6?d.getFullYear():d.getFullYear()-1;
+  return a+(sep||"–")+(a+1);
+}
+
 const RESEAUX=[
   ["Instagram","https://www.instagram.com/cabcvolley/",'<rect class="frame" x="2" y="2" width="20" height="20"/><circle cx="12" cy="12" r="4.6"/><rect x="16.3" y="5.7" width="2.5" height="2.5" fill="currentColor" stroke="none"/>',"instagram"],
   ["Facebook","https://www.facebook.com/cabvolley19/",'<rect class="frame" x="2" y="2" width="20" height="20"/><path d="M14.5 6.5H12.2V17.5M9.5 11H14.5"/>',"facebook"],
@@ -40,7 +52,7 @@ const RESEAUX=[
   // Instagram sans toucher au code, et l adresse du classement porte la saison,
   // qui change tous les etes. Les URL ecrites ici ne sont que des secours, si le
   // fichier ne repond pas ou si le champ est laisse vide.
-  ["FFVB","https://www.ffvbbeach.org/ffvbapp/resu/planning_club_class.php?cnclub=0198049&saison=2026%2F2027",'<rect class="frame" x="2" y="2" width="20" height="20"/><path d="M7.6 17.4V12.4M12 17.4V6.6M16.4 17.4V9.6"/>',"ffvb_classement"]
+  ["FFVB","https://www.ffvbbeach.org/ffvbapp/resu/planning_club_class.php?cnclub=0198049&saison="+encodeURIComponent(saisonSportive("/")),'<rect class="frame" x="2" y="2" width="20" height="20"/><path d="M7.6 17.4V12.4M12 17.4V6.6M16.4 17.4V9.6"/>',"ffvb_classement"]
 ];
 // Bandeau reseaux : bloc autonome sur fond encre. Pose par defaut juste
 // avant le pied de page, mais deplacable — un seul appel a bouger — et

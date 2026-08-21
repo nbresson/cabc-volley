@@ -191,7 +191,7 @@ window.__pageInit=async function(){
     // avoir choisi « exterieur » doit donner les seuls deplacements, et le
     // nom doit le dire — sans quoi trois fichiers homonymes se ressemblent.
     const bout=[etat.equipe!=="tout"?etat.equipe:"",etat.lieu!=="tout"?etat.lieu:""].filter(Boolean).join("-");
-    bIcs.onclick=()=>telechargerICS(liste,`cab-${bout||"saison"}-2026-2027.ics`);
+    bIcs.onclick=()=>telechargerICS(liste,`cab-${bout||"saison"}-${saisonSportive("-")}.ics`);
   };
   poserAvenir();
 
