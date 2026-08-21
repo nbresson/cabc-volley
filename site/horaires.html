@@ -156,11 +156,14 @@ window.__pageInit=async function(){
   // d une equipe mais l occupation d une salle. La couleur reste a l en-tete
   // de ligne : la repeter dans chaque case n apprendrait rien, la ligne disant
   // deja quelle salle on lit.
+  // Meme selection que les fiches de gymnase : creneauxDuSite() range par jour
+  // puis par heure, on n a plus qu a distribuer en cases.
   const parCase={};
-  (teams?.items||[]).forEach(e=>creneauxDe(e).forEach(c=>{
-    const k=(c.gymnase||"")+"|"+c.jour;
-    (parCase[k]=parCase[k]||[]).push({c:c,e:e});
-  }));
+  [...new Set((teams?.items||[]).flatMap(e=>creneauxDe(e).map(c=>c.gymnase||"")))]
+    .forEach(slug=>creneauxDuSite(teams?.items||[],slug).forEach(o=>{
+      const k=slug+"|"+o.c.jour;
+      (parCase[k]=parCase[k]||[]).push(o);
+    }));
   if(Object.keys(parCase).length){
     const lignes=((gymnases?.items)||[]).slice();
     // Une seance sans salle n a aucune ligne ou aller. Plutot que la perdre —
@@ -168,8 +171,7 @@ window.__pageInit=async function(){
     // propre ligne, qui dit au bureau ce qui reste a arreter.
     if(Object.keys(parCase).some(k=>k.charAt(0)==="|"))lignes.push({slug:"",nom:"Site non précisé"});
     const caseSalle=(v,jour)=>{
-      const l=(parCase[v.slug+"|"+jour]||[]).slice()
-        .sort((a,b)=>String(a.c.debut||"").localeCompare(String(b.c.debut||"")));
+      const l=parCase[v.slug+"|"+jour]||[];
       if(!l.length)return "<td></td>";
       return `<td style="vertical-align:top"><div style="display:grid;gap:13px">${l.map(o=>{
         const plage=plageCreneau(o.c);
