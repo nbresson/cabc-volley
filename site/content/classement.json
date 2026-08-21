@@ -4,7 +4,7 @@
       "equipe": "n3-masculin",
       "titre": "Classement National 3 M",
       "une": true,
-      "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+      "note": "Classement généré automatiquement — le détail officiel et à jour est sur le site de la FFVB.",
       "lignes": [
         {
           "club": "Tours Volley-ball 3",
