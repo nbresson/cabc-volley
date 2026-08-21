@@ -108,14 +108,14 @@
       "equipe": "r1-masculin",
       "titre": "Classement Régional 1 masculin",
       "une": false,
-      "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+      "note": "Classement généré automatiquement — le détail officiel et à jour est sur le site de la FFVB.",
       "lignes": []
     },
     {
       "equipe": "r1-feminin",
       "titre": "Classement Régional 1 féminin",
       "une": false,
-      "note": "Classement saisi à la main — le détail officiel et à jour est sur le site de la FFVB.",
+      "note": "Classement généré automatiquement — le détail officiel et à jour est sur le site de la FFVB.",
       "lignes": []
     }
   ]
