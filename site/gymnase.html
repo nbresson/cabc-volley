@@ -21,7 +21,7 @@
 <script>
 window.__pageInit=async function(){
   const slug=new URLSearchParams(location.search).get("g");
-  const data=await getJSON("content/gymnases.json");
+  const [data,teams]=await Promise.all([getJSON("content/gymnases.json"),getJSON("content/teams.json")]);
   const el=document.getElementById("gymnase");
   const v=(data?.items||[]).find(x=>x.slug&&x.slug===slug);
   if(!v){el.innerHTML='<section class="pad section"><p class="muted">Site introuvable. <a href="acces.html" class="lien">Retour à nos gymnases</a></p></section>';return;}
@@ -70,6 +70,35 @@ window.__pageInit=async function(){
     ${iti?`<a href="${echapper(iti)}" target="_blank" rel="noopener" class="mono lien" style="display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.14em;color:var(--encre)">Ouvrir l'itinéraire ↗</a>`:""}
   </section>`:"";
 
+  // Qui s entraine ici. Meme selection que le planning par site de la page
+  // Horaires — creneauxDuSite() range par jour puis par heure — mais une autre
+  // presentation : sur une fiche il n y a qu un lieu, sept colonnes n auraient
+  // qu une ligne a remplir. Les seances se lisent donc de haut en bas, le jour
+  // annonce une fois pour toutes celles qu il porte.
+  const seances=creneauxDuSite(teams?.items||[],v.slug);
+  let jourEnCours="";
+  const rangees=seances.map(o=>{
+    const tete=o.c.jour!==jourEnCours
+      ?`<tr><td colspan="2" class="mono" style="background:var(--sable);font-size:11px;letter-spacing:.18em">${echapper(o.c.jour)}</td></tr>`:"";
+    jourEnCours=o.c.jour;
+    const plage=plageCreneau(o.c);
+    return tete+`<tr>
+      <td style="white-space:nowrap;width:1%;font-weight:600">${echapper(plage||"—")}</td>
+      <td>${o.e.slug?`<a class="lien" href="${teamUrl(o.e.slug)}">${echapper(o.e.nom)}</a>`:echapper(o.e.nom)}
+        ${o.c.precision?`<span class="muted" style="font-size:12px;display:block;margin-top:2px">${echapper(o.c.precision)}</span>`:""}</td>
+    </tr>`;
+  }).join("");
+  // Sans creneau, pas de section : un site peut n en porter aucun — le Beach
+  // Park hors saison — et un tableau vide ne dirait rien de plus qu une absence.
+  const creneaux=seances.length?`<section class="pad section">
+    <div class="section-head"><h2>Qui s'y entraîne</h2><span class="mono">${seances.length} séance${seances.length>1?"s":""} par semaine</span></div>
+    <!-- Pas de .table-wrap : sa regle impose 520 px de large aux tableaux qu il
+         enveloppe, ce qui ferait defiler horizontalement deux colonnes tenant
+         dans 375. Elle sert aux tableaux larges, pas a celui-ci. -->
+    <table class="ds">${rangees}</table>
+    <a class="mono lien" href="horaires.html#planning-salles" style="display:inline-block;margin-top:16px;font-size:11px;letter-spacing:.14em;color:var(--encre)">Le planning de tous les sites →</a>
+  </section>`:"";
+
   const description=v.description
     ?`<section class="pad section"><div style="max-width:70ch">${mdToHtml(v.description)}</div></section>`
     :"";
@@ -99,7 +128,7 @@ window.__pageInit=async function(){
       </figure>`).join("")}</div>
   </section>`:"";
 
-  el.innerHTML=entete+carte+description+blocs+galerie;
+  el.innerHTML=entete+carte+creneaux+description+blocs+galerie;
   initLightbox("galerie-gym",avecImage.map(p=>({src:p.image,legende:p.legende})));
 };
 </script></body></html>

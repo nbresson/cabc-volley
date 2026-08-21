@@ -153,6 +153,21 @@ function creneauxDe(equipe){
     .slice().sort((a,b)=>JOURS_SEMAINE.indexOf(a.jour)-JOURS_SEMAINE.indexOf(b.jour)
       ||String(a.debut||"").localeCompare(String(b.debut||"")));
 }
+// Les seances d un site, rangees par jour puis par heure. Employee par le
+// planning par site de la page Horaires et par la fiche de chaque gymnase :
+// deux definitions donneraient un jour deux ordres differents pour la meme
+// semaine. Chaque entree garde son equipe, que la fiche affiche et que le
+// planning met en case.
+function creneauxDuSite(equipes,slug){
+  const sortie=[];
+  (equipes||[]).forEach(e=>creneauxDe(e).forEach(c=>{
+    if((c.gymnase||"")===(slug||""))sortie.push({c:c,e:e});
+  }));
+  return sortie.sort((a,b)=>
+    JOURS_SEMAINE.indexOf(a.c.jour)-JOURS_SEMAINE.indexOf(b.c.jour)
+    ||String(a.c.debut||"").localeCompare(String(b.c.debut||""))
+    ||String(a.e.nom||"").localeCompare(String(b.e.nom||"")));
+}
 // Les salles indexees par slug, telles que le planning et les fiches les
 // cherchent.
 function parSalle(gymnases){
