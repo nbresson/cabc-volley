@@ -29,7 +29,16 @@
     <div class="eyebrow">— Prochaines journées</div>
     <h2 style="font-size:clamp(32px,5vw,52px);margin:14px 0 18px">Les matchs<br>à venir</h2>
     <p class="muted" style="max-width:38ch">Entrée libre pour tous les matchs à domicile. La buvette ouvre une heure avant le coup d'envoi.</p>
-    <div class="chips" id="chips-equipes" style="margin-top:20px"></div>
+    <div id="filtres" style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+      <div id="filtre-equipes" style="display:none">
+        <span class="mono" style="font-size:10px;letter-spacing:.2em;display:block;margin-bottom:7px">Équipe</span>
+        <div class="chips" id="chips-equipes"></div>
+      </div>
+      <div id="filtre-lieux" style="display:none">
+        <span class="mono" style="font-size:10px;letter-spacing:.2em;display:block;margin-bottom:7px">Lieu</span>
+        <div class="chips" id="chips-lieux"></div>
+      </div>
+    </div>
     <a id="ffvb1" class="btn btn-secondary" style="margin-top:20px" target="_blank" rel="noopener">Calendrier complet FFVB ↗</a>
     <button type="button" id="ics-saison" class="btn btn-secondary" style="margin-top:12px;display:none">↓ Toute la saison dans mon agenda</button>
   </div>
@@ -138,10 +147,29 @@ window.__pageInit=async function(){
   // cinq. Tout ce qui se compte doit donc se recompter a chaque puce — le
   // nombre juste vient de la reconstruction, pas d une arithmetique tenue a
   // cote qui derive au premier changement.
-  const poserAvenir=slug=>{
-    const liste=slug==="tout"?avenir:avenir.filter(m=>m.equipe===slug);
+  // Un seul etat pour les deux filtres, une seule reconstruction. Deux
+  // filtres doublent les occasions du defaut corrige plus haut : un compte
+  // tenu a cote d une liste qu on masque derive au premier changement.
+  const etat={equipe:"tout",lieu:"tout"};
+  const retenu=m=>
+    (etat.equipe==="tout"||m.equipe===etat.equipe)&&
+    (etat.lieu==="tout"||(etat.lieu==="domicile")===!!m.domicile);
+  const poserAvenir=()=>{
+    const liste=avenir.filter(retenu);
     if(!liste.length){
-      up.innerHTML='<p class="vide muted pad">Aucun match programmé pour le moment.</p>';
+      // Avec deux filtres, l intersection vide devient un cas ordinaire — une
+      // equipe a qui il ne reste que des deplacements en fin de saison. Dire
+      // « aucun match programme » serait alors faux : il y en a, mais pas
+      // ceux-la. Le message distingue les deux, et offre la sortie.
+      const filtre=etat.equipe!=="tout"||etat.lieu!=="tout";
+      up.innerHTML=filtre
+        ?`<p class="vide muted pad">Aucun match ne correspond à ce filtre. <button type="button" class="lien" id="tout-voir" style="background:none;border:none;padding:0;font:inherit;cursor:pointer;color:inherit">Voir tous les matchs</button></p>`
+        :'<p class="vide muted pad">Aucun match programmé pour le moment.</p>';
+      const b=document.getElementById("tout-voir");
+      if(b)b.onclick=()=>{etat.equipe="tout";etat.lieu="tout";
+        document.querySelectorAll("#filtres .chip").forEach(c=>
+          c.classList.toggle("actif",c.dataset.valeur==="tout"));
+        poserAvenir();};
       bIcs.style.display="none";
       return;
     }
@@ -153,14 +181,19 @@ window.__pageInit=async function(){
     // sinon un tiroir s ouvrir sur du vide.
     const replie=reste.length>=2;
     up.innerHTML=(replie?liste.slice(0,VISIBLES):liste).map(matchRow).join("")
-      +(replie?`<details class="acc"><summary>Voir les ${reste.length} autres matchs${slug==="tout"?" de la saison":""}</summary><div class="acc-body" style="padding:0">${reste.map(matchRow).join("")}</div></details>`:"");
+      +(replie?`<details class="acc"><summary>Voir les ${reste.length} autres matchs${etat.equipe==="tout"&&etat.lieu==="tout"?" de la saison":""}</summary><div class="acc-body" style="padding:0">${reste.map(matchRow).join("")}</div></details>`:"");
     // onclick et non addEventListener : le bloc est reconstruit a chaque puce,
     // et des ecouteurs empiles telechargeraient autant de fichiers que de clics.
     bIcs.style.display="";
-    bIcs.textContent=slug==="tout"?"↓ Toute la saison dans mon agenda":`↓ Les ${liste.length} matchs dans mon agenda`;
-    bIcs.onclick=()=>telechargerICS(liste,slug==="tout"?"cab-saison-2026-2027.ics":`cab-${slug}-2026-2027.ics`);
+    const filtre=etat.equipe!=="tout"||etat.lieu!=="tout";
+    bIcs.textContent=filtre?`↓ Les ${liste.length} matchs dans mon agenda`:"↓ Toute la saison dans mon agenda";
+    // Le fichier suit les deux filtres, contenu ET nom : telecharger apres
+    // avoir choisi « exterieur » doit donner les seuls deplacements, et le
+    // nom doit le dire — sans quoi trois fichiers homonymes se ressemblent.
+    const bout=[etat.equipe!=="tout"?etat.equipe:"",etat.lieu!=="tout"?etat.lieu:""].filter(Boolean).join("-");
+    bIcs.onclick=()=>telechargerICS(liste,`cab-${bout||"saison"}-2026-2027.ics`);
   };
-  poserAvenir("tout");
+  poserAvenir();
 
   // Derniers resultats. Le tout premier est deja dans le bandeau sombre : la
   // liste montre les trois suivants, et disparait s il n y en a pas.
@@ -177,6 +210,7 @@ window.__pageInit=async function(){
   const slugs=[...new Set(avenir.map(m=>m.equipe).filter(Boolean))];
   const chips=document.getElementById("chips-equipes");
   if(chips&&slugs.length>1){
+    document.getElementById("filtre-equipes").style.display="";
     chips.innerHTML=`<button class="chip actif" data-valeur="tout">Toutes</button>`+
       slugs.map(s=>`<button class="chip" data-valeur="${echapper(s)}">${echapper(nomEquipe(s))}</button>`).join("");
     // Filtre propre a cette page : le filtre partage masque des lignes en CSS,
@@ -186,7 +220,26 @@ window.__pageInit=async function(){
       const b=e.target.closest(".chip");if(!b)return;
       chips.querySelectorAll(".chip").forEach(c=>c.classList.remove("actif"));
       b.classList.add("actif");
-      poserAvenir(b.dataset.valeur);
+      etat.equipe=b.dataset.valeur;
+      poserAvenir();
+    });
+  }
+
+  // Les puces de lieu ne paraissent que si les deux cas existent : comme pour
+  // les equipes, un filtre qui ne retire rien n a pas lieu d etre.
+  const lieux=document.getElementById("chips-lieux");
+  const aDomicile=avenir.some(m=>m.domicile),aExterieur=avenir.some(m=>!m.domicile);
+  if(lieux&&aDomicile&&aExterieur){
+    document.getElementById("filtre-lieux").style.display="";
+    lieux.innerHTML=`<button class="chip actif" data-valeur="tout">Tous</button>`+
+      `<button class="chip" data-valeur="domicile">Domicile</button>`+
+      `<button class="chip" data-valeur="exterieur">Extérieur</button>`;
+    lieux.addEventListener("click",e=>{
+      const b=e.target.closest(".chip");if(!b)return;
+      lieux.querySelectorAll(".chip").forEach(c=>c.classList.remove("actif"));
+      b.classList.add("actif");
+      etat.lieu=b.dataset.valeur;
+      poserAvenir();
     });
   }
 };
