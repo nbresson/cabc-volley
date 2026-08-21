@@ -201,6 +201,34 @@ avertissement sur le format, jumeau de celui qui existe sur le poids. Un
 avertissement et non une erreur : bloquer la photo d'un bénévole serait
 disproportionné.
 
+### L'encadrant d'un créneau
+**Demandé le 21 août.** Sur le planning et sur les fiches de gymnase, chaque séance
+dit son horaire, son lieu et son équipe. Elle ne dit pas qui l'encadre — ce qu'un
+parent cherche, et ce qu'un bénévole du bureau vérifie.
+
+**Ce qui existe déjà**, et sur quoi s'appuyer plutôt que de le refaire. L'effectif
+d'une équipe porte son encadrement : un numéro non numérique le désigne — « E » pour
+entraîneur — et Jean-Pierre Delost y figure ainsi sur le National 3, photo comprise.
+Et le champ **Précision** d'une séance peut déjà accueillir un nom ; son aide Decap
+avertit que la page est publique.
+
+**La question de conception** : renvoyer vers un membre de l'effectif déjà saisi, ou
+laisser saisir un nom au créneau ? Le renvoi évite une seconde version du même nom —
+le travers que ce dépôt passe son temps à retirer — mais suppose que l'encadrant soit
+inscrit à l'effectif de l'équipe, ce qui n'est pas toujours vrai : un même éducateur
+couvre parfois trois créneaux de trois équipes.
+
+**La question de confidentialité**, qui est la vraie difficulté et qui ne se tranche
+pas en écrivant du code. Le nom d'un bénévole sur une page publique est une donnée
+personnelle : elle demande son accord, et cet accord se retire. Quatre niveaux
+possibles, du plus au moins exposé : nom complet — ce que le club fait déjà pour
+l'entraîneur du National 3 —, prénom et initiale, mention sans nom (« encadré par un
+éducateur diplômé »), ou rien de public et l'information réservée au bureau.
+
+**À trancher par le club avant tout développement.** Le choix décide de la forme du
+champ : une relation vers l'effectif, une chaîne libre, ou une case à cocher. Et il
+engage plus que le site — recueillir les accords fait partie du travail.
+
 ### Revoir la présentation des partenaires
 **Demandé le 19 août.** La page Partenaires et le mur de logos posé en pied de chaque
 page méritent une passe de mise en forme. Cinq points relevés à la capture, du plus
