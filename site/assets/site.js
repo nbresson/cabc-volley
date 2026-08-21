@@ -190,16 +190,25 @@ function parSalle(gymnases){
 // Une ligne par seance, pour les pages qui n ont qu une phrase a donner.
 // `salles` est facultatif : sans lui la phrase se tait sur le lieu plutot que
 // d afficher un slug.
-function phraseCreneaux(equipe,salles){
+// Renvoie du HTML deja echappe — ne pas re-echapper a l affichage, les
+// entites y doubleraient. Avec `liees`, la salle devient un lien vers sa
+// fiche : a reserver aux endroits qui ne sont pas deja dans un lien, une
+// ancre dans une ancre etant invalide et decoupee par le navigateur — les
+// cartes de l accueil et de la page Equipes sont elles-memes des liens.
+function phraseCreneaux(equipe,salles,liees){
   return creneauxDe(equipe).map(c=>{
     const v=salles&&salles[c.gymnase];
-    const dit=[plageCreneau(c),v?(v.court||v.nom):""].filter(Boolean);
-    // La precision se parenthese derriere ce qu elle precise. Seule, elle EST
-    // l information — les Jeunes n ont qu « apres-midi, horaire a confirmer » a
-    // annoncer — et des parentheses la donneraient pour un aparte.
+    const nomSalle=v?echapper(v.court||v.nom):"";
+    const salle=v&&liees&&v.slug
+      ?`<a class="lien" href="${gymnaseUrl(v.slug)}">${nomSalle}</a>`
+      :nomSalle;
+    const dit=[echapper(plageCreneau(c)),salle].filter(Boolean);
+    // La precision se parenthese derriere ce qu elle precise — concatenee
+    // APRES la balise du lien, jamais dedans. Seule, elle EST l information :
+    // des parentheses la donneraient pour un aparte.
     if(c.precision){
-      if(dit.length)dit[dit.length-1]+=" ("+c.precision+")";
-      else dit.push(c.precision);
+      if(dit.length)dit[dit.length-1]+=" ("+echapper(c.precision)+")";
+      else dit.push(echapper(c.precision));
     }
     return (JOURS_COURTS[c.jour]+" "+dit.join(" · ")).trim();
   });
