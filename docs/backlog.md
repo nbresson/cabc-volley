@@ -211,12 +211,6 @@ depuis `matches.json`, moisson comprise : un abonnement dans Google ou Apple
 Agenda, à jour tout seul. Le téléchargement actuel resterait, pour qui préfère
 un fichier.
 
-### Une vraie CSP, un jour
-**Relevé le 21 août.** Les trois en-têtes de sécurité gratuits sont posés — le
-commentaire du worker renvoie ici. Une Content-Security-Policy réelle reste hors
-de portée : les styles en ligne du site l'interdisent en l'état, et l'assainir
-serait un chantier de fond, à ne pas confondre avec les trois lignes déjà faites.
-
 ### La case « À la une ? » ne fait rien
 **Relevé le 21 août**, en passant les actualités au tri par date. La collection
 en porte une case à cocher qu'aucune page n'a jamais lue — la une a toujours été
@@ -387,6 +381,17 @@ retenue. Le texte officiel actuel manque de charme.
 ---
 
 ## Fait, pour mémoire
+
+**22 août** — la vraie CSP, plus tôt que « un jour ». Le vecteur qui compte — le
+script — est verrouillé par un nonce tiré à chaque requête et posé au vol par le
+worker sur chaque balise ; un script injecté ne peut pas le connaître, et
+l'épreuve le montre : l'intrus est bloqué quand le légitime s'exécute. Les styles
+restent en ligne, et c'est documenté : un nonce ne s'applique pas aux attributs
+`style=""`, qui sont l'écriture même du site — l'échappement sous contrôle de
+compilation reste leur garde. L'admin est hors politique : Decap vient d'unpkg,
+ce sont ses règles. La page Partenaires refaite le même jour — fusion d'encre
+des cadres, rangées alignées, orpheline centrée, deux colonnes au téléphone —
+il ne reste de son entrée que les échelles, travail d'image.
 
 **21 août, seconde vague** — la passe d'idées et sa récolte. La saison n'est
 plus jamais recopiée : calculée partout, pivot de juillet, le doublon des
