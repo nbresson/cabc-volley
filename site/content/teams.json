@@ -112,8 +112,8 @@
       "planning": [
         {
           "jour": "mardi",
-          "debut": "20:30",
-          "fin": "22:30",
+          "debut": "20:00",
+          "fin": "22:00",
           "gymnase": "saint-germain",
           "precision": "Encadrement : Corentin VEYSSIERE"
         },
@@ -188,16 +188,16 @@
       "photo": "assets/uploads/jeunes_3.jpeg",
       "planning": [
         {
-          "jour": "mardi",
-          "debut": "18:00",
+          "jour": "lundi",
+          "debut": "18:30",
           "fin": "20:00",
-          "gymnase": "saint-germain",
+          "gymnase": "rollinat",
           "precision": ""
         },
         {
           "jour": "samedi",
-          "debut": "12:30",
-          "fin": "14:00",
+          "debut": "11:00",
+          "fin": "12:30",
           "gymnase": "rollinat",
           "precision": ""
         }
