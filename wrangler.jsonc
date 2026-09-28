@@ -33,5 +33,9 @@
   // Toutes les heures, samedi et dimanche seulement : 48 declenchements par
   // semaine au lieu de 168. Les crons sont en UTC, ce qui couvre le samedi matin
   // jusqu au lundi 1 h ou 2 h du matin en heure francaise.
-  "triggers": { "crons": ["0 * * * 6,0"] }
+  // Jours ecrits en toutes lettres : Cloudflare refuse 0 pour dimanche
+  // (« invalid cron string »), sa numerotation n est pas celle d Unix.
+  // Le refus est reste invisible un mois : les builds passaient par
+  // versions deploy, qui n applique pas les crons.
+  "triggers": { "crons": ["0 * * * SAT,SUN"] }
 }
